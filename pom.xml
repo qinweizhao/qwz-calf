@@ -5,7 +5,7 @@
 
     <groupId>com.qinweizhao</groupId>
     <artifactId>qwz-admin</artifactId>
-    <name>qwz-admin</name>
+    <name>admin</name>
     <description>后台管理系统</description>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
