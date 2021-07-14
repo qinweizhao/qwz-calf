@@ -4,25 +4,40 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.qinweizhao</groupId>
-    <artifactId>qwz-admin</artifactId>
+    <artifactId>qwz-code</artifactId>
+    <version>0.0.1</version>
     <name>admin</name>
     <description>后台管理系统</description>
     <packaging>pom</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+
 
     <modules>
-        <module>qwz-common</module>
-        <module>qwz-generator</module>
-        <module>qwz-logging</module>
-        <module>qwz-system</module>
-        <module>qwz-tools</module>
+        <module>qwz-code-admin</module>
+        <module>qwz-code-common</module>
+        <module>qwz-code-generator</module>
+        <module>qwz-code-generator</module>
     </modules>
 
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.locales>zh_CN</project.build.locales>
+        <spring-boot.version>2.5.2</spring-boot.version>
     </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- SpringBoot的依赖配置-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
