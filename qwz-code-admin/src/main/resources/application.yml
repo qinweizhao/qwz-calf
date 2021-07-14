@@ -1,12 +1,12 @@
 server:
   port: 8888
 # DataSource Config
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.79.179:3306/admin_fast?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    username: root
-    password: 112121
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://192.168.79.179:3306/admin_fast?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 112121
 #  security:
 #    user:
 #      name: user
