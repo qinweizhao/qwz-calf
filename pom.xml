@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.qinweizhao</groupId>
-    <artifactId>qwz-code</artifactId>
+    <artifactId>qwz-code-base</artifactId>
     <version>0.0.1</version>
-    <name>admin</name>
+    <name>parent</name>
     <description>后台管理系统</description>
     <packaging>pom</packaging>
 
@@ -17,6 +17,7 @@
         <module>qwz-code-generator</module>
         <module>qwz-code-quartz</module>
         <module>qwz-code-system</module>
+        <module>qwz-code-security</module>
     </modules>
 
 
