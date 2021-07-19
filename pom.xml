@@ -14,10 +14,7 @@
     <modules>
         <module>qwz-code-admin</module>
         <module>qwz-code-common</module>
-        <module>qwz-code-generator</module>
-        <module>qwz-code-quartz</module>
         <module>qwz-code-system</module>
-        <module>qwz-code-security</module>
     </modules>
 
 
