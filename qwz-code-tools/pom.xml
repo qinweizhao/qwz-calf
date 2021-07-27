@@ -7,7 +7,7 @@
         <artifactId>qwz-code-base</artifactId>
         <version>0.0.1</version>
     </parent>
-    <artifactId>tools</artifactId>
+    <artifactId>qwz-code-tools</artifactId>
     <version>0.0.1</version>
     <name>tools</name>
     <description>Demo project for Spring Boot</description>
