@@ -1,12 +1,13 @@
 package com.qinweizhao.common.entity;
 
-import com.baomidou.mybatisplus.extension.api.IErrorCode;
 
 /**
  * 常用API返回对象
- * Created by macro on 2019/4/19.
+ *
+ * @author macro
+ * @date 2019/4/19
  */
-public enum ResultCode implements IErrorCode {
+public enum ResultCode{
     SUCCESS(200, "操作成功"),
     FAILED(500, "操作失败"),
     VALIDATE_FAILED(404, "参数检验失败"),
@@ -15,16 +16,9 @@ public enum ResultCode implements IErrorCode {
     private long code;
     private String message;
 
-    private ResultCode(long code, String message) {
+    ResultCode(long code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public long getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
 }

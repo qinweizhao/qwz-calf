@@ -16,7 +16,6 @@
         <module>qwz-code-common</module>
         <module>qwz-code-portal</module>
         <module>qwz-code-system</module>
-        <module>qwz-code-tools</module>
     </modules>
 
 

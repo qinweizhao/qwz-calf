@@ -1,6 +1,5 @@
 package com.qinweizhao.common.entity;
 
-import com.baomidou.mybatisplus.extension.api.IErrorCode;
 
 /**
  * 通用返回对象
@@ -31,42 +30,42 @@ public class CommonResult<T> {
         this.data = data;
     }
 
-//    /**
-//     * 成功返回结果
-//     *
-//     * @param data 获取的数据
-//     */
-//    public static <T> CommonResult<T> success(T data) {
-//        return new CommonResult<>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
-//    }
-//
-//    /**
-//     * 成功返回结果
-//     *
-//     * @param data 获取的数据
-//     * @param  message 提示信息
-//     */
-//    public static <T> CommonResult<T> success(T data, String message) {
-//        return new CommonResult<>(ResultCode.SUCCESS.getCode(), message, data);
-//    }
-//
-//    /**
-//     * 失败返回结果
-//     * @param errorCode 错误码
-//     */
-//    public static <T> CommonResult<T> failed(IErrorCode errorCode) {
-//        return new CommonResult<>(errorCode.getCode(), errorCode.getMessage(), null);
-//    }
-//
-//    /**
-//     * 失败返回结果
-//     * @param errorCode 错误码
-//     * @param message 错误信息
-//     */
-//    public static <T> CommonResult<T> failed(IErrorCode errorCode,String message) {
-//        return new CommonResult<T>(errorCode.getCode(), message, null);
-//    }
-//
+    /**
+     * 成功返回结果
+     *
+     * @param data 获取的数据
+     */
+    public static <T> CommonResult<T> success(T data) {
+        return new CommonResult<>(200, "ok", data);
+    }
+
+    /**
+     * 成功返回结果
+     *
+     * @param data 获取的数据
+     * @param  message 提示信息
+     */
+    public static <T> CommonResult<T> success(T data, String message) {
+        return new CommonResult<>(200, message, data);
+    }
+
+    /**
+     * 失败返回结果
+     * @param errorCode 错误码
+     */
+    public static <T> CommonResult<T> failed(IErrorCode errorCode) {
+        return new CommonResult<>(errorCode.getCode(), errorCode.getMessage(), null);
+    }
+
+    /**
+     * 失败返回结果
+     * @param errorCode 错误码
+     * @param message 错误信息
+     */
+    public static <T> CommonResult<T> failed(IErrorCode errorCode,String message) {
+        return new CommonResult<T>(errorCode.getCode(), message, null);
+    }
+
 //    /**
 //     * 失败返回结果
 //     * @param message 提示信息
