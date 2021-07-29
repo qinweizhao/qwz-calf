@@ -12,7 +12,7 @@
     <artifactId>qwz-code-admin</artifactId>
     <version>0.0.1</version>
     <name>admin</name>
-    <description>后台web</description>
+    <description>后台服务</description>
     <packaging>jar</packaging>
 
     <properties>
@@ -20,15 +20,17 @@
     </properties>
 
     <dependencies>
+        <!-- spring-boot-devtools -->
         <dependency>
-            <groupId>com.qinweizhao</groupId>
-            <artifactId>qwz-code-common</artifactId>
-            <version>0.0.1</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional> <!-- 表示依赖不会传递 -->
         </dependency>
+
 
         <dependency>
             <groupId>com.qinweizhao</groupId>
-            <artifactId>qwz-code-system</artifactId>
+            <artifactId>qwz-code-framework</artifactId>
             <version>0.0.1</version>
         </dependency>
 

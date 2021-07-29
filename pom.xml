@@ -14,7 +14,7 @@
     <modules>
         <module>qwz-code-admin</module>
         <module>qwz-code-common</module>
-        <module>qwz-code-portal</module>
+        <module>qwz-code-framework</module>
         <module>qwz-code-system</module>
     </modules>
 
@@ -23,6 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.locales>zh_CN</project.build.locales>
         <spring-boot.version>2.5.2</spring-boot.version>
+        <fastjson.version>1.2.75</fastjson.version>
     </properties>
 
 
@@ -35,6 +36,13 @@
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- 阿里JSON解析器 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

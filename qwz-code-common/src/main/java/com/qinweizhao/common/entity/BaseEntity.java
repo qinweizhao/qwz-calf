@@ -1,7 +1,7 @@
 package com.qinweizhao.common.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -10,14 +10,24 @@ import java.time.LocalDateTime;
  * @author qinweizhao
  * @date 2021/7/19
  */
+@Data
 public class BaseEntity implements Serializable {
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @ApiModelProperty(value = "排序")
+    private String sort;
 
-    private LocalDateTime created;
+    @ApiModelProperty(value = "创建者")
+    private String createBy;
 
-    private LocalDateTime updated;
+    @ApiModelProperty(value = "更新者")
+    private String updateBy;
 
-    private Integer status;
+    @ApiModelProperty(value = "创建时间")
+    private LocalDateTime createTime;
+
+    @ApiModelProperty(value = "更新时间")
+    private LocalDateTime updateTime;
+
+    @ApiModelProperty(value = "备注")
+    private String remark;
 }
