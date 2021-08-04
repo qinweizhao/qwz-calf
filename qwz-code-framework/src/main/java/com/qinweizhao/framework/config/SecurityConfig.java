@@ -1,5 +1,7 @@
 package com.qinweizhao.framework.config;
 
+import com.qinweizhao.framework.filter.JwtFilter;
+import com.qinweizhao.framework.filter.JwtLoginFilter;
 import com.qinweizhao.framework.handler.MyAccessDeniedHandlerImpl;
 import com.qinweizhao.framework.handler.MyAuthenticationEntryPointImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.Resource;
 
@@ -17,7 +20,7 @@ import javax.annotation.Resource;
  * @author qinweizhao
  */
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
@@ -37,9 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.
-                //表单登录禁用
-                formLogin().disable()
+        http
+                //.formLogin().and()
                 //禁用session和csrf
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -54,7 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //授权失败处理器
                 .accessDeniedHandler(new MyAccessDeniedHandlerImpl())
                 //认证失败处理类
-                .authenticationEntryPoint(new MyAuthenticationEntryPointImpl());
+                .authenticationEntryPoint(new MyAuthenticationEntryPointImpl())
+                .and().addFilterBefore(new JwtLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
 }
