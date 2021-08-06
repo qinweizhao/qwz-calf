@@ -1,4 +1,4 @@
-package com.qinweizhao.framework.handler;
+package com.qinweizhao.system.handler;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

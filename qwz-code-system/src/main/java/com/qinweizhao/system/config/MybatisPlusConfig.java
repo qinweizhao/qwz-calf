@@ -1,4 +1,4 @@
-package com.qinweizhao.framework.config;
+package com.qinweizhao.system.config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;

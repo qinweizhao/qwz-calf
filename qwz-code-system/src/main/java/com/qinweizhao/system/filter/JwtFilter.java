@@ -1,4 +1,4 @@
-package com.qinweizhao.framework.filter;
+package com.qinweizhao.system.filter;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

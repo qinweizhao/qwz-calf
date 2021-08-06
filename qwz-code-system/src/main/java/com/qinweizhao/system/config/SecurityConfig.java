@@ -1,9 +1,9 @@
-package com.qinweizhao.framework.config;
+package com.qinweizhao.system.config;
 
-import com.qinweizhao.framework.filter.JwtFilter;
-import com.qinweizhao.framework.filter.JwtLoginFilter;
-import com.qinweizhao.framework.handler.MyAccessDeniedHandlerImpl;
-import com.qinweizhao.framework.handler.MyAuthenticationEntryPointImpl;
+import com.qinweizhao.system.filter.JwtFilter;
+import com.qinweizhao.system.filter.JwtLoginFilter;
+import com.qinweizhao.system.handler.MyAccessDeniedHandlerImpl;
+import com.qinweizhao.system.handler.MyAuthenticationEntryPointImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.formLogin().and()
                 //禁用session和csrf
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
@@ -51,13 +52,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(URL_WHITELIST).permitAll()
                 //其余请求需要认证
                 .anyRequest().authenticated()
+
                 .and()
                 .exceptionHandling()
                 //授权失败处理器
                 .accessDeniedHandler(new MyAccessDeniedHandlerImpl())
                 //认证失败处理类
                 .authenticationEntryPoint(new MyAuthenticationEntryPointImpl())
-                .and().addFilterBefore(new JwtLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+
+                .and()
+                .addFilterBefore(new JwtLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }

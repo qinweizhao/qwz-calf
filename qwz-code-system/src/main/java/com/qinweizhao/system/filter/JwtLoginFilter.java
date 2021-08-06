@@ -1,7 +1,7 @@
-package com.qinweizhao.framework.filter;
+package com.qinweizhao.system.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qinweizhao.framework.entity.SysUserDetails;
+import com.qinweizhao.system.entity.SysUserDetails;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.AuthenticationManager;
