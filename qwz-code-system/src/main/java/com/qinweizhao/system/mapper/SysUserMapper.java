@@ -1,7 +1,7 @@
 package com.qinweizhao.system.mapper;
 
-import com.qinweizhao.system.entity.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qinweizhao.system.entity.SysUser;
 
 /**
  * <p>

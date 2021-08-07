@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="SysRoleMenu对象", description="角色和菜单关联表")
+@ApiModel(value = "SysRoleMenu对象", description = "角色和菜单关联表")
 public class SysRoleMenu extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

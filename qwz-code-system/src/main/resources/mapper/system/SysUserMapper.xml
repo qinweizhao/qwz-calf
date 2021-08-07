@@ -4,28 +4,29 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.entity.SysUser">
-        <id column="user_id" property="userId" />
-        <result column="sort" property="sort" />
-        <result column="remark" property="remark" />
-        <result column="dept_id" property="deptId" />
-        <result column="username" property="username" />
-        <result column="password" property="password" />
-        <result column="nick_name" property="nickName" />
-        <result column="email" property="email" />
-        <result column="phone" property="phone" />
-        <result column="sex" property="sex" />
-        <result column="avatar" property="avatar" />
-        <result column="status" property="status" />
-        <result column="login_date" property="loginDate" />
-        <result column="create_by" property="createBy" />
-        <result column="update_by" property="updateBy" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="user_id" property="userId"/>
+        <result column="sort" property="sort"/>
+        <result column="remark" property="remark"/>
+        <result column="dept_id" property="deptId"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="sex" property="sex"/>
+        <result column="avatar" property="avatar"/>
+        <result column="status" property="status"/>
+        <result column="login_date" property="loginDate"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        sort,
+        sort
+        ,
         remark,
         user_id, dept_id, username, password, nick_name, email, phone, sex, avatar, status, login_date, create_by, update_by, create_time, update_time
     </sql>

@@ -23,15 +23,14 @@ import javax.annotation.Resource;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Resource
-    private UserDetailsService userDetailsService;
-
     private static final String[] URL_WHITELIST = {
 
 
             "/captcha"
 
     };
+    @Resource
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

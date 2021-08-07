@@ -4,13 +4,14 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.entity.SysUserRole">
-        <id column="user_id" property="userId" />
-        <result column="role_id" property="roleId" />
+        <id column="user_id" property="userId"/>
+        <result column="role_id" property="roleId"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id, role_id
+        user_id
+        , role_id
     </sql>
 
 </mapper>

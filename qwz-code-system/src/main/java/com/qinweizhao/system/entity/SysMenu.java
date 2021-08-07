@@ -2,13 +2,13 @@ package com.qinweizhao.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
-
 import com.qinweizhao.common.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="SysMenu对象", description="菜单权限表")
+@ApiModel(value = "SysMenu对象", description = "菜单权限表")
 public class SysMenu extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

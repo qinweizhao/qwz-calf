@@ -3,7 +3,6 @@ package com.qinweizhao.admin.system;
 
 import com.qinweizhao.common.controller.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**

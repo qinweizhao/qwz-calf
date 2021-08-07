@@ -1,9 +1,9 @@
 package com.qinweizhao.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qinweizhao.system.entity.SysRole;
 import com.qinweizhao.system.mapper.SysRoleMapper;
 import com.qinweizhao.system.service.SysRoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

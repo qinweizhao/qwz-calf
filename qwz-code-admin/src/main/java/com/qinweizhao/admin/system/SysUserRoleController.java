@@ -1,9 +1,7 @@
 package com.qinweizhao.admin.system;
 
 
-import com.qinweizhao.common.controller.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,6 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/sys-user-role")
-public class SysUserRoleController  {
+public class SysUserRoleController {
 
 }

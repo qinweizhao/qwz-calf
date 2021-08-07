@@ -1,7 +1,7 @@
 package com.qinweizhao.system.service;
 
-import com.qinweizhao.system.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qinweizhao.system.entity.SysUser;
 
 /**
  * <p>
