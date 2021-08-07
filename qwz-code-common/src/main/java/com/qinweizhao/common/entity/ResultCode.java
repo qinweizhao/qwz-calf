@@ -7,7 +7,7 @@ package com.qinweizhao.common.entity;
  * @author macro
  * @date 2019/4/19
  */
-public enum ResultCode{
+public enum ResultCode {
     SUCCESS(200, "操作成功"),
     FAILED(500, "操作失败"),
     VALIDATE_FAILED(404, "参数检验失败"),
