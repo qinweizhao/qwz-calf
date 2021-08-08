@@ -4,11 +4,10 @@ import com.ruoyi.common.utils.ServletUtils;
 
 /**
  * 表格数据处理
- * 
+ *
  * @author ruoyi
  */
-public class TableSupport
-{
+public class TableSupport {
     /**
      * 当前记录起始索引
      */
@@ -32,9 +31,8 @@ public class TableSupport
     /**
      * 封装分页对象
      */
-    public static PageDomain getPageDomain()
-    {
-        PageDomain pageDomain = new PageDomain();
+    public static com.ruoyi.common.core.page.PageDomain getPageDomain() {
+        com.ruoyi.common.core.page.PageDomain pageDomain = new com.ruoyi.common.core.page.PageDomain();
         pageDomain.setPageNum(ServletUtils.getParameterToInt(PAGE_NUM));
         pageDomain.setPageSize(ServletUtils.getParameterToInt(PAGE_SIZE));
         pageDomain.setOrderByColumn(ServletUtils.getParameter(ORDER_BY_COLUMN));
@@ -42,8 +40,7 @@ public class TableSupport
         return pageDomain;
     }
 
-    public static PageDomain buildPageRequest()
-    {
+    public static com.ruoyi.common.core.page.PageDomain buildPageRequest() {
         return getPageDomain();
     }
 }
