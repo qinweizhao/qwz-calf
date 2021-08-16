@@ -1,4 +1,4 @@
-package com.qinweizhao.admin.system;
+package com.qinweizhao.modules.system;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 用户和角色关联表 前端控制器
+ * 角色和菜单关联表 前端控制器
  * </p>
  *
  * @author qinweizhao
  * @since 2021-07-29
  */
 @RestController
-@RequestMapping("/sys-user-role")
-public class SysUserRoleController {
+@RequestMapping("/sys-role-menu")
+public class SysRoleMenuController {
 
 }

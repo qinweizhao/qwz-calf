@@ -1,4 +1,4 @@
-package com.qinweizhao.system.filter;
+package com.qinweizhao.core.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qinweizhao.system.entity.SysUserDetails;

@@ -1,4 +1,4 @@
-package com.qinweizhao.admin.system;
+package com.qinweizhao.modules.system;
 
 
 import com.qinweizhao.common.controller.BaseController;

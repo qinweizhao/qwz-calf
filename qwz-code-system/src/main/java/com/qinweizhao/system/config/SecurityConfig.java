@@ -1,9 +1,9 @@
 package com.qinweizhao.system.config;
 
-import com.qinweizhao.system.filter.JwtFilter;
-import com.qinweizhao.system.filter.JwtLoginFilter;
-import com.qinweizhao.system.handler.MyAccessDeniedHandlerImpl;
-import com.qinweizhao.system.handler.MyAuthenticationEntryPointImpl;
+import com.qinweizhao.core.security.filter.JwtFilter;
+import com.qinweizhao.core.security.filter.JwtLoginFilter;
+import com.qinweizhao.core.security.handler.MyAccessDeniedHandlerImpl;
+import com.qinweizhao.core.security.handler.MyAuthenticationEntryPointImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

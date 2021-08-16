@@ -1,4 +1,4 @@
-package com.qinweizhao.system.handler;
+package com.qinweizhao.core.security.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
