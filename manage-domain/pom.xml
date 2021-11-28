@@ -14,16 +14,14 @@
     <name>manage-domain</name>
 
     <dependencies>
-        <!-- COLA components -->
         <dependency>
-            <groupId>com.alibaba.cola</groupId>
-            <artifactId>cola-component-domain-starter</artifactId>
+            <groupId>com.qinweizhao.manage</groupId>
+            <artifactId>manage-component-domain-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.alibaba.cola</groupId>
-            <artifactId>cola-component-exception</artifactId>
+            <groupId>com.qinweizhao.manage</groupId>
+            <artifactId>manage-component-exception</artifactId>
         </dependency>
-        <!-- COLA components End-->
         <dependency>
             <groupId>com.qinweizhao.manage</groupId>
             <artifactId>manage-client</artifactId>

@@ -10,14 +10,14 @@
     <name>manage</name>
 
     <properties>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <mybatis-starter.version>1.3.1</mybatis-starter.version>
         <spring-boot.version>2.1.3.RELEASE</spring-boot.version>
-        <cola.components.version>4.0.1</cola.components.version>
+        <manage.component.version>1.0.0-SNAPSHOT</manage.component.version>
     </properties>
 
     <modules>
@@ -27,34 +27,33 @@
         <module>manage-domain</module>
         <module>manage-infrastructure</module>
         <module>start</module>
+        <module>manage-component</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
-            <!--COLA Components-->
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-domain-starter</artifactId>
-                <version>${cola.components.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-exception</artifactId>
-                <version>${cola.components.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-dto</artifactId>
-                <version>${cola.components.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-catchlog-starter</artifactId>
-                <version>${cola.components.version}</version>
-            </dependency>
-            <!--COLA Components End-->
 
             <!--Project modules-->
+            <dependency>
+                <groupId>com.qinweizhao.manage</groupId>
+                <artifactId>manage-component-catchlog-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qinweizhao.manage</groupId>
+                <artifactId>manage-component-domain-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qinweizhao.manage</groupId>
+                <artifactId>manage-component-dto</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qinweizhao.manage</groupId>
+                <artifactId>manage-component-exception</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.qinweizhao.manage</groupId>
                 <artifactId>manage-adapter</artifactId>
@@ -118,11 +117,6 @@
             </dependency>
             <!--Validation API End -->
             <!-- Misc -->
-            <dependency>
-                <groupId>org.reflections</groupId>
-                <artifactId>reflections</artifactId>
-                <version>0.9.10</version>
-            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
