@@ -34,6 +34,9 @@
         <module>manage-component-catchlog-starter</module>
         <module>manage-component-exception</module>
         <module>manage-component-domain-starter</module>
+        <module>manage-component-extension-starter</module>
+        <module>manage-component-statemachine</module>
+        <module>manage-component-test-container</module>
     </modules>
 
     <dependencies>
