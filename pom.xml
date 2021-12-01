@@ -1,38 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.qinweizhao.manage</groupId>
-    <artifactId>manage-parent</artifactId>
+    <artifactId>qwz-manage-plus</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+
     <packaging>pom</packaging>
     <name>manage</name>
+    <modelVersion>4.0.0</modelVersion>
 
     <properties>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
         <mybatis-starter.version>1.3.1</mybatis-starter.version>
         <spring-boot.version>2.1.3.RELEASE</spring-boot.version>
         <manage.component.version>1.0.0-SNAPSHOT</manage.component.version>
     </properties>
 
     <modules>
-        <module>manage-client</module>
-        <module>manage-adapter</module>
-        <module>manage-app</module>
-        <module>manage-domain</module>
-        <module>manage-infrastructure</module>
         <module>start</module>
         <module>manage-component</module>
+        <module>manage-system</module>
+        <module>manage-core</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
-
             <!--Project modules-->
             <dependency>
                 <groupId>com.qinweizhao.manage</groupId>
@@ -56,30 +52,16 @@
             </dependency>
             <dependency>
                 <groupId>com.qinweizhao.manage</groupId>
-                <artifactId>manage-adapter</artifactId>
+                <artifactId>manage-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.qinweizhao.manage</groupId>
-                <artifactId>manage-client</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.qinweizhao.manage</groupId>
-                <artifactId>manage-app</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.qinweizhao.manage</groupId>
-                <artifactId>manage-domain</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.qinweizhao.manage</groupId>
-                <artifactId>manage-infrastructure</artifactId>
+                <artifactId>manage-system</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!--Project modules End-->
+
             <!--Spring Boot-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>

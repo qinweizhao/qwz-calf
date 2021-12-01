@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.qinweizhao.manage</groupId>
-        <artifactId>manage-parent</artifactId>
+        <artifactId>qwz-manage-plus</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -14,26 +14,46 @@
     <name>start</name>
 
     <dependencies>
+        <!--Project modules-->
         <dependency>
             <groupId>com.qinweizhao.manage</groupId>
-            <artifactId>manage-adapter</artifactId>
+            <artifactId>manage-component-catchlog-starter</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-test</artifactId>
-            <scope>test</scope>
+            <groupId>com.qinweizhao.manage</groupId>
+            <artifactId>manage-component-domain-starter</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <groupId>com.qinweizhao.manage</groupId>
+            <artifactId>manage-component-dto</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.qinweizhao.manage</groupId>
+            <artifactId>manage-component-exception</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <groupId>com.qinweizhao.manage</groupId>
+            <artifactId>manage-core</artifactId>
+            <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.qinweizhao.manage</groupId>
+            <artifactId>manage-system</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--Project modules End-->
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.1.1.RELEASE</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
