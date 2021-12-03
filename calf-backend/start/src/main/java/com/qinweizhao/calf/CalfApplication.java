@@ -3,6 +3,9 @@ package com.qinweizhao.calf;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author YVKG
+ */
 @SpringBootApplication
 public class CalfApplication {
 
