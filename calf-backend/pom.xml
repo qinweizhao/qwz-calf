@@ -6,7 +6,7 @@
     <artifactId>calf-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>calf</name>
+    <name>calf-backend</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
