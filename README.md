@@ -4,7 +4,7 @@
 
 （Controller 层），也可以直接依赖于 Service 层，依此类推：
 
-![2021-12-02_180736](../2021-12-02_180736.png)
+![2021-12-02_180736](https://cdn.jsdelivr.net/gh/qinweizhao/qwz-calf-boot/calf-resource/img/2021-12-02_180736.png)
 
 • 开放 API 层：可直接封装 Service 接口暴露成 RPC 接口；通过 Web 封装成 http 接口；网关控制层等。
 
