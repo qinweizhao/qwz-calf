@@ -4,19 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qinweizhao.calf.dao.mapper.UserMapper">
 
-    <select id="getByName" parameterType="string" resultType="com.qinweizhao.calf.dao.dataobject.UserDO">
+    <select id="getByName" parameterType="string" resultType="com.qinweizhao.calf.dao.system.dataobject.UserDO">
         SELECT *
         FROM users
         WHERE name = #{value}
     </select>
 
-    <select id="getById" parameterType="long" resultType="com.qinweizhao.calf.dao.dataobject.UserDO">
+    <select id="getById" parameterType="long" resultType="com.qinweizhao.calf.dao.system.dataobject.UserDO">
         SELECT *
         FROM users
         WHERE id = #{value}
     </select>
 
-    <insert id="insert" parameterType="com.qinweizhao.calf.dao.dataobject.UserDO">
+    <insert id="insert" parameterType="com.qinweizhao.calf.dao.system.dataobject.UserDO">
         INSERT INTO users(name, age) VALUES (#{name}, #{age})
         <selectKey resultType="java.lang.Long" keyProperty="id">
             SELECT LAST_INSERT_ID() AS ID

@@ -1,14 +1,13 @@
 package com.qinweizhao.calf.web;
 
+import com.qinweizhao.calf.api.UserService;
+import com.qinweizhao.calf.api.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.qinweizhao.calf.api.UserService;
-import com.qinweizhao.calf.api.model.UserModel;
 
 /**
  * @author <a href="mailto:chenxilzx1@gmail.com">theonefx</a>
