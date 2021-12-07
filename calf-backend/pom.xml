@@ -26,6 +26,15 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.4.1</spring-boot.version>
         <mybatis-plus.version>3.4.3</mybatis-plus.version>
+        <springfox.version>3.0.0</springfox.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <jaxb.version>2.3.0</jaxb.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
+        <guava.version>30.0-jre</guava.version>
+        <fastjson.version>1.2.78</fastjson.version>
+        <hutool.version>5.3.3</hutool.version>
+        <commons-lang3.version>3.11</commons-lang3.version>
+        <commons-io.version>2.11.0</commons-io.version>
     </properties>
 
     <modules>
@@ -40,6 +49,34 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--Project modules-->
+            <dependency>
+                <groupId>com.qinweizhao</groupId>
+                <artifactId>calf-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qinweizhao</groupId>
+                <artifactId>calf-base</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qinweizhao</groupId>
+                <artifactId>calf-dao</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qinweizhao</groupId>
+                <artifactId>calf-manager</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qinweizhao</groupId>
+                <artifactId>calf-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!--Project modules END-->
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -48,15 +85,61 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.taobao.arthas</groupId>
-                <artifactId>arthas-spring-boot-starter</artifactId>
-                <version>3.4.8</version>
-                <type>jar</type>
-            </dependency>
-            <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- swagger3 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <!-- 引入jaxb-api包 -->
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${jaxb.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <!-- google提供的生成验证码工具 -->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

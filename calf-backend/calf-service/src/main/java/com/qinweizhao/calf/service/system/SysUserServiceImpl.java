@@ -52,9 +52,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         if (!permissionSet.isEmpty()) {
             String permission = String.join(",", permissionSet);
-            log.debug("当前用户拥有的菜单权限有:" + permission);
             authority = authority.concat(permission);
-            log.debug("当前用户拥有的菜单权限有:" + authority);
         }
         return authority;
     }
