@@ -9,8 +9,8 @@ import com.qinweizhao.calf.dao.system.dataobject.SysMenu;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-06
+ * @since 2021-12-07
  */
-public interface ISysMenuService extends IService<SysMenu> {
+public interface SysMenuService extends IService<SysMenu> {
 
 }

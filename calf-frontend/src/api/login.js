@@ -22,7 +22,7 @@ export function getInfo() {
 
 export function getCodeImg() {
   return request({
-    url: 'auth/code',
+    url: 'auth/sys/user/captcha',
     method: 'get'
   })
 }

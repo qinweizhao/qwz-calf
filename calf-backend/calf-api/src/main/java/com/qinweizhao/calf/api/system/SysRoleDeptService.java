@@ -9,8 +9,8 @@ import com.qinweizhao.calf.dao.system.dataobject.SysRoleDept;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-06
+ * @since 2021-12-07
  */
-public interface ISysRoleDeptService extends IService<SysRoleDept> {
+public interface SysRoleDeptService extends IService<SysRoleDept> {
 
 }

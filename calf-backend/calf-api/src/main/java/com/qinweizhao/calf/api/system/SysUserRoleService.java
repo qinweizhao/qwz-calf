@@ -9,8 +9,8 @@ import com.qinweizhao.calf.dao.system.dataobject.SysUserRole;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-06
+ * @since 2021-12-07
  */
-public interface ISysUserRoleService extends IService<SysUserRole> {
+public interface SysUserRoleService extends IService<SysUserRole> {
 
 }

@@ -22,4 +22,27 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
+    <select id="selectUserByUsername" resultType="com.qinweizhao.calf.dao.system.dataobject.SysUser">
+        SELECT *
+        FROM sys_user
+        WHERE username = #{username}
+    </select>
+
+    <select id="selectRolesByUserId" resultType="java.lang.String">
+        SELECT r.role_key
+        FROM sys_role r
+                 LEFT JOIN sys_user_role ur ON r.role_id = ur.role_id
+        WHERE ur.user_id = #{id}
+    </select>
+
+    <select id="selectPermissionsByUserId" resultType="java.lang.String">
+        SELECT permission
+        FROM sys_menu m
+                 LEFT JOIN sys_role_menu rm ON m.menu_id = rm.menu_id
+                 LEFT JOIN sys_role r ON rm.role_id = r.role_id
+                 LEFT JOIN sys_user_role ur ON ur.role_id = r.role_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+
 </mapper>

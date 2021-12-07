@@ -9,8 +9,8 @@ import com.qinweizhao.calf.dao.system.dataobject.SysDept;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-06
+ * @since 2021-12-07
  */
-public interface ISysDeptService extends IService<SysDept> {
+public interface SysDeptService extends IService<SysDept> {
 
 }

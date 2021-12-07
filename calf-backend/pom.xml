@@ -35,6 +35,7 @@
         <module>calf-service</module>
         <module>calf-web</module>
         <module>start</module>
+        <module>calf-base</module>
     </modules>
 
     <dependencyManagement>

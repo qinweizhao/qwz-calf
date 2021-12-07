@@ -27,6 +27,13 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.qinweizhao</groupId>
+            <artifactId>calf-base</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
     </dependencies>
 
 </project>

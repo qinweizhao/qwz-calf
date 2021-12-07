@@ -9,8 +9,8 @@ import com.qinweizhao.calf.dao.system.dataobject.SysUserPost;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-06
+ * @since 2021-12-07
  */
-public interface ISysUserPostService extends IService<SysUserPost> {
+public interface SysUserPostService extends IService<SysUserPost> {
 
 }
