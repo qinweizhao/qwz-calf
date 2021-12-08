@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.qinweizhao</groupId>
-    <artifactId>qwz-calf-boot</artifactId>
+    <artifactId>qwz-calf</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>calf</name>

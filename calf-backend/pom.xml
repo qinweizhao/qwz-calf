@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-        <groupId>com.qinweizhao</groupId>
-        <artifactId>qwz-calf-boot</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-
+    <groupId>com.qinweizhao</groupId>
+    <version>0.0.1-SNAPSHOT</version>
     <artifactId>calf-backend</artifactId>
-
     <name>A-backend</name>
     <description>后端</description>
-
-    <version>0.0.1-SNAPSHOT</version>
-
     <packaging>pom</packaging>
 
 
@@ -38,41 +29,34 @@
     </properties>
 
     <modules>
-        <module>calf-api</module>
-        <module>calf-dao</module>
-        <module>calf-manager</module>
-        <module>calf-service</module>
-        <module>calf-web</module>
-        <module>start</module>
-        <module>calf-base</module>
+        <module>calf-auth</module>
+        <module>calf-common</module>
+        <module>calf-platform</module>
+        <module>calf-platform-api</module>
+        <module>calf-start</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
             <!--Project modules-->
             <dependency>
-                <groupId>com.qinweizhao</groupId>
-                <artifactId>calf-api</artifactId>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>calf-auth</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.qinweizhao</groupId>
-                <artifactId>calf-base</artifactId>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>calf-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.qinweizhao</groupId>
-                <artifactId>calf-dao</artifactId>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>calf-platform</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.qinweizhao</groupId>
-                <artifactId>calf-manager</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.qinweizhao</groupId>
-                <artifactId>calf-service</artifactId>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>calf-platform-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!--Project modules END-->
