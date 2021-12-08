@@ -1,4 +1,4 @@
-package com.qinweizhao.config.security.handler;
+package com.qinweizhao.handler;
 
 import cn.hutool.json.JSONUtil;
 import com.qinweizhao.base.response.R;

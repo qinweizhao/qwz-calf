@@ -42,7 +42,6 @@
 </template>
 
 <script>
-import { encrypt } from '@/utils/rsaEncrypt'
 import Config from '@/settings'
 import { getCodeImg } from '@/api/login'
 import Cookies from 'js-cookie'
@@ -90,7 +89,7 @@ export default {
     // 获取验证码
     this.getCode()
     // 获取用户名密码等Cookie
-    this.getCookie()
+    // this.getCookie()
     // token 过期提示
     this.point()
   },
@@ -105,7 +104,7 @@ export default {
       const username = Cookies.get('username')
       let password = Cookies.get('password')
       const rememberMe = Cookies.get('rememberMe')
-      // 保存cookie里面的加密后的密码
+      // 保存cookie里面的密码
       this.cookiePass = password === undefined ? '' : password
       password = password === undefined ? this.loginForm.password : password
       this.loginForm = {
@@ -123,9 +122,6 @@ export default {
           rememberMe: this.loginForm.rememberMe,
           code: this.loginForm.code,
           uuid: this.loginForm.uuid
-        }
-        if (user.password !== this.cookiePass) {
-          user.password = encrypt(user.password)
         }
         if (valid) {
           this.loading = true
@@ -205,7 +201,6 @@ export default {
     width: 33%;
     display: inline-block;
     height: 38px;
-    float: right;
     img{
       cursor: pointer;
       vertical-align:middle

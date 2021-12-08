@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.qinweizhao.base.Constants;
 import com.qinweizhao.base.util.GuavaCacheUtils;
+import com.qinweizhao.system.SysUserApi;
 import com.qinweizhao.system.entity.SysUser;
 import com.qinweizhao.system.mapper.SysUserMapper;
 import com.qinweizhao.system.service.SysUserService;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
  * @since 2021-12-07
  */
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService, SysUserApi {
 
     @Resource
     private DefaultKaptcha defaultKaptcha;

@@ -46,6 +46,7 @@ public class GlobalExceptionHandler {
         return R.failure(e.getMessage());
     }
 
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = RuntimeException.class)
     public R handler(RuntimeException e) {

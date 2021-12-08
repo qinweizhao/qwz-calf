@@ -1,8 +1,9 @@
-package com.qinweizhao.system.service;
+package com.qinweizhao.service;
 
 
+import com.qinweizhao.entity.SysUserDetails;
+import com.qinweizhao.system.SysUserApi;
 import com.qinweizhao.system.entity.SysUser;
-import com.qinweizhao.system.entity.SysUserDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -24,17 +25,17 @@ public class SysUserDetailsServiceImpl implements UserDetailsService {
 
 
     @Resource
-    private SysUserService sysUserService;
+    private SysUserApi sysUserApi;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUser accountInfo = sysUserService.selectUserByUsername(username);
+        SysUser accountInfo = sysUserApi.selectUserByUsername(username);
         if (accountInfo == null) {
             throw new UsernameNotFoundException("用户名输入错误");
         }
         SysUserDetails sysUserDetails = new SysUserDetails();
         BeanUtils.copyProperties(accountInfo, sysUserDetails);
-        String authority = sysUserService.getAuthorityByUserId(accountInfo.getUserId());
+        String authority = sysUserApi.getAuthorityByUserId(accountInfo.getUserId());
         log.info("当前用户拥有的权限有{}", authority);
         sysUserDetails.setAuthorities(AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
         return sysUserDetails;

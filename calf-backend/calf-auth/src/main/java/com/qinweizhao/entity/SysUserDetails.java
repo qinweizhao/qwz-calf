@@ -1,5 +1,6 @@
-package com.qinweizhao.system.entity;
+package com.qinweizhao.entity;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021/9/25
  */
+@Data
 public class SysUserDetails implements UserDetails {
 
     /**
@@ -36,7 +38,7 @@ public class SysUserDetails implements UserDetails {
     /**
      * 帐号状态（0正常 1停用）
      */
-    private String status;
+    private boolean enabled;
 
 
     /**
@@ -94,12 +96,12 @@ public class SysUserDetails implements UserDetails {
         return true;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     @Override
     public boolean isEnabled() {
-        return ACCOUNT_STATUS.equals(this.status);
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

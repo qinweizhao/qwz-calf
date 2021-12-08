@@ -16,4 +16,10 @@
     <description>system-api</description>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>com.qinweizhao</groupId>
+            <artifactId>calf-common</artifactId>
+        </dependency>
+    </dependencies>
 </project>

@@ -1,4 +1,4 @@
-package com.qinweizhao.config.security.handler;
+package com.qinweizhao.handler;
 
 import com.qinweizhao.base.response.R;
 import org.springframework.security.access.AccessDeniedException;

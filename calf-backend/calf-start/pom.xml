@@ -8,10 +8,14 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>start</artifactId>
+    <artifactId>calf-start</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <dependencies>
+        <dependency>
+            <groupId>com.qinweizhao</groupId>
+            <artifactId>calf-auth</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.qinweizhao</groupId>
             <artifactId>calf-common</artifactId>

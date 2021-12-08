@@ -19,7 +19,7 @@ public class Constants {
     /**
      * 验证码
      */
-    public static final String LOGIN_CODE_KEY = "captcha";
+    public static final String LOGIN_CODE_KEY = "code";
 
     /**
      * 验证码

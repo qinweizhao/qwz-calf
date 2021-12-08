@@ -1,9 +1,9 @@
-package com.qinweizhao.config.security.filter;
+package com.qinweizhao.filter;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.qinweizhao.base.Constants;
-import com.qinweizhao.base.exception.CaptchaException;
+import com.qinweizhao.exception.CaptchaException;
 import com.qinweizhao.base.response.R;
 import com.qinweizhao.base.util.GuavaCacheUtils;
 import com.qinweizhao.base.util.IoUtils;
@@ -19,7 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -65,7 +64,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
         JSONObject jsonObject = IoUtils.parseRequestToJsonObject(request);
         String captcha = jsonObject.getString(Constants.LOGIN_CODE_KEY);
         if (StringUtils.isEmpty(captcha)) {
-            throw new CaptchaException("验证码为空");
+            throw new CaptchaException("验证码错误");
         }
         boolean b = this.validateCaptcha(captcha);
         if (!b) {
@@ -92,10 +91,9 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
      * @param chain      chain
      * @param authResult authResult
      * @throws IOException      e
-     * @throws ServletException e
      */
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
         if (log.isDebugEnabled()) {
             log.debug("登录成功");
         }
@@ -119,7 +117,11 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
             log.debug("登录失败");
         }
         R failure = new R();
+        failure.setCode(400);
         response.setContentType("application/json;charset=utf-8");
+        if (exception instanceof CaptchaException){
+            failure.setMessage("验证码为空");
+        }
         if (exception instanceof LockedException) {
             failure.setMessage("账户被锁定，请联系管理员!");
         } else if (exception instanceof CredentialsExpiredException) {
