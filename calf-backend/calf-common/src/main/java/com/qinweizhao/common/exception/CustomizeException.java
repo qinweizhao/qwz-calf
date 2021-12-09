@@ -1,4 +1,4 @@
-package com.qinweizhao.base.exception;
+package com.qinweizhao.common.exception;
 
 /**
  * 自定义异常

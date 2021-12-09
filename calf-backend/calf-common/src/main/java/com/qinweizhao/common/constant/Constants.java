@@ -1,11 +1,14 @@
-package com.qinweizhao.base.constant;
+package com.qinweizhao.common.constant;
 
 /**
  * @author qinweizhao
  * @since 2021/9/27
  */
 public class Constants {
-
+    /**
+     * 日志链路追踪id日志标志
+     */
+    public static final String LOG_TRACE_ID = "traceId";
     /**
      * 用户名
      */
@@ -34,6 +37,12 @@ public class Constants {
      * 默认头像
      */
     public static final String DEFAULT_AVATAR = "https://cdn.jsdelivr.net/gh/qinhua/halo-theme-joe2.0@master/source/svg/spinner-preloader.svg";
+
+
+    /**
+     * 微服务之间传递的唯一标识
+     */
+    public static final String MATE_TRACE_ID = "calf-trace-id";
 
     private Constants() {
 

@@ -1,13 +1,14 @@
-package com.qinweizhao.base.response;
+package com.qinweizhao.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
  * 返回码实现
+ *
  * @author qinweizhao
- * @since 2021/9/25
  */
+
 @Getter
 @AllArgsConstructor
 public enum ResultCode implements IResultCode {

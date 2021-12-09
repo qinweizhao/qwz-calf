@@ -1,6 +1,7 @@
 package com.qinweizhao.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qinweizhao.common.request.Search;
 import com.qinweizhao.system.entity.SysUser;
 
 import java.io.IOException;
@@ -38,4 +39,8 @@ public interface SysUserService extends IService<SysUser> {
      * @throws IOException e
      */
     String getCaptcha() throws IOException;
+
+    Object listPage(Search search, SysUser sysUser);
+
+    boolean status(String ids, String status);
 }

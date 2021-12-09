@@ -1,7 +1,7 @@
-package com.qinweizhao.base.response;
+package com.qinweizhao.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.qinweizhao.base.constant.ResponseConstants;
+import com.qinweizhao.common.constant.ResultConstants;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,8 +11,9 @@ import java.io.Serializable;
 
 /**
  * 统一响应消息报文
+ *
+ * @param <T> 　T对象
  * @author qinweizhao
- * @since 2021/9/25
  */
 @Data
 @Getter
@@ -81,7 +82,7 @@ public class Result<T> implements Serializable {
 	}
 
 	public static <T> Result<T> data(T data) {
-		return data(data, ResponseConstants.DEFAULT_SUCCESS_MESSAGE);
+		return data(data, ResultConstants.DEFAULT_SUCCESS_MESSAGE);
 	}
 
 	public static <T> Result<T> data(T data, String msg) {
@@ -89,30 +90,30 @@ public class Result<T> implements Serializable {
 	}
 
 	public static <T> Result<T> data(int code, T data, String msg) {
-		return new Result<>(code, data, data == null ? ResponseConstants.DEFAULT_NULL_MESSAGE : msg);
+		return new Result<>(code, data, data == null ? ResultConstants.DEFAULT_NULL_MESSAGE : msg);
 	}
 
-	public static <T> Result<T> fail() {
+	public static <T> Result<T> failure() {
 		return new Result<>(ResultCode.FAILURE, ResultCode.FAILURE.getMsg());
 	}
 
-	public static <T> Result<T> fail(String msg) {
+	public static <T> Result<T> failure(String msg) {
 		return new Result<>(ResultCode.FAILURE, msg);
 	}
 
-	public static <T> Result<T> fail(int code, String msg) {
+	public static <T> Result<T> failure(int code, String msg) {
 		return new Result<>(code, null, msg);
 	}
 
-	public static <T> Result<T> fail(IResultCode resultCode) {
+	public static <T> Result<T> failure(IResultCode resultCode) {
 		return new Result<>(resultCode);
 	}
 
-	public static <T> Result<T> fail(IResultCode resultCode, String msg) {
+	public static <T> Result<T> failure(IResultCode resultCode, String msg) {
 		return new Result<>(resultCode, msg);
 	}
 
 	public static <T> Result<T> condition(boolean flag) {
-		return flag ? success(ResponseConstants.DEFAULT_SUCCESS_MESSAGE) : fail(ResponseConstants.DEFAULT_FAIL_MESSAGE);
+		return flag ? success(ResultConstants.DEFAULT_SUCCESS_MESSAGE) : failure(ResultConstants.DEFAULT_FAIL_MESSAGE);
 	}
 }

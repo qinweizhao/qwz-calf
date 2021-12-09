@@ -1,4 +1,4 @@
-package com.qinweizhao.base.util;
+package com.qinweizhao.common.util;
 
 
 import com.google.common.cache.Cache;

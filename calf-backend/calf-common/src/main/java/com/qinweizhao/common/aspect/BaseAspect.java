@@ -1,4 +1,4 @@
-package com.qinweizhao.base.aspect;
+package com.qinweizhao.common.aspect;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

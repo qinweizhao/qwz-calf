@@ -1,4 +1,4 @@
-package com.qinweizhao.base.util;
+package com.qinweizhao.common.util;
 
 import cn.hutool.core.io.IoUtil;
 import com.alibaba.fastjson.JSON;

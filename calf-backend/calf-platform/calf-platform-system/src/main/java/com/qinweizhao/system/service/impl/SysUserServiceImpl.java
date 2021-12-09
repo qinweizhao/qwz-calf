@@ -4,8 +4,9 @@ package com.qinweizhao.system.service.impl;
 import cn.hutool.core.codec.Base64;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.qinweizhao.base.constant.Constants;
-import com.qinweizhao.base.util.GuavaCacheUtils;
+import com.qinweizhao.common.constant.Constants;
+import com.qinweizhao.common.request.Search;
+import com.qinweizhao.common.util.GuavaCacheUtils;
 import com.qinweizhao.system.SysUserApi;
 import com.qinweizhao.system.entity.SysUser;
 import com.qinweizhao.system.mapper.SysUserMapper;
@@ -76,5 +77,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         ImageIO.write(image, "jpg", outputStream);
         outputStream.flush();
         return Constants.BASE64_PREFIX + Base64.encode(outputStream.toByteArray());
+    }
+
+    @Override
+    public Object listPage(Search search, SysUser sysUser) {
+        return null;
+    }
+
+    @Override
+    public boolean status(String ids, String status) {
+        return false;
     }
 }

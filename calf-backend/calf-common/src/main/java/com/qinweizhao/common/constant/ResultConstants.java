@@ -1,10 +1,10 @@
-package com.qinweizhao.base.constant;
+package com.qinweizhao.common.constant;
 
 /**
  * @author qinweizhao
  * @since 2021/9/27
  */
-public class ResponseConstants {
+public class ResultConstants {
 
 
     /**
@@ -16,13 +16,14 @@ public class ResponseConstants {
      * 默认成功消息
      */
     public static final String DEFAULT_SUCCESS_MESSAGE = "处理成功";
+
     /**
      * 默认失败消息
      */
     public static final String DEFAULT_FAIL_MESSAGE = "处理失败";
 
 
-    private ResponseConstants() {
+    private ResultConstants() {
 
     }
 

@@ -1,7 +1,7 @@
 package com.qinweizhao.controller;
 
 
-import com.qinweizhao.base.response.R;
+import com.qinweizhao.common.response.Result;
 import com.qinweizhao.system.SysUserApi;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,14 +20,14 @@ public class AuthController {
     @Resource
     SysUserApi sysUserApi;
 
-    /**
-     * 获取验证码
-     *
-     * @return r
-     * @throws IOException e
-     */
-    @GetMapping("/captcha")
-    public R captcha() throws IOException {
-        return R.success(sysUserApi.getCaptcha());
-    }
+        /**
+         * 获取验证码
+         *
+         * @return r
+         * @throws IOException e
+         */
+        @GetMapping("/captcha")
+        public Result<String> captcha() throws IOException {
+            return Result.data(sysUserApi.getCaptcha());
+        }
 }

@@ -2,12 +2,12 @@ package com.qinweizhao.filter;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.qinweizhao.base.constant.Constants;
-import com.qinweizhao.base.response.R;
-import com.qinweizhao.base.util.GuavaCacheUtils;
-import com.qinweizhao.base.util.IoUtils;
-import com.qinweizhao.util.JwtUtils;
+import com.qinweizhao.common.constant.Constants;
+import com.qinweizhao.common.response.Result;
+import com.qinweizhao.common.util.GuavaCacheUtils;
+import com.qinweizhao.common.util.IoUtils;
 import com.qinweizhao.exception.CaptchaException;
+import com.qinweizhao.util.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
@@ -104,7 +104,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
         SecurityContextHolder.getContext().setAuthentication(authResult);
         // 生成 token
         String token = jwtUtils.generateToken(authResult.getName());
-        R success = R.success(token);
+        Result<String> success = Result.success(token);
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
         PrintWriter writer = response.getWriter();
@@ -119,22 +119,22 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
         if (log.isDebugEnabled()) {
             log.debug("登录失败");
         }
-        R failure = new R();
+        Result<?> failure = Result.failure();
         failure.setCode(400);
         response.setContentType("application/json;charset=utf-8");
         if (exception instanceof CaptchaException){
-            failure.setMessage(exception.getMessage());
+            failure.setMsg(exception.getMessage());
         }
         if (exception instanceof LockedException) {
-            failure.setMessage("账户被锁定，请联系管理员!");
+            failure.setMsg("账户被锁定，请联系管理员!");
         } else if (exception instanceof CredentialsExpiredException) {
-            failure.setMessage("密码过期，请联系管理员!");
+            failure.setMsg("密码过期，请联系管理员!");
         } else if (exception instanceof AccountExpiredException) {
-            failure.setMessage("账户过期，请联系管理员!");
+            failure.setMsg("账户过期，请联系管理员!");
         } else if (exception instanceof DisabledException) {
-            failure.setMessage("账户被禁用，请联系管理员!");
+            failure.setMsg("账户被禁用，请联系管理员!");
         } else if (exception instanceof BadCredentialsException) {
-            failure.setMessage("用户名或者密码输入错误，请重新输入!");
+            failure.setMsg("用户名或者密码输入错误，请重新输入!");
         }
         PrintWriter writer = response.getWriter();
         writer.write(JSONUtil.toJsonStr(failure));

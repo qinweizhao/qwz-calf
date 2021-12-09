@@ -1,4 +1,4 @@
-package com.qinweizhao.base.enums;
+package com.qinweizhao.common.enums;
 
 import lombok.Getter;
 

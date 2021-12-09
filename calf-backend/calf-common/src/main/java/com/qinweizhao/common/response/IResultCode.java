@@ -1,9 +1,9 @@
-package com.qinweizhao.base.response;
+package com.qinweizhao.common.response;
 
 /**
  * 返回码接口
+ *
  * @author qinweizhao
- * @since 2021/9/25
  */
 public interface IResultCode {
 
