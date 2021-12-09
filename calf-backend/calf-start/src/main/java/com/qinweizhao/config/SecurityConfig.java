@@ -37,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/img/**",
             "/fonts/**",
             "/favicon.ico",
-            "/sys/user/captcha"
+            "/captcha"
     };
     @Resource
     private UserDetailsService sysUserDetailsService;

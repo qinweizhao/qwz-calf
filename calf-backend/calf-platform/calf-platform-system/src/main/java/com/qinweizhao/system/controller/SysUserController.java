@@ -1,16 +1,11 @@
 package com.qinweizhao.system.controller;
 
 
-import com.qinweizhao.base.response.R;
-import com.qinweizhao.system.entity.SysUser;
 import com.qinweizhao.system.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * <p>
@@ -28,19 +23,13 @@ public class SysUserController {
     private SysUserService sysUserService;
 
 
-    @RequestMapping("/all")
-    public List<SysUser> all() {
-        return sysUserService.list();
+    /**
+     * info
+     * @return List<SysUser>
+     */
+    @RequestMapping("/info")
+    public Object all(Authentication authentication) {
+        return authentication.getPrincipal();
     }
 
-    /**
-     * 获取验证码
-     *
-     * @return r
-     * @throws IOException e
-     */
-    @GetMapping("/captcha")
-    public R captcha() throws IOException {
-        return R.success(sysUserService.getCaptcha());
-    }
 }

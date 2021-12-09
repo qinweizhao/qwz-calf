@@ -13,6 +13,8 @@
     <artifactId>calf-platform</artifactId>
 
    <modules>
+       <module>calf-platform-development</module>
+       <module>calf-platform-operations</module>
        <module>calf-platform-system</module>
    </modules>
 

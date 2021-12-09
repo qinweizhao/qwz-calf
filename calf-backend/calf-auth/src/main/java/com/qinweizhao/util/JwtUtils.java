@@ -1,4 +1,4 @@
-package com.qinweizhao.base.util;
+package com.qinweizhao.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

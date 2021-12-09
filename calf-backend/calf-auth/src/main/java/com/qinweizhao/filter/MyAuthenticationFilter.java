@@ -2,22 +2,24 @@ package com.qinweizhao.filter;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.qinweizhao.base.Constants;
-import com.qinweizhao.exception.CaptchaException;
+import com.qinweizhao.base.constant.Constants;
 import com.qinweizhao.base.response.R;
 import com.qinweizhao.base.util.GuavaCacheUtils;
 import com.qinweizhao.base.util.IoUtils;
-import com.qinweizhao.base.util.JwtUtils;
-import com.qinweizhao.base.util.SpringUtils;
+import com.qinweizhao.util.JwtUtils;
+import com.qinweizhao.exception.CaptchaException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +41,9 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
      */
     private static final String LOGIN_URL = "/login";
 
+
+    @Resource
+    JwtUtils jwtUtils;
 
     /**
      * 无参构造器
@@ -63,9 +68,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
         }
         JSONObject jsonObject = IoUtils.parseRequestToJsonObject(request);
         String captcha = jsonObject.getString(Constants.LOGIN_CODE_KEY);
-        if (StringUtils.isEmpty(captcha)) {
-            throw new CaptchaException("验证码错误");
-        }
+
         boolean b = this.validateCaptcha(captcha);
         if (!b) {
             throw new CaptchaException("验证码错误");
@@ -100,7 +103,6 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
         // 将认证信息放入 SecurityContextHolder
         SecurityContextHolder.getContext().setAuthentication(authResult);
         // 生成 token
-        JwtUtils jwtUtils = SpringUtils.getBean(JwtUtils.class);
         String token = jwtUtils.generateToken(authResult.getName());
         R success = R.success(token);
         response.setCharacterEncoding("UTF-8");
@@ -111,6 +113,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
         writer.close();
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         if (log.isDebugEnabled()) {
@@ -120,7 +123,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
         failure.setCode(400);
         response.setContentType("application/json;charset=utf-8");
         if (exception instanceof CaptchaException){
-            failure.setMessage("验证码为空");
+            failure.setMessage(exception.getMessage());
         }
         if (exception instanceof LockedException) {
             failure.setMessage("账户被锁定，请联系管理员!");
@@ -145,6 +148,9 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
      * @param captcha 验证码
      */
     private boolean validateCaptcha(String captcha) {
+        if (StringUtils.isEmpty(captcha)) {
+            throw new CaptchaException("验证码为空");
+        }
         ConcurrentMap<String, String> stringStringConcurrentMap = GuavaCacheUtils.CACHE.asMap();
         Collection<String> values = stringStringConcurrentMap.values();
         boolean b = values.contains(captcha);

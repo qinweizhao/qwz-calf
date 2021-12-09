@@ -1,11 +1,10 @@
-package com.qinweizhao.base;
+package com.qinweizhao.base.constant;
 
 /**
  * @author qinweizhao
  * @since 2021/9/27
  */
 public class Constants {
-
 
     /**
      * 用户名
@@ -25,7 +24,6 @@ public class Constants {
      * 验证码
      */
     public static final String BASE64_PREFIX = "data:image/jpeg;base64,";
-    ;
 
     /**
      * 默认密码

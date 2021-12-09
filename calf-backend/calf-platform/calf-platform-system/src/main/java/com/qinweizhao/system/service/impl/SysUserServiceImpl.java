@@ -4,7 +4,7 @@ package com.qinweizhao.system.service.impl;
 import cn.hutool.core.codec.Base64;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.qinweizhao.base.Constants;
+import com.qinweizhao.base.constant.Constants;
 import com.qinweizhao.base.util.GuavaCacheUtils;
 import com.qinweizhao.system.SysUserApi;
 import com.qinweizhao.system.entity.SysUser;

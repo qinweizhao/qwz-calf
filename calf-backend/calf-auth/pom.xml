@@ -2,17 +2,18 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>calf-backend</artifactId>
         <groupId>com.qinweizhao</groupId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
+
     <artifactId>calf-auth</artifactId>
     <name>calf-auth</name>
     <description>Demo project for Spring Boot</description>
-    <properties>
-        <java.version>11</java.version>
-    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -27,16 +28,13 @@
         <dependency>
             <groupId>com.qinweizhao</groupId>
             <artifactId>calf-common</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>com.qinweizhao</groupId>
             <artifactId>calf-platform-system-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -45,7 +43,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-
 
 </project>

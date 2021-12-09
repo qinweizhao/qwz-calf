@@ -1,6 +1,6 @@
 import { login, getInfo, logout } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-
+import { Notification } from 'element-ui'
 const user = {
   state: {
     token: getToken(),
@@ -28,9 +28,19 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, userInfo) {
+      console.log('console.log(commit)')
       const rememberMe = userInfo.rememberMe
       return new Promise((resolve, reject) => {
         login(userInfo.username, userInfo.password, userInfo.code, userInfo.uuid).then(res => {
+          if (res.code === 400) {
+            const errorMsg = res.message
+            if (errorMsg !== undefined) {
+              Notification.error({
+                title: errorMsg,
+                duration: 5000
+              })
+            }
+          }
           setToken(res.data, rememberMe)
           commit('SET_TOKEN', res.data)
           setUserInfo(res.user, commit)

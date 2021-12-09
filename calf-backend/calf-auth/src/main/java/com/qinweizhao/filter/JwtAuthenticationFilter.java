@@ -1,7 +1,7 @@
 package com.qinweizhao.filter;
 
 import cn.hutool.core.util.StrUtil;
-import com.qinweizhao.base.util.JwtUtils;
+import com.qinweizhao.util.JwtUtils;
 import com.qinweizhao.entity.SysUserDetails;
 import com.qinweizhao.system.SysUserApi;
 import com.qinweizhao.system.entity.SysUser;
