@@ -10,7 +10,7 @@ import com.qinweizhao.common.util.GuavaCacheUtils;
 import com.qinweizhao.system.SysUserApi;
 import com.qinweizhao.system.entity.SysUser;
 import com.qinweizhao.system.mapper.SysUserMapper;
-import com.qinweizhao.system.service.SysUserService;
+import com.qinweizhao.system.service.ISysUserService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  * @since 2021-12-07
  */
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService, SysUserApi {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService, SysUserApi {
 
     @Resource
     private DefaultKaptcha defaultKaptcha;
@@ -86,6 +86,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public boolean status(String ids, String status) {
-        return false;
+        return true;
     }
 }

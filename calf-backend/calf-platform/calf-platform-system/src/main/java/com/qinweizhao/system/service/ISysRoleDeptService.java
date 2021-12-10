@@ -9,8 +9,8 @@ import com.qinweizhao.system.entity.SysRoleDept;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-07
+ * @since 2021-12-10
  */
-public interface SysRoleDeptService extends IService<SysRoleDept> {
+public interface ISysRoleDeptService extends IService<SysRoleDept> {
 
 }

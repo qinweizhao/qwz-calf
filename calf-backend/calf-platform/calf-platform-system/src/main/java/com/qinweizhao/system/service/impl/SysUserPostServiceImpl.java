@@ -3,7 +3,7 @@ package com.qinweizhao.system.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qinweizhao.system.entity.SysUserPost;
 import com.qinweizhao.system.mapper.SysUserPostMapper;
-import com.qinweizhao.system.service.SysUserPostService;
+import com.qinweizhao.system.service.ISysUserPostService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-12-07
  */
 @Service
-public class SysUserPostServiceImpl extends ServiceImpl<SysUserPostMapper, SysUserPost> implements SysUserPostService {
+public class SysUserPostServiceImpl extends ServiceImpl<SysUserPostMapper, SysUserPost> implements ISysUserPostService {
 
 }

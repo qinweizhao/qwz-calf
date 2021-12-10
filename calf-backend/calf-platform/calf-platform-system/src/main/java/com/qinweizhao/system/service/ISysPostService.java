@@ -9,8 +9,8 @@ import com.qinweizhao.system.entity.SysPost;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-07
+ * @since 2021-12-10
  */
-public interface SysPostService extends IService<SysPost> {
+public interface ISysPostService extends IService<SysPost> {
 
 }

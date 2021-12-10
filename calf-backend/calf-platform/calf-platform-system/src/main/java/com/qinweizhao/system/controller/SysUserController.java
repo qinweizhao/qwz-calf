@@ -1,13 +1,11 @@
 package com.qinweizhao.system.controller;
 
 
-import com.qinweizhao.common.annotation.Log;
 import com.qinweizhao.common.base.BaseException;
 import com.qinweizhao.common.request.Search;
 import com.qinweizhao.common.response.Result;
-import com.qinweizhao.common.util.CollectionUtil;
 import com.qinweizhao.system.entity.SysUser;
-import com.qinweizhao.system.service.SysUserService;
+import com.qinweizhao.system.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -18,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -33,7 +32,7 @@ import javax.validation.Valid;
 @Api(tags = "用户管理")
 public class SysUserController {
 
-    private final SysUserService sysUserService;
+    private final ISysUserService sysUserService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -43,8 +42,6 @@ public class SysUserController {
      * @param search 　搜索关键词
      * @return Result
      */
-
-    @Log(value = "用户列表", exception = "用户列表请求异常")
     @GetMapping("/page")
     @ApiOperation(value = "用户列表", notes = "分页查询")
     @ApiImplicitParams({
@@ -66,8 +63,6 @@ public class SysUserController {
      * @param sysUser 用户信息
      * @return Result
      */
-
-    @Log(value = "用户设置", exception = "设置用户请求异常")
     @PostMapping("/set")
     @ApiOperation(value = "设置用户", notes = "新增或修改用户")
     public Result<Object> set(@Valid @RequestBody SysUser sysUser) {
@@ -85,14 +80,12 @@ public class SysUserController {
      * @param id Id信息
      * @return Result
      */
-
-    @Log(value = "用户信息", exception = "用户信息请求异常")
-    @GetMapping("/get")
+    @GetMapping("/info")
     @ApiOperation(value = "用户信息", notes = "根据ID查询")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", required = true, value = "用户ID", paramType = "form"),
     })
-    public Result<Object> get(@RequestParam String id) {
+    public Result<SysUser> get(@RequestParam String id) {
         return Result.data(sysUserService.getById(id));
     }
 
@@ -102,15 +95,13 @@ public class SysUserController {
      * @param ids id字符串，根据,号分隔
      * @return Result
      */
-
-    @Log(value = "用户删除", exception = "用户删除请求异常")
     @PostMapping("/del")
     @ApiOperation(value = "用户删除", notes = "用户删除")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ids", required = true, value = "多个用,号隔开", paramType = "form")
     })
-    public Result<Object> del(@RequestParam String ids) {
-        return Result.condition(sysUserService.removeByIds(CollectionUtil.stringToCollection(ids)));
+    public Result<Object> del(@RequestParam List<String> ids) {
+        return Result.condition(sysUserService.removeByIds(ids));
     }
 
     /**
@@ -120,8 +111,6 @@ public class SysUserController {
      * @param status 状态标识，启用或禁用
      * @return Result
      */
-
-    @Log(value = "用户状态", exception = "用户状态请求异常")
     @PostMapping("/set-status")
     @ApiOperation(value = "用户状态", notes = "状态包括：启用、禁用")
     @ApiImplicitParams({
@@ -138,8 +127,6 @@ public class SysUserController {
      * @param user 用户信息
      * @return Result
      */
-
-    @Log(value = "用户密码设置", exception = "用户密码设置请求异常")
     @PostMapping("/set-password")
     @ApiOperation(value = "用户密码设置", notes = "用户密码设置")
     @ApiImplicitParams({

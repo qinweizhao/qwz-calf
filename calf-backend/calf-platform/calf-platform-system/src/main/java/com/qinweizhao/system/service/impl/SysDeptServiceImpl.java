@@ -4,7 +4,7 @@ package com.qinweizhao.system.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qinweizhao.system.entity.SysDept;
 import com.qinweizhao.system.mapper.SysDeptMapper;
-import com.qinweizhao.system.service.SysDeptService;
+import com.qinweizhao.system.service.ISysDeptService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +16,6 @@ import org.springframework.stereotype.Service;
  * @since 2021-12-07
  */
 @Service
-public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements SysDeptService {
+public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements ISysDeptService {
 
 }

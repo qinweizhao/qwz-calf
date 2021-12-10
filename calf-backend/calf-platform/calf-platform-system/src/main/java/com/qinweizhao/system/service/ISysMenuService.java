@@ -9,8 +9,8 @@ import com.qinweizhao.system.entity.SysMenu;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-07
+ * @since 2021-12-10
  */
-public interface SysMenuService extends IService<SysMenu> {
+public interface ISysMenuService extends IService<SysMenu> {
 
 }

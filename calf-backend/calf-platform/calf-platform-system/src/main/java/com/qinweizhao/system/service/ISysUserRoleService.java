@@ -9,8 +9,8 @@ import com.qinweizhao.system.entity.SysUserRole;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-07
+ * @since 2021-12-10
  */
-public interface SysUserRoleService extends IService<SysUserRole> {
+public interface ISysUserRoleService extends IService<SysUserRole> {
 
 }

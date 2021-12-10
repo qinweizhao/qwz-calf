@@ -28,7 +28,6 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-      console.log('console.log(commit)')
       const rememberMe = userInfo.rememberMe
       return new Promise((resolve, reject) => {
         login(userInfo.username, userInfo.password, userInfo.code, userInfo.uuid).then(res => {
