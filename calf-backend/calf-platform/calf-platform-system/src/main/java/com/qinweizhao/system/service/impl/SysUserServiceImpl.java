@@ -7,7 +7,6 @@ import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.qinweizhao.common.constant.Constants;
 import com.qinweizhao.common.request.Search;
 import com.qinweizhao.common.util.GuavaCacheUtils;
-import com.qinweizhao.system.SysUserApi;
 import com.qinweizhao.system.entity.SysUser;
 import com.qinweizhao.system.mapper.SysUserMapper;
 import com.qinweizhao.system.service.ISysUserService;
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
  * @since 2021-12-07
  */
 @Service
-public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService, SysUserApi {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
     @Resource
     private DefaultKaptcha defaultKaptcha;

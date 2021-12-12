@@ -1,9 +1,9 @@
 package com.qinweizhao.filter;
 
 import cn.hutool.core.util.StrUtil;
+import com.qinweizhao.system.service.ISysUserService;
 import com.qinweizhao.util.JwtUtils;
 import com.qinweizhao.entity.SysUserDetails;
-import com.qinweizhao.system.SysUserApi;
 import com.qinweizhao.system.entity.SysUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -42,7 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtUtils jwtUtils;
 
     @Resource
-    private SysUserApi sysUserApi;
+    private ISysUserService sysUserService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain) throws ServletException, IOException {
@@ -57,10 +57,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throw new JwtException("token已过期");
         }
         String username = claim.getSubject();
-        SysUser sysUser = sysUserApi.selectUserByUsername(username);
+        SysUser sysUser = sysUserService.selectUserByUsername(username);
         SysUserDetails sysUserDetails = new SysUserDetails();
         BeanUtils.copyProperties(sysUser, sysUserDetails);
-        String authority = sysUserApi.getAuthorityByUserId(sysUserDetails.getUserId());
+        String authority = sysUserService.getAuthorityByUserId(sysUserDetails.getUserId());
         log.info("当前用户拥有的权限有{}", authority);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null, AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
         SecurityContextHolder.getContext().setAuthentication(token);

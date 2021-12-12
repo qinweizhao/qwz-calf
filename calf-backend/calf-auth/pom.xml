@@ -19,11 +19,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
-            <version>2.3.6.RELEASE</version>
-        </dependency>
 
         <dependency>
             <groupId>com.qinweizhao</groupId>
@@ -33,7 +28,7 @@
 
         <dependency>
             <groupId>com.qinweizhao</groupId>
-            <artifactId>calf-platform-system-api</artifactId>
+            <artifactId>calf-platform-system</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
