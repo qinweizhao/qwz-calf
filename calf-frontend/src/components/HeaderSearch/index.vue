@@ -12,7 +12,7 @@
       class="header-search-select"
       @change="change"
     >
-      <el-option v-for="item in options" :key="item.path" :value="item" :label="item.title.join(' > ')" />
+      <el-option v-for="option in options" :key="option.item.path" :value="option.item" :label="option.item.title.join(' > ')" />
     </el-select>
   </div>
 </template>
@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     routes() {
-      return this.$store.state.permission.routers
+      return this.$store.getters.permission_routes
     }
   },
   watch: {
@@ -70,9 +70,9 @@ export default {
       this.show = false
     },
     change(val) {
-      if (this.ishttp(val.path)) {
+      if(this.ishttp(val.path)) {
         // http(s):// 路径新窗口打开
-        window.open(val.path, '_blank')
+        window.open(val.path, "_blank");
       } else {
         this.$router.push(val.path)
       }
@@ -167,7 +167,7 @@ export default {
     display: inline-block;
     vertical-align: middle;
 
-   ::v-deep .el-input__inner {
+    ::v-deep .el-input__inner {
       border-radius: 0;
       border: 0;
       padding-left: 0;

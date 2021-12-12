@@ -1,20 +1,22 @@
 <template>
-  <div class="sidebar-logo-container" :class="{'collapse':collapse}">
+  <div class="sidebar-logo-container" :class="{'collapse':collapse}" :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBg : variables.menuLightBg }">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 v-else class="sidebar-title">{{ title }} </h1>
+        <h1 v-else class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.sidebarTitle : variables.sidebarLightTitle }">{{ title }} </h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 class="sidebar-title">{{ title }} </h1>
+        <h1 class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.sidebarTitle : variables.sidebarLightTitle }">{{ title }} </h1>
       </router-link>
     </transition>
   </div>
 </template>
 
 <script>
-import Logo from '@/assets/images/logo.png'
+import logoImg from '@/assets/logo/logo.png'
+import variables from '@/assets/styles/variables.scss'
+
 export default {
   name: 'SidebarLogo',
   props: {
@@ -23,10 +25,18 @@ export default {
       required: true
     }
   },
+  computed: {
+    variables() {
+      return variables;
+    },
+	sideTheme() {
+      return this.$store.state.settings.sideTheme
+    }
+  },
   data() {
     return {
-      title: 'ELADMIN-后台管理',
-      logo: Logo
+      title: 'Calf 管理系统',
+      logo: logoImg
     }
   }
 }
@@ -47,6 +57,7 @@ export default {
   width: 100%;
   height: 50px;
   line-height: 50px;
+  background: #2b2f3a;
   text-align: center;
   overflow: hidden;
 
@@ -58,7 +69,7 @@ export default {
       width: 32px;
       height: 32px;
       vertical-align: middle;
-      margin-right: 6px;
+      margin-right: 12px;
     }
 
     & .sidebar-title {

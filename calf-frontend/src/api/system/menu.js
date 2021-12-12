@@ -1,65 +1,52 @@
 import request from '@/utils/request'
 
-export function getMenusTree(pid) {
+// 查询菜单列表
+export function listMenu(query) {
   return request({
-    url: 'api/menus/lazy?pid=' + pid,
-    method: 'get'
-  })
-}
-
-export function getMenus(params) {
-  return request({
-    url: 'api/menus',
+    url: '/system/menu/list',
     method: 'get',
-    params
+    params: query
   })
 }
 
-export function getMenuSuperior(ids) {
-  const data = Array.isArray(ids) || ids.length === 0 ? ids : Array.of(ids)
+// 查询菜单（精简)列表
+export function listSimpleMenus() {
   return request({
-    url: 'api/menus/superior',
-    method: 'post',
-    data
-  })
-}
-
-export function getChild(id) {
-  return request({
-    url: 'api/menus/child?id=' + id,
+    url: '/system/menu/list-all-simple',
     method: 'get'
   })
 }
 
-export function buildMenus() {
+// 查询菜单详细
+export function getMenu(id) {
   return request({
-    url: 'api/menus/build',
+    url: '/system/menu/get?id=' + id,
     method: 'get'
   })
 }
 
-export function add(data) {
+// 新增菜单
+export function addMenu(data) {
   return request({
-    url: 'api/menus',
+    url: '/system/menu/create',
     method: 'post',
-    data
+    data: data
   })
 }
 
-export function del(ids) {
+// 修改菜单
+export function updateMenu(data) {
   return request({
-    url: 'api/menus',
-    method: 'delete',
-    data: ids
-  })
-}
-
-export function edit(data) {
-  return request({
-    url: 'api/menus',
+    url: '/system/menu/update',
     method: 'put',
-    data
+    data: data
   })
 }
 
-export default { add, edit, del, getMenusTree, getMenuSuperior, getMenus, getChild }
+// 删除菜单
+export function delMenu(id) {
+  return request({
+    url: '/system/menu/delete?id=' + id,
+    method: 'delete'
+  })
+}

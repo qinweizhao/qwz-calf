@@ -1,9 +1,7 @@
 <template>
-  <div class="login" :style="'background-image:url('+ Background +');'">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" label-position="left" label-width="0px" class="login-form">
-      <h3 class="title">
-        Calf 后台管理系统
-      </h3>
+  <div class="login">
+    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
+      <h3 class="title">Calf 后台管理系统</h3>
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
@@ -19,191 +17,214 @@
           <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
         </el-input>
         <div class="login-code">
-          <img :src="codeUrl" @click="getCode">
+          <img :src="codeUrl" @click="getCode" class="login-code-img"/>
         </div>
       </el-form-item>
-      <el-checkbox v-model="loginForm.rememberMe" style="margin:0 0 25px 0;">
-        记住我
-      </el-checkbox>
+      <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
       <el-form-item style="width:100%;">
         <el-button :loading="loading" size="medium" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
           <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
       </el-form-item>
+
+      <el-form-item style="width:100%;">
+          <div class="oauth-login" style="display:flex">
+            <div class="oauth-login-item" v-for="item in SysUserSocialTypeEnum" :key="item.type" @click="doSocialLogin(item)">
+              <img :src="item.img" height="25px" width="25px" alt="登录" >
+              <span>{{item.title}}</span>
+            </div>
+        </div>
+      </el-form-item>
     </el-form>
     <!--  底部  -->
-    <div v-if="$store.state.settings.showFooter" id="el-login-footer">
-      <span v-html="$store.state.settings.footerTxt" />
-      <span> ⋅ </span>
-      <a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">{{ $store.state.settings.caseNumber }}</a>
+    <div class="el-login-footer">
+      <span>Copyright © 2020-2021 iocoder.cn All Rights Reserved.</span>
     </div>
   </div>
 </template>
 
 <script>
-import Config from '@/settings'
-import { getCodeImg } from '@/api/login'
-import Cookies from 'js-cookie'
-import qs from 'qs'
-import Background from '@/assets/images/background.jpg'
+import { getCodeImg,socialAuthRedirect } from "@/api/login";
+import Cookies from "js-cookie";
+import { encrypt, decrypt } from '@/utils/jsencrypt'
+import {InfApiErrorLogProcessStatusEnum, SysUserSocialTypeEnum} from "@/utils/constants";
+
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
-      Background: Background,
-      codeUrl: '',
-      cookiePass: '',
+      codeUrl: "",
       loginForm: {
-        username: 'admin',
-        password: '123456',
+        username: "admin",
+        password: "admin123",
         rememberMe: false,
-        code: '',
-        uuid: ''
+        code: "",
+        uuid: ""
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', message: '用户名不能为空' }],
-        password: [{ required: true, trigger: 'blur', message: '密码不能为空' }],
-        code: [{ required: true, trigger: 'change', message: '验证码不能为空' }]
+        username: [
+          { required: true, trigger: "blur", message: "用户名不能为空" }
+        ],
+        password: [
+          { required: true, trigger: "blur", message: "密码不能为空" }
+        ],
+        code: [{ required: true, trigger: "change", message: "验证码不能为空" }]
       },
       loading: false,
-      redirect: undefined
-    }
+      redirect: undefined,
+      // 枚举
+      SysUserSocialTypeEnum: SysUserSocialTypeEnum,
+    };
   },
-  watch: {
-    $route: {
-      handler: function(route) {
-        const data = route.query
-        if (data && data.redirect) {
-          this.redirect = data.redirect
-          delete data.redirect
-          if (JSON.stringify(data) !== '{}') {
-            this.redirect = this.redirect + '&' + qs.stringify(data, { indices: false })
-          }
-        }
-      },
-      immediate: true
-    }
-  },
+  // watch: {
+  //   $route: {
+  //     handler: function(route) {
+  //       this.redirect = route.query && route.query.redirect;
+  //     },
+  //     immediate: true
+  //   }
+  // },
   created() {
-    // 获取验证码
-    this.getCode()
-    // 获取用户名密码等Cookie
-    // this.getCookie()
-    // token 过期提示
-    this.point()
+    // 重定向地址
+    this.redirect = this.$route.query.redirect;
+    this.getCode();
+    this.getCookie();
   },
   methods: {
     getCode() {
       getCodeImg().then(res => {
-        this.codeUrl = res.data
-        this.loginForm.uuid = res.uuid
-      })
+        res = res.data;
+        this.codeUrl = "data:image/gif;base64," + res.img;
+        this.loginForm.uuid = res.uuid;
+      });
     },
     getCookie() {
-      const username = Cookies.get('username')
-      let password = Cookies.get('password')
+      const username = Cookies.get("username");
+      const password = Cookies.get("password");
       const rememberMe = Cookies.get('rememberMe')
-      // 保存cookie里面的密码
-      this.cookiePass = password === undefined ? '' : password
-      password = password === undefined ? this.loginForm.password : password
       this.loginForm = {
         username: username === undefined ? this.loginForm.username : username,
-        password: password,
-        rememberMe: rememberMe === undefined ? false : Boolean(rememberMe),
-        code: ''
-      }
+        password: password === undefined ? this.loginForm.password : decrypt(password),
+        rememberMe: rememberMe === undefined ? false : Boolean(rememberMe)
+      };
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
-        const user = {
-          username: this.loginForm.username,
-          password: this.loginForm.password,
-          rememberMe: this.loginForm.rememberMe,
-          code: this.loginForm.code,
-          uuid: this.loginForm.uuid
-        }
         if (valid) {
-          this.loading = true
-          if (user.rememberMe) {
-            Cookies.set('username', user.username, { expires: Config.passCookieExpires })
-            Cookies.set('password', user.password, { expires: Config.passCookieExpires })
-            Cookies.set('rememberMe', user.rememberMe, { expires: Config.passCookieExpires })
+          this.loading = true;
+          if (this.loginForm.rememberMe) {
+            Cookies.set("username", this.loginForm.username, { expires: 30 });
+            Cookies.set("password", encrypt(this.loginForm.password), { expires: 30 });
+            Cookies.set('rememberMe', this.loginForm.rememberMe, { expires: 30 });
           } else {
-            Cookies.remove('username')
-            Cookies.remove('password')
-            Cookies.remove('rememberMe')
+            Cookies.remove("username");
+            Cookies.remove("password");
+            Cookies.remove('rememberMe');
           }
-          this.$store.dispatch('Login', user).then(() => {
-            this.loading = false
-            this.$router.push({ path: this.redirect || '/' })
+          this.$store.dispatch("Login", this.loginForm).then(() => {
+            this.$router.push({ path: this.redirect || "/" }).catch(()=>{});
           }).catch(() => {
-            this.loading = false
-            this.getCode()
-          })
-        } else {
-          console.log('error submit!!')
-          return false
+            this.loading = false;
+            this.getCode();
+          });
         }
-      })
+      });
     },
-    point() {
-      const point = Cookies.get('point') !== undefined
-      if (point) {
-        this.$notify({
-          title: '提示',
-          message: '当前登录状态已过期，请重新登录！',
-          type: 'warning',
-          duration: 5000
-        })
-        Cookies.remove('point')
-      }
+    doSocialLogin(socialTypeEnum) {
+      // console.log("开始Oauth登录...%o", socialTypeEnum.code);
+      // 设置登录中
+      this.loading = true;
+      // 计算 redirectUri
+      const redirectUri = location.origin + '/social-login?type=' + socialTypeEnum.type + '&redirect=' + (this.redirect || "/"); // 重定向不能丢
+      // const redirectUri = 'http://127.0.0.1:48080/api/gitee/callback';
+      // const redirectUri = 'http://127.0.0.1:48080/api/dingtalk/callback';
+      // 进行跳转
+      socialAuthRedirect(socialTypeEnum.type, encodeURIComponent(redirectUri)).then((res) => {
+        // console.log(res.url);
+        window.location.href = res.data;
+      });
     }
   }
-}
+};
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-  .login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    background-size: cover;
-  }
-  .title {
-    margin: 0 auto 30px auto;
-    text-align: center;
-    color: #707070;
-  }
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-image: url("http://static.yudao.iocoder.cn/login-background.jpg");
+  background-size: cover;
+}
+.title {
+  margin: 0px auto 30px auto;
+  text-align: center;
+  color: #707070;
+}
 
-  .login-form {
-    border-radius: 6px;
-    background: #ffffff;
-    width: 385px;
-    padding: 25px 25px 5px 25px;
-    .el-input {
-      height: 38px;
-      input {
-        height: 38px;
-      }
-    }
-    .input-icon{
-      height: 39px;width: 14px;margin-left: 2px;
-    }
-  }
-  .login-tip {
-    font-size: 13px;
-    text-align: center;
-    color: #bfbfbf;
-  }
-  .login-code {
-    width: 33%;
-    display: inline-block;
+.login-form {
+  border-radius: 6px;
+  background: #ffffff;
+  width: 400px;
+  padding: 25px 25px 5px 25px;
+  .el-input {
     height: 38px;
-    img{
-      cursor: pointer;
-      vertical-align:middle
+    input {
+      height: 38px;
     }
   }
+  .input-icon {
+    height: 39px;
+    width: 14px;
+    margin-left: 2px;
+  }
+}
+.login-tip {
+  font-size: 13px;
+  text-align: center;
+  color: #bfbfbf;
+}
+.login-code {
+  width: 33%;
+  height: 38px;
+  float: right;
+  img {
+    cursor: pointer;
+    vertical-align: middle;
+  }
+}
+.el-login-footer {
+  height: 40px;
+  line-height: 40px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-family: Arial;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.login-code-img {
+  height: 38px;
+}
+.oauth-login {
+  display: flex;
+  cursor:pointer;
+}
+.oauth-login-item {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+.oauth-login-item img {
+  height: 25px;
+  width: 25px;
+}
+.oauth-login-item span:hover {
+  text-decoration: underline red;
+  color: red;
+}
 </style>

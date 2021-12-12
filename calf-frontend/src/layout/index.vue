@@ -1,7 +1,7 @@
 <template>
-  <div :class="classObj" class="app-wrapper">
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
-    <sidebar class="sidebar-container" />
+  <div :class="classObj" class="app-wrapper" :style="{'--current-color': theme}">
+    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
+    <sidebar class="sidebar-container" :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBg : variables.menuLightBg }" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
@@ -12,8 +12,6 @@
         <settings />
       </right-panel>
     </div>
-    <!--  防止刷新后主题丢失  -->
-    <Theme v-show="false" ref="theme" />
   </div>
 </template>
 
@@ -22,8 +20,8 @@ import RightPanel from '@/components/RightPanel'
 import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
-import Theme from '@/components/ThemePicker'
-import Cookies from 'js-cookie'
+import variables from '@/assets/styles/variables.scss'
+
 export default {
   name: 'Layout',
   components: {
@@ -32,12 +30,13 @@ export default {
     RightPanel,
     Settings,
     Sidebar,
-    TagsView,
-    Theme
+    TagsView
   },
   mixins: [ResizeMixin],
   computed: {
     ...mapState({
+      theme: state => state.settings.theme,
+      sideTheme: state => state.settings.sideTheme,
       sidebar: state => state.app.sidebar,
       device: state => state.app.device,
       showSettings: state => state.settings.showSettings,
@@ -51,15 +50,9 @@ export default {
         withoutAnimation: this.sidebar.withoutAnimation,
         mobile: this.device === 'mobile'
       }
-    }
-  },
-  mounted() {
-    if (Cookies.get('theme')) {
-      this.$refs.theme.theme = Cookies.get('theme')
-      this.$store.dispatch('settings/changeSetting', {
-        key: 'theme',
-        value: Cookies.get('theme')
-      })
+    },
+    variables() {
+      return variables;
     }
   },
   methods: {
@@ -103,7 +96,6 @@ export default {
     z-index: 9;
     width: calc(100% - #{$sideBarWidth});
     transition: width 0.28s;
-    padding: 0;
   }
 
   .hideSidebar .fixed-header {

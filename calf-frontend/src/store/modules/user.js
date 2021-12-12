@@ -1,50 +1,81 @@
-import { login, getInfo, logout } from '@/api/login'
+import {login, logout, getInfo, socialLogin, socialLogin2} from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { Notification } from 'element-ui'
+
 const user = {
   state: {
     token: getToken(),
-    user: {},
+    name: '',
+    avatar: '',
     roles: [],
-    // 第一次加载菜单时用到
-    loadMenus: false
+    permissions: []
   },
 
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token
     },
-    SET_USER: (state, user) => {
-      state.user = user
+    SET_NAME: (state, name) => {
+      state.name = name
+    },
+    SET_AVATAR: (state, avatar) => {
+      state.avatar = avatar
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
     },
-    SET_LOAD_MENUS: (state, loadMenus) => {
-      state.loadMenus = loadMenus
+    SET_PERMISSIONS: (state, permissions) => {
+      state.permissions = permissions
     }
   },
 
   actions: {
     // 登录
     Login({ commit }, userInfo) {
-      const rememberMe = userInfo.rememberMe
+      const username = userInfo.username.trim()
+      const password = userInfo.password
+      const code = userInfo.code
+      const uuid = userInfo.uuid
       return new Promise((resolve, reject) => {
-        login(userInfo.username, userInfo.password, userInfo.code, userInfo.uuid).then(res => {
-          if (res.code === 400) {
-            const errorMsg = res.message
-            if (errorMsg !== undefined) {
-              Notification.error({
-                title: errorMsg,
-                duration: 5000
-              })
-            }
-          }
-          setToken(res.data, rememberMe)
-          commit('SET_TOKEN', res.data)
-          setUserInfo(res.user, commit)
-          // 第一次加载菜单时用到， 具体见 src 目录下的 permission.js
-          commit('SET_LOAD_MENUS', true)
+        login(username, password, code, uuid).then(res => {
+          res = res.data;
+          setToken(res.token)
+          commit('SET_TOKEN', res.token)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    // 社交登录
+    SocialLogin({ commit }, userInfo) {
+      const code = userInfo.code
+      const state = userInfo.state
+      const type = userInfo.type
+      return new Promise((resolve, reject) => {
+        socialLogin(type, code, state).then(res => {
+          res = res.data;
+          setToken(res.token)
+          commit('SET_TOKEN', res.token)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    // 社交登录
+    SocialLogin2({ commit }, userInfo) {
+      const code = userInfo.code
+      const state = userInfo.state
+      const type = userInfo.type
+      const username = userInfo.username.trim()
+      const password = userInfo.password
+      return new Promise((resolve, reject) => {
+        socialLogin2(type, code, state, username, password).then(res => {
+          res = res.data;
+          setToken(res.token)
+          commit('SET_TOKEN', res.token)
           resolve()
         }).catch(error => {
           reject(error)
@@ -53,51 +84,51 @@ const user = {
     },
 
     // 获取用户信息
-    GetInfo({ commit }) {
+    GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
-        getInfo().then(res => {
-          setUserInfo(res, commit)
+        getInfo(state.token).then(res => {
+          res = res.data; // 读取 data 数据
+          const user = res.user
+          const avatar = user.avatar === "" ? require("@/assets/images/profile.jpg") : user.avatar;
+          if (res.roles && res.roles.length > 0) { // 验证返回的roles是否是一个非空数组
+            commit('SET_ROLES', res.roles)
+            commit('SET_PERMISSIONS', res.permissions)
+          } else {
+            commit('SET_ROLES', ['ROLE_DEFAULT'])
+          }
+          commit('SET_NAME', user.userName)
+          commit('SET_AVATAR', avatar)
           resolve(res)
         }).catch(error => {
           reject(error)
         })
       })
     },
-    // 登出
-    LogOut({ commit }) {
+
+    // 退出系统
+    LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout().then(res => {
-          logOut(commit)
+        logout(state.token).then(() => {
+          commit('SET_TOKEN', '')
+          commit('SET_ROLES', [])
+          commit('SET_PERMISSIONS', [])
+          removeToken()
           resolve()
         }).catch(error => {
-          logOut(commit)
           reject(error)
         })
       })
     },
 
-    updateLoadMenus({ commit }) {
-      return new Promise((resolve, reject) => {
-        commit('SET_LOAD_MENUS', false)
+    // 前端 登出
+    FedLogOut({ commit }) {
+      return new Promise(resolve => {
+        commit('SET_TOKEN', '')
+        removeToken()
+        resolve()
       })
     }
   }
-}
-
-export const logOut = (commit) => {
-  commit('SET_TOKEN', '')
-  commit('SET_ROLES', [])
-  removeToken()
-}
-
-export const setUserInfo = (res, commit) => {
-  // 如果没有任何权限，则赋予一个默认的权限，避免请求死循环
-  if (res.roles.length === 0) {
-    commit('SET_ROLES', ['ROLE_SYSTEM_DEFAULT'])
-  } else {
-    commit('SET_ROLES', res.roles)
-  }
-  commit('SET_USER', res.user)
 }
 
 export default user

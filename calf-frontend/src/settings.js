@@ -1,50 +1,36 @@
 module.exports = {
+  title: 'Calf 管理系统',
+
   /**
-   * @description 网站标题
+   * 侧边栏主题 深色主题theme-dark，浅色主题theme-light
    */
-  title: 'Calf',
+  sideTheme: 'theme-dark',
+
   /**
-   * @description 是否显示 tagsView
+   * 是否系统布局配置
+   */
+  showSettings: false,
+
+  /**
+   * 是否显示 tagsView
    */
   tagsView: true,
+
   /**
-   * @description 固定头部
+   * 是否固定头部
    */
-  fixedHeader: true,
+  fixedHeader: false,
+
   /**
-   * @description 记住密码状态下的token在Cookie中存储的天数，默认1天
-   */
-  tokenCookieExpires: 1,
-  /**
-   * @description 记住密码状态下的密码在Cookie中存储的天数，默认1天s
-   */
-  passCookieExpires: 1,
-  /**
-   * @description 是否只保持一个子菜单的展开
-   */
-  uniqueOpened: true,
-  /**
-   * @description token key
-   */
-  TokenKey: 'Authorization',
-  /**
-   * @description 请求超时时间，毫秒（默认2分钟）
-   */
-  timeout: 1200000,
-  /**
-   * @description 是否显示logo
+   * 是否显示logo
    */
   sidebarLogo: true,
+
   /**
-   * 是否显示设置的底部信息
+   * @type {string | array} 'production' | ['production', 'development']
+   * @description Need show err logs component.
+   * The default is only used in the production env
+   * If you want to also use it in dev, you can pass ['production', 'development']
    */
-  showFooter: true,
-  /**
-   * 底部文字，支持html语法
-   */
-  footerTxt: '',
-  /**
-   * 备案号
-   */
-  caseNumber: ''
+  errorLog: 'production'
 }

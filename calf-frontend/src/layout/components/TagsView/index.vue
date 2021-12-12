@@ -1,6 +1,6 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
-    <scroll-pane ref="scrollPane" class="tags-view-wrapper">
+    <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
       <router-link
         v-for="tag in visitedViews"
         ref="tag"
@@ -9,18 +9,19 @@
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
         tag="span"
         class="tags-view-item"
-        @click.middle.native="closeSelectedTag(tag)"
+        :style="activeStyle(tag)"
+        @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
         @contextmenu.prevent.native="openMenu(tag,$event)"
       >
         {{ tag.title }}
-        <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+        <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)">刷新</li>
-      <li v-if="!(selectedTag.meta&&selectedTag.meta.affix)" @click="closeSelectedTag(selectedTag)">关闭</li>
+      <li @click="refreshSelectedTag(selectedTag)">刷新页面</li>
+      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">关闭当前</li>
       <li @click="closeOthersTags">关闭其他</li>
-      <li @click="closeAllTags(selectedTag)">关闭全部</li>
+      <li @click="closeAllTags(selectedTag)">关闭所有</li>
     </ul>
   </div>
 </template>
@@ -45,7 +46,10 @@ export default {
       return this.$store.state.tagsView.visitedViews
     },
     routes() {
-      return this.$store.state.permission.routers
+      return this.$store.state.permission.routes
+    },
+    theme() {
+      return this.$store.state.settings.theme;
     }
   },
   watch: {
@@ -68,6 +72,16 @@ export default {
   methods: {
     isActive(route) {
       return route.path === this.$route.path
+    },
+    activeStyle(tag) {
+      if (!this.isActive(tag)) return {};
+      return {
+        "background-color": this.theme,
+        "border-color": this.theme
+      };
+    },
+    isAffix(tag) {
+      return tag.meta && tag.meta.affix
     },
     filterAffixTags(routes, basePath = '/') {
       let tags = []
@@ -146,7 +160,7 @@ export default {
     },
     closeAllTags(view) {
       this.$store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
-        if (this.affixTags.some(tag => tag.path === view.path)) {
+        if (this.affixTags.some(tag => tag.path === this.$route.path)) {
           return
         }
         this.toLastView(visitedViews, view)
@@ -155,7 +169,7 @@ export default {
     toLastView(visitedViews, view) {
       const latestView = visitedViews.slice(-1)[0]
       if (latestView) {
-        this.$router.push(latestView)
+        this.$router.push(latestView.fullPath)
       } else {
         // now the default is to redirect to the home page if there is no tags-view,
         // you can adjust it according to your needs.
@@ -186,6 +200,9 @@ export default {
     },
     closeMenu() {
       this.visible = false
+    },
+    handleScroll() {
+      this.closeMenu()
     }
   }
 }
