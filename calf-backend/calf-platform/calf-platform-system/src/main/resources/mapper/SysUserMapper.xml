@@ -44,5 +44,11 @@
         WHERE ur.user_id = #{userId}
     </select>
 
+    <select id="selectUserIdByUsername" resultType="java.lang.Long">
+        SELECT *
+        FROM sys_user
+        WHERE username = #{username}
+    </select>
+
 
 </mapper>

@@ -79,6 +79,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    public Long selectUserIdByUsername(String username) {
+        return this.baseMapper.selectUserIdByUsername(username);
+    }
+
+    @Override
     public Object listPage(Search search, SysUser sysUser) {
         return null;
     }

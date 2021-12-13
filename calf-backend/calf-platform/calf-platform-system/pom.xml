@@ -21,6 +21,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.qinweizhao</groupId>
+            <artifactId>calf-platform-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
