@@ -34,7 +34,6 @@
         <module>calf-platform</module>
         <module>calf-platform-api</module>
         <module>calf-start</module>
-        <module>calf-controller</module>
     </modules>
 
     <dependencyManagement>
@@ -58,6 +57,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>calf-platform-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.qinweizhao</groupId>
+                <artifactId>calf-platform-api-system</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!--Project modules END-->

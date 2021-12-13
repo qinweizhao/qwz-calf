@@ -37,14 +37,6 @@ public interface ISysUserService extends IService<SysUser> {
     String getAuthorityByUserId(Long userId);
 
     /**
-     * 获取验证码
-     *
-     * @return base64编码
-     * @throws IOException e
-     */
-    String getCaptcha() throws IOException;
-
-    /**
      * 查询用户 id
      *
      * @param username 用户名

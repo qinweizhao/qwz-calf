@@ -57,7 +57,7 @@ export default {
       codeUrl: "",
       loginForm: {
         username: "admin",
-        password: "admin123",
+        password: "123456",
         rememberMe: false,
         code: "",
         uuid: ""
@@ -94,9 +94,8 @@ export default {
   methods: {
     getCode() {
       getCodeImg().then(res => {
-        res = res.data;
-        this.codeUrl = "data:image/gif;base64," + res.img;
-        this.loginForm.uuid = res.uuid;
+        this.codeUrl = res.data;
+        this.loginForm.uuid = res.time;
       });
     },
     getCookie() {

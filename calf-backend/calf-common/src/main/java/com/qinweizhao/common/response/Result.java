@@ -36,7 +36,7 @@ public class Result<T> implements Serializable {
 	private T data;
 
 	private Result() {
-		this.time = System.currentTimeMillis();
+		this(ResultCode.SUCCESS);
 	}
 
 	private Result(IResultCode resultCode) {
@@ -64,33 +64,26 @@ public class Result<T> implements Serializable {
 
 	/**
 	 * 返回状态码
-	 *
-	 * @param resultCode 状态码
-	 * @param <T>        泛型标识
 	 * @return ApiResult
 	 */
+	public static <T> Result<T> success() {
+		return new Result<>();
+	}
+
+	public static <T> Result<T> success(T data) {
+		return success(data, ResultConstants.DEFAULT_SUCCESS_MESSAGE);
+	}
+
+	public static <T> Result<T> success(T data, String msg) {
+		return new Result<>(ResultCode.SUCCESS.code, data, msg);
+	}
+
 	public static <T> Result<T> success(IResultCode resultCode) {
 		return new Result<>(resultCode);
 	}
 
-	public static <T> Result<T> success(String msg) {
-		return new Result<>(ResultCode.SUCCESS, msg);
-	}
-
-	public static <T> Result<T> success(IResultCode resultCode, String msg) {
-		return new Result<>(resultCode, msg);
-	}
-
-	public static <T> Result<T> data(T data) {
-		return data(data, ResultConstants.DEFAULT_SUCCESS_MESSAGE);
-	}
-
-	public static <T> Result<T> data(T data, String msg) {
-		return data(ResultCode.SUCCESS.code, data, msg);
-	}
-
-	public static <T> Result<T> data(int code, T data, String msg) {
-		return new Result<>(code, data, data == null ? ResultConstants.DEFAULT_NULL_MESSAGE : msg);
+	public static <T> Result<T> success(IResultCode resultCode, T data) {
+		return new Result<>(resultCode, data);
 	}
 
 	public static <T> Result<T> failure() {
@@ -99,10 +92,6 @@ public class Result<T> implements Serializable {
 
 	public static <T> Result<T> failure(String msg) {
 		return new Result<>(ResultCode.FAILURE, msg);
-	}
-
-	public static <T> Result<T> failure(int code, String msg) {
-		return new Result<>(code, null, msg);
 	}
 
 	public static <T> Result<T> failure(IResultCode resultCode) {
@@ -114,6 +103,6 @@ public class Result<T> implements Serializable {
 	}
 
 	public static <T> Result<T> condition(boolean flag) {
-		return flag ? success(ResultConstants.DEFAULT_SUCCESS_MESSAGE) : failure(ResultConstants.DEFAULT_FAIL_MESSAGE);
+		return flag ? success() : failure();
 	}
 }

@@ -16,20 +16,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.qinweizhao</groupId>
             <artifactId>calf-common</artifactId>
-            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>com.qinweizhao</groupId>
-            <artifactId>calf-platform-system</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>calf-platform-api-system</artifactId>
         </dependency>
 
         <dependency>

@@ -32,9 +32,6 @@ import java.util.stream.Collectors;
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
-    @Resource
-    private DefaultKaptcha defaultKaptcha;
-
     @Override
     public SysUser selectUserByUsername(String username) {
         return this.baseMapper.selectUserByUsername(username);
@@ -56,26 +53,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             authority = authority.concat(permission);
         }
         return authority;
-    }
-
-    /**
-     * 获取验证码
-     *
-     * @return base64编码
-     */
-    @Override
-    public String getCaptcha() throws IOException {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        String text = defaultKaptcha.createText();
-        if (log.isDebugEnabled()) {
-            log.debug("验证码为:" + text);
-        }
-        String key = Constants.LOGIN_CODE_KEY + "_" + RandomStringUtils.random(5);
-        GuavaCacheUtils.CACHE.put(key, text);
-        BufferedImage image = defaultKaptcha.createImage(text);
-        ImageIO.write(image, "jpg", outputStream);
-        outputStream.flush();
-        return Constants.BASE64_PREFIX + Base64.encode(outputStream.toByteArray());
     }
 
     @Override

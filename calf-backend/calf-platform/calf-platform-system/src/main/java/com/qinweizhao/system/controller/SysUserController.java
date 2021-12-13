@@ -54,7 +54,7 @@ public class SysUserController {
             @ApiImplicitParam(name = "order", required = true, value = "排序方式", paramType = "form"),
     })
     public Result<Object> page(Search search, SysUser sysUser) {
-        return Result.data(sysUserService.listPage(search, sysUser));
+        return Result.success(sysUserService.listPage(search, sysUser));
     }
 
     /**
@@ -86,7 +86,7 @@ public class SysUserController {
             @ApiImplicitParam(name = "id", required = true, value = "用户ID", paramType = "form"),
     })
     public Result<SysUser> get(@RequestParam String id) {
-        return Result.data(sysUserService.getById(id));
+        return Result.success(sysUserService.getById(id));
     }
 
     /**

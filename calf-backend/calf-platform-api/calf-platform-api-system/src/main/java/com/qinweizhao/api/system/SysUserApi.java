@@ -1,4 +1,4 @@
-package com.qinweizhao.system.service;
+package com.qinweizhao.api.system;
 
 import java.io.IOException;
 
@@ -7,6 +7,8 @@ import java.io.IOException;
  * @since 2021/12/13
  */
 public interface SysUserApi {
+
+
     /**
      * 通过用户 id 获取权限信息
      *
