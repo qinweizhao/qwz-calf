@@ -1,0 +1,126 @@
+package com.qinweizhao.system.module.authority.controller;
+
+
+import com.qinweizhao.common.base.BaseController;
+import com.qinweizhao.common.request.Search;
+import com.qinweizhao.common.response.Result;
+import com.qinweizhao.system.module.authority.entity.SysUser;
+import com.qinweizhao.system.module.authority.service.ISysPostService;
+import com.qinweizhao.system.module.authority.service.ISysRoleService;
+import com.qinweizhao.system.module.authority.service.ISysUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * <p>
+ * 系统用户 前端控制器
+ * </p>
+ *
+ * @author qinweizhao
+ * @since 2021-12-06
+ */
+@RestController
+@RequestMapping("/sys/user")
+@Api(tags = "用户管理")
+public class SysUserController extends BaseController {
+
+    @Resource
+    private ISysUserService sysUserService;
+
+    @Resource
+    private ISysRoleService sysRoleService;
+
+    @Resource
+    private ISysPostService sysPostService;
+
+    /**
+     * 用户列表
+     *
+     * @param search 　搜索关键词
+     * @return Result
+     */
+    @GetMapping("/page")
+    public Result<Object> page(Search search, SysUser sysUser) {
+        return Result.success(sysUserService.listPage(search, sysUser));
+    }
+
+    /**
+     * 设置用户，支持新增或修改
+     *
+     * @param sysUser 用户信息
+     * @return Result
+     */
+    @PostMapping("/edit")
+    @ApiOperation(value = "设置用户", notes = "新增或修改用户")
+    public Result<Object> edit(@Valid @RequestBody SysUser sysUser) {
+        return Result.condition(sysUserService.updateById(sysUser));
+    }
+
+    /**
+     * 登录成功后需要的信息
+     *
+     * @return Result
+     */
+    @GetMapping("/info")
+    public Result<Map<Object,Object>> info() {
+        return Result.success(sysUserService.getProjectInitInfo(getCurrentLoginUsername()));
+    }
+
+    /**
+     * 用户删除
+     *
+     * @param ids id字符串，根据,号分隔
+     * @return Result
+     */
+    @PostMapping("/del")
+    @ApiOperation(value = "用户删除", notes = "用户删除")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "ids", required = true, value = "多个用,号隔开", paramType = "form")
+    })
+    public Result<Object> del(@RequestParam List<String> ids) {
+        return Result.condition(sysUserService.removeByIds(ids));
+    }
+
+    /**
+     * 设置用户状态
+     *
+     * @param ids    id字符串，根据,号分隔
+     * @param status 状态标识，启用或禁用
+     * @return Result
+     */
+    @PostMapping("/set-status")
+    @ApiOperation(value = "用户状态", notes = "状态包括：启用、禁用")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "ids", required = true, value = "多个用,号隔开", paramType = "form"),
+            @ApiImplicitParam(name = "status", required = true, value = "状态", paramType = "form")
+    })
+    public Result<Object> setStatus(@RequestParam String ids, @RequestParam String status) {
+        return Result.condition(sysUserService.status(ids, status));
+    }
+
+    /**
+     * 设置用户密码
+     *
+     * @param user 用户信息
+     * @return Result
+     */
+    @PostMapping("/set-password")
+    @ApiOperation(value = "用户密码设置", notes = "用户密码设置")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", required = true, value = "用户ID", paramType = "form"),
+            @ApiImplicitParam(name = "password", required = true, value = "密码", paramType = "form")
+    })
+    public Result<Object> setPassword(@RequestBody SysUser user) {
+        return Result.condition(sysUserService.updateById(user));
+    }
+
+
+}

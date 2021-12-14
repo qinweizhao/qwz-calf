@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qinweizhao.system.module.mapper.SysUserMapper">
+<mapper namespace="com.qinweizhao.system.module.authority.mapper.SysUserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.entity.SysUser">
+    <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.authority.entity.SysUser">
         <id column="user_id" property="userId"/>
         <result column="dept_id" property="deptId"/>
         <result column="username" property="username"/>
@@ -22,7 +22,7 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-    <select id="selectUserByUsername" resultType="com.qinweizhao.system.module.entity.SysUser">
+    <select id="selectUserByUsername" resultType="com.qinweizhao.system.module.authority.entity.SysUser">
         SELECT *
         FROM sys_user
         WHERE username = #{username}
