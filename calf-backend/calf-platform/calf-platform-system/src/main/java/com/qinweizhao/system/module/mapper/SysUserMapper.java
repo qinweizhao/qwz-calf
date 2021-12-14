@@ -43,5 +43,10 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     Set<String> selectPermissionsByUserId(Long userId);
 
 
+    /**
+     * qqq
+     * @param username username
+     * @return return
+     */
     Long selectUserIdByUsername(String username);
 }

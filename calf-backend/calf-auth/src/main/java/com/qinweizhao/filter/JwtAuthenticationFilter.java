@@ -2,6 +2,7 @@ package com.qinweizhao.filter;
 
 import cn.hutool.core.util.StrUtil;
 import com.qinweizhao.api.system.SysUserApi;
+import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.util.JwtUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -54,8 +55,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throw new JwtException("token已过期");
         }
         String username = claim.getSubject();
-        Long userId = sysUserApi.selectUserIdByUsername(username);
-        String authority = sysUserApi.getAuthorityByUserId(userId);
+        SysUserDTO user = sysUserApi.selectUserIdByUsername(username);
+        String authority = sysUserApi.getAuthorityByUserId(user.getUserId());
         log.info("当前用户拥有的权限有{}", authority);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null, AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
         SecurityContextHolder.getContext().setAuthentication(token);

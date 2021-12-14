@@ -1,8 +1,16 @@
 package com.qinweizhao.system.module.controller;
 
 
-import org.springframework.stereotype.Controller;
+import com.qinweizhao.common.base.BaseController;
+import com.qinweizhao.common.response.Result;
+import com.qinweizhao.system.module.entity.SysMenu;
+import com.qinweizhao.system.module.service.ISysMenuService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -12,8 +20,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author qinweizhao
  * @since 2021-12-06
  */
-@Controller
-@RequestMapping("/mappers/system/sys-menu")
-public class SysMenuController {
+@RestController
+@RequestMapping("/sys/menu")
+public class SysMenuController extends BaseController {
+
+    @Resource
+    private ISysMenuService sysMenuService;
+
+    @GetMapping("/tree")
+    public Result<List<SysMenu>> tree() {
+        List<SysMenu> list = sysMenuService.listWithTree(getCurrentLoginUsername());
+        return Result.success(list);
+    }
+
 
 }

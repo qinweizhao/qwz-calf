@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.qinweizhao.common.request.Search;
 import com.qinweizhao.system.module.entity.SysUser;
 
+import java.util.Map;
+
 /**
  * <p>
  * 系统用户 服务类
@@ -41,4 +43,11 @@ public interface ISysUserService extends IService<SysUser> {
      * @return Long
      */
     Long selectUserIdByUsername(String username);
+
+    /**
+     * 获取项目初始化需要的信息
+     * @param currentLoginUsername 当前登录的用户名
+     * @return user roles permissions
+     */
+    Map<Object,Object> getProjectInitInfo(String currentLoginUsername);
 }

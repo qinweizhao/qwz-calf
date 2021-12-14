@@ -1,5 +1,7 @@
 package com.qinweizhao.api.system;
 
+import com.qinweizhao.api.system.dto.SysUserDTO;
+
 import java.io.IOException;
 
 /**
@@ -29,7 +31,7 @@ public interface SysUserApi {
      * 查询用户 id
      *
      * @param username 用户名
-     * @return Long
+     * @return SysUserDTO
      */
-    Long selectUserIdByUsername(String username);
+    SysUserDTO selectUserIdByUsername(String username);
 }

@@ -42,7 +42,7 @@ mybatis-plus:
   # 启动时是否检查 MyBatis XML 文件的存在，默认不检查。
   check-config-location: false
   # mapper.xml所在位置
-  mapper-locations: classpath*:/mapper/*Mapper.xml
+  mapper-locations: classpath:/mapper/*Mapper.xml
 
 qinweizhao:
   jwt:

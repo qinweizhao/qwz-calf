@@ -1,13 +1,16 @@
 package com.qinweizhao.system.module.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -17,6 +20,7 @@ import java.time.LocalDateTime;
  * @author qinweizhao
  * @since 2021-12-06
  */
+@Data
 @TableName("sys_menu")
 @ApiModel(value = "SysMenu对象", description = "菜单权限表")
 public class SysMenu implements Serializable {
@@ -69,144 +73,6 @@ public class SysMenu implements Serializable {
     @ApiModelProperty("更新时间")
     private LocalDateTime updateTime;
 
-    public Long getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
-    }
-
-    public String getMenuName() {
-        return menuName;
-    }
-
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getComponent() {
-        return component;
-    }
-
-    public void setComponent(String component) {
-        this.component = component;
-    }
-
-    public String getMenuType() {
-        return menuType;
-    }
-
-    public void setMenuType(String menuType) {
-        this.menuType = menuType;
-    }
-
-    public String getPermission() {
-        return permission;
-    }
-
-    public void setPermission(String permission) {
-        this.permission = permission;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public Integer getMenuSort() {
-        return menuSort;
-    }
-
-    public void setMenuSort(Integer menuSort) {
-        this.menuSort = menuSort;
-    }
-
-    public String getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(String deleted) {
-        this.deleted = deleted;
-    }
-
-    public String getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(String enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "SysMenu{" +
-                "menuId=" + menuId +
-                ", menuName=" + menuName +
-                ", parentId=" + parentId +
-                ", path=" + path +
-                ", component=" + component +
-                ", menuType=" + menuType +
-                ", permission=" + permission +
-                ", icon=" + icon +
-                ", menuSort=" + menuSort +
-                ", deleted=" + deleted +
-                ", enabled=" + enabled +
-                ", createBy=" + createBy +
-                ", updateBy=" + updateBy +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                "}";
-    }
+    @TableField(exist = false)
+    private List<SysMenu> children;
 }

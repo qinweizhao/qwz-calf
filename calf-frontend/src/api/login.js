@@ -18,7 +18,7 @@ export function login(username, password, code, uuid) {
 // 获取用户详细信息
 export function getInfo() {
   return request({
-    url: '/get-permission-info',
+    url: '/sys/user/info',
     method: 'get'
   })
 }

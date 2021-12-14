@@ -1,6 +1,7 @@
 package com.qinweizhao.system.module.service.impl;
 
 
+import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qinweizhao.common.request.Search;
 import com.qinweizhao.system.module.entity.SysUser;
@@ -8,6 +9,7 @@ import com.qinweizhao.system.module.mapper.SysUserMapper;
 import com.qinweizhao.system.module.service.ISysUserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -48,6 +50,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public Long selectUserIdByUsername(String username) {
         return this.baseMapper.selectUserIdByUsername(username);
+    }
+
+    @Override
+    public Map<Object, Object> getProjectInitInfo(String currentLoginUsername) {
+        SysUser sysUser = baseMapper.selectUserByUsername(currentLoginUsername);
+        Long userId = sysUser.getUserId();
+        Set<String> roles = this.baseMapper.selectRolesByUserId(userId);
+        Set<String> permissions = this.baseMapper.selectPermissionsByUserId(userId);
+        return MapUtil.builder()
+                .put("user", sysUser)
+                .put("roles", roles)
+                .put("permissions", permissions).map();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.qinweizhao.system.module.controller;
 
 
+import com.qinweizhao.common.base.BaseController;
 import com.qinweizhao.common.base.BaseException;
 import com.qinweizhao.common.request.Search;
 import com.qinweizhao.common.response.Result;
@@ -15,12 +16,14 @@ import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -31,9 +34,9 @@ import java.util.List;
  * @since 2021-12-06
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/sys/user")
 @Api(tags = "用户管理")
-public class SysUserController {
+public class SysUserController extends BaseController {
 
     @Resource
     private ISysUserService sysUserService;
@@ -70,16 +73,11 @@ public class SysUserController {
     /**
      * 用户信息
      *
-     * @param id Id信息
      * @return Result
      */
     @GetMapping("/info")
-    @ApiOperation(value = "用户信息", notes = "根据ID查询")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", required = true, value = "用户ID", paramType = "form"),
-    })
-    public Result<SysUser> get(@RequestParam String id) {
-        return Result.success(sysUserService.getById(id));
+    public Result<Map<Object,Object>> info() {
+        return Result.success(sysUserService.getProjectInitInfo(getCurrentLoginUsername()));
     }
 
     /**

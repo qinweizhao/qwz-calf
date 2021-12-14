@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qinweizhao.system.module.entity.SysMenu;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 菜单权限表 Mapper 接口
@@ -14,5 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
+
+    List<SysMenu> selectMenuListByUsername(String currentLoginUsername);
 
 }

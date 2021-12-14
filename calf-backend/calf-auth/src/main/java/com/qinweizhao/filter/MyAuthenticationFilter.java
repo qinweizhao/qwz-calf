@@ -102,6 +102,11 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
         }
         // 将认证信息放入 SecurityContextHolder
         SecurityContextHolder.getContext().setAuthentication(authResult);
+
+        System.out.println("=================");
+        System.out.println(authResult);
+        System.out.println("=================");
+
         // 生成 token
         String token = jwtUtils.generateToken(authResult.getName());
         Result<String> success = Result.success(token);

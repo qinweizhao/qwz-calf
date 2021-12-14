@@ -2,12 +2,15 @@ package com.qinweizhao.system.api;
 
 import cn.hutool.core.codec.Base64;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.common.constant.Constants;
 import com.qinweizhao.common.util.GuavaCacheUtils;
 import com.qinweizhao.api.system.SysUserApi;
+import com.qinweizhao.system.module.entity.SysUser;
 import com.qinweizhao.system.module.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -51,7 +54,10 @@ public class SysUserApiImpl implements SysUserApi {
     }
 
     @Override
-    public Long selectUserIdByUsername(String username) {
-        return sysUserService.selectUserIdByUsername(username);
+    public SysUserDTO selectUserIdByUsername(String username) {
+        SysUser sysUser = sysUserService.selectUserByUsername(username);
+        SysUserDTO user = new SysUserDTO();
+        BeanUtils.copyProperties(sysUser,user);
+        return user;
     }
 }

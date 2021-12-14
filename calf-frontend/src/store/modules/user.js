@@ -37,9 +37,8 @@ const user = {
       const uuid = userInfo.uuid
       return new Promise((resolve, reject) => {
         login(username, password, code, uuid).then(res => {
-          res = res.data;
-          setToken(res.token)
-          commit('SET_TOKEN', res.token)
+          setToken(res.data)
+          commit('SET_TOKEN', res.data)
           resolve()
         }).catch(error => {
           reject(error)
@@ -54,9 +53,8 @@ const user = {
       const type = userInfo.type
       return new Promise((resolve, reject) => {
         socialLogin(type, code, state).then(res => {
-          res = res.data;
-          setToken(res.token)
-          commit('SET_TOKEN', res.token)
+          setToken(res.data)
+          commit('SET_TOKEN', res.data)
           resolve()
         }).catch(error => {
           reject(error)
