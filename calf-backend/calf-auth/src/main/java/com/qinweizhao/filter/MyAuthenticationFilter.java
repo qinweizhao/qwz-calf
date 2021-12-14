@@ -120,7 +120,6 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
             log.debug("登录失败");
         }
         Result<?> failure = Result.failure();
-        failure.setCode(400);
         response.setContentType("application/json;charset=utf-8");
         if (exception instanceof CaptchaException){
             failure.setMsg(exception.getMessage());

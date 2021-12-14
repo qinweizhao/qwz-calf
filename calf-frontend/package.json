@@ -32,10 +32,6 @@
     "admin-template",
     "management-system"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/YunaiV/ruoyi-vue-pro"
-  },
   "dependencies": {
     "@riophae/vue-treeselect": "0.4.0",
     "axios": "0.21.0",
