@@ -3,7 +3,7 @@
 <mapper namespace="com.qinweizhao.system.mapper.SysMenuMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.qinweizhao.system.entity.SysMenu">
+    <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.entity.SysMenu">
         <id column="menu_id" property="menuId"/>
         <result column="menu_name" property="menuName"/>
         <result column="parent_id" property="parentId"/>

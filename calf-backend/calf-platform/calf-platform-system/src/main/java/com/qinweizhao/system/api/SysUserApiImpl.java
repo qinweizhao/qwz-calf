@@ -5,7 +5,7 @@ import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.qinweizhao.common.constant.Constants;
 import com.qinweizhao.common.util.GuavaCacheUtils;
 import com.qinweizhao.api.system.SysUserApi;
-import com.qinweizhao.system.service.ISysUserService;
+import com.qinweizhao.system.module.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;

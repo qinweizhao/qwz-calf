@@ -3,7 +3,7 @@
 <mapper namespace="com.qinweizhao.system.mapper.SysRoleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.qinweizhao.system.entity.SysRole">
+    <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.entity.SysRole">
         <id column="role_id" property="roleId"/>
         <result column="role_name" property="roleName"/>
         <result column="role_key" property="roleKey"/>

@@ -3,7 +3,7 @@
 <mapper namespace="com.qinweizhao.system.mapper.SysDeptMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.qinweizhao.system.entity.SysDept">
+    <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.entity.SysDept">
         <id column="dept_id" property="deptId"/>
         <result column="parent_id" property="parentId"/>
         <result column="dept_name" property="deptName"/>
