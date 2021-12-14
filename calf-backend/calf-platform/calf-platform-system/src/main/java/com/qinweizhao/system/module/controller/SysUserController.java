@@ -71,7 +71,7 @@ public class SysUserController extends BaseController {
     }
 
     /**
-     * 用户信息
+     * 登录成功后需要的信息
      *
      * @return Result
      */

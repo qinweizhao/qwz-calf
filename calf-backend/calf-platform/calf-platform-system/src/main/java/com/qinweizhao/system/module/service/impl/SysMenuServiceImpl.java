@@ -26,10 +26,19 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<SysMenu> listWithTree(String currentLoginUsername) {
         List<SysMenu> menus = this.baseMapper.selectMenuListByUsername(currentLoginUsername);
+        return buildTree(menus);
+
+    }
+
+    /**
+     * 构建树形菜单
+     * @param menus 所有菜单
+     * @return 树形菜单
+     */
+    private List<SysMenu> buildTree(List<SysMenu> menus){
         return menus.stream().filter(item ->
                 LONG_ZERO.equals(item.getParentId())
         ).peek(item -> item.setChildren(getChildrenMenu(item, menus))).collect(Collectors.toList());
-
     }
 
     /**

@@ -55,6 +55,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public Map<Object, Object> getProjectInitInfo(String currentLoginUsername) {
         SysUser sysUser = baseMapper.selectUserByUsername(currentLoginUsername);
+        // 清除密码
+        sysUser.setPassword("");
         Long userId = sysUser.getUserId();
         Set<String> roles = this.baseMapper.selectRolesByUserId(userId);
         Set<String> permissions = this.baseMapper.selectPermissionsByUserId(userId);
