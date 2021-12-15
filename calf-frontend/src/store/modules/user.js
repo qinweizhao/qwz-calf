@@ -62,25 +62,6 @@ const user = {
       })
     },
 
-    // 社交登录
-    SocialLogin2({ commit }, userInfo) {
-      const code = userInfo.code
-      const state = userInfo.state
-      const type = userInfo.type
-      const username = userInfo.username.trim()
-      const password = userInfo.password
-      return new Promise((resolve, reject) => {
-        socialLogin2(type, code, state, username, password).then(res => {
-          res = res.data;
-          setToken(res.token)
-          commit('SET_TOKEN', res.token)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
-
     // 获取用户信息
     GetInfo({ commit, state }) {
       return new Promise((resolve, reject) => {

@@ -35,12 +35,6 @@ public class SysUserController extends BaseController {
     @Resource
     private ISysUserService sysUserService;
 
-    @Resource
-    private ISysRoleService sysRoleService;
-
-    @Resource
-    private ISysPostService sysPostService;
-
     /**
      * 用户列表
      *

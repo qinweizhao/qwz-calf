@@ -6,6 +6,7 @@ import com.qinweizhao.common.constant.Constants;
 import com.qinweizhao.common.response.Result;
 import com.qinweizhao.common.util.GuavaCacheUtils;
 import com.qinweizhao.common.util.IoUtils;
+import com.qinweizhao.config.AuthConstants;
 import com.qinweizhao.exception.CaptchaException;
 import com.qinweizhao.util.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -68,10 +69,11 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
         }
         JSONObject jsonObject = IoUtils.parseRequestToJsonObject(request);
         String captcha = jsonObject.getString(Constants.LOGIN_CODE_KEY);
-
-        boolean b = this.validateCaptcha(captcha);
-        if (!b) {
-            throw new CaptchaException("验证码错误");
+        if (AuthConstants.IS_CAPTCHA){
+            boolean b = this.validateCaptcha(captcha);
+            if (!b) {
+                throw new CaptchaException("验证码错误");
+            }
         }
         String username = jsonObject.getString(Constants.LOGIN_USER_KEY);
         username = username != null ? username : "";

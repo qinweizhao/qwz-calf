@@ -31,6 +31,8 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+
+
     /**
      * 日志记录
      */

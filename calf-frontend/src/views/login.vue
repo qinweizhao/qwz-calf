@@ -12,7 +12,7 @@
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon" />
         </el-input>
       </el-form-item>
-      <el-form-item prop="code">
+      <el-form-item prop="code" v-if="captchaOnOff">
         <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 63%" @keyup.enter.native="handleLogin">
           <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
         </el-input>
@@ -27,19 +27,10 @@
           <span v-else>登 录 中...</span>
         </el-button>
       </el-form-item>
-
-      <el-form-item style="width:100%;">
-          <div class="oauth-login" style="display:flex">
-            <div class="oauth-login-item" v-for="item in SysUserSocialTypeEnum" :key="item.type" @click="doSocialLogin(item)">
-              <img :src="item.img" height="25px" width="25px" alt="登录" >
-              <span>{{item.title}}</span>
-            </div>
-        </div>
-      </el-form-item>
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2020-2021 iocoder.cn All Rights Reserved.</span>
+      <span>Copyright © 2021 qinweizhao.cn All Rights Reserved.</span>
     </div>
   </div>
 </template>
@@ -48,7 +39,6 @@
 import { getCodeImg,socialAuthRedirect } from "@/api/login";
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from '@/utils/jsencrypt'
-import {InfApiErrorLogProcessStatusEnum, SysUserSocialTypeEnum} from "@/utils/constants";
 
 export default {
   name: "Login",
@@ -60,7 +50,9 @@ export default {
         password: "123456",
         rememberMe: false,
         code: "",
-        uuid: ""
+        uuid: "",
+        // 验证码开关
+        captchaOnOff: false,
       },
       loginRules: {
         username: [
@@ -73,8 +65,6 @@ export default {
       },
       loading: false,
       redirect: undefined,
-      // 枚举
-      SysUserSocialTypeEnum: SysUserSocialTypeEnum,
     };
   },
   // watch: {
@@ -128,20 +118,6 @@ export default {
             this.getCode();
           });
         }
-      });
-    },
-    doSocialLogin(socialTypeEnum) {
-      // console.log("开始Oauth登录...%o", socialTypeEnum.code);
-      // 设置登录中
-      this.loading = true;
-      // 计算 redirectUri
-      const redirectUri = location.origin + '/social-login?type=' + socialTypeEnum.type + '&redirect=' + (this.redirect || "/"); // 重定向不能丢
-      // const redirectUri = 'http://127.0.0.1:48080/api/gitee/callback';
-      // const redirectUri = 'http://127.0.0.1:48080/api/dingtalk/callback';
-      // 进行跳转
-      socialAuthRedirect(socialTypeEnum.type, encodeURIComponent(redirectUri)).then((res) => {
-        // console.log(res.url);
-        window.location.href = res.data;
       });
     }
   }

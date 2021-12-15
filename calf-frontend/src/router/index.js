@@ -5,7 +5,6 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-import ParentView from '@/components/ParentView';
 
 /**
  * Note: 路由配置项
@@ -41,11 +40,6 @@ export const constantRoutes = [
   {
     path: '/login',
     component: (resolve) => require(['@/views/login'], resolve),
-    hidden: true
-  },
-  {
-    path: '/social-login',
-    component: (resolve) => require(['@/views/socialLogin'], resolve),
     hidden: true
   },
   {
