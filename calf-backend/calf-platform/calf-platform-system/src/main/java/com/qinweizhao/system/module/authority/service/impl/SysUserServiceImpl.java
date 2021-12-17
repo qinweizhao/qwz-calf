@@ -3,7 +3,6 @@ package com.qinweizhao.system.module.authority.service.impl;
 
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qinweizhao.common.request.Search;
 import com.qinweizhao.system.module.authority.entity.SysUser;
 import com.qinweizhao.system.module.authority.mapper.SysUserMapper;
 import com.qinweizhao.system.module.authority.service.ISysUserService;
@@ -25,8 +24,8 @@ import java.util.stream.Collectors;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
     @Override
-    public SysUser selectUserByUsername(String username) {
-        return this.baseMapper.selectUserByUsername(username);
+    public SysUser getUserByUsername(String username) {
+        return this.baseMapper.getUserByUsername(username);
     }
 
     @Override
@@ -47,14 +46,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return authority;
     }
 
-    @Override
-    public Long selectUserIdByUsername(String username) {
-        return this.baseMapper.selectUserIdByUsername(username);
-    }
 
     @Override
     public Map<Object, Object> getProjectInitInfo(String currentLoginUsername) {
-        SysUser sysUser = baseMapper.selectUserByUsername(currentLoginUsername);
+        SysUser sysUser = baseMapper.getUserByUsername(currentLoginUsername);
         // 清除密码
         sysUser.setPassword("");
         Long userId = sysUser.getUserId();
@@ -66,13 +61,4 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 .put("permissions", permissions).map();
     }
 
-    @Override
-    public Object listPage(Search search, SysUser sysUser) {
-        return null;
-    }
-
-    @Override
-    public boolean status(String ids, String status) {
-        return true;
-    }
 }

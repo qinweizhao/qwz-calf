@@ -24,7 +24,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param username 　username
      * @return SysUser
      */
-    SysUser selectUserByUsername(String username);
+    SysUser getUserByUsername(String username);
 
     /**
      * 通过用户 id 查询角色
@@ -48,5 +48,5 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param username username
      * @return return
      */
-    Long selectUserIdByUsername(String username);
+    Long getUserIdByUsername(String username);
 }

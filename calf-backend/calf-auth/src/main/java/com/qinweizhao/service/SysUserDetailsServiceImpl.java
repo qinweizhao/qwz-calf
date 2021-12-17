@@ -30,7 +30,7 @@ public class SysUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUserDTO user = sysUserApi.selectUserIdByUsername(username);
+        SysUserDTO user = sysUserApi.getUserIdByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("用户名输入错误");
         }

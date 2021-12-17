@@ -54,8 +54,8 @@ public class SysUserApiImpl implements SysUserApi {
     }
 
     @Override
-    public SysUserDTO selectUserIdByUsername(String username) {
-        SysUser sysUser = sysUserService.selectUserByUsername(username);
+    public SysUserDTO getUserIdByUsername(String username) {
+        SysUser sysUser = sysUserService.getUserByUsername(username);
         SysUserDTO user = new SysUserDTO();
         BeanUtils.copyProperties(sysUser,user);
         return user;

@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">Calf 后台管理系统</h3>
+      <h3 class="title">Calf-Platform</h3>
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
@@ -50,9 +50,7 @@ export default {
         password: "123456",
         rememberMe: false,
         code: "",
-        uuid: "",
-        // 验证码开关
-        captchaOnOff: false,
+        uuid: ""
       },
       loginRules: {
         username: [
@@ -65,6 +63,8 @@ export default {
       },
       loading: false,
       redirect: undefined,
+        // 验证码开关
+        captchaOnOff: false
     };
   },
   // watch: {
@@ -83,10 +83,12 @@ export default {
   },
   methods: {
     getCode() {
-      getCodeImg().then(res => {
-        this.codeUrl = res.data;
-        this.loginForm.uuid = res.time;
-      });
+      if (this.captchaOnOff) {
+        getCodeImg().then(res => {
+          this.codeUrl = res.data;
+          this.loginForm.uuid = res.time;
+        });
+      }
     },
     getCookie() {
       const username = Cookies.get("username");

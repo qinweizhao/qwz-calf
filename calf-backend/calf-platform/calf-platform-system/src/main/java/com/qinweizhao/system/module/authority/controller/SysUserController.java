@@ -2,11 +2,8 @@ package com.qinweizhao.system.module.authority.controller;
 
 
 import com.qinweizhao.common.base.BaseController;
-import com.qinweizhao.common.request.Search;
 import com.qinweizhao.common.response.Result;
 import com.qinweizhao.system.module.authority.entity.SysUser;
-import com.qinweizhao.system.module.authority.service.ISysPostService;
-import com.qinweizhao.system.module.authority.service.ISysRoleService;
 import com.qinweizhao.system.module.authority.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -38,12 +35,11 @@ public class SysUserController extends BaseController {
     /**
      * 用户列表
      *
-     * @param search 　搜索关键词
      * @return Result
      */
     @GetMapping("/page")
-    public Result<Object> page(Search search, SysUser sysUser) {
-        return Result.success(sysUserService.listPage(search, sysUser));
+    public Result<Object> page(SysUser sysUser) {
+        return Result.success(sysUserService.list());
     }
 
     /**
@@ -64,7 +60,7 @@ public class SysUserController extends BaseController {
      * @return Result
      */
     @GetMapping("/info")
-    public Result<Map<Object,Object>> info() {
+    public Result<Map<Object, Object>> info() {
         return Result.success(sysUserService.getProjectInitInfo(getCurrentLoginUsername()));
     }
 
@@ -74,7 +70,7 @@ public class SysUserController extends BaseController {
      * @param ids id字符串，根据,号分隔
      * @return Result
      */
-    @PostMapping("/del")
+    @PostMapping("/delete")
     @ApiOperation(value = "用户删除", notes = "用户删除")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ids", required = true, value = "多个用,号隔开", paramType = "form")
@@ -90,14 +86,14 @@ public class SysUserController extends BaseController {
      * @param status 状态标识，启用或禁用
      * @return Result
      */
-    @PostMapping("/set-status")
+    @PostMapping("/setStatus")
     @ApiOperation(value = "用户状态", notes = "状态包括：启用、禁用")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ids", required = true, value = "多个用,号隔开", paramType = "form"),
             @ApiImplicitParam(name = "status", required = true, value = "状态", paramType = "form")
     })
     public Result<Object> setStatus(@RequestParam String ids, @RequestParam String status) {
-        return Result.condition(sysUserService.status(ids, status));
+        return Result.condition(false);
     }
 
     /**

@@ -33,5 +33,5 @@ public interface SysUserApi {
      * @param username 用户名
      * @return SysUserDTO
      */
-    SysUserDTO selectUserIdByUsername(String username);
+    SysUserDTO getUserIdByUsername(String username);
 }

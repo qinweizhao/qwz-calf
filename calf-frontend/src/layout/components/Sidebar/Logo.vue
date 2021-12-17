@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: 'Calf 管理系统',
+      title: 'Calf - Platform',
       logo: logoImg
     }
   }

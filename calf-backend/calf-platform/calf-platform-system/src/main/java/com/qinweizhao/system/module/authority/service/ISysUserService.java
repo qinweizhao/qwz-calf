@@ -1,7 +1,6 @@
 package com.qinweizhao.system.module.authority.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.qinweizhao.common.request.Search;
 import com.qinweizhao.system.module.authority.entity.SysUser;
 
 import java.util.Map;
@@ -16,17 +15,13 @@ import java.util.Map;
  */
 public interface ISysUserService extends IService<SysUser> {
 
-    Object listPage(Search search, SysUser sysUser);
-
-    boolean status(String ids, String status);
-
     /**
      * 通过用户名查询用户
      *
      * @param username 　username
      * @return SysUser
      */
-    SysUser selectUserByUsername(String username);
+    SysUser getUserByUsername(String username);
 
     /**
      * 通过用户 id 获取权限信息
@@ -36,13 +31,6 @@ public interface ISysUserService extends IService<SysUser> {
      */
     String getAuthorityByUserId(Long userId);
 
-    /**
-     * 查询用户 id
-     *
-     * @param username 用户名
-     * @return Long
-     */
-    Long selectUserIdByUsername(String username);
 
     /**
      * 获取项目初始化需要的信息
