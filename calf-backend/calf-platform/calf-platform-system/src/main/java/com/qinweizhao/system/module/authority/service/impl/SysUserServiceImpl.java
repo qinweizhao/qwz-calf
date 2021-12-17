@@ -2,9 +2,12 @@ package com.qinweizhao.system.module.authority.service.impl;
 
 
 import cn.hutool.core.map.MapUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qinweizhao.system.module.authority.entity.SysUser;
+import com.qinweizhao.system.module.authority.model.entity.SysUser;
 import com.qinweizhao.system.module.authority.mapper.SysUserMapper;
+import com.qinweizhao.system.module.authority.model.query.SysUserQuery;
 import com.qinweizhao.system.module.authority.service.ISysUserService;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +27,8 @@ import java.util.stream.Collectors;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
     @Override
-    public SysUser getUserByUsername(String username) {
-        return this.baseMapper.getUserByUsername(username);
+    public SysUser selectUserByUsername(String username) {
+        return this.baseMapper.selectUserByUsername(username);
     }
 
     @Override
@@ -49,7 +52,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public Map<Object, Object> getProjectInitInfo(String currentLoginUsername) {
-        SysUser sysUser = baseMapper.getUserByUsername(currentLoginUsername);
+        SysUser sysUser = baseMapper.selectUserByUsername(currentLoginUsername);
         // 清除密码
         sysUser.setPassword("");
         Long userId = sysUser.getUserId();
@@ -59,6 +62,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 .put("user", sysUser)
                 .put("roles", roles)
                 .put("permissions", permissions).map();
+    }
+
+
+    @Override
+    public IPage<SysUser> pageUsers(Page<SysUser> page,SysUserQuery sysUserQuery) {
+        return this.baseMapper.selectPageUsers(page,sysUserQuery);
     }
 
 }

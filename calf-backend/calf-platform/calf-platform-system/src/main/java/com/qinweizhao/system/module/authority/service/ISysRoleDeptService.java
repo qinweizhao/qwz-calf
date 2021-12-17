@@ -1,7 +1,7 @@
 package com.qinweizhao.system.module.authority.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.qinweizhao.system.module.authority.entity.SysRoleDept;
+import com.qinweizhao.system.module.authority.model.entity.SysRoleDept;
 
 /**
  * <p>

@@ -1,9 +1,12 @@
 package com.qinweizhao.system.module.authority.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.common.base.BaseController;
 import com.qinweizhao.common.response.Result;
-import com.qinweizhao.system.module.authority.entity.SysUser;
+import com.qinweizhao.system.module.authority.model.entity.SysUser;
+import com.qinweizhao.system.module.authority.model.query.SysUserQuery;
 import com.qinweizhao.system.module.authority.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -37,9 +40,9 @@ public class SysUserController extends BaseController {
      *
      * @return Result
      */
-    @GetMapping("/page")
-    public Result<Object> page(SysUser sysUser) {
-        return Result.success(sysUserService.list());
+    @PostMapping("/page")
+    public Result<IPage<SysUser>> page(Page<SysUser> page,SysUserQuery sysUserQuery) {
+        return Result.success(sysUserService.pageUsers(page,sysUserQuery));
     }
 
     /**

@@ -3,7 +3,7 @@
 <mapper namespace="com.qinweizhao.system.module.authority.mapper.SysPostMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.authority.entity.SysPost">
+    <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.authority.model.entity.SysPost">
         <id column="post_id" property="postId"/>
         <result column="post_code" property="postCode"/>
         <result column="post_name" property="postName"/>

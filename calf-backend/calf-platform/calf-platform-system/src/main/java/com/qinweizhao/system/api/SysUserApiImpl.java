@@ -6,7 +6,7 @@ import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.common.constant.Constants;
 import com.qinweizhao.common.util.GuavaCacheUtils;
 import com.qinweizhao.api.system.SysUserApi;
-import com.qinweizhao.system.module.authority.entity.SysUser;
+import com.qinweizhao.system.module.authority.model.entity.SysUser;
 import com.qinweizhao.system.module.authority.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -55,7 +55,7 @@ public class SysUserApiImpl implements SysUserApi {
 
     @Override
     public SysUserDTO getUserIdByUsername(String username) {
-        SysUser sysUser = sysUserService.getUserByUsername(username);
+        SysUser sysUser = sysUserService.selectUserByUsername(username);
         SysUserDTO user = new SysUserDTO();
         BeanUtils.copyProperties(sysUser,user);
         return user;

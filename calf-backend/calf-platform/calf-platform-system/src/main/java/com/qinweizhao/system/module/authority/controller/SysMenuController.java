@@ -3,7 +3,7 @@ package com.qinweizhao.system.module.authority.controller;
 
 import com.qinweizhao.common.base.BaseController;
 import com.qinweizhao.common.response.Result;
-import com.qinweizhao.system.module.authority.entity.SysMenu;
+import com.qinweizhao.system.module.authority.model.entity.SysMenu;
 import com.qinweizhao.system.module.authority.service.ISysMenuService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,7 +1,10 @@
 package com.qinweizhao.system.module.authority.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.qinweizhao.system.module.authority.entity.SysUser;
+import com.qinweizhao.system.module.authority.model.entity.SysUser;
+import com.qinweizhao.system.module.authority.model.query.SysUserQuery;
 
 import java.util.Map;
 
@@ -21,7 +24,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param username 　username
      * @return SysUser
      */
-    SysUser getUserByUsername(String username);
+    SysUser selectUserByUsername(String username);
 
     /**
      * 通过用户 id 获取权限信息
@@ -38,4 +41,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @return user roles permissions
      */
     Map<Object,Object> getProjectInitInfo(String currentLoginUsername);
+
+
+    IPage<SysUser> pageUsers(Page<SysUser> page, SysUserQuery sysUserQuery);
 }

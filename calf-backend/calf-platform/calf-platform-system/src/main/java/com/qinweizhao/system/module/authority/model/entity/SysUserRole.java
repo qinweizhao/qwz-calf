@@ -1,4 +1,4 @@
-package com.qinweizhao.system.module.authority.entity;
+package com.qinweizhao.system.module.authority.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -8,23 +8,31 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 角色和部门关联表
+ * 用户和角色关联表
  * </p>
  *
  * @author qinweizhao
  * @since 2021-12-06
  */
-@TableName("sys_role_dept")
-@ApiModel(value = "SysRoleDept对象", description = "角色和部门关联表")
-public class SysRoleDept implements Serializable {
+@TableName("sys_user_role")
+@ApiModel(value = "SysUserRole对象", description = "用户和角色关联表")
+public class SysUserRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty("用户ID")
+    private Long userId;
 
     @ApiModelProperty("角色ID")
     private Long roleId;
 
-    @ApiModelProperty("部门ID")
-    private Long deptId;
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public Long getRoleId() {
         return roleId;
@@ -34,19 +42,11 @@ public class SysRoleDept implements Serializable {
         this.roleId = roleId;
     }
 
-    public Long getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
-    }
-
     @Override
     public String toString() {
-        return "SysRoleDept{" +
-                "roleId=" + roleId +
-                ", deptId=" + deptId +
+        return "SysUserRole{" +
+                "userId=" + userId +
+                ", roleId=" + roleId +
                 "}";
     }
 }

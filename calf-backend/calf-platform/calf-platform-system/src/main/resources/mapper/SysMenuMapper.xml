@@ -3,7 +3,7 @@
 <mapper namespace="com.qinweizhao.system.module.authority.mapper.SysMenuMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.authority.entity.SysMenu">
+    <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.authority.model.entity.SysMenu">
         <id column="menu_id" property="menuId"/>
         <result column="menu_name" property="menuName"/>
         <result column="parent_id" property="parentId"/>
@@ -21,7 +21,7 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-    <select id="selectMenuListByUsername" resultType="com.qinweizhao.system.module.authority.entity.SysMenu">
+    <select id="selectMenuListByUsername" resultType="com.qinweizhao.system.module.authority.model.entity.SysMenu">
         SELECT m.*
         FROM sys_menu m
                  LEFT JOIN sys_role_menu rm ON rm.menu_id = m.menu_id

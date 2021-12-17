@@ -393,7 +393,7 @@ export default {
         this.dateRange[0] ? this.dateRange[0] + ' 00:00:00' : undefined,
         this.dateRange[1] ? this.dateRange[1] + ' 23:59:59' : undefined,
       ])).then(response => {
-          this.userList = response.data.list;
+          this.userList = response.data.records;
           this.total = response.data.total;
           this.loading = false;
         }

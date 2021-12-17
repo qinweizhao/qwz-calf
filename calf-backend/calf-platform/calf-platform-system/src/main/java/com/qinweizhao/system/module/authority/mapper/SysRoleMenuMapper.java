@@ -1,7 +1,7 @@
 package com.qinweizhao.system.module.authority.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.qinweizhao.system.module.authority.entity.SysRoleMenu;
+import com.qinweizhao.system.module.authority.model.entity.SysRoleMenu;
 
 /**
  * <p>

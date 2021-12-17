@@ -1,4 +1,4 @@
-package com.qinweizhao.system.module.authority.entity;
+package com.qinweizhao.system.module.authority.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -11,35 +11,41 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 岗位信息表
+ * 部门表
  * </p>
  *
  * @author qinweizhao
  * @since 2021-12-06
  */
-@TableName("sys_post")
-@ApiModel(value = "SysPost对象", description = "岗位信息表")
-public class SysPost implements Serializable {
+@TableName("sys_dept")
+@ApiModel(value = "SysDept对象", description = "部门表")
+public class SysDept implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("岗位ID")
-    @TableId(value = "post_id", type = IdType.AUTO)
-    private Long postId;
+    @ApiModelProperty("ID")
+    @TableId(value = "dept_id", type = IdType.AUTO)
+    private Long deptId;
 
-    @ApiModelProperty("岗位编码")
-    private String postCode;
+    @ApiModelProperty("父ID")
+    private Long parentId;
 
-    @ApiModelProperty("岗位名称")
-    private String postName;
+    @ApiModelProperty("名称")
+    private String deptName;
 
-    @ApiModelProperty("显示顺序")
-    private Integer postSort;
+    @ApiModelProperty("电话")
+    private String phone;
 
-    @ApiModelProperty("删除标志：1存在、0删除")
+    @ApiModelProperty("邮箱")
+    private String email;
+
+    @ApiModelProperty("排序")
+    private Integer deptSort;
+
+    @ApiModelProperty("删除：1存在、0删除")
     private String deleted;
 
-    @ApiModelProperty("状态（1正常 0停用）")
+    @ApiModelProperty("状态：1启用、0禁用")
     private String enabled;
 
     @ApiModelProperty("创建者")
@@ -54,36 +60,52 @@ public class SysPost implements Serializable {
     @ApiModelProperty("更新时间")
     private LocalDateTime updateTime;
 
-    public Long getPostId() {
-        return postId;
+    public Long getDeptId() {
+        return deptId;
     }
 
-    public void setPostId(Long postId) {
-        this.postId = postId;
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
     }
 
-    public String getPostCode() {
-        return postCode;
+    public Long getParentId() {
+        return parentId;
     }
 
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 
-    public String getPostName() {
-        return postName;
+    public String getDeptName() {
+        return deptName;
     }
 
-    public void setPostName(String postName) {
-        this.postName = postName;
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 
-    public Integer getPostSort() {
-        return postSort;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPostSort(Integer postSort) {
-        this.postSort = postSort;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getDeptSort() {
+        return deptSort;
+    }
+
+    public void setDeptSort(Integer deptSort) {
+        this.deptSort = deptSort;
     }
 
     public String getDeleted() {
@@ -136,11 +158,13 @@ public class SysPost implements Serializable {
 
     @Override
     public String toString() {
-        return "SysPost{" +
-                "postId=" + postId +
-                ", postCode=" + postCode +
-                ", postName=" + postName +
-                ", postSort=" + postSort +
+        return "SysDept{" +
+                "deptId=" + deptId +
+                ", parentId=" + parentId +
+                ", deptName=" + deptName +
+                ", phone=" + phone +
+                ", email=" + email +
+                ", deptSort=" + deptSort +
                 ", deleted=" + deleted +
                 ", enabled=" + enabled +
                 ", createBy=" + createBy +

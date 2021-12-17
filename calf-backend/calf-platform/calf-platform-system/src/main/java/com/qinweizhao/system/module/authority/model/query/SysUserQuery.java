@@ -1,7 +1,6 @@
-package com.qinweizhao.api.system.dto;
+package com.qinweizhao.system.module.authority.model.query;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -10,7 +9,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 /**
  * <p>
@@ -23,7 +21,7 @@ import java.util.Set;
 @Data
 @TableName("sys_user")
 @ApiModel(value = "SysUser对象", description = "系统用户")
-public class SysUserDTO implements Serializable {
+public class SysUserQuery implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -75,12 +73,5 @@ public class SysUserDTO implements Serializable {
 
     @ApiModelProperty("更新时间")
     private LocalDateTime updateTime;
-
-    /**
-     * 岗位编号数组
-     */
-    private Set<Long> postIds;
-
-    private SysDeptDTO dept;
 
 }

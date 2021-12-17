@@ -1,4 +1,4 @@
-package com.qinweizhao.system.module.authority.entity;
+package com.qinweizhao.api.system.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
  */
 @TableName("sys_dept")
 @ApiModel(value = "SysDept对象", description = "部门表")
-public class SysDept implements Serializable {
+public class SysDeptDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

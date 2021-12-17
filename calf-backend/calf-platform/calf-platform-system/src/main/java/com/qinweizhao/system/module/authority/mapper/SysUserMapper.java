@@ -1,8 +1,12 @@
 package com.qinweizhao.system.module.authority.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.qinweizhao.system.module.authority.entity.SysUser;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.system.module.authority.model.entity.SysUser;
+import com.qinweizhao.system.module.authority.model.query.SysUserQuery;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Set;
 
@@ -24,7 +28,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param username 　username
      * @return SysUser
      */
-    SysUser getUserByUsername(String username);
+    SysUser selectUserByUsername(String username);
 
     /**
      * 通过用户 id 查询角色
@@ -44,9 +48,11 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
 
     /**
-     * qqq
+     * 通过用户名查询用户
      * @param username username
      * @return return
      */
-    Long getUserIdByUsername(String username);
+    Long selectUserIdByUsername(String username);
+
+    IPage<SysUser> selectPageUsers(Page<SysUser> page, @Param("query") SysUserQuery sysUserQuery);
 }

@@ -1,7 +1,7 @@
 package com.qinweizhao.system.module.authority.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qinweizhao.system.module.authority.entity.SysRoleDept;
+import com.qinweizhao.system.module.authority.model.entity.SysRoleDept;
 import com.qinweizhao.system.module.authority.mapper.SysRoleDeptMapper;
 import com.qinweizhao.system.module.authority.service.ISysRoleDeptService;
 import org.springframework.stereotype.Service;

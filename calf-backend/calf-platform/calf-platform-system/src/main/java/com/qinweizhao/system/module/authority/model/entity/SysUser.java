@@ -1,4 +1,4 @@
-package com.qinweizhao.system.module.authority.entity;
+package com.qinweizhao.system.module.authority.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 2021-12-06
  */
 @Controller
-@RequestMapping("/mappers/system/sys-post")
+@RequestMapping("/sys/post")
 public class SysPostController {
 
 }

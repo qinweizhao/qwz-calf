@@ -11,10 +11,10 @@ import org.springframework.stereotype.Controller;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-10
+ * @since 2021/12/10
  */
 @Controller
-@RequestMapping("/system/sys-role-menu")
+@RequestMapping("/sys/role/menu")
 public class SysRoleMenuController {
 
 }
