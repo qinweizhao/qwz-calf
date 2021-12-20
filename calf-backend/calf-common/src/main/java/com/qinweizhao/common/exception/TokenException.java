@@ -3,7 +3,9 @@ package com.qinweizhao.common.exception;
 /**
  * Token处理异常
  *
- * @author xuzhanfu
+ * @author qinweizhao.
+ * @since 2021/11/18
+ *
  */
 public class TokenException extends RuntimeException {
 

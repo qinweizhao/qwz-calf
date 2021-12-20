@@ -41,9 +41,6 @@ const permission = {
 // 遍历后台传来的路由字符串，转换为组件对象
 function filterAsyncRouter(asyncRouterMap, isRewrite = false) {
   return asyncRouterMap.filter((route) => {
-    console.log("route start ")
-    console.log(route)
-    console.log("route end")
     // 处理 meta 属性
     route.meta = {
       title: route.menuName,

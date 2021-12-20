@@ -8,6 +8,8 @@ import com.qinweizhao.system.module.authority.model.query.SysUserQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**

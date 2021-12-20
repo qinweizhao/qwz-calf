@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qinweizhao.system.module.authority.model.entity.SysUserPost;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户与岗位关联表 Mapper 接口
@@ -14,5 +16,13 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SysUserPostMapper extends BaseMapper<SysUserPost> {
+
+    int deleteUserPost(List<Long> ids);
+
+    int insertBatchUserPost(List<SysUserPost> list);
+
+    List<Long> selectPostIdsByUserId(Long userId);
+
+
 
 }

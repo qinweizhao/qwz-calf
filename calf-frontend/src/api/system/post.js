@@ -12,7 +12,7 @@ export function listPost(query) {
 // 获取岗位精简信息列表
 export function listSimplePosts() {
   return request({
-    url: '/system/post/list-all-simple',
+    url: '/sys/post/list',
     method: 'get'
   })
 }

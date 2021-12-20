@@ -424,7 +424,7 @@ export default {
       listSimpleDepts().then(response => {
         // 处理 deptOptions 参数
         this.deptOptions = [];
-        this.deptOptions.push(...this.handleTree(response.data, "id"));
+        this.deptOptions.push(...this.handleTree(response.data, "deptId"));
         this.depts = response.data;
         // this.deptIds = response.data.map(x => x.id);
         // 获得角色拥有的数据权限

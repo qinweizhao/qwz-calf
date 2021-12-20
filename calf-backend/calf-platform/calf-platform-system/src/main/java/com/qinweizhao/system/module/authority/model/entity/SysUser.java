@@ -1,6 +1,7 @@
 package com.qinweizhao.system.module.authority.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -9,6 +10,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -74,4 +76,13 @@ public class SysUser implements Serializable {
     @ApiModelProperty("更新时间")
     private LocalDateTime updateTime;
 
+
+    @TableField(exist = false)
+    private List<Long> roleIds;
+
+    @TableField(exist = false)
+    private List<Long> postIds;
+
+    @TableField(exist = false)
+    private SysDept dept;
 }

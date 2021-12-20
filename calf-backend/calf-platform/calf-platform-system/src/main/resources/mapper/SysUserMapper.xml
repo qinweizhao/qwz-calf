@@ -51,12 +51,8 @@
     </select>
 
     <select id="selectPageUsers" resultType="com.qinweizhao.system.module.authority.model.entity.SysUser">
-        SELECT
-            *
-        FROM
-            sys_user AS `user`
-                LEFT JOIN sys_dept AS d ON d.dept_id = `user`.dept_id
-        ORDER BY `user`.create_time DESC
+        SELECT *
+        FROM sys_user
     </select>
 
 

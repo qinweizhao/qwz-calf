@@ -5,7 +5,7 @@ import { praseStrEmpty } from "@/utils/ruoyi";
 export function listUser(query) {
   return request({
     url: '/sys/user/page',
-    method: 'post',
+    method: 'get',
     params: query
   })
 }
@@ -13,7 +13,7 @@ export function listUser(query) {
 // 查询用户详细
 export function getUser(userId) {
   return request({
-    url: '/system/user/get?id=' + praseStrEmpty(userId),
+    url: '/sys/user/get?id=' + praseStrEmpty(userId),
     method: 'get'
   })
 }

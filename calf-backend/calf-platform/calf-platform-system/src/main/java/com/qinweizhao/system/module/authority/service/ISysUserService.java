@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.qinweizhao.system.module.authority.model.entity.SysUser;
 import com.qinweizhao.system.module.authority.model.query.SysUserQuery;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,4 +45,10 @@ public interface ISysUserService extends IService<SysUser> {
 
 
     IPage<SysUser> pageUsers(Page<SysUser> page, SysUserQuery sysUserQuery);
+
+
+    int removeUserByIds(List<Long> ids);
+
+    int saveUser(SysUser sysUser);
+
 }

@@ -18,8 +18,8 @@
             <el-input v-model="queryParams.username" placeholder="请输入用户名称" clearable size="small" style="width: 240px"
                       @keyup.enter.native="handleQuery"/>
           </el-form-item>
-          <el-form-item label="手机号码" prop="mobile">
-            <el-input v-model="queryParams.mobile" placeholder="请输入手机号码" clearable size="small" style="width: 240px"
+          <el-form-item label="手机号码" prop="phone">
+            <el-input v-model="queryParams.phone" placeholder="请输入手机号码" clearable size="small" style="width: 240px"
                       @keyup.enter.native="handleQuery"/>
           </el-form-item>
           <el-form-item label="状态" prop="status">
@@ -54,11 +54,11 @@
         </el-row>
 
         <el-table v-loading="loading" :data="userList">
-          <el-table-column label="用户编号" align="center" prop="id" />
+          <el-table-column label="用户编号" align="center" prop="userId" />
           <el-table-column label="用户名称" align="center" prop="username" :show-overflow-tooltip="true" />
-          <el-table-column label="用户昵称" align="center" prop="nickname" :show-overflow-tooltip="true" />
-          <el-table-column label="部门" align="center" prop="dept.name" :show-overflow-tooltip="true" />
-          <el-table-column label="手机号码" align="center" prop="mobile" width="120" />
+          <el-table-column label="用户昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />
+          <el-table-column label="部门" align="center" prop="dept.deptName" :show-overflow-tooltip="true" />
+          <el-table-column label="手机号码" align="center" prop="phone" width="120" />
           <el-table-column label="状态" align="center">
             <template slot-scope="scope">
               <el-switch v-model="scope.row.status" :active-value="0" :inactive-value="1" @change="handleStatusChange(scope.row)" />
@@ -100,8 +100,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="用户昵称" prop="nickname">
-              <el-input v-model="form.nickname" placeholder="请输入用户昵称" />
+            <el-form-item label="用户昵称" prop="nickName">
+              <el-input v-model="form.nickName" placeholder="请输入用户昵称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -113,8 +113,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="手机号码" prop="mobile">
-              <el-input v-model="form.mobile" placeholder="请输入手机号码" maxlength="11" />
+            <el-form-item label="手机号码" prop="phone">
+              <el-input v-model="form.phone" placeholder="请输入手机号码" maxlength="11" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -145,12 +145,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="岗位">
-              <el-select v-model="form.postIds" multiple placeholder="请选择">
+              <el-select v-model="form.postId" multiple placeholder="请选择">
                 <el-option
                     v-for="item in postOptions"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
+                    :key="item.postId"
+                    :label="item.postName"
+                    :value="item.postId"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -291,7 +291,7 @@ export default {
       form: {},
       defaultProps: {
         children: "children",
-        label: "name"
+        label: "deptName"
       },
       // 用户导入参数
       upload: {
@@ -313,7 +313,7 @@ export default {
         pageNo: 1,
         pageSize: 10,
         username: undefined,
-        mobile: undefined,
+        phone: undefined,
         status: undefined,
         deptId: undefined
       },
@@ -322,7 +322,7 @@ export default {
         username: [
           { required: true, message: "用户名称不能为空", trigger: "blur" }
         ],
-        nickname: [
+        nickName: [
           { required: true, message: "用户昵称不能为空", trigger: "blur" }
         ],
         password: [
@@ -335,7 +335,7 @@ export default {
             trigger: ["blur", "change"]
           }
         ],
-        mobile: [
+        phone: [
           {
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
             message: "请输入正确的手机号码",
@@ -362,9 +362,9 @@ export default {
   created() {
     this.getList();
     this.getTreeselect();
-    this.getConfigKey("sys.user.init-password").then(response => {
-      this.initPassword = response.msg;
-    });
+    //this.getConfigKey("sys.user.init-password").then(response => {
+    //  this.initPassword = response.msg;
+    //});
   },
   methods: {
     // 更多操作
@@ -404,7 +404,9 @@ export default {
       listSimpleDepts().then(response => {
         // 处理 deptOptions 参数
         this.deptOptions = [];
-        this.deptOptions.push(...this.handleTree(response.data, "id"));
+         console.log("deptId start")
+        console.log(...this.handleTree(response.data, "deptId"))
+        this.deptOptions.push(...this.handleTree(response.data, "deptId"));
       });
       listSimplePosts().then(response => {
         // 处理 postOptions 参数
@@ -419,7 +421,7 @@ export default {
     },
     // 节点单击事件
     handleNodeClick(data) {
-      this.queryParams.deptId = data.id;
+      this.queryParams.deptId = data.deptId;
       this.getList();
     },
     // 用户状态修改
@@ -451,12 +453,12 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        id: undefined,
+        userId: undefined,
         deptId: undefined,
         username: undefined,
-        nickname: undefined,
+        nickName: undefined,
         password: undefined,
-        mobile: undefined,
+        phone: undefined,
         email: undefined,
         sex: undefined,
         status: "0",
@@ -491,7 +493,7 @@ export default {
     handleUpdate(row) {
       this.reset();
       this.getTreeselect();
-      const id = row.id;
+      const id = row.userId;
       getUser(id).then(response => {
         this.form = response.data;
         this.open = true;

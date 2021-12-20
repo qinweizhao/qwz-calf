@@ -10,6 +10,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -79,8 +80,17 @@ public class SysUserDTO implements Serializable {
     /**
      * 岗位编号数组
      */
-    private Set<Long> postIds;
+    private List<Long> postIds;
 
+
+    /**
+     * 角色编号数组
+     */
+    private List<Long> roleIds;
+
+    /**
+     * 岗位
+     */
     private SysDeptDTO dept;
 
 }

@@ -3,8 +3,10 @@ package com.qinweizhao.system.module.authority.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.common.base.BaseController;
 import com.qinweizhao.common.response.Result;
+import com.qinweizhao.system.module.authority.model.entity.SysDept;
 import com.qinweizhao.system.module.authority.model.entity.SysUser;
 import com.qinweizhao.system.module.authority.model.query.SysUserQuery;
 import com.qinweizhao.system.module.authority.service.ISysUserService;
@@ -35,24 +37,50 @@ public class SysUserController extends BaseController {
     @Resource
     private ISysUserService sysUserService;
 
+
+    /**
+     * 获取用户详情
+     * @param id id
+     * @return SysUser
+     */
+    @GetMapping("/get")
+    @ApiOperation(value = "获取用户", notes = "获取用户详情")
+    public Result<SysUser> get(Long id) {
+        return Result.success(sysUserService.getById(id));
+    }
+
+    /**
+     * 修改
+     *
+     * @param sysUser 用户信息
+     * @return Result
+     */
+    @PostMapping("/save")
+    @ApiOperation(value = "设置用户", notes = "新增或修改用户")
+    public Result<Object> save(@RequestBody SysUser sysUser) {
+        sysUserService.saveUser(sysUser);
+        return Result.success();
+    }
+
+
     /**
      * 用户列表
      *
      * @return Result
      */
-    @PostMapping("/page")
-    public Result<IPage<SysUser>> page(Page<SysUser> page,SysUserQuery sysUserQuery) {
+    @GetMapping("/page")
+    public Result<Object> page(Page<SysUser> page,SysUserQuery sysUserQuery) {
         return Result.success(sysUserService.pageUsers(page,sysUserQuery));
     }
 
     /**
-     * 设置用户，支持新增或修改
+     * 修改
      *
      * @param sysUser 用户信息
      * @return Result
      */
     @PostMapping("/edit")
-    @ApiOperation(value = "设置用户", notes = "新增或修改用户")
+    @ApiOperation(value = "设置用户", notes = "修改用户")
     public Result<Object> edit(@Valid @RequestBody SysUser sysUser) {
         return Result.condition(sysUserService.updateById(sysUser));
     }
@@ -78,8 +106,8 @@ public class SysUserController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ids", required = true, value = "多个用,号隔开", paramType = "form")
     })
-    public Result<Object> del(@RequestParam List<String> ids) {
-        return Result.condition(sysUserService.removeByIds(ids));
+    public Result<Object> del(@RequestParam List<Long> ids) {
+        return Result.condition(sysUserService.removeUserByIds(ids));
     }
 
     /**
