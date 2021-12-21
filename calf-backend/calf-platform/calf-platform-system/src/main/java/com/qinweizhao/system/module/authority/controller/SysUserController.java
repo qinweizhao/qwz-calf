@@ -1,6 +1,7 @@
 package com.qinweizhao.system.module.authority.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.common.base.BaseController;
 import com.qinweizhao.common.response.Result;
@@ -61,7 +62,7 @@ public class SysUserController extends BaseController {
      * @return Result
      */
     @GetMapping("/page")
-    public Result<Object> page(Page<SysUser> page, SysUser sysUser) {
+    public Result<IPage<SysUser>> page(Page<SysUser> page, SysUser sysUser) {
         return Result.success(sysUserService.pageUsers(page, sysUser));
     }
 

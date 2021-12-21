@@ -1,6 +1,9 @@
 package com.qinweizhao.system.module.system.mapper;
 
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.qinweizhao.system.module.system.entity.SysDictData;
+
 /**
  * <p>
  * 字典数据表 Mapper 接口
@@ -11,4 +14,5 @@ package com.qinweizhao.system.module.system.mapper;
  */
 public interface SysDictDataMapper extends BaseMapper<SysDictData> {
 
+    int selectCountByDictType(String type);
 }

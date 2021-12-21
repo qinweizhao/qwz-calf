@@ -1,5 +1,6 @@
 package com.qinweizhao.system.module.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.qinweizhao.system.module.system.entity.SysDictType;
 
@@ -13,4 +14,11 @@ import com.qinweizhao.system.module.system.entity.SysDictType;
  */
 public interface ISysDictTypeService extends IService<SysDictType> {
 
+    int saveDictType(SysDictType sysDictType);
+
+    int updateDictType(SysDictType sysDictType);
+
+    int removeDictType(Long id);
+
+    IPage<SysDictType> pageDictTypes(SysDictType sysDictType);
 }

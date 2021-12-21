@@ -13,4 +13,7 @@ import com.qinweizhao.system.module.system.entity.SysDictType;
  */
 public interface SysDictTypeMapper extends BaseMapper<SysDictType> {
 
+    SysDictType selectDictTypeByType(String type);
+
+    SysDictType selectDictTypeByName(String name);
 }
