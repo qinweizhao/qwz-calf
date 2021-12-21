@@ -5,8 +5,8 @@
         <el-input v-model="queryParams.name" placeholder="请输入角色名称" clearable size="small" style="width: 240px"
                   @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="角色标识" prop="code">
-        <el-input v-model="queryParams.code" placeholder="请输入角色标识" clearable size="small" style="width: 240px"
+      <el-form-item label="角色标识" prop="roleKey">
+        <el-input v-model="queryParams.roleKey" placeholder="请输入角色标识" clearable size="small" style="width: 240px"
                   @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="状态" prop="status">
@@ -37,11 +37,10 @@
     </el-row>
 
     <el-table v-loading="loading" :data="roleList">
-      <el-table-column label="角色编号" prop="id" width="120" />
-      <el-table-column label="角色名称" prop="name" :show-overflow-tooltip="true" width="150" />
-      <el-table-column label="角色标识" prop="code" :show-overflow-tooltip="true" width="150" />
-      <el-table-column label="角色类型" prop="type" :formatter="typeFormat" width="80"></el-table-column>
-      <el-table-column label="显示顺序" prop="sort" width="100" />
+      <el-table-column label="角色编号" prop="roleId" width="120" />
+      <el-table-column label="角色名称" prop="roleName" :show-overflow-tooltip="true" width="150" />
+      <el-table-column label="角色标识" prop="roleKey" :show-overflow-tooltip="true" width="150" />
+      <el-table-column label="显示顺序" prop="roleSort" width="180" />
       <el-table-column label="状态" align="center" width="100">
         <template slot-scope="scope">
           <el-switch v-model="scope.row.status" :active-value="0" :inactive-value="1" @change="handleStatusChange(scope.row)"></el-switch>
@@ -66,7 +65,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.current" :limit.sync="queryParams.size"
                 @pagination="getList"/>
 
     <!-- 添加或修改角色配置对话框 -->
@@ -215,8 +214,8 @@ export default {
       depts: [], // 部门列表
       // 查询参数
       queryParams: {
-        pageNo: 1,
-        pageSize: 10,
+        current: 1,
+        size: 10,
         name: undefined,
         code: undefined,
         status: undefined
@@ -261,7 +260,7 @@ export default {
         this.dateRange[1] ? this.dateRange[1] + ' 23:59:59' : undefined,
       ])).then(
         response => {
-          this.roleList = response.data.list;
+          this.roleList = response.data.records;
           this.total = response.data.total;
           this.loading = false;
         }
@@ -329,7 +328,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNo = 1;
+      this.queryParams.current = 1;
       this.getList();
     },
     /** 重置按钮操作 */

@@ -17,6 +17,7 @@ import com.qinweizhao.system.module.authority.model.entity.SysUserRole;
 import com.qinweizhao.system.module.authority.model.query.SysUserQuery;
 import com.qinweizhao.system.module.authority.service.ISysUserService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +43,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private SysUserRoleMapper userRoleMapper;
 
     @Resource
-    private SysUserPostMapper userPostMapper;
+    private SysUserPostMapper sysUserPostMapper;
     @Resource
     private SysDeptMapper sysDeptMapper;
 
@@ -86,12 +87,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 
     @Override
-    public IPage<SysUser> pageUsers(Page<SysUser> page, SysUserQuery sysUserQuery) {
-        IPage<SysUser> sysUserPage = this.baseMapper.selectPageUsers(page, sysUserQuery);
+    public SysUser getUserById(Long id) {
+        SysUser sysUser = this.baseMapper.selectById(id);
+        List<Long> ids = sysUserPostMapper.selectPostIdsByUserId(id);
+        sysUser.setPostIds(ids);
+        return sysUser;
+    }
+
+    @Override
+    public IPage<SysUser> pageUsers(Page<SysUser> page, SysUser sysUser) {
+        IPage<SysUser> sysUserPage = this.baseMapper.selectPageUsers(page, sysUser);
         List<SysUser> records = sysUserPage.getRecords();
         records.forEach(item->{
             item.setDept(sysDeptMapper.selectById(item.getDeptId()));
-            item.setPostIds(userPostMapper.selectPostIdsByUserId(item.getUserId()));
+            item.setPostIds(sysUserPostMapper.selectPostIdsByUserId(item.getUserId()));
         });
         return sysUserPage;
 
@@ -101,29 +110,29 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public int removeUserByIds(List<Long> ids) {
         // 获取当前用户 id
-        SysUser loginUser = (SysUser) SecurityUtils.getLoginUser();
-        Long userId = loginUser.getUserId();
+        String username = (String) SecurityUtils.getLoginUsername();
+        SysUser sysUser = this.baseMapper.selectUserByUsername(username);
+        Long userId = sysUser.getUserId();
         if (ids.contains(userId)) {
             throw new ServiceException("不能删除当前用户");
         }
         // 删除用户与角色关联
         userRoleMapper.deleteUserRole(ids);
         // 删除用户与岗位关联
-        userPostMapper.deleteUserPost(ids);
+        sysUserPostMapper.deleteUserPost(ids);
         return this.baseMapper.deleteBatchIds(ids);
     }
 
 
     @Override
     public int saveUser(SysUser sysUser) {
+        // 新增用户信息
+        int i = this.baseMapper.insert(sysUser);
         // 新增用户岗位关联
         this.insertUserPost(sysUser);
         // 新增用户与角色管理
         this.insertUserRole(sysUser);
-        // 新增用户信息
-        SysUser user = new SysUser();
-        BeanUtils.copyProperties(sysUser,user );
-        return this.baseMapper.insert(user);
+        return i;
     }
 
     private void insertUserRole(SysUser sysUser) {
@@ -156,7 +165,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 list.add(up);
             }
             if (!list.isEmpty()) {
-                userPostMapper.insertBatchUserPost(list);
+                sysUserPostMapper.insertBatchUserPost(list);
             }
         }
     }

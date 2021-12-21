@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,10 +71,10 @@ public class SysUser implements Serializable {
     private String updateBy;
 
     @ApiModelProperty("创建日期")
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @ApiModelProperty("更新时间")
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
 
     @TableField(exist = false)
@@ -85,4 +85,15 @@ public class SysUser implements Serializable {
 
     @TableField(exist = false)
     private SysDept dept;
+
+    /**
+     * 开始时间
+     */
+    @TableField(exist = false)
+    private String beginTime;
+    /**
+     * 结束时间
+     */
+    @TableField(exist = false)
+    private String endTime;
 }

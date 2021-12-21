@@ -3,6 +3,7 @@ package com.qinweizhao.system.module.authority.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qinweizhao.system.module.authority.model.entity.SysUserRole;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    int deleteUserRole(List<Long> ids);
+    int deleteUserRole(@Param("ids") List<Long> ids);
 
     void insertBatchUserRole(List<SysUserRole> list);
 

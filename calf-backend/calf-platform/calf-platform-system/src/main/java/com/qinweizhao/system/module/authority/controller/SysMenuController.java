@@ -33,5 +33,11 @@ public class SysMenuController extends BaseController {
         return Result.success(list);
     }
 
+    @GetMapping("/list")
+    public Result<List<SysMenu>> list() {
+        return Result.success(sysMenuService.list());
+    }
+
+
 
 }

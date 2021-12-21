@@ -18,7 +18,7 @@
 
     <delete id="deleteUserPost">
         delete from sys_user_post where user_id in
-        <foreach collection="array" item="userId" open="(" separator="," close=")">
+        <foreach collection="ids" item="userId" open="(" separator="," close=")">
             #{userId}
         </foreach>
     </delete>

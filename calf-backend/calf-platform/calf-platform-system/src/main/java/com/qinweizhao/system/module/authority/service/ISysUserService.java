@@ -44,11 +44,12 @@ public interface ISysUserService extends IService<SysUser> {
     Map<Object,Object> getProjectInitInfo(String currentLoginUsername);
 
 
-    IPage<SysUser> pageUsers(Page<SysUser> page, SysUserQuery sysUserQuery);
+    IPage<SysUser> pageUsers(Page<SysUser> page, SysUser sysUser);
 
 
     int removeUserByIds(List<Long> ids);
 
     int saveUser(SysUser sysUser);
 
+    SysUser getUserById(Long id);
 }

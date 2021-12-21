@@ -56,7 +56,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.current" :limit.sync="queryParams.size"
                 @pagination="getList"/>
   </div>
 </template>
@@ -82,8 +82,8 @@ export default {
       dateRange: [],
       // 查询参数
       queryParams: {
-        pageNo: 1,
-        pageSize: 10,
+        current: 1,
+        size: 10,
         userIp: undefined,
         username: undefined,
         status: undefined
@@ -113,7 +113,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNo = 1;
+      this.queryParams.current = 1;
       this.getList();
     },
     /** 重置按钮操作 */

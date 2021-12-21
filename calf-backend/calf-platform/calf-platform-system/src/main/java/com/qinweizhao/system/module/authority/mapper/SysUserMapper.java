@@ -56,5 +56,5 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      */
     Long selectUserIdByUsername(String username);
 
-    IPage<SysUser> selectPageUsers(Page<SysUser> page, @Param("query") SysUserQuery sysUserQuery);
+    IPage<SysUser> selectPageUsers(Page<SysUser> page, @Param("query") SysUser sysUser);
 }

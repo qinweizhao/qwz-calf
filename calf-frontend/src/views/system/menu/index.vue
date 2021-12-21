@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
-      <el-form-item label="菜单名称" prop="name">
-        <el-input v-model="queryParams.name" placeholder="请输入菜单名称" clearable size="small" @keyup.enter.native="handleQuery"/>
+      <el-form-item label="菜单名称" prop="menuName">
+        <el-input v-model="queryParams.menuName" placeholder="请输入菜单名称" clearable size="small" @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="菜单状态" clearable size="small">
@@ -23,18 +23,18 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="menuList" row-key="id"
+    <el-table v-loading="loading" :data="menuList" row-key="menuId"
               :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-      <el-table-column prop="name" label="菜单名称" :show-overflow-tooltip="true" width="200"></el-table-column>
+      <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="200"></el-table-column>
       <el-table-column prop="icon" label="图标" align="center" width="100">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon" />
         </template>
       </el-table-column>
-      <el-table-column prop="sort" label="排序" width="60"></el-table-column>
+      <el-table-column prop="menuSort" label="排序" width="60"></el-table-column>
       <el-table-column prop="permission" label="权限标识" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="component" label="组件路径" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="status" label="状态" :formatter="statusFormat" width="80"></el-table-column>
+      <el-table-column prop="enabled" label="状态" :formatter="statusFormat" width="80"></el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -194,7 +194,7 @@ export default {
     getList() {
       this.loading = true;
       listMenu(this.queryParams).then(response => {
-        this.menuList = this.handleTree(response.data, "id");
+        this.menuList = this.handleTree(response.data, "menuId");
         this.loading = false;
       });
     },
@@ -204,8 +204,8 @@ export default {
         delete node.children;
       }
       return {
-        id: node.id,
-        label: node.name,
+        id: node.menuId,
+        label: node.menuName,
         children: node.children
       };
     },

@@ -17,7 +17,7 @@ public class SecurityUtils {
     /**
      * 获取用户
      **/
-    public static Object getLoginUser() {
+    public static Object getLoginUsername() {
         try {
             return getAuthentication().getPrincipal();
         } catch (Exception e) {

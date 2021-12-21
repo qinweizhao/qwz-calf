@@ -53,6 +53,28 @@
     <select id="selectPageUsers" resultType="com.qinweizhao.system.module.authority.model.entity.SysUser">
         SELECT *
         FROM sys_user
+        <where>
+            <if test="query.username != null and query.username != ''">
+                username like concat('%', #{query.username}, '%')
+            </if>
+            <if test="query.enabled != null and query.enabled != ''">
+                AND enabled = #{query.enabled}
+            </if>
+            <if test="query.phone != null and query.phone != ''">
+                AND phone like concat('%', #{query.phone}, '%')
+            </if>
+            <if test="query.deptId != null and query.deptId != 0">
+                AND dept_id = #{query.deptId}
+            </if>
+            <!-- 开始时间检索 -->
+            <if test="query.beginTime != null and query.beginTime != ''">
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{query.beginTime},'%y%m%d')
+            </if>
+            <!-- 结束时间检索 -->
+            <if test="query.endTime != null and query.endTime != ''">
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{query.endTime},'%y%m%d')
+            </if>
+        </where>
     </select>
 
 

@@ -32,7 +32,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="pageNo" :limit.sync="pageSize" />
+    <pagination v-show="total>0" :total="total" :page.sync="current" :limit.sync="size" />
   </div>
 </template>
 
@@ -51,8 +51,8 @@ export default {
       list: [],
       // 查询参数
       queryParams: {
-        pageNo: 1,
-        pageSize: 10,
+        current: 1,
+        size: 10,
         userIp: undefined,
         username: undefined
       }
@@ -73,7 +73,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.pageNo = 1;
+      this.current = 1;
       this.getList();
     },
     /** 重置按钮操作 */

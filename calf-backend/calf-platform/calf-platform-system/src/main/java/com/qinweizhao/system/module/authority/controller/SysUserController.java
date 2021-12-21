@@ -1,14 +1,10 @@
 package com.qinweizhao.system.module.authority.controller;
 
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.common.base.BaseController;
 import com.qinweizhao.common.response.Result;
-import com.qinweizhao.system.module.authority.model.entity.SysDept;
 import com.qinweizhao.system.module.authority.model.entity.SysUser;
-import com.qinweizhao.system.module.authority.model.query.SysUserQuery;
 import com.qinweizhao.system.module.authority.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -37,17 +33,38 @@ public class SysUserController extends BaseController {
     @Resource
     private ISysUserService sysUserService;
 
+    /**
+     * 登录成功后需要的信息
+     *
+     * @return Result
+     */
+    @GetMapping("/info")
+    public Result<Map<Object, Object>> info() {
+        return Result.success(sysUserService.getProjectInitInfo(getCurrentLoginUsername()));
+    }
 
     /**
      * 获取用户详情
+     *
      * @param id id
      * @return SysUser
      */
     @GetMapping("/get")
     @ApiOperation(value = "获取用户", notes = "获取用户详情")
     public Result<SysUser> get(Long id) {
-        return Result.success(sysUserService.getById(id));
+        return Result.success(sysUserService.getUserById(id));
     }
+
+    /**
+     * 用户列表
+     *
+     * @return Result
+     */
+    @GetMapping("/page")
+    public Result<Object> page(Page<SysUser> page, SysUser sysUser) {
+        return Result.success(sysUserService.pageUsers(page, sysUser));
+    }
+
 
     /**
      * 修改
@@ -58,20 +75,9 @@ public class SysUserController extends BaseController {
     @PostMapping("/save")
     @ApiOperation(value = "设置用户", notes = "新增或修改用户")
     public Result<Object> save(@RequestBody SysUser sysUser) {
-        sysUserService.saveUser(sysUser);
-        return Result.success();
+        return Result.success(sysUserService.saveUser(sysUser));
     }
 
-
-    /**
-     * 用户列表
-     *
-     * @return Result
-     */
-    @GetMapping("/page")
-    public Result<Object> page(Page<SysUser> page,SysUserQuery sysUserQuery) {
-        return Result.success(sysUserService.pageUsers(page,sysUserQuery));
-    }
 
     /**
      * 修改
@@ -85,29 +91,20 @@ public class SysUserController extends BaseController {
         return Result.condition(sysUserService.updateById(sysUser));
     }
 
-    /**
-     * 登录成功后需要的信息
-     *
-     * @return Result
-     */
-    @GetMapping("/info")
-    public Result<Map<Object, Object>> info() {
-        return Result.success(sysUserService.getProjectInitInfo(getCurrentLoginUsername()));
-    }
 
     /**
      * 用户删除
      *
-     * @param ids id字符串，根据,号分隔
+     * @param id id字符串，根据,号分隔
      * @return Result
      */
-    @PostMapping("/delete")
+    @GetMapping("/delete")
     @ApiOperation(value = "用户删除", notes = "用户删除")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "ids", required = true, value = "多个用,号隔开", paramType = "form")
     })
-    public Result<Object> del(@RequestParam List<Long> ids) {
-        return Result.condition(sysUserService.removeUserByIds(ids));
+    public Result<Object> delete(@RequestParam List<Long> id) {
+        return Result.condition(sysUserService.removeUserByIds(id));
     }
 
     /**

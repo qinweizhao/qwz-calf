@@ -52,7 +52,7 @@
       </el-table-column>
     </el-table>
     <!-- 分页组件 -->
-    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
+    <pagination v-show="total > 0" :total="total" :page.sync="queryParams.current" :limit.sync="queryParams.size"
                 @pagination="getList"/>
 
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
@@ -129,8 +129,8 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        pageNo: 1,
-        pageSize: 10
+        current: 1,
+        size: 10
       },
       // 表单参数
       form: {},
@@ -209,7 +209,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNo = 1;
+      this.queryParams.current = 1;
       this.getList();
     },
     /** 重置按钮操作 */

@@ -3,6 +3,7 @@ package com.qinweizhao.system.module.authority.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qinweizhao.system.module.authority.model.entity.SysUserPost;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,9 +18,9 @@ import java.util.List;
 @Mapper
 public interface SysUserPostMapper extends BaseMapper<SysUserPost> {
 
-    int deleteUserPost(List<Long> ids);
+    int deleteUserPost(@Param("ids") List<Long> ids);
 
-    int insertBatchUserPost(List<SysUserPost> list);
+    int insertBatchUserPost(@Param("list") List<SysUserPost> list);
 
     List<Long> selectPostIdsByUserId(Long userId);
 

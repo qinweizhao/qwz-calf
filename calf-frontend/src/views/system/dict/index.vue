@@ -61,7 +61,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.current" :limit.sync="queryParams.size"
                 @pagination="getList"/>
 
     <!-- 添加或修改参数配置对话框 -->
@@ -118,8 +118,8 @@ export default {
       dateRangeCreateTime: [],
       // 查询参数
       queryParams: {
-        pageNo: 1,
-        pageSize: 10,
+        current: 1,
+        size: 10,
         name: undefined,
         type: undefined,
         status: undefined
@@ -181,7 +181,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNo = 1;
+      this.queryParams.current = 1;
       this.getList();
     },
     /** 重置按钮操作 */
@@ -244,8 +244,8 @@ export default {
     handleExport() {
       // 处理查询参数
       let params = {...this.queryParams};
-      params.pageNo = undefined;
-      params.pageSize = undefined;
+      params.current = undefined;
+      params.size = undefined;
       this.addBeginAndEndTime(params, this.dateRangeCreateTime, 'createTime');
       // 执行导出
       this.$confirm('是否确认导出所有字典类型数据项?', "警告", {

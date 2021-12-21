@@ -22,8 +22,8 @@
             <el-input v-model="queryParams.phone" placeholder="请输入手机号码" clearable size="small" style="width: 240px"
                       @keyup.enter.native="handleQuery"/>
           </el-form-item>
-          <el-form-item label="状态" prop="status">
-            <el-select v-model="queryParams.status" placeholder="用户状态" clearable size="small" style="width: 240px">
+          <el-form-item label="状态" prop="enabled">
+            <el-select v-model="queryParams.enabled" placeholder="用户状态" clearable size="small" style="width: 240px">
               <el-option v-for="dict in statusDictDatas" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
             </el-select>
           </el-form-item>
@@ -78,7 +78,7 @@
                       更多操作<i class="el-icon-arrow-down el-icon--right"></i>
                     </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="handleDelete" v-if="scope.row.id !== 1" size="mini" type="text" icon="el-icon-delete"
+                  <el-dropdown-item command="handleDelete" v-if="scope.row.userId !== 1" size="mini" type="text" icon="el-icon-delete"
                                     v-hasPermi="['system:user:delete']">删除</el-dropdown-item>
                   <el-dropdown-item command="handleResetPwd" size="mini" type="text" icon="el-icon-key"
                                     v-hasPermi="['system:user:update-password']">重置密码</el-dropdown-item>
@@ -90,7 +90,7 @@
           </el-table-column>
         </el-table>
 
-        <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
+        <pagination v-show="total>0" :total="total" :page.sync="queryParams.current" :limit.sync="queryParams.size"
                     @pagination="getList"/>
       </el-col>
     </el-row>
@@ -125,12 +125,12 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item v-if="form.id === undefined" label="用户名称" prop="username">
+            <el-form-item v-if="form.userId === undefined" label="用户名称" prop="username">
               <el-input v-model="form.username" placeholder="请输入用户名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item v-if="form.id === undefined" label="用户密码" prop="password">
+            <el-form-item v-if="form.userId === undefined" label="用户密码" prop="password">
               <el-input v-model="form.password" placeholder="请输入用户密码" type="password" />
             </el-form-item>
           </el-col>
@@ -145,7 +145,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="岗位">
-              <el-select v-model="form.postId" multiple placeholder="请选择">
+              <el-select v-model="form.postIds" multiple placeholder="请选择">
                 <el-option
                     v-for="item in postOptions"
                     :key="item.postId"
@@ -310,8 +310,8 @@ export default {
       },
       // 查询参数
       queryParams: {
-        pageNo: 1,
-        pageSize: 10,
+        current: 1,
+        size: 10,
         username: undefined,
         phone: undefined,
         status: undefined,
@@ -404,8 +404,6 @@ export default {
       listSimpleDepts().then(response => {
         // 处理 deptOptions 参数
         this.deptOptions = [];
-         console.log("deptId start")
-        console.log(...this.handleTree(response.data, "deptId"))
         this.deptOptions.push(...this.handleTree(response.data, "deptId"));
       });
       listSimplePosts().then(response => {
@@ -417,7 +415,7 @@ export default {
     // 筛选节点
     filterNode(value, data) {
       if (!value) return true;
-      return data.name.indexOf(value) !== -1;
+      return data.deptName.indexOf(value) !== -1;
     },
     // 节点单击事件
     handleNodeClick(data) {
@@ -470,7 +468,7 @@ export default {
     },
     /** 搜索按钮操作 */
     handleQuery() {
-      this.queryParams.pageNo = 1;
+      this.queryParams.current = 1;
       this.getList();
     },
     /** 重置按钮操作 */
@@ -538,7 +536,7 @@ export default {
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.id !== undefined) {
+          if (this.form.userId !== undefined) {
             updateUser(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
@@ -569,7 +567,7 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
+      const ids = row.userId || this.ids;
       this.$confirm('是否确认删除用户编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -641,8 +639,8 @@ export default {
     // 格式化部门的下拉框
     normalizer(node) {
       return {
-        id: node.id,
-        label: node.name,
+        id: node.deptId,
+        label: node.deptName,
         children: node.children
       }
     }
