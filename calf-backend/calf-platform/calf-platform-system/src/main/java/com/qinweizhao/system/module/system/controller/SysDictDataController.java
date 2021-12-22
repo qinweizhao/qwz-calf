@@ -25,7 +25,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-21
  */
-@Controller
+@RestController
 @RequestMapping("/sys/dict/data")
 public class SysDictDataController {
 

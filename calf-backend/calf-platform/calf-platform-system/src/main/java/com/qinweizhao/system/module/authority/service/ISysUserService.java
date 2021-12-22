@@ -52,4 +52,5 @@ public interface ISysUserService extends IService<SysUser> {
     int saveUser(SysUser sysUser);
 
     SysUser getUserById(Long id);
+
 }

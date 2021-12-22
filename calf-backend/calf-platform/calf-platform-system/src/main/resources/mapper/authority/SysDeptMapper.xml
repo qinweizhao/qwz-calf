@@ -9,9 +9,9 @@
         <result column="dept_name" property="deptName"/>
         <result column="phone" property="phone"/>
         <result column="email" property="email"/>
-        <result column="dept_sort" property="deptSort"/>
+        <result column="dept_sort" property="sort"/>
         <result column="deleted" property="deleted"/>
-        <result column="enabled" property="enabled"/>
+        <result column="enabled" property="status"/>
         <result column="create_by" property="createBy"/>
         <result column="create_time" property="createTime"/>
         <result column="update_by" property="updateBy"/>

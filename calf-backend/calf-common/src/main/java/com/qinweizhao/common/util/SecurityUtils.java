@@ -21,7 +21,7 @@ public class SecurityUtils {
         try {
             return getAuthentication().getPrincipal();
         } catch (Exception e) {
-            throw new ServiceException("获取用户信息异常", HttpStatus.UNAUTHORIZED.value());
+            throw new ServiceException("获取用户信息异常");
         }
     }
 

@@ -25,7 +25,7 @@ public class FastGenerator {
                             // 覆盖已生成文件
                             .fileOverride()
                             // 指定输出目录
-                            .outputDir(property + "/code/generator/src/main/java");
+                            .outputDir(property + "/calf-resource/code/generator/src/main/java");
                 })
                 .packageConfig(builder -> builder
                         // 设置父包名
@@ -33,11 +33,20 @@ public class FastGenerator {
                         // 设置父包模块名
                         .moduleName("system")
                         // 设置mapperXml生成路径
-                        .pathInfo(Collections.singletonMap(OutputFile.mapperXml, property + "/code/generator/src/main/resources/mapper")))
+                        .pathInfo(Collections.singletonMap(OutputFile.mapperXml, property + "/calf-resource/code/generator/src/main/resources/mapper")))
                 .strategyConfig(builder -> {
                     builder
-                            .addExclude("a")
-                            .mapperBuilder().enableBaseResultMap()
+                            // Collections.emptyList()
+                            .addInclude("sys_operate_log","sys_login_log","sys_user_session")
+                            // 忽略那些表
+                            //.addExclude("a")
+                            // Mapper 策略配置
+                            .controllerBuilder().enableRestStyle()
+                            .mapperBuilder()
+                            // 启用 BaseResultMap 生成
+                            .enableBaseResultMap()
+                            // 启用 BaseColumnList
+                            .enableBaseColumnList()
                             .serviceBuilder()
                     // 设置需要生成的表名
                     //.addTablePrefix("sys_")

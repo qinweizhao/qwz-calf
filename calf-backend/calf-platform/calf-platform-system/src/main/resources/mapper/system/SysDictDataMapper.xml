@@ -18,4 +18,8 @@
         <result column="deleted" property="deleted" />
     </resultMap>
 
+    <select id="selectCountByDictType" resultType="java.lang.Integer">
+
+    </select>
+
 </mapper>

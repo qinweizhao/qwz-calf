@@ -6,14 +6,21 @@
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.system.entity.SysDictType">
         <id column="id" property="id" />
         <result column="name" property="name" />
-        <result column="type" property="type" />
-        <result column="status" property="status" />
-        <result column="remark" property="remark" />
-        <result column="creator" property="creator" />
-        <result column="create_time" property="createTime" />
-        <result column="updater" property="updater" />
-        <result column="update_time" property="updateTime" />
-        <result column="deleted" property="deleted" />
+        <result column="type" property="type"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="creator" property="creator"/>
+        <result column="create_time" property="createTime"/>
+        <result column="updater" property="updater"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="deleted" property="deleted"/>
     </resultMap>
+
+    <select id="selectDictTypeByName" resultType="com.qinweizhao.system.module.system.entity.SysDictType">
+
+    </select>
+    <select id="selectDictTypeByType" resultType="com.qinweizhao.system.module.system.entity.SysDictType">
+
+    </select>
 
 </mapper>

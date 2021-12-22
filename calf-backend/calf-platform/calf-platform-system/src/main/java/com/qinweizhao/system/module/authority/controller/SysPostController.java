@@ -1,15 +1,24 @@
 package com.qinweizhao.system.module.authority.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.common.annotation.OperateLog;
 import com.qinweizhao.common.response.Result;
-import com.qinweizhao.system.module.authority.service.ISysDeptService;
+import com.qinweizhao.common.util.ExcelUtils;
+import com.qinweizhao.system.module.authority.model.entity.SysPost;
 import com.qinweizhao.system.module.authority.service.ISysPostService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * <p>
@@ -22,12 +31,59 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/sys/post")
 public class SysPostController {
+
+
     @Resource
-    ISysPostService sysPostService;
+    private ISysPostService sysPostService;
 
     @GetMapping("/list")
     public Result<Object> list() {
         return Result.success(sysPostService.list());
+    }
+
+    @PostMapping("/save")
+    @ApiOperation("创建岗位")
+    @PreAuthorize("hasAuthority('system:post:save')")
+    public Result<Long> save(@Valid @RequestBody SysPost sysPost) {
+        return Result.condition(sysPostService.save(sysPost));
+    }
+
+    @PutMapping("/update")
+    @ApiOperation("修改岗位")
+    @PreAuthorize("hasAuthority('system:post:update')")
+    public Result<Boolean> updatePost(@Valid @RequestBody SysPost sysPost) {
+        return Result.condition(sysPostService.updateById(sysPost));
+    }
+
+    @DeleteMapping("/remove")
+    @ApiOperation("删除岗位")
+    @PreAuthorize("hasAuthority('system:post:remove')")
+    public Result<Boolean> remove(@RequestParam("id") Long id) {
+        return Result.condition(sysPostService.removeById(id));
+    }
+
+    @GetMapping(value = "/get")
+    @ApiOperation("获得岗位信息")
+    @ApiImplicitParam(name = "id", value = "岗位编号", required = true, example = "1024", dataTypeClass = Long.class)
+    @PreAuthorize("hasAuthority('system:post:query')")
+    public Result<SysPost> get(@RequestParam("id") Long id) {
+        return Result.success(sysPostService.getById(id));
+    }
+
+    @GetMapping("/page")
+    @ApiOperation("获得岗位分页列表")
+    @PreAuthorize("hasAuthority('system:post:query')")
+    public Result<IPage<SysPost>> page(Page<SysPost> page, @Validated SysPost sysPost) {
+        return Result.success(sysPostService.page(page));
+    }
+
+    @GetMapping("/export")
+    @ApiOperation("岗位管理")
+    @PreAuthorize("hasAuthority('system:post:export')")
+    @OperateLog(type = "EXPORT")
+    public void export(HttpServletResponse response, @Validated SysPost sysPost) throws IOException {
+        List<SysPost> posts = sysPostService.list();
+        ExcelUtils.write(response, "岗位数据.xls", "岗位列表", SysPost.class, posts);
     }
 
 }

@@ -3,6 +3,7 @@ package com.qinweizhao.system.module.authority.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author qinweizhao
  * @since 2021-12-06
  */
-@Controller
+ @RestController
 @RequestMapping("/sys/user/role")
 public class SysUserRoleController {
 

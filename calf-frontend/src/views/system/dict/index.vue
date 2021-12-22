@@ -154,7 +154,7 @@ export default {
       this.addBeginAndEndTime(params, this.dateRangeCreateTime, 'createTime');
       // 执行查询
       listType(params).then(response => {
-        this.typeList = response.data.list;
+        this.typeList = response.data.records;
         this.total = response.data.total;
         this.loading = false;
       });

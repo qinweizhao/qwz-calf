@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.Date;
  * @author qinweizhao
  * @since 2021-12-06
  */
+@Data
 @TableName("sys_dept")
 @ApiModel(value = "SysDept对象", description = "部门表")
 public class SysDept implements Serializable {
@@ -40,13 +42,13 @@ public class SysDept implements Serializable {
     private String email;
 
     @ApiModelProperty("排序")
-    private Integer deptSort;
+    private Integer sort;
 
     @ApiModelProperty("删除：1存在、0删除")
     private String deleted;
 
     @ApiModelProperty("状态：1启用、0禁用")
-    private String enabled;
+    private String status;
 
     @ApiModelProperty("创建者")
     private String createBy;
@@ -60,117 +62,5 @@ public class SysDept implements Serializable {
     @ApiModelProperty("更新时间")
     private Date updateTime;
 
-    public Long getDeptId() {
-        return deptId;
-    }
 
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Integer getDeptSort() {
-        return deptSort;
-    }
-
-    public void setDeptSort(Integer deptSort) {
-        this.deptSort = deptSort;
-    }
-
-    public String getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(String deleted) {
-        this.deleted = deleted;
-    }
-
-    public String getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(String enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "SysDept{" +
-                "deptId=" + deptId +
-                ", parentId=" + parentId +
-                ", deptName=" + deptName +
-                ", phone=" + phone +
-                ", email=" + email +
-                ", deptSort=" + deptSort +
-                ", deleted=" + deleted +
-                ", enabled=" + enabled +
-                ", createBy=" + createBy +
-                ", createTime=" + createTime +
-                ", updateBy=" + updateBy +
-                ", updateTime=" + updateTime +
-                "}";
-    }
 }

@@ -1,5 +1,7 @@
 package com.qinweizhao.common.exception;
 
+import com.qinweizhao.common.response.ResultCode;
+
 /**
  * 业务异常
  *
@@ -34,9 +36,9 @@ public final class ServiceException extends RuntimeException {
         this.message = message;
     }
 
-    public ServiceException(String message, Integer code) {
-        this.message = message;
-        this.code = code;
+    public ServiceException(ResultCode resultCode) {
+        this.message = resultCode.getMsg();
+        this.code = resultCode.getCode();
     }
 
     public String getDetailMessage() {
