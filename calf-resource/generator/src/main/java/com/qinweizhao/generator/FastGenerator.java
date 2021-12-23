@@ -29,7 +29,7 @@ public class FastGenerator {
                 })
                 .packageConfig(builder -> builder
                         // 设置父包名
-                        .parent("com.qinweizhao.calf")
+                        .parent("com.qinweizhao")
                         // 设置父包模块名
                         .moduleName("system")
                         // 设置mapperXml生成路径
@@ -37,7 +37,7 @@ public class FastGenerator {
                 .strategyConfig(builder -> {
                     builder
                             // Collections.emptyList()
-                            .addInclude("sys_operate_log","sys_login_log","sys_user_session")
+                            .addInclude("")
                             // 忽略那些表
                             //.addExclude("a")
                             // Mapper 策略配置

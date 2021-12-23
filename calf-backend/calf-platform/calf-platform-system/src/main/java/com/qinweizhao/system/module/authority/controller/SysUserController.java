@@ -8,9 +8,6 @@ import com.qinweizhao.common.response.Result;
 import com.qinweizhao.system.module.authority.model.entity.SysUser;
 import com.qinweizhao.system.module.authority.service.ISysUserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -28,7 +25,6 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/sys/user")
-@Api(tags = "用户管理")
 public class SysUserController extends BaseController {
 
     @Resource
@@ -53,7 +49,6 @@ public class SysUserController extends BaseController {
     }
 
 
-
     @PostMapping("/save")
     public Result<Object> save(@RequestBody SysUser sysUser) {
         return Result.success(sysUserService.saveUser(sysUser));
@@ -62,7 +57,8 @@ public class SysUserController extends BaseController {
 
     @PostMapping("/edit")
     public Result<Object> edit(@Valid @RequestBody SysUser sysUser) {
-        return Result.condition(sysUserService.updateById(sysUser));
+        sysUserService.updateUserById(sysUser);
+        return Result.success();
     }
 
 

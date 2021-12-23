@@ -10,6 +10,7 @@ import com.qinweizhao.system.module.authority.model.entity.SysPost;
 import com.qinweizhao.system.module.authority.service.ISysPostService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ public class SysPostController {
     private ISysPostService sysPostService;
 
     @GetMapping("/list")
-    public Result<Object> list() {
+    public Result<List<SysPost>> list() {
         return Result.success(sysPostService.list());
     }
 

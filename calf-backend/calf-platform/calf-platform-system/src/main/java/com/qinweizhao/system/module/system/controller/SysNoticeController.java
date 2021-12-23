@@ -25,13 +25,13 @@ import javax.validation.Valid;
  * @since 2021-12-22
  */
 @RestController
-@RequestMapping("/system/sys-notice")
+@RequestMapping("/sys/notice")
 public class SysNoticeController {
 
     @Resource
     private ISysNoticeService sysNoticeService;
 
-    @PostMapping("/create")
+    @PostMapping("/save")
     @ApiOperation("创建通知公告")
     @PreAuthorize("hasAuthority('system:notice:create')")
     public Result<Boolean> save(@Valid @RequestBody SysNotice sysNotice) {
@@ -41,20 +41,20 @@ public class SysNoticeController {
     @PutMapping("/update")
     @ApiOperation("修改通知公告")
     @PreAuthorize("hasAuthority('system:notice:update')")
-    public Result<Boolean> updateNotice(@Valid @RequestBody SysNotice sysNotice) {
+    public Result<Boolean> update(@Valid @RequestBody SysNotice sysNotice) {
         return Result.condition(sysNoticeService.updateById(sysNotice));
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/remove")
     @PreAuthorize("hasAuthority('system:notice:delete')")
-    public Result<Boolean> deleteNotice(@RequestParam("id") Long id) {
+    public Result<Boolean> remove(@RequestParam("id") Long id) {
         return Result.condition(sysNoticeService.removeById(id));
     }
 
     @GetMapping("/page")
     @ApiOperation("获取通知公告列表")
     @PreAuthorize("hasAuthority('system:notice:query')")
-    public Result<IPage<SysNotice>> pageNotices(Page<SysNotice> page, @Validated SysNotice sysNotice) {
+    public Result<IPage<SysNotice>> page(Page<SysNotice> page, @Validated SysNotice sysNotice) {
         QueryWrapper<SysNotice> queryWrapper = new QueryWrapper<>();
         return Result.success(sysNoticeService.page(page,queryWrapper));
     }
@@ -63,7 +63,7 @@ public class SysNoticeController {
     @ApiOperation("获得通知公告")
     @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("hasAuthority('system:notice:query')")
-    public Result<SysNotice> getNotice(@RequestParam("id") Long id) {
+    public Result<SysNotice> get(@RequestParam("id") Long id) {
         return Result.success(sysNoticeService.getById(id));
     }
 

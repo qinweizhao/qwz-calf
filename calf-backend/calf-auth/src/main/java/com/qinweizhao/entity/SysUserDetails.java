@@ -1,5 +1,6 @@
 package com.qinweizhao.entity;
 
+import io.swagger.models.auth.In;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,7 +39,7 @@ public class SysUserDetails implements UserDetails {
     /**
      * 帐号状态（0正常 1停用）
      */
-    private boolean enabled;
+    private Integer status;
 
 
     /**
@@ -98,10 +99,7 @@ public class SysUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return this.status==1;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
 }

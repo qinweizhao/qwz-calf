@@ -45,13 +45,13 @@ public class SysRole implements Serializable {
     private String dataScope;
 
     @ApiModelProperty("排序")
-    private Integer roleSort;
+    private Integer sort;
 
     @ApiModelProperty("删除：1存在、0删除")
-    private String deleted;
+    private Integer deleted;
 
     @ApiModelProperty("状态：1正常、0停用")
-    private String enabled;
+    private Integer status;
 
     @ApiModelProperty("创建者")
     private String createBy;

@@ -57,7 +57,7 @@ public class SysUserQuery implements Serializable {
     private Integer userSort;
 
     @ApiModelProperty("删除：1存在、0删除")
-    private String deleted;
+    private Integer deleted;
 
     @ApiModelProperty("状态：1启用、0禁用")
     private Boolean enabled;

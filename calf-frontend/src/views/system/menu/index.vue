@@ -84,7 +84,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="菜单名称" prop="name">
-              <el-input v-model="form.name" placeholder="请输入菜单名称" />
+              <el-input v-model="form.menuName" placeholder="请输入菜单名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -153,14 +153,14 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        name: undefined,
+        menuName: undefined,
         visible: undefined
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        name: [
+        menuName: [
           { required: true, message: "菜单名称不能为空", trigger: "blur" }
         ],
         sort: [
@@ -213,8 +213,8 @@ export default {
     getTreeselect() {
       listMenu().then(response => {
         this.menuOptions = [];
-        const menu = { id: 0, name: '主类目', children: [] };
-        menu.children = this.handleTree(response.data, "id");
+        const menu = { menuId: 0, menuName: '主类目', children: [] };
+        menu.children = this.handleTree(response.data, "menuId");
         this.menuOptions.push(menu);
       });
     },
@@ -265,7 +265,7 @@ export default {
     handleUpdate(row) {
       this.reset();
       this.getTreeselect();
-      getMenu(row.id).then(response => {
+      getMenu(row.menuId).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "修改菜单";
@@ -293,7 +293,7 @@ export default {
           }
 
           // 提交
-          if (this.form.id !== undefined) {
+          if (this.form.menuId !== undefined) {
             updateMenu(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
@@ -311,12 +311,12 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      this.$confirm('是否确认删除名称为"' + row.name + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除名称为"' + row.menuName + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delMenu(row.id);
+          return delMenu(row.menuId);
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");

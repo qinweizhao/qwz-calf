@@ -2,6 +2,7 @@ package com.qinweizhao.system.module.authority.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -44,11 +45,12 @@ public class SysDept implements Serializable {
     @ApiModelProperty("排序")
     private Integer sort;
 
+    @TableLogic
     @ApiModelProperty("删除：1存在、0删除")
-    private String deleted;
+    private Integer deleted;
 
     @ApiModelProperty("状态：1启用、0禁用")
-    private String status;
+    private Integer status;
 
     @ApiModelProperty("创建者")
     private String createBy;

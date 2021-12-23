@@ -36,13 +36,13 @@ public class SysPost implements Serializable {
     private String postName;
 
     @ApiModelProperty("显示顺序")
-    private Integer postSort;
+    private Integer sort;
 
     @ApiModelProperty("删除标志：1存在、0删除")
-    private String deleted;
+    private Integer deleted;
 
     @ApiModelProperty("状态（1正常 0停用）")
-    private String enabled;
+    private Integer status;
 
     @ApiModelProperty("创建者")
     private String createBy;

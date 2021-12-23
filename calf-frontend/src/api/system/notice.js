@@ -20,7 +20,7 @@ export function getNotice(noticeId) {
 // 新增公告
 export function addNotice(data) {
   return request({
-    url: '/sys/notice/create',
+    url: '/sys/notice/save',
     method: 'post',
     data: data
   })

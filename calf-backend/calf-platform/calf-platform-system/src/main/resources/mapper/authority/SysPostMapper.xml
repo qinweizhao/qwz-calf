@@ -7,13 +7,17 @@
         <id column="post_id" property="postId"/>
         <result column="post_code" property="postCode"/>
         <result column="post_name" property="postName"/>
-        <result column="post_sort" property="postSort"/>
+        <result column="sort" property="sort"/>
         <result column="deleted" property="deleted"/>
-        <result column="enabled" property="enabled"/>
+        <result column="status" property="status"/>
         <result column="create_by" property="createBy"/>
         <result column="create_time" property="createTime"/>
         <result column="update_by" property="updateBy"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
+
+    <select id="selectListPosts" resultType="com.qinweizhao.system.module.authority.model.entity.SysPost">
+        select * from sys_post
+    </select>
 
 </mapper>

@@ -13,9 +13,9 @@
         <result column="phone" property="phone"/>
         <result column="email" property="email"/>
         <result column="avatar" property="avatar"/>
-        <result column="user_sort" property="userSort"/>
+        <result column="sort" property="sort"/>
         <result column="deleted" property="deleted"/>
-        <result column="enabled" property="enabled"/>
+        <result column="status" property="status"/>
         <result column="create_by" property="createBy"/>
         <result column="update_by" property="updateBy"/>
         <result column="create_time" property="createTime"/>
@@ -57,7 +57,7 @@
             <if test="query.username != null and query.username != ''">
                 username like concat('%', #{query.username}, '%')
             </if>
-            <if test="query.enabled != null and query.enabled != ''">
+            <if test="query.status != null and query.status != ''">
                 AND enabled = #{query.enabled}
             </if>
             <if test="query.phone != null and query.phone != ''">
@@ -75,6 +75,12 @@
                 AND date_format(create_time,'%y%m%d') &lt;= date_format(#{query.endTime},'%y%m%d')
             </if>
         </where>
+    </select>
+    <select id="selectUserByPhone" resultType="com.qinweizhao.system.module.authority.model.entity.SysUser">
+        select * from sys_user where phone =#{phone}
+    </select>
+    <select id="selectUserByEmail" resultType="com.qinweizhao.system.module.authority.model.entity.SysUser">
+        select * from sys_user where email =#{email}
     </select>
 
 

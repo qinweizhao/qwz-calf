@@ -55,13 +55,13 @@ public class SysUserDTO implements Serializable {
     private String avatar;
 
     @ApiModelProperty("排序")
-    private Integer userSort;
+    private Integer sort;
 
     @ApiModelProperty("删除：1存在、0删除")
-    private String deleted;
+    private Integer deleted;
 
     @ApiModelProperty("状态：1启用、0禁用")
-    private Boolean enabled;
+    private Integer status;
 
     @ApiModelProperty("创建者")
     private String createBy;

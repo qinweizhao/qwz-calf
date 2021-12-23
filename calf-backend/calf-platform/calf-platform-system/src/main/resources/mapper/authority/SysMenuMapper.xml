@@ -12,9 +12,9 @@
         <result column="menu_type" property="menuType"/>
         <result column="permission" property="permission"/>
         <result column="icon" property="icon"/>
-        <result column="menu_sort" property="menuSort"/>
+        <result column="sort" property="sort"/>
         <result column="deleted" property="deleted"/>
-        <result column="enabled" property="enabled"/>
+        <result column="status" property="status"/>
         <result column="create_by" property="createBy"/>
         <result column="update_by" property="updateBy"/>
         <result column="create_time" property="createTime"/>

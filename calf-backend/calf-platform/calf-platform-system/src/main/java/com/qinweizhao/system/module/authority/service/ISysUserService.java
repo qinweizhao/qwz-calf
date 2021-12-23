@@ -53,4 +53,5 @@ public interface ISysUserService extends IService<SysUser> {
 
     SysUser getUserById(Long id);
 
+    void updateUserById(SysUser sysUser);
 }

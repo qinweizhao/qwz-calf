@@ -40,10 +40,10 @@
       <el-table-column label="角色编号" prop="roleId" width="120" />
       <el-table-column label="角色名称" prop="roleName" :show-overflow-tooltip="true" width="150" />
       <el-table-column label="角色标识" prop="roleKey" :show-overflow-tooltip="true" width="150" />
-      <el-table-column label="显示顺序" prop="roleSort" width="180" />
+      <el-table-column label="显示顺序" prop="sort" width="180" />
       <el-table-column label="状态" align="center" width="100">
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.status" :active-value="0" :inactive-value="1" @change="handleStatusChange(scope.row)"></el-switch>
+          <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" @change="handleStatusChange(scope.row)"></el-switch>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -72,10 +72,10 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="角色名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入角色名称" />
+          <el-input v-model="form.roleName" placeholder="请输入角色名称" />
         </el-form-item>
         <el-form-item label="角色标识" prop="code">
-          <el-input v-model="form.code" placeholder="请输入角色标识" />
+          <el-input v-model="form.roleKey" placeholder="请输入角色标识" />
         </el-form-item>
         <el-form-item label="角色顺序" prop="sort">
           <el-input-number v-model="form.sort" controls-position="right" :min="0" />
@@ -228,10 +228,10 @@ export default {
       },
       // 表单校验
       rules: {
-        name: [
+        roleName: [
           { required: true, message: "角色名称不能为空", trigger: "blur" }
         ],
-        code: [
+        roleKey: [
           { required: true, message: "角色标识不能为空", trigger: "blur" }
         ],
         sort: [
@@ -377,7 +377,7 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id
+      const id = row.roleId
       getRole(id).then(response => {
         this.form = response.data;
         this.open = true;
@@ -437,7 +437,7 @@ export default {
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.id !== undefined) {
+          if (this.form.roleId !== undefined) {
             updateRole(this.form).then(response => {
               this.msgSuccess("修改成功");
               this.open = false;
@@ -483,7 +483,7 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids;
+      const ids = row.roleId || this.ids;
       this.$confirm('是否确认删除角色编号为"' + ids + '"的数据项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",

@@ -1,23 +1,19 @@
 package com.qinweizhao.system.module.authority.service.impl;
 
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qinweizhao.common.enums.StatusEnum;
 import com.qinweizhao.common.exception.ServiceException;
+import com.qinweizhao.common.response.ResultCode;
 import com.qinweizhao.common.util.SecurityUtils;
-import com.qinweizhao.system.module.authority.mapper.SysDeptMapper;
-import com.qinweizhao.system.module.authority.mapper.SysUserMapper;
-import com.qinweizhao.system.module.authority.mapper.SysUserPostMapper;
-import com.qinweizhao.system.module.authority.mapper.SysUserRoleMapper;
-import com.qinweizhao.system.module.authority.model.entity.SysUser;
-import com.qinweizhao.system.module.authority.model.entity.SysUserPost;
-import com.qinweizhao.system.module.authority.model.entity.SysUserRole;
-import com.qinweizhao.system.module.authority.model.query.SysUserQuery;
+import com.qinweizhao.system.module.authority.mapper.*;
+import com.qinweizhao.system.module.authority.model.entity.*;
 import com.qinweizhao.system.module.authority.service.ISysUserService;
-import org.springframework.beans.BeanUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +39,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private SysUserRoleMapper userRoleMapper;
 
     @Resource
+    private SysPostMapper sysPostMapper;
+
+    @Resource
     private SysUserPostMapper sysUserPostMapper;
+
     @Resource
     private SysDeptMapper sysDeptMapper;
 
@@ -94,17 +94,176 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return sysUser;
     }
 
+    @Override
+    public void updateUserById(SysUser sysUser) {
+        this.checkSaveOrUpdate(sysUser.getUserId(), sysUser.getUsername(), sysUser.getPhone(), sysUser.getEmail(),
+                sysUser.getDeptId(), sysUser.getPostIds());
+        // 更新用户
+        this.baseMapper.updateById(sysUser);
+    }
+
+    /**
+     * 更新或保存前置检查
+     *
+     * @param id       id
+     * @param username username
+     * @param phone    phone
+     * @param email    email
+     * @param deptId   deptId
+     * @param postIds  postIds
+     */
+    private void checkSaveOrUpdate(Long id, String username, String phone, String email,
+                                   Long deptId, List<Long> postIds) {
+        // 校验用户存在
+        this.checkUserExists(id);
+        // 校验用户名唯一
+        this.checkUsernameUnique(id, username);
+        // 校验手机号唯一
+        this.checkPhoneUnique(id, phone);
+        // 校验邮箱唯一
+        this.checkEmailUnique(id, email);
+        // 校验部门处于开启状态
+        this.checkDeptEnable(deptId);
+        // 校验岗位处于开启状态
+        this.checkPostEnable(postIds);
+    }
+
+
+    /**
+     * 校验用户存在
+     *
+     * @param id id
+     */
+    public void checkUserExists(Long id) {
+        if (id == null) {
+            return;
+        }
+        SysUser user = this.baseMapper.selectById(id);
+        if (user == null) {
+            throw new ServiceException(ResultCode.USER_NOT_EXISTS);
+        }
+    }
+
+
+    /**
+     * 校验用户名唯一
+     *
+     * @param id       id
+     * @param username username
+     */
+    public void checkUsernameUnique(Long id, String username) {
+        if (StrUtil.isBlank(username)) {
+            return;
+        }
+        SysUser user = this.baseMapper.selectUserByUsername(username);
+        if (user == null) {
+            return;
+        }
+        // 如果 id 为空，说明不用比较是否为相同 id 的用户
+        if (id == null) {
+            throw new ServiceException(ResultCode.USER_USERNAME_EXISTS);
+        }
+        if (!user.getUserId().equals(id)) {
+            throw new ServiceException(ResultCode.USER_USERNAME_EXISTS);
+        }
+    }
+
+    /**
+     * 校验手机号唯一
+     *
+     * @param id    id
+     * @param phone phone
+     */
+    public void checkPhoneUnique(Long id, String phone) {
+        if (StrUtil.isBlank(phone)) {
+            return;
+        }
+        SysUser user = this.baseMapper.selectUserByPhone(phone);
+        if (user == null) {
+            return;
+        }
+        // 如果 id 为空，说明不用比较是否为相同 id 的用户
+        if (id == null) {
+            throw new ServiceException(ResultCode.USER_MOBILE_EXISTS);
+        }
+        if (!user.getUserId().equals(id)) {
+            throw new ServiceException(ResultCode.USER_MOBILE_EXISTS);
+        }
+    }
+
+    /**
+     * 校验邮箱唯一
+     *
+     * @param id    id
+     * @param email email
+     */
+    public void checkEmailUnique(Long id, String email) {
+        if (StrUtil.isBlank(email)) {
+            return;
+        }
+        SysUser user = baseMapper.selectUserByEmail(email);
+        if (user == null) {
+            return;
+        }
+        // 如果 id 为空，说明不用比较是否为相同 id 的用户
+        if (id == null) {
+            throw new ServiceException(ResultCode.USER_EMAIL_EXISTS);
+        }
+        if (!user.getUserId().equals(id)) {
+            throw new ServiceException(ResultCode.USER_EMAIL_EXISTS);
+        }
+    }
+
+    /**
+     * 校验部门处于开启状态
+     *
+     * @param deptId deptId
+     */
+    public void checkDeptEnable(Long deptId) {
+        // 允许不选择
+        if (deptId == null) {
+            return;
+        }
+        SysDept dept = sysDeptMapper.selectById(deptId);
+        if (dept == null) {
+            throw new ServiceException(ResultCode.DEPT_NOT_FOUND);
+        }
+        if (!StatusEnum.ENABLE.getStatus().equals(dept.getStatus())) {
+            throw new ServiceException(ResultCode.DEPT_NOT_ENABLE);
+        }
+    }
+
+
+    public void checkPostEnable(List<Long> postIds) {
+        // 允许不选择
+        if (CollUtil.isEmpty(postIds)) {
+            return;
+        }
+        List<SysPost> posts = sysPostMapper.selectListPosts(postIds);
+        if (CollUtil.isEmpty(posts)) {
+            throw new ServiceException(ResultCode.POST_NOT_FOUND);
+        }
+        Map<Long, SysPost> postMap = posts.stream().collect(Collectors.toMap(SysPost::getPostId, t -> t));
+        postIds.forEach(postId -> {
+            SysPost post = postMap.get(postId);
+            if (post == null) {
+                throw new ServiceException(ResultCode.POST_NOT_FOUND);
+            }
+            if (!StatusEnum.ENABLE.getStatus().equals(post.getStatus())) {
+                throw new ServiceException(ResultCode.POST_NOT_ENABLE);
+            }
+        });
+    }
 
     @Override
     public IPage<SysUser> pageUsers(Page<SysUser> page, SysUser sysUser) {
         IPage<SysUser> sysUserPage = this.baseMapper.selectPageUsers(page, sysUser);
         List<SysUser> records = sysUserPage.getRecords();
-        records.forEach(item->{
+        records.forEach(item -> {
             item.setDept(sysDeptMapper.selectById(item.getDeptId()));
             item.setPostIds(sysUserPostMapper.selectPostIdsByUserId(item.getUserId()));
         });
         return sysUserPage;
-
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -158,7 +317,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         List<Long> postIds = sysUser.getPostIds();
         if (!postIds.isEmpty()) {
             // 新增用户与岗位管理
-            List<SysUserPost> list = new ArrayList<SysUserPost>();
+            List<SysUserPost> list = new ArrayList<>();
             for (Long postId : postIds) {
                 SysUserPost up = new SysUserPost();
                 up.setUserId(sysUser.getUserId());

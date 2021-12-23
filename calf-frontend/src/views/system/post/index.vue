@@ -31,9 +31,9 @@
     </el-row>
 
     <el-table v-loading="loading" :data="postList">
-      <el-table-column label="岗位编号" align="center" prop="id" />
-      <el-table-column label="岗位编码" align="center" prop="code" />
-      <el-table-column label="岗位名称" align="center" prop="name" />
+      <el-table-column label="岗位编号" align="center" prop="postId" />
+      <el-table-column label="岗位编码" align="center" prop="postCode" />
+      <el-table-column label="岗位名称" align="center" prop="postName" />
       <el-table-column label="岗位排序" align="center" prop="sort" />
       <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -145,7 +145,7 @@ export default {
     getList() {
       this.loading = true;
       listPost(this.queryParams).then(response => {
-        this.postList = response.data.list;
+        this.postList = response.data.records;
         this.total = response.data.total;
         this.loading = false;
       });
