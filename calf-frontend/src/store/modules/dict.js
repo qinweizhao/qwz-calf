@@ -1,4 +1,4 @@
-import { listSimpleDictDatas } from '@/api/system/dict/data'
+import { listSimpleDictDatas } from '@/api/system/manage/dict/data'
 
 const state = {
   /**

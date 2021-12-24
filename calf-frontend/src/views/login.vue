@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { getCodeImg,socialAuthRedirect } from "@/api/login";
+import { getCodeImg,socialAuthRedirect } from "@/api/auth/login";
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from '@/utils/jsencrypt'
 

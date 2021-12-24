@@ -14,7 +14,7 @@ import permission from './directive/permission'
 
 import './assets/icons' // icon
 import './permission' // permission control
-import { getDicts } from "@/api/system/dict/data";
+import { getDicts } from "@/api/system/manage/dict/data";
 import { getConfigKey } from "@/api/infra/config";
 import {
   parseTime,

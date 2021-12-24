@@ -37,7 +37,7 @@ public class FastGenerator {
                 .strategyConfig(builder -> {
                     builder
                             // Collections.emptyList()
-                            .addInclude("")
+                            .addInclude(Collections.emptyList())
                             // 忽略那些表
                             //.addExclude("a")
                             // Mapper 策略配置

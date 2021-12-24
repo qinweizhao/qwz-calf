@@ -2,7 +2,6 @@ package com.qinweizhao.system.module.monitor.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-12-22
  */
 @RestController
-@RequestMapping("/system/sys-user-session")
+@RequestMapping("/system/sys/session")
 public class SysUserSessionController {
 
 }
