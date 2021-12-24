@@ -44,7 +44,7 @@ public class SysMenu implements Serializable {
     private String component;
 
     @ApiModelProperty("类型：M目录、C菜单、F按钮")
-    private String menuType;
+    private Integer menuType;
 
     @ApiModelProperty("权限")
     private String permission;

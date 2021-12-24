@@ -17,4 +17,9 @@ public interface ISysMenuService extends IService<SysMenu> {
 
     List<SysMenu> listWithTree(String currentLoginUsername);
 
+    Integer saveMenu(SysMenu sysMenu);
+
+    Integer updateMenu(SysMenu sysMenu);
+
+    Integer removeMenuByMenuId(Long id);
 }

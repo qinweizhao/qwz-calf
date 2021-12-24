@@ -19,4 +19,8 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     List<SysMenu> selectMenuListByUsername(String currentLoginUsername);
 
+    SysMenu selectMenuByParentIdAndName(Long parentId, String menuName);
+
+    Integer selectCountByParentId(Long menuId);
+
 }

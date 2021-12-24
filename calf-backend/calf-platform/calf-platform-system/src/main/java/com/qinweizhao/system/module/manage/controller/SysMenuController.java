@@ -48,14 +48,14 @@ public class SysMenuController extends BaseController {
     @ApiOperation("创建菜单")
     @PreAuthorize("hasAuthority('system:menu:create')")
     public Result<Boolean> save(@Valid @RequestBody SysMenu sysMenu) {
-        return Result.condition(sysMenuService.save(sysMenu));
+        return Result.condition(sysMenuService.saveMenu(sysMenu));
     }
 
     @PutMapping("/update")
     @ApiOperation("修改菜单")
     @PreAuthorize("hasAuthority('system:menu:update')")
     public Result<Boolean> update(@Valid @RequestBody SysMenu sysMenu) {
-        return Result.success(sysMenuService.updateById(sysMenu));
+        return Result.condition(sysMenuService.updateMenu(sysMenu));
     }
 
     @DeleteMapping("/remove")
@@ -63,7 +63,7 @@ public class SysMenuController extends BaseController {
     @ApiImplicitParam(name = "id", value = "角色编号", required= true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("hasAuthority('system:menu:delete')")
     public Result<Boolean> remove(@RequestParam("id") Long id) {
-        return Result.success(sysMenuService.removeById(id));
+        return Result.condition(sysMenuService.removeMenuByMenuId(id));
     }
 
 

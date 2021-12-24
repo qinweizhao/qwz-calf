@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qinweizhao.system.mapper.SysApiAccessLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qinweizhao.system.entity.SysApiAccessLog">
+        <id column="id" property="id" />
+        <result column="trace_id" property="traceId" />
+        <result column="user_id" property="userId" />
+        <result column="user_type" property="userType" />
+        <result column="application_name" property="applicationName" />
+        <result column="request_method" property="requestMethod" />
+        <result column="request_url" property="requestUrl" />
+        <result column="request_params" property="requestParams" />
+        <result column="user_ip" property="userIp" />
+        <result column="user_agent" property="userAgent" />
+        <result column="begin_time" property="beginTime" />
+        <result column="end_time" property="endTime" />
+        <result column="duration" property="duration" />
+        <result column="result_code" property="resultCode" />
+        <result column="result_msg" property="resultMsg" />
+        <result column="creator" property="creator" />
+        <result column="create_time" property="createTime" />
+        <result column="updater" property="updater" />
+        <result column="update_time" property="updateTime" />
+        <result column="deleted" property="deleted" />
+        <result column="tenant_id" property="tenantId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, trace_id, user_id, user_type, application_name, request_method, request_url, request_params, user_ip, user_agent, begin_time, end_time, duration, result_code, result_msg, creator, create_time, updater, update_time, deleted, tenant_id
+    </sql>
+
+</mapper>

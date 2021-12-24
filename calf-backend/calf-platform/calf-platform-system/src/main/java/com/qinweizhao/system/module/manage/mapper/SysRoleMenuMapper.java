@@ -13,4 +13,5 @@ import com.qinweizhao.system.module.manage.entity.SysRoleMenu;
  */
 public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
 
+    int deleteRoleMenuByMenuId(Long menuId);
 }

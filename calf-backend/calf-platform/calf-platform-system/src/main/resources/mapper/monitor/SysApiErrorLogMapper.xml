@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qinweizhao.system.module.monitor.mapper.SysApiErrorLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.monitor.entity.SysApiErrorLog">
+        <id column="id" property="id" />
+        <result column="trace_id" property="traceId" />
+        <result column="user_id" property="userId" />
+        <result column="user_type" property="userType" />
+        <result column="application_name" property="applicationName" />
+        <result column="request_method" property="requestMethod" />
+        <result column="request_url" property="requestUrl" />
+        <result column="request_params" property="requestParams" />
+        <result column="user_ip" property="userIp" />
+        <result column="user_agent" property="userAgent" />
+        <result column="exception_time" property="exceptionTime" />
+        <result column="exception_name" property="exceptionName" />
+        <result column="exception_message" property="exceptionMessage" />
+        <result column="exception_root_cause_message" property="exceptionRootCauseMessage" />
+        <result column="exception_stack_trace" property="exceptionStackTrace" />
+        <result column="exception_class_name" property="exceptionClassName" />
+        <result column="exception_file_name" property="exceptionFileName" />
+        <result column="exception_method_name" property="exceptionMethodName" />
+        <result column="exception_line_number" property="exceptionLineNumber" />
+        <result column="process_status" property="processStatus" />
+        <result column="process_time" property="processTime" />
+        <result column="process_user_id" property="processUserId" />
+        <result column="creator" property="creator" />
+        <result column="create_time" property="createTime" />
+        <result column="updater" property="updater" />
+        <result column="update_time" property="updateTime" />
+        <result column="deleted" property="deleted" />
+        <result column="tenant_id" property="tenantId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, trace_id, user_id, user_type, application_name, request_method, request_url, request_params, user_ip, user_agent, exception_time, exception_name, exception_message, exception_root_cause_message, exception_stack_trace, exception_class_name, exception_file_name, exception_method_name, exception_line_number, process_status, process_time, process_user_id, creator, create_time, updater, update_time, deleted, tenant_id
+    </sql>
+
+</mapper>
