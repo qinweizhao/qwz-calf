@@ -127,7 +127,7 @@
 </template>
 
 <script>
-import { listConfig, getConfig, delConfig, addConfig, updateConfig, exportConfig } from "@/api/infra/config";
+import { listConfig, getConfig, delConfig, addConfig, updateConfig, exportConfig } from "@/api/system/manage/config";
 
 export default {
   name: "Config",

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-24
+ * @since 2021-12-27
  */
 @Service
 public class SysErrorCodeServiceImpl extends ServiceImpl<SysErrorCodeMapper, SysErrorCode> implements ISysErrorCodeService {

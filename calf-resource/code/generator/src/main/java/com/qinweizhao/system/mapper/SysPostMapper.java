@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-24
+ * @since 2021-12-27
  */
 public interface SysPostMapper extends BaseMapper<SysPost> {
 

@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { getJobLogPage, exportJobLogExcel } from "@/api/infra/jobLog";
+import { getJobLogPage, exportJobLogExcel } from "@/api/system/tool/jobLog";
 
 export default {
   name: "JobLog",

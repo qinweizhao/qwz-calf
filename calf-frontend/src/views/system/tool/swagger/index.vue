@@ -5,10 +5,10 @@
 </template>
 <script>
 export default {
-  name: "SkyWalking-Log",
+  name: "Swagger",
   data() {
     return {
-      src: "http://skywalking.shop.iocoder.cn/log", // TODO 芋艿，后续改成配置读取
+      src: process.env.VUE_APP_BASE_API + "/doc.html",
       height: document.documentElement.clientHeight - 94.5 + "px;",
       loading: true
     };

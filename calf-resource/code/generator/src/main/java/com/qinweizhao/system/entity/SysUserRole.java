@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-24
+ * @since 2021-12-27
  */
 @TableName("sys_user_role")
 @ApiModel(value = "SysUserRole对象", description = "用户和角色关联表")

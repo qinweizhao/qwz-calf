@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-24
+ * @since 2021-12-27
  */
 @TableName("sys_api_access_log")
 @ApiModel(value = "SysApiAccessLog对象", description = "API 访问日志表")

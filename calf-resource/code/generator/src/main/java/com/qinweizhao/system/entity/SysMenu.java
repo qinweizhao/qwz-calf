@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-24
+ * @since 2021-12-27
  */
 @TableName("sys_menu")
 @ApiModel(value = "SysMenu对象", description = "菜单权限表")

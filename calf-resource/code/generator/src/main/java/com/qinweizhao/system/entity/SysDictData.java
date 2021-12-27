@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-24
+ * @since 2021-12-27
  */
 @TableName("sys_dict_data")
 @ApiModel(value = "SysDictData对象", description = "字典数据表")

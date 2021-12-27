@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-24
+ * @since 2021-12-27
  */
 @TableName("sys_api_error_log")
 @ApiModel(value = "SysApiErrorLog对象", description = "系统异常日志")

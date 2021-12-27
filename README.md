@@ -1,157 +1,66 @@
-## 命名规范
+<p align="center">
+  <a class="logo" href="https://github.com/qinweizhao/qwz-calf">
+    <img src="https://cdn.jsdelivr.net/gh/qinweizhao/qwz-calf@master/logo.png" height="80" width="45%" alt="Calf">
+  </a>
+</p>
 
-### 方法
+<p align="center">
+👉 <a href="https://www.qinweizhao.com">https://www.qinweizhao.com</a> 👈
+</p>
 
-#### Service 层
+<p align="center">
+  <a href="https://github.com/qinweizhao/qwz-calf" target="_blank">
+    <img src="https://img.shields.io/badge/Release-1.0.0-green" alt="Release"/>
+  </a>
+</p>
 
-- 获取单个对象的方法用 get 做前缀。 
 
-  ```java
-  @GetMapping("/get")
-  public Result getUser() {
-  
-  }
-  方法名： getXXX()  XXX一般为去掉统一前缀的实体名
-  url: 如：/get, url建议与方法名一致（去掉统一前缀，和实体名）
-  请求类型：Get
-      
-  @GetMapping("/get/name")
-  public Result getUser(UserDTO user) {
-  
-  }
-  方法名： getXXXByFFF()  XXX一般为去掉统一前缀的实体名，FFF 一般为查询条件
-  url: 如：/getByName, url 建议与方法名一致（去掉统一前缀，和实体名）,若条件过多可转为业务描述，如 /getForBusiness
-  请求类型：Get
-  ```
+![Alt](https://repobeats.axiom.co/api/embed/a9d167d82b691b1c1e7ad622262698a15b6fc146.svg "Repobeats analytics image")
 
-- 获取多个对象的方法用 list 做前缀，复数结尾。 
+## 1、简介
 
-  ```java
-  @PostMapping("/list")
-  public Result listUsers() {
-  
-  }
-  方法名： listXXX()  XXX一般为去掉统一前缀的实体名
-  url: 如：/list, url建议与方法名一致（去掉统一前缀，和实体名）
-  请求类型：Post
-      
-  @PostMapping("/list/name")
-  public Result listUsersByName(UserDTO user) {
-  
-  }
-  方法名： listXXXByFFF()  XXX 一般为去掉统一前缀的实体名，FFF 一般为查询条件
-  url: 如：/listByName, url 建议与方法名一致（去掉统一前缀，和实体名）,若条件过多可转为业务描述，如/listForBusiness
-  请求类型：Post
-  ```
+calf 是一个前后端分离的权限管理系统。
 
-- 获取分页信息用 page 做前缀。
+### 技术栈
 
-  ```java
-  @PostMapping("/page")
-  public Result pageUsers() {
-  
-  }
-  方法名： pageXXX()  XXX一般为去掉统一前缀的实体名
-  url: 如：/page, url建议与方法名一致（去掉统一前缀，和实体名）
-  请求类型：Post
-      
-  @PostMapping("/page/name")
-  public Result pageUsersByName(UserDTO user) {
-  
-  }
-  方法名： pageXXXByFFF()  XXX 一般为去掉统一前缀的实体名，FFF 一般为分页条件
-  url: 如：/pageByName, url建议与方法名一致（去掉统一前缀，和实体名）,若条件过多可转为业务描述，如/pageForBusiness
-  请求类型：Post
-  ```
+- 前端采用 Vue、Element UI、Axios 。
+- 后端采用 Spring Boot、SpringSecurity 、Jwt、Hibernate validatior、MyBatis Plus 。
 
-- 获取统计值的方法用 count 做前缀。
+### 仓库结构
 
-  ```java
-  @PostMapping("/count")
-  public Result countUser() {
-  
-  }
-  方法名： countXXX()  XXX一般为去掉统一前缀的实体名
-  url: 如：/count, url建议与方法名一致（去掉统一前缀，和实体名）
-  请求类型：Post
-      
-  @PostMapping("/count/name")
-  public Result countUserByName(String name) {
-  
-  }
-  方法名： countXXXByFFF()  XXX一般为去掉统一前缀的实体名,FFF一般为统计条件
-  url: 如：/countByName, url建议与方法名一致（去掉统一前缀，和实体名）,若条件过多可转为业务描述，如/countForBusiness
-  请求类型：Post
-  ```
+```
+qwz-calf
+├─calf-backend  后端源码
+│
+├─calf-frontend 前端源码
+│ 
+├─calf-resource 项目资源
+```
 
-- 新增的方法用 save 做前缀。
+## 2、使用
 
-  ```java
-  @PostMapping("/save") 
-  public Result saveUser(SysUser sysUser) {
-  
-  }
-  方法名： saveXXX()  XXX一般为去掉统一前缀的实体名
-  url: 如：/save, url建议与方法名一致（去掉统一前缀，和实体名）
-  请求类型：Post
-  ```
+- 启动项目
 
-- 删除的方法用 remove 做前缀。
+    1. 用 calf-resource 中的 sql 文件创建数据库。
 
-  ```java
-  @PostMapping("/delete")
-  public Result deleteUser() {
-  
-  }
-  方法名： deleteXXX()  XXX一般为去掉统一前缀的实体名
-  url: 如：/delete, url建议与方法名一致（去掉统一前缀，和实体名）
-  请求类型：Post
-      
-  @PostMapping("/delete/name")
-  public Result deleteUserByName(String name) {
-  
-  }
-  方法名： deleteXXXByFFF()  XXX一般为去掉统一前缀的实体名,FFF一般为删除条件
-  url: 如：/delete/name, url建议与方法名一致（去掉统一前缀，和实体名）。若条件过多可转为业务描述，如/deleteForBusiness
-  请求类型：Post
-  ```
+    2. 更改 calf-back 配置文件中的数据库配置（根据实际情况更改）
 
-- 修改的方法用 update 做前缀。
+    3. 项目地址：http://ip:port/index.html
+- 二次开发
+    1. 这个需要部署前端。前端在运行时，需要准备一个 nodejs。
+    2. 前端项目打开后，需要在项目根目录下，执行 npm install （默认安装比较慢，可以修改为淘宝的源。[下载源修改为淘宝](https://mp.weixin.qq.com/s/HWRYAR16vLE1XFep6_i1tA)）。
+    3. npm install 执行成功后，再执行 npm run serve 启动前端项目。
+    4. 二次开发完成后，执行 npm run build 前端编译打包。把打包后的文件拷贝到后端。
 
-  ```java
-  @PostMapping("/update")
-  public Result updateUser(UserDTO user) {
-  
-  }
-  方法名： updateXXX()  XXX一般为去掉统一前缀的实体名
-  url: 如：/update, url建议与方法名一致（去掉统一前缀，和实体名）
-  请求类型：Post
-      
-  @PostMapping("/update/name")
-  public Result updateUserByName(UserDTO user) {
-  
-  }
-  方法名： updateXXXByFFF()  XXX一般为去掉统一前缀的实体名，FFF 一般为更新条件
-  url: 如：/update/name, url 建议与方法名一致（去掉统一前缀，和实体名）。若条件过多可转为业务描述，如/updateForBusiness
-  请求类型：Post
-  ```
+## 3、演示
 
-#### DAO 层
-
-- 新增用 insert 做前缀。
-- 删除用 delete 做前缀。
-- 修改用 update 做前缀。
-- 查询用 select 做前缀。
-
-### 模型
-
-- DO（Data Object）：此对象与数据库表结构一一对应，通过 DAO 层向上传输数据源对象。
-
-- DTO（Data Transfer Object）：数据传输对象，Service 或Manager 向外传输的对象
-
-- BO（Business Object）：业务对象，可以由 Service 层输出的封装业务逻辑的对象。
-
-- Query：数据查询对象，各层接收上层的查询请求。注意超过 2 个参数的查询封装，禁止使用 Map 类来传输。
-
-- VO（View Object）：显示层对象，通常是 Web 向模板渲染引擎层传输的对象。
-
+<table>
+    <tr>
+        <td><img src="https://cdn.jsdelivr.net/gh/qinweizhao/qwz-calf/calf-resource/img/2021-12-27_175324.png"/></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/qinweizhao/qwz-calf/calf-resource/img/2021-12-27_175351.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://cdn.jsdelivr.net/gh/qinweizhao/qwz-calf/calf-resource/img/2021-12-27_175404.png"/></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/qinweizhao/qwz-calf/calf-resource/img/2021-12-27_175453.png"/></td>
+    </tr>
+</table>
