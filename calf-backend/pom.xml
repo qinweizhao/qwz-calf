@@ -18,6 +18,7 @@
         <spring-boot.version>2.4.1</spring-boot.version>
         <mybatis-plus.version>3.4.3</mybatis-plus.version>
         <springfox.version>3.0.0</springfox.version>
+        <knife4j.version>3.0.3</knife4j.version>
         <jjwt.version>0.9.1</jjwt.version>
         <jaxb.version>2.3.0</jaxb.version>
         <kaptcha.version>2.3.2</kaptcha.version>
@@ -84,6 +85,12 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${springfox.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
             </dependency>
 
             <dependency>

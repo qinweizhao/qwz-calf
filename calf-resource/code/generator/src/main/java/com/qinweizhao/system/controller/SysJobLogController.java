@@ -1,4 +1,4 @@
-package com.qinweizhao.system.module.tool.controller;
+package com.qinweizhao.system.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-27
+ * @since 2021-12-28
  */
 @RestController
-@RequestMapping("/system/job/log")
+@RequestMapping("/system/sys-job-log")
 public class SysJobLogController {
 
 }

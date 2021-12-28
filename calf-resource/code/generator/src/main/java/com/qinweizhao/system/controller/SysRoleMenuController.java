@@ -1,4 +1,4 @@
-package com.qinweizhao.system.module.tool.controller;
+package com.qinweizhao.system.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 定时任务日志表 前端控制器
+ * 角色菜单关联 前端控制器
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-27
+ * @since 2021-12-28
  */
 @RestController
-@RequestMapping("/system/job/log")
-public class SysJobLogController {
+@RequestMapping("/system/sys-role-menu")
+public class SysRoleMenuController {
 
 }

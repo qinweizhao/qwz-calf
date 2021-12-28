@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qinweizhao.system.mapper.SysErrorCodeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qinweizhao.system.entity.SysErrorCode">
+        <id column="id" property="id" />
+        <result column="type" property="type" />
+        <result column="application_name" property="applicationName" />
+        <result column="code" property="code" />
+        <result column="message" property="message" />
+        <result column="memo" property="memo" />
+        <result column="creator" property="creator" />
+        <result column="create_time" property="createTime" />
+        <result column="updater" property="updater" />
+        <result column="update_time" property="updateTime" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, type, application_name, code, message, memo, creator, create_time, updater, update_time, deleted
+    </sql>
+
+</mapper>

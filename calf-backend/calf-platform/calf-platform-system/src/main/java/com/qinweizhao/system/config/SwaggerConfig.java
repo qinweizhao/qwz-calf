@@ -1,6 +1,7 @@
 package com.qinweizhao.system.config;
 
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.models.auth.In;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import java.util.*;
  * @author qinweizhao
  * @since 2021/10/12
  */
+@EnableKnife4j
 @Configuration
 public class SwaggerConfig {
 
@@ -71,7 +73,6 @@ public class SwaggerConfig {
         }
         return new HashSet<>();
     }
-
 
 }
 

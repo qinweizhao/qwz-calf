@@ -1,7 +1,6 @@
-package com.qinweizhao.system.module.tool.controller;
+package com.qinweizhao.system.controller;
 
 
-import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -12,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-27
+ * @since 2021-12-28
  */
 @RestController
-@RequestMapping("/system/job")
+@RequestMapping("/system/sys-job")
 public class SysJobController {
 
 }
