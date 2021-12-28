@@ -37,8 +37,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/img/**",
             "/fonts/**",
             "/favicon.ico",
-            "/captcha"
+            "/captcha",
+            "/swagger-ui/**",
+            "/webjars/**",
+            "/swagger-resources/**",
+            "/v3/**",
+            "/druid/**"
     };
+
     @Resource
     private UserDetailsService sysUserDetailsService;
 

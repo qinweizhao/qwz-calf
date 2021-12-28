@@ -24,6 +24,7 @@
         config_id
         , config_group, config_type, config_name, config_key, config_value, sensitive, remark, deleted, create_time, update_time, create_by, update_by
     </sql>
+
     <select id="selectPageConfigs" resultType="com.qinweizhao.system.module.manage.entity.SysConfig">
         select *
         from sys_config

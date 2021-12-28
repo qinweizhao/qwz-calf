@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询在线用户列表
 export function list(query) {
   return request({
-    url: '/system/user-session/page',
+    url: '/system/session/page',
     method: 'get',
     params: query
   })

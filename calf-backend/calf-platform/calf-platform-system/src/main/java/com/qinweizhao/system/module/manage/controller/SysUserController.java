@@ -3,10 +3,15 @@ package com.qinweizhao.system.module.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jayway.jsonpath.internal.function.ParamType;
 import com.qinweizhao.common.base.BaseController;
 import com.qinweizhao.common.response.Result;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,6 +27,7 @@ import java.util.Map;
  * @author qinweizhao
  * @since 2021-12-06
  */
+@Api(tags = "用户管理")
 @RestController
 @RequestMapping("/sys/user")
 public class SysUserController extends BaseController {
@@ -37,6 +43,7 @@ public class SysUserController extends BaseController {
 
 
     @GetMapping("/get")
+    @ApiOperation(value = "查询用户", notes = "备注")
     public Result<SysUser> get(Long id) {
         return Result.success(sysUserService.getUserById(id));
     }

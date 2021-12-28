@@ -76,9 +76,11 @@
             </if>
         </where>
     </select>
+
     <select id="selectUserByPhone" resultType="com.qinweizhao.system.module.manage.entity.SysUser">
         select * from sys_user where phone =#{phone}
     </select>
+
     <select id="selectUserByEmail" resultType="com.qinweizhao.system.module.manage.entity.SysUser">
         select * from sys_user where email =#{email}
     </select>
