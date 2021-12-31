@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>com.qinweizhao</groupId>
-            <artifactId>calf-common</artifactId>
+            <artifactId>calf-common-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

@@ -2,7 +2,7 @@ package com.qinweizhao.controller;
 
 
 import com.qinweizhao.api.system.SysUserApi;
-import com.qinweizhao.common.response.Result;
+import com.qinweizhao.common.core.response.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

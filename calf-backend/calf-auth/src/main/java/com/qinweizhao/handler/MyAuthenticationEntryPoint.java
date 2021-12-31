@@ -1,7 +1,7 @@
 package com.qinweizhao.handler;
 
 import cn.hutool.json.JSONUtil;
-import com.qinweizhao.common.response.Result;
+import com.qinweizhao.common.core.response.Result;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;

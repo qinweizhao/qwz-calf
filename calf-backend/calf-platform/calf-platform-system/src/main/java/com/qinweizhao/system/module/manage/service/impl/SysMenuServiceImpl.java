@@ -2,17 +2,15 @@ package com.qinweizhao.system.module.manage.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qinweizhao.common.enums.MenuIdEnum;
-import com.qinweizhao.common.enums.MenuTypeEnum;
-import com.qinweizhao.common.exception.ServiceException;
-import com.qinweizhao.common.response.ResultCode;
+import com.qinweizhao.common.core.enums.MenuIdEnum;
+import com.qinweizhao.common.core.enums.MenuTypeEnum;
+import com.qinweizhao.common.core.exception.ServiceException;
+import com.qinweizhao.common.core.response.ResultCode;
 import com.qinweizhao.system.module.manage.entity.SysMenu;
 import com.qinweizhao.system.module.manage.mapper.SysMenuMapper;
 import com.qinweizhao.system.module.manage.mapper.SysRoleMenuMapper;
 import com.qinweizhao.system.module.manage.service.ISysMenuService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionSynchronization;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.annotation.Resource;
 import java.util.List;

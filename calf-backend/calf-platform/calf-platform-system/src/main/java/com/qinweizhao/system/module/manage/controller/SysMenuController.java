@@ -1,8 +1,8 @@
 package com.qinweizhao.system.module.manage.controller;
 
 
-import com.qinweizhao.common.base.BaseController;
-import com.qinweizhao.common.response.Result;
+import com.qinweizhao.common.core.base.BaseController;
+import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.entity.SysMenu;
 import com.qinweizhao.system.module.manage.service.ISysMenuService;
 import io.swagger.annotations.ApiImplicitParam;

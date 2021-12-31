@@ -1,6 +1,6 @@
 package com.qinweizhao.handler;
 
-import com.qinweizhao.common.response.Result;
+import com.qinweizhao.common.core.response.Result;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;

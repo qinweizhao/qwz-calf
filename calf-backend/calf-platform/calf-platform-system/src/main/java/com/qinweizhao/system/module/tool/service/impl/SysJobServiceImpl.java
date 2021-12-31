@@ -18,4 +18,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysJobServiceImpl extends ServiceImpl<SysJobMapper, SysJob> implements ISysJobService {
 
+    @Override
+    public int saveJob(SysJob sysJob) {
+        return 0;
+    }
+
+    @Override
+    public void updateJobById(SysJob sysJob) {
+
+    }
 }

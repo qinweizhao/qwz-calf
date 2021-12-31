@@ -3,9 +3,8 @@ package com.qinweizhao.system.module.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.qinweizhao.common.annotation.OperateLog;
-import com.qinweizhao.common.response.Result;
-import com.qinweizhao.common.util.ExcelUtils;
+import com.qinweizhao.common.core.response.Result;
+import com.qinweizhao.common.core.util.ExcelUtils;
 import com.qinweizhao.system.module.manage.entity.SysPost;
 import com.qinweizhao.system.module.manage.service.ISysPostService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -80,7 +79,7 @@ public class SysPostController {
     @GetMapping("/export")
     @ApiOperation("岗位管理")
     @PreAuthorize("hasAuthority('system:post:export')")
-    @OperateLog(type = "EXPORT")
+    //@SysLog(value = "EXPORT")
     public void export(HttpServletResponse response, @Validated SysPost sysPost) throws IOException {
         List<SysPost> posts = sysPostService.list();
         ExcelUtils.write(response, "岗位数据.xls", "岗位列表", SysPost.class, posts);

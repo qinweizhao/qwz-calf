@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qinweizhao.common.exception.ServiceException;
+import com.qinweizhao.common.core.exception.ServiceException;
 import com.qinweizhao.system.module.manage.mapper.SysDictDataMapper;
 import com.qinweizhao.system.module.manage.mapper.SysDictTypeMapper;
 import com.qinweizhao.system.module.manage.service.ISysDictTypeService;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-import static com.qinweizhao.common.response.ResultCode.*;
+import static com.qinweizhao.common.core.response.ResultCode.*;
 
 /**
  * <p>

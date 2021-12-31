@@ -12,14 +12,15 @@
     <artifactId>calf-platform</artifactId>
     <packaging>pom</packaging>
 
-   <modules>
-       <module>calf-platform-system</module>
-   </modules>
+    <modules>
+        <module>calf-platform-system</module>
+    </modules>
+
 
     <dependencies>
         <dependency>
             <groupId>com.qinweizhao</groupId>
-            <artifactId>calf-common</artifactId>
+            <artifactId>calf-common-core</artifactId>
         </dependency>
     </dependencies>
 

@@ -2,9 +2,8 @@ package com.qinweizhao.system.module.manage.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.qinweizhao.common.annotation.OperateLog;
-import com.qinweizhao.common.response.Result;
-import com.qinweizhao.common.util.ExcelUtils;
+import com.qinweizhao.common.core.response.Result;
+import com.qinweizhao.common.core.util.ExcelUtils;
 import com.qinweizhao.system.module.manage.entity.SysRole;
 import com.qinweizhao.system.module.manage.service.ISysRoleService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -99,7 +98,7 @@ public class SysRoleController {
     }
 
     @GetMapping("/export")
-    @OperateLog(type = "EXPORT")
+    //@SysLog(value = "EXPORT")
     @PreAuthorize("hasAuthority('system:role:export')")
     public void export(HttpServletResponse response, @Validated SysRole sysRole) throws IOException {
         List<SysRole> list = sysRoleService.list();

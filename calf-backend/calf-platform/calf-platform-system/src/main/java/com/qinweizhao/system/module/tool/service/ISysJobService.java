@@ -13,4 +13,7 @@ import com.qinweizhao.system.module.tool.entity.SysJob;
  */
 public interface ISysJobService extends IService<SysJob> {
 
+    int saveJob(SysJob sysJob);
+
+    void updateJobById(SysJob sysJob);
 }

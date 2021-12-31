@@ -2,7 +2,7 @@ package com.qinweizhao.system.module.manage.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.qinweizhao.common.response.Result;
+import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.service.ISysDictDataService;
 import com.qinweizhao.system.module.manage.entity.SysDictData;
 import io.swagger.annotations.ApiImplicitParam;

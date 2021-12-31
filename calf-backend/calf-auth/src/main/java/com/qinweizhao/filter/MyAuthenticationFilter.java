@@ -2,10 +2,11 @@ package com.qinweizhao.filter;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.qinweizhao.common.constant.Constants;
-import com.qinweizhao.common.response.Result;
-import com.qinweizhao.common.util.GuavaCacheUtils;
-import com.qinweizhao.common.util.IoUtils;
+import com.qinweizhao.common.core.constant.Constants;
+import com.qinweizhao.common.core.response.Result;
+
+import com.qinweizhao.common.core.util.GuavaCacheUtils;
+import com.qinweizhao.common.core.util.IoUtils;
 import com.qinweizhao.config.AuthConstants;
 import com.qinweizhao.exception.CaptchaException;
 import com.qinweizhao.util.JwtUtils;

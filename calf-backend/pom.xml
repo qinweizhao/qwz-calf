@@ -47,7 +47,12 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>calf-common</artifactId>
+                <artifactId>calf-common-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>calf-common-log</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

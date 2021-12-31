@@ -3,13 +3,11 @@ package com.qinweizhao.system.module.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.qinweizhao.common.annotation.OperateLog;
-import com.qinweizhao.common.exception.ServiceException;
-import com.qinweizhao.common.response.Result;
-import com.qinweizhao.common.util.ExcelUtils;
+import com.qinweizhao.common.core.exception.ServiceException;
+import com.qinweizhao.common.core.response.Result;
+import com.qinweizhao.common.core.util.ExcelUtils;
 import com.qinweizhao.system.module.manage.entity.SysConfig;
 import com.qinweizhao.system.module.manage.service.ISysConfigService;
-
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -37,27 +35,27 @@ public class SysConfigController {
 
     @PostMapping("/save")
     @ApiOperation("创建参数配置")
-    @PreAuthorize("hasAuthority('infra:config:create')")
+    @PreAuthorize("hasAuthority('system:config:create')")
     public Result<Long> createConfig(@Valid @RequestBody SysConfig sysConfig) {
         return Result.condition(sysConfigService.save(sysConfig));
     }
 
     @PutMapping("/update")
     @ApiOperation("修改参数配置")
-    @PreAuthorize("hasAuthority('infra:config:update')")
+    @PreAuthorize("hasAuthority('system:config:update')")
     public Result<Boolean> updateConfig(@Valid @RequestBody SysConfig sysConfig) {
         sysConfigService.updateById(sysConfig);
         return Result.success(true);
     }
 
     @DeleteMapping("/remove")
-    @PreAuthorize("hasAuthority('infra:config:delete')")
+    @PreAuthorize("hasAuthority('system:config:delete')")
     public Result<Boolean> deleteConfig(@RequestParam("id") Long id) {
         return Result.success(sysConfigService.removeById(id));
     }
 
     @GetMapping(value = "/get")
-    @PreAuthorize("hasAuthority('infra:config:query')")
+    @PreAuthorize("hasAuthority('system:config:query')")
     public Result<SysConfig> getConfig(@RequestParam("id") Long id) {
         return Result.success(sysConfigService.getById(id));
     }
@@ -75,15 +73,15 @@ public class SysConfigController {
     }
 
     @GetMapping("/page")
-    // @PreAuthorize("hasAuthority('infra:config:query')")
-    public Result<IPage<SysConfig>> getConfigPage(Page<SysConfig> page,SysConfig sysConfig) {
+    @PreAuthorize("hasAuthority('system:config:query')")
+    public Result<IPage<SysConfig>> getConfigPage(Page<SysConfig> page, SysConfig sysConfig) {
         IPage<SysConfig> pageSysConfig = sysConfigService.pageConfigs(page, sysConfig);
         return Result.success(pageSysConfig);
     }
 
     @GetMapping("/export")
-    @OperateLog(type = "1")
-    @PreAuthorize("hasAuthority('infra:config:export')")
+    //@SysLog(value = "1")
+    @PreAuthorize("hasAuthority('system:config:export')")
     public void exportSysConfig(@Valid SysConfig sysConfig,
                                 HttpServletResponse response) throws IOException {
         List<SysConfig> list = sysConfigService.listConfigs(sysConfig);

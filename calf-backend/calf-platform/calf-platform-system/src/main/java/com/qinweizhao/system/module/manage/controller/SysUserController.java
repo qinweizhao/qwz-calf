@@ -3,14 +3,11 @@ package com.qinweizhao.system.module.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jayway.jsonpath.internal.function.ParamType;
-import com.qinweizhao.common.base.BaseController;
-import com.qinweizhao.common.response.Result;
+import com.qinweizhao.common.core.base.BaseController;
+import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 

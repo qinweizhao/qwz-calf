@@ -4,7 +4,7 @@ package com.qinweizhao.system.module.manage.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.qinweizhao.common.response.Result;
+import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.service.ISysNoticeService;
 import com.qinweizhao.system.module.manage.entity.SysNotice;
 import io.swagger.annotations.ApiImplicitParam;

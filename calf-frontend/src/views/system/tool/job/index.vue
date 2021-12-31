@@ -22,15 +22,15 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd"
-                   v-hasPermi="['infra:job:create']">新增</el-button>
+                   v-hasPermi="['system:job:create']">新增</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport"
-                   v-hasPermi="['infra:job:export']">导出</el-button>
+                   v-hasPermi="['system:job:export']">导出</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="info" icon="el-icon-s-operation" size="mini" @click="handleJobLog"
-                   v-hasPermi="['infra:job:query']">执行日志</el-button>
+                   v-hasPermi="['system:job:query']">执行日志</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -49,19 +49,19 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
-                     v-hasPermi="['infra:job:query']">详细</el-button>
+                     v-hasPermi="['system:job:query']">详细</el-button>
           <el-button size="mini" icon="el-icon-s-operation" @click="handleJobLog(scope.row)"
-                     v-hasPermi="['infra:job:query']">执行日志</el-button>
+                     v-hasPermi="['system:job:query']">执行日志</el-button>
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-                     v-hasPermi="['infra:job:update']">修改</el-button>
+                     v-hasPermi="['system:job:update']">修改</el-button>
           <el-button size="mini" type="text" icon="el-icon-check" @click="handleChangeStatus(scope.row, true)"
-                     v-if="scope.row.status === InfJobStatusEnum.STOP" v-hasPermi="['infra:job:update']">开启</el-button>
+                     v-if="scope.row.status === InfJobStatusEnum.STOP" v-hasPermi="['system:job:update']">开启</el-button>
           <el-button size="mini" type="text" icon="el-icon-close" @click="handleChangeStatus(scope.row, false)"
-                     v-if="scope.row.status === InfJobStatusEnum.NORMAL" v-hasPermi="['infra:job:update']">暂停</el-button>
+                     v-if="scope.row.status === InfJobStatusEnum.NORMAL" v-hasPermi="['system:job:update']">暂停</el-button>
           <el-button size="mini" type="text" icon="el-icon-caret-right" @click="handleRun(scope.row)"
-                     v-hasPermi="['infra:job:trigger']">执行一次</el-button>
+                     v-hasPermi="['system:job:trigger']">执行一次</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['infra:job:delete']">删除</el-button>
+                     v-hasPermi="['system:job:delete']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -182,7 +182,7 @@ export default {
     getList() {
       this.loading = true;
       listJob(this.queryParams).then(response => {
-        this.jobList = response.data.list;
+        this.jobList = response.data.records;
         this.total = response.data.total;
         this.loading = false;
       });

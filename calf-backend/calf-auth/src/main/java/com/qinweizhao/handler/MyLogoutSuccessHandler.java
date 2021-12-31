@@ -1,7 +1,7 @@
 package com.qinweizhao.handler;
 
 import cn.hutool.json.JSONUtil;
-import com.qinweizhao.common.response.Result;
+import com.qinweizhao.common.core.response.Result;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
