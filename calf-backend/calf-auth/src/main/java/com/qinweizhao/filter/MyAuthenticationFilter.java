@@ -2,12 +2,11 @@ package com.qinweizhao.filter;
 
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.qinweizhao.common.core.constant.Constants;
+import com.qinweizhao.common.core.constant.AuthConstants;
 import com.qinweizhao.common.core.response.Result;
 
 import com.qinweizhao.common.core.util.GuavaCacheUtils;
 import com.qinweizhao.common.core.util.IoUtils;
-import com.qinweizhao.config.AuthConstants;
 import com.qinweizhao.exception.CaptchaException;
 import com.qinweizhao.util.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -69,17 +68,17 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
             throw new AuthenticationServiceException("不支持身份验证方法:" + request.getMethod());
         }
         JSONObject jsonObject = IoUtils.parseRequestToJsonObject(request);
-        String captcha = jsonObject.getString(Constants.LOGIN_CODE_KEY);
-        if (AuthConstants.IS_CAPTCHA){
+        String captcha = jsonObject.getString(AuthConstants.LOGIN_CODE_KEY);
+        if (com.qinweizhao.config.AuthConstants.IS_CAPTCHA){
             boolean b = this.validateCaptcha(captcha);
             if (!b) {
                 throw new CaptchaException("验证码错误");
             }
         }
-        String username = jsonObject.getString(Constants.LOGIN_USER_KEY);
+        String username = jsonObject.getString(AuthConstants.LOGIN_USER_KEY);
         username = username != null ? username : "";
         username = username.trim();
-        String password = jsonObject.getString(Constants.LOGIN_PASS_KEY);
+        String password = jsonObject.getString(AuthConstants.LOGIN_PASS_KEY);
         password = password != null ? password : "";
 
         // 判断 账号 密码 验证码 是否为空

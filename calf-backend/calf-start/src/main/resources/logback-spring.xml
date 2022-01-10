@@ -85,11 +85,11 @@
 		可以包含零个或多个元素，标识这个appender将会添加到这个logger。
 	-->
 	<!-- 本地和开发环境:打印控制台-->
-<!--	<springProfile name="dev | local">-->
-<!--		<root level="DEBUG">-->
-<!--			<appender-ref ref="CONSOLE"/>-->
-<!--		</root>-->
-<!--	</springProfile>-->
+	<springProfile name="dev | local">
+		<root level="DEBUG">
+			<appender-ref ref="CONSOLE"/>
+		</root>
+	</springProfile>
 
 	<!-- 测试或生产:输出到文档 -->
 	<springProfile name="!(dev | local)">

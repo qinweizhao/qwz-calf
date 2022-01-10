@@ -1,7 +1,6 @@
 package com.qinweizhao.common.core.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.qinweizhao.common.core.constant.ResultConstants;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -72,7 +71,7 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<T> success(T data) {
-        return success(data, ResultConstants.DEFAULT_SUCCESS_MESSAGE);
+        return success(data, ResultCode.SUCCESS.msg);
     }
 
     public static <T> Result<T> success(T data, String msg) {

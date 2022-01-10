@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.common.core.base.BaseController;
 import com.qinweizhao.common.core.response.Result;
+import com.qinweizhao.common.log.annotation.SysLog;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
 import io.swagger.annotations.Api;
@@ -32,7 +33,6 @@ public class SysUserController extends BaseController {
     @Resource
     private ISysUserService sysUserService;
 
-
     @GetMapping("/info")
     public Result<Map<Object, Object>> info() {
         return Result.success(sysUserService.getProjectInitInfo(getCurrentLoginUsername()));
@@ -51,20 +51,21 @@ public class SysUserController extends BaseController {
         return Result.success(sysUserService.pageUsers(page, sysUser));
     }
 
-
+    @SysLog("新增用户")
     @PostMapping("/save")
     public Result<Object> save(@RequestBody SysUser sysUser) {
         return Result.success(sysUserService.saveUser(sysUser));
     }
 
 
+    @SysLog("编辑用户")
     @PostMapping("/edit")
     public Result<Object> edit(@Valid @RequestBody SysUser sysUser) {
         sysUserService.updateUserById(sysUser);
         return Result.success();
     }
 
-
+    @SysLog("删除用户")
     @GetMapping("/delete")
     public Result<Object> delete(@RequestParam List<Long> id) {
         return Result.condition(sysUserService.removeUserByIds(id));

@@ -3,7 +3,7 @@ package com.qinweizhao.system.api;
 import cn.hutool.core.codec.Base64;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.qinweizhao.api.system.dto.SysUserDTO;
-import com.qinweizhao.common.core.constant.Constants;
+import com.qinweizhao.common.core.constant.AuthConstants;
 import com.qinweizhao.api.system.SysUserApi;
 import com.qinweizhao.common.core.util.GuavaCacheUtils;
 import com.qinweizhao.system.module.manage.entity.SysUser;
@@ -45,12 +45,12 @@ public class SysUserApiImpl implements SysUserApi {
         if (log.isDebugEnabled()) {
             log.debug("验证码为:" + text);
         }
-        String key = Constants.LOGIN_CODE_KEY + "_" + RandomStringUtils.random(5);
+        String key = AuthConstants.LOGIN_CODE_KEY + "_" + RandomStringUtils.random(5);
         GuavaCacheUtils.CACHE.put(key, text);
         BufferedImage image = defaultKaptcha.createImage(text);
         ImageIO.write(image, "jpg", outputStream);
         outputStream.flush();
-        return Constants.BASE64_PREFIX + Base64.encode(outputStream.toByteArray());
+        return AuthConstants.BASE64_PREFIX + Base64.encode(outputStream.toByteArray());
     }
 
     @Override

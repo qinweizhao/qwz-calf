@@ -1,28 +1,26 @@
-package com.qinweizhao.api.system.dto;
+package com.qinweizhao.system.module.monitor.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 /**
  * <p>
- * 操作日志记录
+ * 日志表
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-22
+ * @since 2022-01-04
  */
 @Data
-@TableName("sys_operate_log")
-@ApiModel(value = "SysOperateLog对象", description = "操作日志记录")
-public class SysLogDTO implements Serializable {
+@TableName("sys_log")
+@ApiModel(value = "SysLog对象", description = "日志表")
+public class SysLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,7 +41,7 @@ public class SysLogDTO implements Serializable {
     private String exception;
 
     @ApiModelProperty("执行时间")
-    private Long time;
+    private String time;
 
     @ApiModelProperty("删除标记")
     private String deleted;

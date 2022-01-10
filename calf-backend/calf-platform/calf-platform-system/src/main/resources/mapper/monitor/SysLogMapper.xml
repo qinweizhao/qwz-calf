@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qinweizhao.system.module.monitor.mapper.SysLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.monitor.entity.SysLog">
+        <id column="log_id" property="logId" />
+        <result column="log_type" property="logType" />
+        <result column="log_title" property="logTitle" />
+        <result column="request" property="request" />
+        <result column="exception" property="exception" />
+        <result column="time" property="time" />
+        <result column="deleted" property="deleted" />
+        <result column="status" property="status" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        log_id, log_type, log_title, request, exception, time, deleted, status, create_by, update_by, create_time, update_time
+    </sql>
+
+</mapper>

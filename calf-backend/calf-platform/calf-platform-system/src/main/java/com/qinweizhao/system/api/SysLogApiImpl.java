@@ -2,9 +2,10 @@ package com.qinweizhao.system.api;
 
 import com.qinweizhao.api.system.SysLogApi;
 
+
 import com.qinweizhao.api.system.dto.SysLogDTO;
-import com.qinweizhao.system.module.monitor.entity.SysOperateLog;
-import com.qinweizhao.system.module.monitor.service.ISysOperateLogService;
+import com.qinweizhao.system.module.monitor.entity.SysLog;
+import com.qinweizhao.system.module.monitor.service.ISysLogService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +20,13 @@ public class SysLogApiImpl implements SysLogApi {
 
 
     @Resource
-    private ISysOperateLogService sysOperateLogService;
+    private ISysLogService sysLogService;
 
 
     @Override
     public void saveLog(SysLogDTO sysLog) {
-        SysOperateLog sysOperateLog = new SysOperateLog();
+        SysLog sysOperateLog = new SysLog();
         BeanUtils.copyProperties(sysLog,sysOperateLog);
-        sysOperateLogService.save(sysOperateLog);
+        sysLogService.save(sysOperateLog);
     }
 }

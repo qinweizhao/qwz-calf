@@ -24,6 +24,11 @@
             <groupId>com.qinweizhao</groupId>
             <artifactId>calf-platform-api-system</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.qinweizhao</groupId>
+            <artifactId>calf-common-log</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
