@@ -3,6 +3,7 @@ package com.qinweizhao.system.module.manage.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @author qinweizhao
  * @since 2021-12-10
  */
+@Data
 @TableName("sys_role_menu")
 @ApiModel(value = "SysRoleMenu对象", description = "角色菜单关联")
 public class SysRoleMenu implements Serializable {
@@ -26,26 +28,4 @@ public class SysRoleMenu implements Serializable {
     @ApiModelProperty("角色ID")
     private Long roleId;
 
-    public Long getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
-    }
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
-    @Override
-    public String toString() {
-        return "SysRoleMenu{" +
-            "menuId=" + menuId +
-            ", roleId=" + roleId +
-        "}";
-    }
 }

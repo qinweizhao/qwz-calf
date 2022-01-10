@@ -22,6 +22,14 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
+    <update id="updatePasswordById">
+        UPDATE sys_user SET password=#{password} WHERE user_id=#{userId}
+    </update>
+
+    <update id="updateUserStatusById">
+        UPDATE sys_user SET status=#{status} WHERE user_id=#{userId}
+    </update>
+
     <select id="selectUserByUsername" resultType="com.qinweizhao.system.module.manage.entity.SysUser">
         SELECT *
         FROM sys_user
@@ -50,30 +58,30 @@
         WHERE username = #{username}
     </select>
 
-    <select id="selectPageUsers" resultType="com.qinweizhao.system.module.manage.entity.SysUser">
-        SELECT *
+    <select id="selectPageUsers" resultType="com.qinweizhao.api.system.vo.SysUserVO">
+        SELECT avatar,create_by,create_time,deleted,dept_id,email,nick_name,password,phone,sex,sort,status,update_by,update_time,user_id,username
         FROM sys_user
         <where>
-            <if test="query.username != null and query.username != ''">
-                username like concat('%', #{query.username}, '%')
+            <if test="user.username != null and user.username != ''">
+                username like concat('%', #{user.username}, '%')
             </if>
-            <if test="query.status != null and query.status != ''">
-                AND enabled = #{query.enabled}
+            <if test="user.status != null and user.status != ''">
+                AND enabled = #{user.enabled}
             </if>
-            <if test="query.phone != null and query.phone != ''">
-                AND phone like concat('%', #{query.phone}, '%')
+            <if test="user.phone != null and user.phone != ''">
+                AND phone like concat('%', #{user.phone}, '%')
             </if>
-            <if test="query.deptId != null and query.deptId != 0">
-                AND dept_id = #{query.deptId}
+            <if test="user.deptId != null and user.deptId != 0">
+                AND dept_id = #{user.deptId}
             </if>
-            <!-- 开始时间检索 -->
-            <if test="query.beginTime != null and query.beginTime != ''">
-                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{query.beginTime},'%y%m%d')
-            </if>
-            <!-- 结束时间检索 -->
-            <if test="query.endTime != null and query.endTime != ''">
-                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{query.endTime},'%y%m%d')
-            </if>
+<!--            &lt;!&ndash; 开始时间检索 &ndash;&gt;-->
+<!--            <if test="user.beginTime != null and user.beginTime != ''">-->
+<!--                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{user.beginTime},'%y%m%d')-->
+<!--            </if>-->
+<!--            &lt;!&ndash; 结束时间检索 &ndash;&gt;-->
+<!--            <if test="user.endTime != null and user.endTime != ''">-->
+<!--                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{user.endTime},'%y%m%d')-->
+<!--            </if>-->
         </where>
     </select>
 

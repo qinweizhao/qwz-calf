@@ -18,7 +18,7 @@ export function login(username, password, code, uuid) {
 // 获取用户详细信息
 export function getInfo() {
   return request({
-    url: '/sys/user/info',
+    url: '/system/manage/user/info',
     method: 'get'
   })
 }

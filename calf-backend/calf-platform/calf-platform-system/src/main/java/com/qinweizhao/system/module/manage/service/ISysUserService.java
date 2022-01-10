@@ -1,8 +1,10 @@
 package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qinweizhao.api.system.dto.SysUserDTO;
+import com.qinweizhao.api.system.vo.SysUserVO;
+import com.qinweizhao.common.core.request.Search;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 
 import java.util.List;
@@ -37,20 +39,56 @@ public interface ISysUserService extends IService<SysUser> {
 
     /**
      * 获取项目初始化需要的信息
+     *
      * @param currentLoginUsername 当前登录的用户名
      * @return user roles permissions
      */
-    Map<Object,Object> getProjectInitInfo(String currentLoginUsername);
+    Map<Object, Object> getProjectInitInfo(String currentLoginUsername);
 
 
-    IPage<SysUser> pageUsers(Page<SysUser> page, SysUser sysUser);
+    /**
+     * 获取用户分页信息
+     *
+     * @param sysUserDTO sysUserDTO
+     * @return IPage<SysUser>
+     */
+    IPage<SysUserVO> pageUsers(SysUserDTO sysUserDTO);
 
 
+    /**
+     * 通过用户 Id 集合删除用户
+     *
+     * @param ids ids
+     * @return int
+     */
     int removeUserByIds(List<Long> ids);
 
-    int saveUser(SysUser sysUser);
+    /**
+     * 保存用户
+     *
+     * @param sysUserDTO sysUserDTO
+     * @return int
+     */
+    int saveUser(SysUserDTO sysUserDTO);
 
-    SysUser getUserById(Long id);
 
-    void updateUserById(SysUser sysUser);
+    /**
+     * 通过用户 Id 获取用户
+     *
+     * @param id id
+     * @return SysUserVO
+     */
+    SysUserVO getUserById(Long id);
+
+
+    /**
+     * 通过用户 Id 修改用户
+     *
+     * @param sysUserDTO sysUserDTO
+     */
+    void updateUserById(SysUserDTO sysUserDTO);
+
+    boolean updatePasswordById(Long userId, String password);
+
+    boolean updateUserStatusById(Long userId, String status);
 }

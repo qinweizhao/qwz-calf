@@ -5,13 +5,18 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import com.qinweizhao.api.system.dto.SysUserDTO;
+import com.qinweizhao.api.system.vo.SysUserVO;
+import com.qinweizhao.common.core.request.Search;
 import com.qinweizhao.common.core.enums.StatusEnum;
 import com.qinweizhao.common.core.exception.ServiceException;
 import com.qinweizhao.common.core.response.ResultCode;
+import com.qinweizhao.common.core.util.PageUtil;
 import com.qinweizhao.common.core.util.SecurityUtils;
+import com.qinweizhao.system.module.manage.convert.SysDeptConvert;
+import com.qinweizhao.system.module.manage.convert.SysUserConvert;
 import com.qinweizhao.system.module.manage.entity.*;
 import com.qinweizhao.system.module.manage.mapper.*;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
@@ -88,19 +93,29 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 
     @Override
-    public SysUser getUserById(Long id) {
-        SysUser sysUser = this.baseMapper.selectById(id);
+    public SysUserVO getUserById(Long id) {
+        SysUserVO sysUserVO = SysUserConvert.INSTANCE.convert(this.baseMapper.selectById(id));
         List<Long> ids = sysUserPostMapper.selectPostIdsByUserId(id);
-        sysUser.setPostIds(ids);
-        return sysUser;
+        sysUserVO.setPostIds(ids);
+        return sysUserVO;
     }
 
     @Override
-    public void updateUserById(SysUser sysUser) {
-        this.checkSaveOrUpdate(sysUser.getUserId(), sysUser.getUsername(), sysUser.getPhone(), sysUser.getEmail(),
-                sysUser.getDeptId(), sysUser.getPostIds());
+    public void updateUserById(SysUserDTO sysUserDTO) {
+        this.checkSaveOrUpdate(sysUserDTO.getUserId(), sysUserDTO.getUsername(), sysUserDTO.getPhone(), sysUserDTO.getEmail(),
+                sysUserDTO.getDeptId(), sysUserDTO.getPostIds());
         // 更新用户
-        this.baseMapper.updateById(sysUser);
+        this.baseMapper.updateById(SysUserConvert.INSTANCE.convert(sysUserDTO));
+    }
+
+    @Override
+    public boolean updatePasswordById(Long userId, String password) {
+        return this.baseMapper.updatePasswordById(userId,password);
+    }
+
+    @Override
+    public boolean updateUserStatusById(Long userId, String status) {
+        return this.baseMapper.updateUserStatusById(userId,status);
     }
 
     /**
@@ -128,7 +143,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 校验岗位处于开启状态
         this.checkPostEnable(postIds);
     }
-
 
     /**
      * 校验用户存在
@@ -257,11 +271,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public IPage<SysUser> pageUsers(Page<SysUser> page, SysUser sysUser) {
-        IPage<SysUser> sysUserPage = this.baseMapper.selectPageUsers(page, sysUser);
-        List<SysUser> records = sysUserPage.getRecords();
+    public IPage<SysUserVO> pageUsers(SysUserDTO sysUserDTO) {
+        SysUser sysUser = SysUserConvert.INSTANCE.convert(sysUserDTO);
+        IPage<SysUserVO> sysUserPage = this.baseMapper.selectPageUsers(PageUtil.getPage(),sysUser);
+        List<SysUserVO> records = sysUserPage.getRecords();
         records.forEach(item -> {
-            item.setDept(sysDeptMapper.selectById(item.getDeptId()));
+            item.setDept(SysDeptConvert.INSTANCE.convert(sysDeptMapper.selectById(item.getDeptId())));
             item.setPostIds(sysUserPostMapper.selectPostIdsByUserId(item.getUserId()));
         });
         return sysUserPage;
@@ -286,25 +301,29 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 
     @Override
-    public int saveUser(SysUser sysUser) {
+    public int saveUser(SysUserDTO sysUserDTO) {
+        this.checkSaveOrUpdate(sysUserDTO.getUserId(), sysUserDTO.getUsername(), sysUserDTO.getPhone(), sysUserDTO.getEmail(),
+                sysUserDTO.getDeptId(), sysUserDTO.getPostIds());
+        SysUser sysUser = SysUserConvert.INSTANCE.convert(sysUserDTO);
+        Long userId = sysUserDTO.getUserId();
         // 新增用户信息
         int i = this.baseMapper.insert(sysUser);
+        List<Long> postIds = sysUserDTO.getPostIds();
         // 新增用户岗位关联
-        this.insertUserPost(sysUser);
+        this.insertUserPost(postIds,userId);
         // 新增用户与角色管理
-        this.insertUserRole(sysUser);
+        List<Long> roleIds = sysUserDTO.getRoleIds();
+        this.insertUserRole(roleIds,userId);
         return i;
     }
 
-    private void insertUserRole(SysUser sysUser) {
-        List<Long> roleIds = sysUser.getRoleIds();
-
+    private void insertUserRole(List<Long> roleIds,Long userId) {
         if (!roleIds.isEmpty()) {
             // 新增用户与角色管理
             List<SysUserRole> list = new ArrayList<>();
             for (Long roleId : roleIds) {
                 SysUserRole ur = new SysUserRole();
-                ur.setUserId(sysUser.getUserId());
+                ur.setUserId(userId);
                 ur.setRoleId(roleId);
                 list.add(ur);
             }
@@ -314,14 +333,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
     }
 
-    private void insertUserPost(SysUser sysUser) {
-        List<Long> postIds = sysUser.getPostIds();
+    private void insertUserPost(List<Long> postIds,Long userId) {
         if (!postIds.isEmpty()) {
             // 新增用户与岗位管理
             List<SysUserPost> list = new ArrayList<>();
             for (Long postId : postIds) {
                 SysUserPost up = new SysUserPost();
-                up.setUserId(sysUser.getUserId());
+                up.setUserId(userId);
                 up.setPostId(postId);
                 list.add(up);
             }

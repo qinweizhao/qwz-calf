@@ -3,6 +3,9 @@ package com.qinweizhao.system.module.manage.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.SysUserDTO;
+import com.qinweizhao.api.system.vo.SysUserVO;
+import com.qinweizhao.common.core.request.Search;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -53,9 +56,19 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      */
     Long selectUserIdByUsername(String username);
 
-    IPage<SysUser> selectPageUsers(Page<SysUser> page, @Param("query") SysUser sysUser);
+    /**
+     * 查询用户分页
+     * @param page page
+     * @param sysUser sysUser
+     * @return IPage<SysUser>
+     */
+    IPage<SysUserVO> selectPageUsers(Page<SysUser> page,@Param("user") SysUser sysUser);
 
     SysUser selectUserByEmail(String email);
 
     SysUser selectUserByPhone(String phone);
+
+    boolean updatePasswordById(Long userId, String password);
+
+    boolean updateUserStatusById(Long userId, String status);
 }

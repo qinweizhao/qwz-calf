@@ -2,11 +2,14 @@ package com.qinweizhao.system.module.tool.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -16,6 +19,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author qinweizhao
  * @since 2021-12-27
  */
+@Data
 @TableName("sys_job")
 @ApiModel(value = "SysJob对象", description = "定时任务表")
 public class SysJob implements Serializable {
@@ -63,124 +67,7 @@ public class SysJob implements Serializable {
     private LocalDateTime updateTime;
 
     @ApiModelProperty("是否删除")
-    private Boolean deleted;
+    @TableLogic
+    private Integer deleted;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-    public String getHandlerName() {
-        return handlerName;
-    }
-
-    public void setHandlerName(String handlerName) {
-        this.handlerName = handlerName;
-    }
-    public String getHandlerParam() {
-        return handlerParam;
-    }
-
-    public void setHandlerParam(String handlerParam) {
-        this.handlerParam = handlerParam;
-    }
-    public String getCronExpression() {
-        return cronExpression;
-    }
-
-    public void setCronExpression(String cronExpression) {
-        this.cronExpression = cronExpression;
-    }
-    public Integer getRetryCount() {
-        return retryCount;
-    }
-
-    public void setRetryCount(Integer retryCount) {
-        this.retryCount = retryCount;
-    }
-    public Integer getRetryInterval() {
-        return retryInterval;
-    }
-
-    public void setRetryInterval(Integer retryInterval) {
-        this.retryInterval = retryInterval;
-    }
-    public Integer getMonitorTimeout() {
-        return monitorTimeout;
-    }
-
-    public void setMonitorTimeout(Integer monitorTimeout) {
-        this.monitorTimeout = monitorTimeout;
-    }
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "SysJob{" +
-            "id=" + id +
-            ", name=" + name +
-            ", status=" + status +
-            ", handlerName=" + handlerName +
-            ", handlerParam=" + handlerParam +
-            ", cronExpression=" + cronExpression +
-            ", retryCount=" + retryCount +
-            ", retryInterval=" + retryInterval +
-            ", monitorTimeout=" + monitorTimeout +
-            ", creator=" + creator +
-            ", createTime=" + createTime +
-            ", updater=" + updater +
-            ", updateTime=" + updateTime +
-            ", deleted=" + deleted +
-        "}";
-    }
 }

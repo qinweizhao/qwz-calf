@@ -8,6 +8,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
  * 通用异常
  *
  * @author qinweizhao
+ * @since 2021/11/18
  */
 public class BaseException extends RuntimeException {
 

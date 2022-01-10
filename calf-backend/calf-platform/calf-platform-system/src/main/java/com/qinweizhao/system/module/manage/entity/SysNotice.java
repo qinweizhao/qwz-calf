@@ -2,9 +2,11 @@ package com.qinweizhao.system.module.manage.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,6 +19,7 @@ import java.time.LocalDateTime;
  * @author qinweizhao
  * @since 2021-12-22
  */
+@Data
 @TableName("sys_notice")
 @ApiModel(value = "SysNotice对象", description = "通知公告表")
 public class SysNotice implements Serializable {
@@ -52,92 +55,7 @@ public class SysNotice implements Serializable {
     private LocalDateTime updateTime;
 
     @ApiModelProperty("是否删除")
-    private Boolean deleted;
+    @TableLogic
+    private Integer deleted;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-    public Integer getNoticeType() {
-        return noticeType;
-    }
-
-    public void setNoticeType(Integer noticeType) {
-        this.noticeType = noticeType;
-    }
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-    public String getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(String updater) {
-        this.updater = updater;
-    }
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    @Override
-    public String toString() {
-        return "SysNotice{" +
-            "id=" + id +
-            ", title=" + title +
-            ", content=" + content +
-            ", noticeType=" + noticeType +
-            ", status=" + status +
-            ", creator=" + creator +
-            ", createTime=" + createTime +
-            ", updater=" + updater +
-            ", updateTime=" + updateTime +
-            ", deleted=" + deleted +
-        "}";
-    }
 }

@@ -10,6 +10,7 @@ import java.util.Date;
  * 实体类的基类
  *
  * @author qinweizhao
+ * @since 2021/11/18
  */
 @Data
 public class BaseEntity implements Serializable {

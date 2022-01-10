@@ -20,17 +20,16 @@ import java.util.List;
  * @since 2021-12-06
  */
 @Data
-@TableName("sys_user")
-@ApiModel(value = "SysUser对象", description = "系统用户")
+@ApiModel(value = "SysUserDTO对象", description = "系统用户")
 public class SysUserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("ID")
+    @ApiModelProperty("编号")
     @TableId(value = "user_id", type = IdType.AUTO)
     private Long userId;
 
-    @ApiModelProperty("部门ID")
+    @ApiModelProperty("部门编号")
     private Long deptId;
 
     @ApiModelProperty("用户名")
@@ -75,15 +74,16 @@ public class SysUserDTO implements Serializable {
     @ApiModelProperty("更新时间")
     private Date updateTime;
 
-    /**
-     * 岗位编号数组
-     */
+    @ApiModelProperty("岗位编号")
     private List<Long> postIds;
 
-
-    /**
-     * 角色编号数组
-     */
+    @ApiModelProperty("角色编号")
     private List<Long> roleIds;
+
+
+    @ApiModelProperty("开始时间")
+    private String beginTime;
+    @ApiModelProperty("结束时间")
+    private String endTime;
 
 }

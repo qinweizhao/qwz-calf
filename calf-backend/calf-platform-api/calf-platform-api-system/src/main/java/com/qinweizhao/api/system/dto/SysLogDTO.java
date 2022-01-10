@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
  * @since 2021-12-22
  */
 @Data
-@TableName("sys_operate_log")
 @ApiModel(value = "SysOperateLog对象", description = "操作日志记录")
 public class SysLogDTO implements Serializable {
 

@@ -1,7 +1,8 @@
-package com.qinweizhao.system.module.manage.entity;
+package com.qinweizhao.api.system.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,50 +13,37 @@ import java.util.Date;
 
 /**
  * <p>
- * 系统用户
+ * 部门表
  * </p>
  *
  * @author qinweizhao
  * @since 2021-12-06
  */
 @Data
-@TableName("sys_user")
-@ApiModel(value = "SysUser对象", description = "系统用户")
-public class SysUser implements Serializable {
+@ApiModel(value = "SysDept对象", description = "部门表")
+public class SysDeptDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("ID")
-    @TableId(value = "user_id", type = IdType.AUTO)
-    private Long userId;
-
-    @ApiModelProperty("部门ID")
     private Long deptId;
 
-    @ApiModelProperty("用户名")
-    private String username;
+    @ApiModelProperty("父ID")
+    private Long parentId;
 
-    @ApiModelProperty("密码")
-    private String password;
+    @ApiModelProperty("名称")
+    private String deptName;
 
-    @ApiModelProperty("昵称")
-    private String nickName;
-
-    @ApiModelProperty("性别")
-    private String sex;
-
-    @ApiModelProperty("手机号码")
+    @ApiModelProperty("电话")
     private String phone;
 
     @ApiModelProperty("邮箱")
     private String email;
 
-    @ApiModelProperty("头像")
-    private String avatar;
-
     @ApiModelProperty("排序")
     private Integer sort;
 
+    @TableLogic
     @ApiModelProperty("删除：1存在、0删除")
     private Integer deleted;
 
@@ -65,13 +53,15 @@ public class SysUser implements Serializable {
     @ApiModelProperty("创建者")
     private String createBy;
 
+    @ApiModelProperty("创建时间")
+    private Date createTime;
+
     @ApiModelProperty("更新者")
     private String updateBy;
 
-    @ApiModelProperty("创建日期")
-    private Date createTime;
-
     @ApiModelProperty("更新时间")
     private Date updateTime;
+
+
 
 }

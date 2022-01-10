@@ -2,6 +2,7 @@ package com.qinweizhao.system.module.manage.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -51,7 +52,8 @@ public class SysConfig implements Serializable {
     private String remark;
 
     @ApiModelProperty("是否删除")
-    private Boolean deleted;
+    @TableLogic
+    private Integer deleted;
 
     @ApiModelProperty("创建时间")
     private Date createTime;
