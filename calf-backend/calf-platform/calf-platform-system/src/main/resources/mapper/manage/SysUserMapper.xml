@@ -23,11 +23,15 @@
     </resultMap>
 
     <update id="updatePasswordById">
-        UPDATE sys_user SET password=#{password} WHERE user_id=#{userId}
+        UPDATE sys_user
+        SET password=#{password}
+        WHERE user_id = #{userId}
     </update>
 
     <update id="updateUserStatusById">
-        UPDATE sys_user SET status=#{status} WHERE user_id=#{userId}
+        UPDATE sys_user
+        SET status=#{status}
+        WHERE user_id = #{userId}
     </update>
 
     <select id="selectUserByUsername" resultType="com.qinweizhao.system.module.manage.entity.SysUser">
@@ -58,39 +62,38 @@
         WHERE username = #{username}
     </select>
 
-    <select id="selectPageUsers" resultType="com.qinweizhao.api.system.vo.SysUserVO">
-        SELECT avatar,create_by,create_time,deleted,dept_id,email,nick_name,password,phone,sex,sort,status,update_by,update_time,user_id,username
+    <select id="selectPageUsers" resultType="com.qinweizhao.system.module.manage.entity.SysUser">
+        SELECT
+        avatar,create_by,create_time,deleted,dept_id,email,nick_name,password,phone,sex,sort,status,update_by,update_time,user_id,username
         FROM sys_user
         <where>
-            <if test="user.username != null and user.username != ''">
-                username like concat('%', #{user.username}, '%')
+            <if test="search.keyword != null and search.keyword != ''">
+                username like concat('%', #{search.keyword}, '%')
             </if>
-            <if test="user.status != null and user.status != ''">
-                AND enabled = #{user.enabled}
+            <if test="deptId != null and deptId != 0">
+                AND dept_id = #{deptId}
             </if>
-            <if test="user.phone != null and user.phone != ''">
-                AND phone like concat('%', #{user.phone}, '%')
+            <!-- 开始时间检索 -->
+            <if test="search.beginTime != null and search.beginTime != ''">
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{search.beginTime},'%y%m%d')
             </if>
-            <if test="user.deptId != null and user.deptId != 0">
-                AND dept_id = #{user.deptId}
+            <!-- 结束时间检索 -->
+            <if test="search.endTime != null and search.endTime != ''">
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{search.endTime},'%y%m%d')
             </if>
-<!--            &lt;!&ndash; 开始时间检索 &ndash;&gt;-->
-<!--            <if test="user.beginTime != null and user.beginTime != ''">-->
-<!--                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{user.beginTime},'%y%m%d')-->
-<!--            </if>-->
-<!--            &lt;!&ndash; 结束时间检索 &ndash;&gt;-->
-<!--            <if test="user.endTime != null and user.endTime != ''">-->
-<!--                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{user.endTime},'%y%m%d')-->
-<!--            </if>-->
         </where>
     </select>
 
     <select id="selectUserByPhone" resultType="com.qinweizhao.system.module.manage.entity.SysUser">
-        select * from sys_user where phone =#{phone}
+        select *
+        from sys_user
+        where phone = #{phone}
     </select>
 
     <select id="selectUserByEmail" resultType="com.qinweizhao.system.module.manage.entity.SysUser">
-        select * from sys_user where email =#{email}
+        select *
+        from sys_user
+        where email = #{email}
     </select>
 
 

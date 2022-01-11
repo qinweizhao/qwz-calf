@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row :gutter="20">
       <!--部门数据-->
-      <el-col :span="4" :xs="24">
+      <el-col :span="3" :xs="24">
         <div class="head-container">
           <el-input
             v-model="deptName"
@@ -26,7 +26,7 @@
         </div>
       </el-col>
       <!--用户数据-->
-      <el-col :span="20" :xs="24">
+      <el-col :span="21" :xs="24">
         <el-form
           :model="queryParams"
           ref="queryForm"
@@ -34,47 +34,21 @@
           v-show="showSearch"
           label-width="68px"
         >
-          <el-form-item label="用户名称" prop="username">
+          <el-form-item label="关键字" prop="keyword">
             <el-input
-              v-model="queryParams.username"
+              v-model="queryParams.keyword"
               placeholder="请输入用户名称"
               clearable
               size="small"
-              style="width: 240px"
+              style="width: 260px"
               @keyup.enter.native="handleQuery"
             />
-          </el-form-item>
-          <el-form-item label="手机号码" prop="phone">
-            <el-input
-              v-model="queryParams.phone"
-              placeholder="请输入手机号码"
-              clearable
-              size="small"
-              style="width: 240px"
-              @keyup.enter.native="handleQuery"
-            />
-          </el-form-item>
-          <el-form-item label="状态" prop="status">
-            <el-select
-              v-model="queryParams.status"
-              placeholder="用户状态"
-              clearable
-              size="small"
-              style="width: 240px"
-            >
-              <el-option
-                v-for="dict in statusDictDatas"
-                :key="parseInt(dict.value)"
-                :label="dict.label"
-                :value="parseInt(dict.value)"
-              />
-            </el-select>
           </el-form-item>
           <el-form-item label="创建时间">
             <el-date-picker
               v-model="dateRange"
               size="small"
-              style="width: 240px"
+              style="width: 260px"
               value-format="yyyy-MM-dd"
               type="daterange"
               range-separator="-"
@@ -510,9 +484,7 @@ export default {
       queryParams: {
         current: 1,
         size: 10,
-        username: undefined,
-        phone: undefined,
-        status: undefined,
+        keyword: undefined,
         deptId: undefined,
       },
       // 表单校验
@@ -634,7 +606,7 @@ export default {
         }
       )
         .then(function () {
-          return changeUserStatus(row.id, row.status);
+          return changeUserStatus(row.userId, row.status);
         })
         .then(() => {
           this.msgSuccess(text + "成功");
@@ -667,7 +639,6 @@ export default {
         phone: undefined,
         email: undefined,
         sex: undefined,
-        status: "0",
         remark: undefined,
         postIds: [],
         roleIds: [],
@@ -723,9 +694,8 @@ export default {
     /** 分配用户角色操作 */
     handleRole(row) {
       this.reset();
-      const id = row.id;
       // 处理了 form 的用户 username 和 nickname 的展示
-      this.form.id = id;
+      this.form.userId = row.userId;
       this.form.username = row.username;
       this.form.nickname = row.nickname;
       // 打开弹窗

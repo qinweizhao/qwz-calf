@@ -1,13 +1,14 @@
 package com.qinweizhao.system.module.manage.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import com.qinweizhao.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -19,9 +20,10 @@ import java.util.Date;
  * @since 2021-12-06
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("sys_user")
 @ApiModel(value = "SysUser对象", description = "系统用户")
-public class SysUser implements Serializable {
+public class SysUser extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -52,26 +54,5 @@ public class SysUser implements Serializable {
 
     @ApiModelProperty("头像")
     private String avatar;
-
-    @ApiModelProperty("排序")
-    private Integer sort;
-
-    @ApiModelProperty("删除：1存在、0删除")
-    private Integer deleted;
-
-    @ApiModelProperty("状态：1启用、0禁用")
-    private Integer status;
-
-    @ApiModelProperty("创建者")
-    private String createBy;
-
-    @ApiModelProperty("更新者")
-    private String updateBy;
-
-    @ApiModelProperty("创建日期")
-    private Date createTime;
-
-    @ApiModelProperty("更新时间")
-    private Date updateTime;
 
 }

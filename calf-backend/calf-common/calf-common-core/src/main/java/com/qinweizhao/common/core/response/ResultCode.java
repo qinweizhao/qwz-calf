@@ -228,7 +228,7 @@ public enum ResultCode implements IResultCode {
     ROLE_CAN_NOT_UPDATE_SYSTEM_TYPE_ROLE(1002003004, "不能操作类型为系统内置的角色"),
 
     // ========== 用户模块 1002004000 ==========
-    USER_USERNAME_EXISTS(1002004000, "用户账号已经存在"),
+    USER_USERNAME_EXISTS(1002004000, "用户名称已经存在"),
 
     USER_MOBILE_EXISTS(1002004001, "手机号已经存在"),
 

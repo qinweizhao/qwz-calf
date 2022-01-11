@@ -6,12 +6,12 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
 import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.vo.SysUserVO;
-import com.qinweizhao.common.core.request.Search;
+import com.qinweizhao.common.core.constant.UserConstants;
 import com.qinweizhao.common.core.enums.StatusEnum;
 import com.qinweizhao.common.core.exception.ServiceException;
+import com.qinweizhao.common.core.request.Search;
 import com.qinweizhao.common.core.response.ResultCode;
 import com.qinweizhao.common.core.util.PageUtil;
 import com.qinweizhao.common.core.util.SecurityUtils;
@@ -110,12 +110,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public boolean updatePasswordById(Long userId, String password) {
-        return this.baseMapper.updatePasswordById(userId,password);
+        return this.baseMapper.updatePasswordById(userId, password);
     }
 
     @Override
-    public boolean updateUserStatusById(Long userId, String status) {
-        return this.baseMapper.updateUserStatusById(userId,status);
+    public boolean updateUserStatusById(Long userId, Integer status) {
+        return this.baseMapper.updateUserStatusById(userId, status);
     }
 
     /**
@@ -271,22 +271,22 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public IPage<SysUserVO> pageUsers(SysUserDTO sysUserDTO) {
-        SysUser sysUser = SysUserConvert.INSTANCE.convert(sysUserDTO);
-        IPage<SysUserVO> sysUserPage = this.baseMapper.selectPageUsers(PageUtil.getPage(),sysUser);
-        List<SysUserVO> records = sysUserPage.getRecords();
+    public IPage<SysUserVO> pageUsers(Search search, Long deptId) {
+        IPage<SysUser> sysUserPage = this.baseMapper.selectPageUsers(PageUtil.getPage(search), search, deptId);
+        IPage<SysUserVO> userPage = SysUserConvert.INSTANCE.convert(sysUserPage);
+        List<SysUserVO> records = userPage.getRecords();
         records.forEach(item -> {
             item.setDept(SysDeptConvert.INSTANCE.convert(sysDeptMapper.selectById(item.getDeptId())));
             item.setPostIds(sysUserPostMapper.selectPostIdsByUserId(item.getUserId()));
         });
-        return sysUserPage;
+        return userPage;
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public int removeUserByIds(List<Long> ids) {
         // 获取当前用户 id
-        String username = (String) SecurityUtils.getLoginUsername();
+        String username = SecurityUtils.getLoginUsername();
         SysUser sysUser = this.baseMapper.selectUserByUsername(username);
         Long userId = sysUser.getUserId();
         if (ids.contains(userId)) {
@@ -305,19 +305,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.checkSaveOrUpdate(sysUserDTO.getUserId(), sysUserDTO.getUsername(), sysUserDTO.getPhone(), sysUserDTO.getEmail(),
                 sysUserDTO.getDeptId(), sysUserDTO.getPostIds());
         SysUser sysUser = SysUserConvert.INSTANCE.convert(sysUserDTO);
-        Long userId = sysUserDTO.getUserId();
+        sysUser.setAvatar(UserConstants.DEFAULT_AVATAR);
         // 新增用户信息
         int i = this.baseMapper.insert(sysUser);
         List<Long> postIds = sysUserDTO.getPostIds();
+        Long userId = sysUser.getUserId();
         // 新增用户岗位关联
-        this.insertUserPost(postIds,userId);
+        this.insertUserPost(postIds, userId);
         // 新增用户与角色管理
         List<Long> roleIds = sysUserDTO.getRoleIds();
-        this.insertUserRole(roleIds,userId);
+        this.insertUserRole(roleIds, userId);
         return i;
     }
 
-    private void insertUserRole(List<Long> roleIds,Long userId) {
+    private void insertUserRole(List<Long> roleIds, Long userId) {
         if (!roleIds.isEmpty()) {
             // 新增用户与角色管理
             List<SysUserRole> list = new ArrayList<>();
@@ -333,7 +334,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
     }
 
-    private void insertUserPost(List<Long> postIds,Long userId) {
+    private void insertUserPost(List<Long> postIds, Long userId) {
         if (!postIds.isEmpty()) {
             // 新增用户与岗位管理
             List<SysUserPost> list = new ArrayList<>();

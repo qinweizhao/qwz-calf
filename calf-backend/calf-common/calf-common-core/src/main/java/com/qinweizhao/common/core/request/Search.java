@@ -20,6 +20,12 @@ import java.util.List;
 @ApiModel(description = "搜索条件")
 public class Search implements Serializable {
 
+	/**
+	 * 关键词
+	 */
+	@ApiModelProperty(value = "关键词")
+	private String keyword;
+
 
 	/**
 	 * 开始日期

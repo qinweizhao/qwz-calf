@@ -30,8 +30,8 @@ export function addUser(data) {
 // 修改用户
 export function updateUser(data) {
   return request({
-    url: '/system/manage/user/edit',
-    method: 'post',
+    url: '/system/manage/user/update',
+    method: 'put',
     data: data
   })
 }
@@ -40,7 +40,7 @@ export function updateUser(data) {
 export function delUser(userId) {
   return request({
     url: '/system/manage/user/delete?id=' + userId,
-    method: 'get'
+    method: 'delete'
   })
 }
 
@@ -68,13 +68,13 @@ export function resetUserPwd(id, password) {
 }
 
 // 用户状态修改
-export function changeUserStatus(id, status) {
+export function changeUserStatus(userId, status) {
   const data = {
-    id,
+    userId,
     status
   }
   return request({
-    url: '/system/user/update-status',
+    url: '/system/manage/user/update/status',
     method: 'put',
     data: data
   })

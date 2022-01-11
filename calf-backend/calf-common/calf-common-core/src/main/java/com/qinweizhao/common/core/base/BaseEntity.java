@@ -1,9 +1,14 @@
 package com.qinweizhao.common.core.base;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -13,30 +18,36 @@ import java.util.Date;
  * @since 2021/11/18
  */
 @Data
-public class BaseEntity implements Serializable {
+@ApiModel("BaseEntity对象")
+public abstract class BaseEntity implements Serializable {
 
-    /**
-     * 创建人
-     */
-    @ApiModelProperty(value = "创建人")
+    @ApiModelProperty("排序")
+    @TableField(fill = FieldFill.INSERT)
+    private Integer sort;
+
+    @ApiModelProperty("删除：0存在、1删除")
+    @TableLogic
+    @TableField(fill = FieldFill.INSERT)
+    private Integer deleted;
+
+    @ApiModelProperty("状态：1启用、0禁用")
+    @TableField(fill = FieldFill.INSERT)
+    private Integer status;
+
+    @ApiModelProperty("创建者")
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
-    /**
-     * 更新人
-     */
-    @ApiModelProperty(value = "更新人")
+    @ApiModelProperty("更新者")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateBy;
 
-    /**
-     * 创建时间
-     */
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
+    @ApiModelProperty("创建日期")
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
-    @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
+    @ApiModelProperty("更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 
 }

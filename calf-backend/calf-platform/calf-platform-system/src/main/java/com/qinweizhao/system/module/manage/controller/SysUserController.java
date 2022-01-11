@@ -37,22 +37,23 @@ public class SysUserController extends BaseController {
     private ISysUserService sysUserService;
 
 
-    @ApiOperation("Init信息")
     @GetMapping("/info")
+    @ApiOperation("初始信息")
     public Result<Map<Object, Object>> info() {
         return Result.success(sysUserService.getProjectInitInfo(getCurrentLoginUsername()));
     }
 
     @GetMapping("/get")
-    @ApiOperation(value = "查询用户", notes = "备注")
+    @ApiOperation(value = "用户详情")
     public Result<SysUserVO> get(Long id) {
         return Result.success(sysUserService.getUserById(id));
     }
 
 
     @GetMapping("/page")
-    public Result<IPage<SysUserVO>> page(SysUserDTO sysUserDTO) {
-        return Result.success(sysUserService.pageUsers(sysUserDTO));
+    @ApiOperation(value = "查询用户")
+    public Result<IPage<SysUserVO>> page(Search search, Long deptId) {
+        return Result.success(sysUserService.pageUsers(search, deptId));
     }
 
 
@@ -85,7 +86,9 @@ public class SysUserController extends BaseController {
     @PutMapping("/update/status")
     @ApiOperation("修改用户状态")
     @PreAuthorize("hasAuthority('system:user:update')")
-    public Result<Boolean> updateUserStatus(Long userId, String status) {
+    public Result<Boolean> updateUserStatus(@RequestBody SysUserDTO sysUserDTO) {
+        Long userId = sysUserDTO.getUserId();
+        Integer status = sysUserDTO.getStatus();
         return Result.condition(sysUserService.updateUserStatusById(userId, status));
     }
 

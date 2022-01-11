@@ -51,7 +51,7 @@ public class SwaggerConfig {
      * 设置授权信息
      */
     private List<SecurityScheme> securitySchemes() {
-        ApiKey apiKey = new ApiKey("tokenName", "Authorization", In.HEADER.toValue());
+        ApiKey apiKey = new ApiKey("Authorization", "Authorization", In.HEADER.toValue());
         return Collections.singletonList(apiKey);
     }
 
@@ -61,7 +61,7 @@ public class SwaggerConfig {
     private List<SecurityContext> securityContexts() {
         return Collections.singletonList(
                 SecurityContext.builder()
-                        .securityReferences(Collections.singletonList(new SecurityReference("tokenName", new AuthorizationScope[]{new AuthorizationScope("global", "accessEverything")})))
+                        .securityReferences(Collections.singletonList(new SecurityReference("Authorization", new AuthorizationScope[]{new AuthorizationScope("global", "accessEverything")})))
                         .build()
         );
     }

@@ -17,9 +17,9 @@ public class SecurityUtils {
     /**
      * 获取用户
      **/
-    public static Object getLoginUsername() {
+    public static String getLoginUsername() {
         try {
-            return getAuthentication().getPrincipal();
+            return String.valueOf(getAuthentication().getPrincipal());
         } catch (Exception e) {
             throw new ServiceException("获取用户信息异常");
         }

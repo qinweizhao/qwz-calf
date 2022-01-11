@@ -28,7 +28,7 @@ import java.util.List;
  * @since 2021-12-06
  */
 @RestController
-@RequestMapping("/sys/role")
+@RequestMapping("/system/manage/role")
 public class SysRoleController {
 
     @Resource

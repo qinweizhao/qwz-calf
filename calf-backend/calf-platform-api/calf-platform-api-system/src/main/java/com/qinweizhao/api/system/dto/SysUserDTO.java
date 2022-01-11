@@ -3,11 +3,13 @@ package com.qinweizhao.api.system.dto;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -53,37 +55,21 @@ public class SysUserDTO implements Serializable {
     @ApiModelProperty("头像")
     private String avatar;
 
-    @ApiModelProperty("排序")
-    private Integer sort;
-
-    @ApiModelProperty("删除：1存在、0删除")
-    private Integer deleted;
-
     @ApiModelProperty("状态：1启用、0禁用")
     private Integer status;
 
-    @ApiModelProperty("创建者")
-    private String createBy;
-
-    @ApiModelProperty("更新者")
-    private String updateBy;
-
     @ApiModelProperty("创建日期")
-    private Date createTime;
+    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime;
 
     @ApiModelProperty("更新时间")
-    private Date updateTime;
+    @JsonFormat( pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updateTime;
 
     @ApiModelProperty("岗位编号")
     private List<Long> postIds;
 
     @ApiModelProperty("角色编号")
     private List<Long> roleIds;
-
-
-    @ApiModelProperty("开始时间")
-    private String beginTime;
-    @ApiModelProperty("结束时间")
-    private String endTime;
 
 }

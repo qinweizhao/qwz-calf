@@ -3,8 +3,6 @@ package com.qinweizhao.system.module.manage.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.qinweizhao.api.system.dto.SysUserDTO;
-import com.qinweizhao.api.system.vo.SysUserVO;
 import com.qinweizhao.common.core.request.Search;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
@@ -51,6 +49,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**
      * 通过用户名查询用户
+     *
      * @param username username
      * @return return
      */
@@ -58,11 +57,13 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**
      * 查询用户分页
-     * @param page page
-     * @param sysUser sysUser
+     *
+     * @param page   page
+     * @param search search
+     * @param deptId deptId
      * @return IPage<SysUser>
      */
-    IPage<SysUserVO> selectPageUsers(Page<SysUser> page,@Param("user") SysUser sysUser);
+    IPage<SysUser> selectPageUsers(Page<SysUser> page, @Param("search") Search search, @Param("deptId") Long deptId);
 
     SysUser selectUserByEmail(String email);
 
@@ -70,5 +71,5 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
     boolean updatePasswordById(Long userId, String password);
 
-    boolean updateUserStatusById(Long userId, String status);
+    boolean updateUserStatusById(@Param("userId") Long userId, @Param("status") Integer status);
 }
