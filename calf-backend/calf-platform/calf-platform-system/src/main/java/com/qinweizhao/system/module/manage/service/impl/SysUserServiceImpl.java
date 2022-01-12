@@ -2,6 +2,7 @@ package com.qinweizhao.system.module.manage.service.impl;
 
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -24,10 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -42,7 +40,7 @@ import java.util.stream.Collectors;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
     @Resource
-    private SysUserRoleMapper userRoleMapper;
+    private SysUserRoleMapper sysUserRoleMapper;
 
     @Resource
     private SysPostMapper sysPostMapper;
@@ -61,9 +59,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public String getAuthorityByUserId(Long userId) {
         String authority = "";
-        Set<String> roleSet = this.baseMapper.selectRolesByUserId(userId);
+        Set<String> roleSet = this.baseMapper.selectRoleKeysByUserId(userId);
         if (!roleSet.isEmpty()) {
-            String roles = roleSet.stream().map("ROLE_"::concat).collect(Collectors.joining(","));
+            String roles = roleSet.stream().map(
+                    "ROLE_"::concat
+            ).collect(Collectors.joining(","));
             log.debug("当前用户拥有的角色有:" + roles);
             authority = authority.concat(",");
         }
@@ -83,7 +83,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 清除密码
         sysUser.setPassword("");
         Long userId = sysUser.getUserId();
-        Set<String> roles = this.baseMapper.selectRolesByUserId(userId);
+        Set<String> roles = this.baseMapper.selectRoleKeysByUserId(userId);
         Set<String> permissions = this.baseMapper.selectPermissionsByUserId(userId);
         return MapUtil.builder()
                 .put("user", sysUser)
@@ -108,14 +108,39 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         this.baseMapper.updateById(SysUserConvert.INSTANCE.convert(sysUserDTO));
     }
 
-    @Override
-    public boolean updatePasswordById(Long userId, String password) {
-        return this.baseMapper.updatePasswordById(userId, password);
-    }
 
     @Override
     public boolean updateUserStatusById(Long userId, Integer status) {
         return this.baseMapper.updateUserStatusById(userId, status);
+    }
+
+    @Override
+    public List<Long> listRoleIdsByUserId(Long userId) {
+        return this.baseMapper.selectRoleIdsByUserId(userId);
+    }
+
+    @Override
+    public boolean updateUserRole(Long userId, List<Long> roleIds) {
+        // 获得角色拥有角色编号
+        List<Long> dbRoleIds = this.baseMapper.selectRoleIdsByUserId(userId);
+        // 计算新增和删除的角色编号
+        Collection<Long> insertRoleIds = CollUtil.subtract(roleIds, dbRoleIds);
+        Collection<Long> deleteRoleIds = CollUtil.subtract(dbRoleIds, roleIds);
+        // 执行新增和删除。对于已经授权的角色，不用做任何处理
+        List<SysUserRole> insertList= new ArrayList<>();
+        if (!CollectionUtil.isEmpty(insertRoleIds)) {
+            insertRoleIds.forEach(item->{
+                SysUserRole sysUserRole = new SysUserRole();
+                sysUserRole.setUserId(userId);
+                sysUserRole.setRoleId(item);
+                insertList.add(sysUserRole);
+            });
+            sysUserRoleMapper.insertBatchUserRole(insertList);
+        }
+        if (!CollectionUtil.isEmpty(deleteRoleIds)) {
+            sysUserRoleMapper.deleteUserRoleByUserIdAndRoleIds(userId, deleteRoleIds);
+        }
+        return true;
     }
 
     /**
@@ -293,7 +318,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new ServiceException("不能删除当前用户");
         }
         // 删除用户与角色关联
-        userRoleMapper.deleteUserRole(ids);
+        sysUserRoleMapper.deleteUserRole(ids);
         // 删除用户与岗位关联
         sysUserPostMapper.deleteUserPost(ids);
         return this.baseMapper.deleteBatchIds(ids);
@@ -329,7 +354,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 list.add(ur);
             }
             if (list.isEmpty()) {
-                userRoleMapper.insertBatchUserRole(list);
+                sysUserRoleMapper.insertBatchUserRole(list);
             }
         }
     }

@@ -2,8 +2,14 @@ package com.qinweizhao.system.module.manage.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.SysRoleDTO;
+import com.qinweizhao.api.system.dto.SysUserDTO;
+import com.qinweizhao.api.system.vo.SysRoleVO;
+import com.qinweizhao.common.core.request.Search;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.common.core.util.ExcelUtils;
+import com.qinweizhao.common.log.annotation.SysLog;
+import com.qinweizhao.system.module.manage.convert.SysRoleConvert;
 import com.qinweizhao.system.module.manage.entity.SysRole;
 import com.qinweizhao.system.module.manage.service.ISysRoleService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -35,74 +41,71 @@ public class SysRoleController {
     private ISysRoleService sysRoleService;
 
 
-    /**
-     * 用户列表
-     *
-     * @return Result
-     */
-    @ApiOperation("获得角色分页")
+
+    @GetMapping("/get")
+    @ApiOperation("获得角色信息")
     @PreAuthorize("hasAuthority('system:role:query')")
-    @GetMapping("/page")
-    public Result<Object> page(Page<SysRole> page) {
-        return Result.success(sysRoleService.page(page));
+    public Result<SysRoleVO> get(@RequestParam("roleId") Long roleId) {
+        SysRole byId = sysRoleService.getById(roleId);
+        System.out.println(byId);
+        return Result.success(SysRoleConvert.INSTANCE.convert(sysRoleService.getById(roleId)));
     }
 
-    
+    @GetMapping("/list_role_menus")
+    @ApiOperation(value = "用户详情")
+    public Result<List<Long>> listRoleMenus(Long roleId) {
+        return Result.success(sysRoleService.listMenuIdsByRoleId(roleId));
+    }
+
+    @ApiOperation("获得角色分页")
+    @PreAuthorize("hasAuthority('system:role:select')")
+    @GetMapping("/page")
+    public Result<Object> page(Search search) {
+        return Result.success(sysRoleService.pageRoles(search));
+    }
 
     @PostMapping("/save")
     @ApiOperation("创建角色")
     @PreAuthorize("hasAuthority('system:role:save')")
-    public Result<Boolean> save(@Valid @RequestBody SysRole sysRole) {
-        return Result.condition(sysRoleService.save(sysRole));
+    public Result<Boolean> save(@Valid @RequestBody SysRoleDTO sysRoleDTO) {
+        return Result.condition(sysRoleService.saveRole(sysRoleDTO));
     }
 
     @PutMapping("/update")
     @ApiOperation("修改角色")
     @PreAuthorize("hasAuthority('system:role:update')")
-    public Result<Boolean> updateRole(@Valid @RequestBody SysRole sysRole) {
-        return Result.condition(sysRoleService.updateById(sysRole));
+    public Result<Boolean> updateRole(@Valid @RequestBody SysRoleDTO sysRoleDTO) {
+        return Result.condition(sysRoleService.updateSysRoleById(sysRoleDTO));
     }
 
-    //@PutMapping("/update/status")
-    //@ApiOperation("修改角色状态")
-    //@PreAuthorize("hasAuthority('system:role:update')")
-    //public Result<Boolean> updateRoleStatus(@Valid @RequestBody SysRole sysRole) {
-    //    sysRoleService.updateRoleStatus(sysRole.getRoleId(), sysRole.getStatus());
-    //    return Result.success(true);
-    //}
+    @SysLog("修改状态")
+    @PutMapping("/update_status")
+    @ApiOperation("修改状态")
+    @PreAuthorize("hasAuthority('system:role:update')")
+    public Result<Boolean> updateRoleStatus(@RequestBody SysRoleDTO sysRoleDTO) {
+        Long roleId = sysRoleDTO.getRoleId();
+        Integer status = sysRoleDTO.getStatus();
+        return Result.condition(sysRoleService.updateRoleStatusById(roleId, status));
+    }
 
-    @DeleteMapping("/delete")
+
+    @DeleteMapping("/remove")
     @ApiOperation("删除角色")
     @ApiImplicitParam(name = "id", value = "角色编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("hasAuthority('system:role:delete')")
-    public Result<Boolean> deleteRole(@RequestParam("id") Long id) {
-        sysRoleService.removeById(id);
-        return Result.success(true);
+    public Result<Boolean> remove(@RequestParam("roleId") Long roleId) {
+        return Result.condition(sysRoleService.removeRole(roleId));
     }
 
-    @GetMapping("/get")
-    @ApiOperation("获得角色信息")
-    @PreAuthorize("hasAuthority('system:role:query')")
-    public Result<SysRole> get(@RequestParam("id") Long id) {
-        return Result.success(sysRoleService.getById(id));
-    }
 
-    @GetMapping("/list-all-simple")
+    @GetMapping("/list_simple")
     @ApiOperation(value = "获取角色精简信息列表", notes = "只包含被开启的角色，主要用于前端的下拉选项")
     public Result<List<SysRole>> getSimpleRoles() {
         // 获得角色列表，只要开启状态的
-        List<SysRole> list = sysRoleService.list();
-        // 排序后，返回个诶前端
+        List<SysRole> list = sysRoleService.listSimpleRoles();
+        // 排序后，返回前端
         list.sort(Comparator.comparing(SysRole::getSort));
         return Result.success(list);
     }
 
-    @GetMapping("/export")
-    //@SysLog(value = "EXPORT")
-    @PreAuthorize("hasAuthority('system:role:export')")
-    public void export(HttpServletResponse response, @Validated SysRole sysRole) throws IOException {
-        List<SysRole> list = sysRoleService.list();
-        // 输出
-        ExcelUtils.write(response, "角色数据.xls", "角色列表", SysRole.class, list);
-    }
 }

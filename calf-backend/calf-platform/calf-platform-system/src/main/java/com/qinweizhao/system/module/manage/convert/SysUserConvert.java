@@ -6,12 +6,11 @@ import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.vo.SysUserVO;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 import org.mapstruct.Mapper;
-import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 /**
- *
  * (unmappedTargetPolicy = ReportingPolicy.IGNORE)
+ *
  * @author qinweizhao
  * @since 2022/1/10
  */
@@ -45,5 +44,6 @@ public interface SysUserConvert {
      * @return SysUser
      */
     Page<SysUserVO> convert(IPage<SysUser> userPage);
+
 
 }

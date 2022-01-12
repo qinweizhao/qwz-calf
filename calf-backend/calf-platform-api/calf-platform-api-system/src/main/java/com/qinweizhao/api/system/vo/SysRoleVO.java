@@ -1,13 +1,11 @@
-package com.qinweizhao.system.module.manage.entity;
+package com.qinweizhao.api.system.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.qinweizhao.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,12 +18,9 @@ import java.util.Date;
  * @author qinweizhao
  * @since 2021-12-06
  */
-
 @Data
-@TableName("sys_role")
-@ApiModel(value = "SysRole对象", description = "角色表")
-@EqualsAndHashCode(callSuper = true)
-public class SysRole extends BaseEntity {
+@ApiModel(value = "SysRoleVO 对象")
+public class SysRoleVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,4 +42,26 @@ public class SysRole extends BaseEntity {
 
     @ApiModelProperty("数据范围：1全部数据权限、2自定数据权限、3本部门数据权限、4本部门及以下数据权限")
     private String dataScope;
+
+    @ApiModelProperty("排序")
+    private Integer sort;
+
+    @ApiModelProperty("删除：1存在、0删除")
+    private Integer deleted;
+
+    @ApiModelProperty("状态：1正常、0停用")
+    private Integer status;
+
+    @ApiModelProperty("创建者")
+    private String createBy;
+
+    @ApiModelProperty("更新者")
+    private String updateBy;
+
+    @ApiModelProperty("创建日期")
+    private Date createTime;
+
+    @ApiModelProperty("更新时间")
+    private Date updateTime;
+
 }

@@ -1,8 +1,10 @@
 package com.qinweizhao.system.module.manage.controller;
 
 
+import com.qinweizhao.api.system.vo.SysMenuVO;
 import com.qinweizhao.common.core.base.BaseController;
 import com.qinweizhao.common.core.response.Result;
+import com.qinweizhao.system.module.manage.convert.SysMenuConvert;
 import com.qinweizhao.system.module.manage.entity.SysMenu;
 import com.qinweizhao.system.module.manage.service.ISysMenuService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -42,7 +45,16 @@ public class SysMenuController extends BaseController {
         return Result.success(sysMenuService.list());
     }
 
-
+    @GetMapping("/list_simple")
+    @ApiOperation(value = "获取角色精简信息列表", notes = "只包含被开启的角色，主要用于前端的下拉选项")
+    public Result<List<SysMenuVO>> getSimpleRoles() {
+        // 获得角色列表，只要开启状态的
+        List<SysMenu> list = sysMenuService.listSimpleRoles();
+        List<SysMenuVO> voList = SysMenuConvert.INSTANCE.convert(list);
+        // 排序后，返回前端
+        voList.sort(Comparator.comparing(SysMenuVO::getSort));
+        return Result.success(voList);
+    }
 
     @PostMapping("/save")
     @ApiOperation("创建菜单")
@@ -60,22 +72,12 @@ public class SysMenuController extends BaseController {
 
     @DeleteMapping("/remove")
     @ApiOperation("删除菜单")
-    @ApiImplicitParam(name = "id", value = "角色编号", required= true, example = "1024", dataTypeClass = Long.class)
+    @ApiImplicitParam(name = "id", value = "角色编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("hasAuthority('system:menu:delete')")
     public Result<Boolean> remove(@RequestParam("id") Long id) {
         return Result.condition(sysMenuService.removeMenuByMenuId(id));
     }
 
-
-    @GetMapping("/list-all-simple")
-    @ApiOperation(value = "获取菜单精简信息列表", notes = "只包含被开启的菜单，主要用于前端的下拉选项")
-    public Result<List<SysMenu>> getSimpleMenus() {
-        // 获得菜单列表，只要开启状态的
-
-        // 排序后，返回个诶前端
-        // list.sort(Comparator.comparing(SysMenu::getSort));
-        return Result.success(null);
-    }
 
     @GetMapping("/get")
     @ApiOperation("获取菜单信息")

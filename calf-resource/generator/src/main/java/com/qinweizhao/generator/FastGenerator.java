@@ -38,8 +38,8 @@ public class FastGenerator {
                     builder
                             // Collections.emptyList()
                             // 全部
-                            //.addInclude(Collections.emptyList())
-                            .addInclude("sys_log")
+                            .addInclude(Collections.emptyList())
+                            //.addInclude("sys_log")
                             // 忽略那些表
                             //.addExclude("a")
                             // Mapper 策略配置

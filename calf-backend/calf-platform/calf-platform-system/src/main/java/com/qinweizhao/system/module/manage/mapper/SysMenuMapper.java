@@ -3,6 +3,7 @@ package com.qinweizhao.system.module.manage.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qinweizhao.system.module.manage.entity.SysMenu;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,10 +18,37 @@ import java.util.List;
 @Mapper
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
-    List<SysMenu> selectMenuListByUsername(String currentLoginUsername);
+    /**
+     * 获取菜单列表
+     *
+     * @param currentLoginUsername currentLoginUsername
+     * @param menuType             menuType
+     * @return List<SysMenu>
+     */
+    List<SysMenu> selectMenuListByUsername(@Param("username") String currentLoginUsername, @Param("menuType") Integer menuType);
 
-    SysMenu selectMenuByParentIdAndName(Long parentId, String menuName);
+    /**
+     * 通过父 Id 和 菜单名称获取菜单
+     *
+     * @param parentId parentId
+     * @param menuName menuName
+     * @return SysMenu
+     */
+    SysMenu selectMenuByParentIdAndName(@Param("parentId") Long parentId, @Param("menuName") String menuName);
 
+    /**
+     * 通过菜单父 Id 统计个数
+     *
+     * @param menuId menuId
+     * @return Integer
+     */
     Integer selectCountByParentId(Long menuId);
 
+    /**
+     * 状态开启的菜单列表
+     *
+     * @param status status
+     * @return List<SysMenu>
+     */
+    List<SysMenu> selectListSimpleMenus(Integer status);
 }

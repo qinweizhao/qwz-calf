@@ -4,9 +4,26 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.manage.entity.SysRoleMenu">
-        <id column="menu_id" property="menuId" />
-        <id column="role_id" property="roleId" />
+        <id column="menu_id" property="menuId"/>
+        <id column="role_id" property="roleId"/>
     </resultMap>
-    <delete id="deleteRoleMenuByMenuId"></delete>
+
+    <delete id="deleteRoleMenuByMenuId">
+        DELETE
+        FROM sys_role_menu
+        WHERE menu_id = #{menuId}
+    </delete>
+
+    <delete id="deleteRoleMenuByRoleId">
+        DELETE
+        FROM sys_role_menu
+        WHERE role_id = #{roleId}
+    </delete>
+
+    <select id="selectListMenuIdsByRoleId" resultType="java.lang.Long">
+        SELECT menu_id
+        FROM sys_role_menu
+        WHERE role_id = #{id}
+    </select>
 
 </mapper>

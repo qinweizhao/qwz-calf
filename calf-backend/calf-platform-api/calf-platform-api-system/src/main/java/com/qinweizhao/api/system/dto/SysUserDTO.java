@@ -55,6 +55,9 @@ public class SysUserDTO implements Serializable {
     @ApiModelProperty("头像")
     private String avatar;
 
+    @ApiModelProperty("排序")
+    private Integer sort;
+
     @ApiModelProperty("状态：1启用、0禁用")
     private Integer status;
 

@@ -25,8 +25,10 @@
         <guava.version>30.0-jre</guava.version>
         <fastjson.version>1.2.78</fastjson.version>
         <hutool.version>5.3.3</hutool.version>
-        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <!-- mapstruct 和 lombok 等注解处理器 -->
+        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <lombok.version>1.18.20</lombok.version>
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
         <commons-lang3.version>3.11</commons-lang3.version>
         <commons-io.version>2.11.0</commons-io.version>
     </properties>
@@ -112,11 +114,10 @@
                 <version>${jaxb.version}</version>
             </dependency>
 
-
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
-                <version>${mapstruct.version}</version>
+                <version>${org.mapstruct.version}</version>
             </dependency>
 
             <dependency>
@@ -168,13 +169,19 @@
                         <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapstruct.version}</version>
+                            <version>${org.mapstruct.version}</version>
                         </path>
                         <!-- 引入 lombok-processor -->
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
+                        </path>
+                        <!-- additional annotation processor required as of Lombok 1.18.16 -->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>${lombok-mapstruct-binding.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

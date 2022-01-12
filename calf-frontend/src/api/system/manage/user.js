@@ -39,7 +39,7 @@ export function updateUser(data) {
 // 删除用户
 export function delUser(userId) {
   return request({
-    url: '/system/manage/user/delete?id=' + userId,
+    url: '/system/manage/user/remove?id=' + userId,
     method: 'delete'
   })
 }
@@ -47,23 +47,10 @@ export function delUser(userId) {
 // 导出用户
 export function exportUser(query) {
   return request({
-    url: '/system/user/export',
+    url: '/system/manage/user/export',
     method: 'get',
     params: query,
     responseType: 'blob'
-  })
-}
-
-// 用户密码重置
-export function resetUserPwd(id, password) {
-  const data = {
-    id,
-    password
-  }
-  return request({
-    url: '/system/user/update-password',
-    method: 'put',
-    data: data
   })
 }
 

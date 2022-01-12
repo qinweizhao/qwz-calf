@@ -221,9 +221,9 @@ public enum ResultCode implements IResultCode {
     // ========== 角色模块 1002003000 ==========
     ROLE_NOT_EXISTS(1002003000, "角色不存在"),
 
-    ROLE_NAME_DUPLICATE(1002003001, "已经存在名为【{}】的角色"),
+    ROLE_NAME_DUPLICATE(1002003001, "角色名已经存在"),
 
-    ROLE_CODE_DUPLICATE(1002003002, "已经存在编码为【{}】的角色"),
+    ROLE_CODE_DUPLICATE(1002003002, "角色编码已经存在"),
 
     ROLE_CAN_NOT_UPDATE_SYSTEM_TYPE_ROLE(1002003004, "不能操作类型为系统内置的角色"),
 

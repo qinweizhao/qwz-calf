@@ -20,6 +20,11 @@
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        component
+        ,create_by,create_time,deleted,icon,menu_id,menu_name,menu_type,parent_id,path,permission,sort,status,update_by,update_time
+    </sql>
 
     <select id="selectMenuListByUsername" resultType="com.qinweizhao.system.module.manage.entity.SysMenu">
         SELECT m.*
@@ -29,7 +34,22 @@
                  LEFT JOIN sys_user_role ur ON r.role_id = ur.role_id
                  LEFT JOIN sys_user u ON u.user_id = ur.user_id
         WHERE u.username = #{username}
-          AND m.menu_type !=3
+          AND m.menu_type !=#{menuType}
+    </select>
+
+    <select id="selectMenuByParentIdAndName" resultType="com.qinweizhao.system.module.manage.entity.SysMenu">
+         SELECT * FROM sys_menu WHERE parent_id=#{parentId} AND menu_name = #{menuName}
+    </select>
+
+    <select id="selectCountByParentId" resultType="java.lang.Integer">
+        SELECT COUNT(0) FROM sys_menu WHERE parent_id = #{parentId}
+    </select>
+
+    <select id="selectListSimpleMenus" resultType="com.qinweizhao.system.module.manage.entity.SysMenu">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_menu
+        WHERE status = #{status}
     </select>
 
 </mapper>

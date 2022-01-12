@@ -12,7 +12,7 @@ export function listRole(query) {
 // 查询角色（精简)列表
 export function listSimpleRoles() {
   return request({
-    url: '/system/manage/role/list',
+    url: '/system/manage/role/list_simple',
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function listSimpleRoles() {
 // 查询角色详细
 export function getRole(roleId) {
   return request({
-    url: '/system/manage/role/get?id=' + roleId,
+    url: '/system/manage/role/get?roleId=' + roleId,
     method: 'get'
   })
 }
@@ -61,15 +61,5 @@ export function delRole(roleId) {
   return request({
     url: '/system/manage/role/delete?id=' + roleId,
     method: 'delete'
-  })
-}
-
-// 导出角色
-export function exportRole(query) {
-  return request({
-    url: '/system/manage/role/export',
-    method: 'get',
-    params: query,
-    responseType: 'blob'
   })
 }

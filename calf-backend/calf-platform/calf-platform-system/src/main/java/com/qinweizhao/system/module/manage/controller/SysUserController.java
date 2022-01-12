@@ -56,17 +56,21 @@ public class SysUserController extends BaseController {
         return Result.success(sysUserService.pageUsers(search, deptId));
     }
 
+    @GetMapping("/list_user_roles")
+    @ApiOperation(value = "用户详情")
+    public Result<List<Long>> listUserRoles(Long userId) {
+        return Result.success(sysUserService.listRoleIdsByUserId(userId));
+    }
 
     @SysLog("新增用户")
     @ApiOperation("新增用户")
     @PostMapping("/save")
-    @PreAuthorize("hasAuthority('system:user:create')")
-    public Result<Object> save(@RequestBody SysUserDTO sysUserDTO) {
-        return Result.success(sysUserService.saveUser(sysUserDTO));
+    @PreAuthorize("hasAuthority('system:user:insert')")
+    public Result<Boolean> save(@RequestBody SysUserDTO sysUserDTO) {
+        return Result.condition(sysUserService.saveUser(sysUserDTO));
     }
 
-
-    @SysLog("编辑用户")
+    @SysLog("修改用户")
     @PutMapping("update")
     @ApiOperation("修改用户")
     @PreAuthorize("hasAuthority('system:user:update')")
@@ -75,15 +79,8 @@ public class SysUserController extends BaseController {
         return Result.success();
     }
 
-
-    @PutMapping("/update/password")
-    @ApiOperation("重置用户密码")
-    @PreAuthorize("hasAuthority('system:user:update-password')")
-    public Result<Boolean> updateUserPassword(Long userId, String password) {
-        return Result.condition(sysUserService.updatePasswordById(userId, password));
-    }
-
-    @PutMapping("/update/status")
+    @SysLog("修改用户状态")
+    @PutMapping("/update_status")
     @ApiOperation("修改用户状态")
     @PreAuthorize("hasAuthority('system:user:update')")
     public Result<Boolean> updateUserStatus(@RequestBody SysUserDTO sysUserDTO) {
@@ -92,13 +89,19 @@ public class SysUserController extends BaseController {
         return Result.condition(sysUserService.updateUserStatusById(userId, status));
     }
 
+    @ApiOperation("赋予用户角色")
+    @PostMapping("/update_user_role")
+    @PreAuthorize("hasAuthority('system:user:update')")
+    public Result<Boolean> assignUserRole(@RequestBody SysUserDTO sysUserDTO) {
+        return Result.condition(sysUserService.updateUserRole(sysUserDTO.getUserId(), sysUserDTO.getRoleIds()));
+    }
 
     @SysLog("删除用户")
-    @DeleteMapping("/delete")
+    @DeleteMapping("/remove")
     @ApiOperation("删除用户")
     @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("hasAuthority('system:user:delete')")
-    public Result<Object> delete(@RequestParam List<Long> id) {
+    public Result<Object> remove(@RequestParam List<Long> id) {
         return Result.condition(sysUserService.removeUserByIds(id));
     }
 

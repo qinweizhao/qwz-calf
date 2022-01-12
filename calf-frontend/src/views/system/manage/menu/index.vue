@@ -1,53 +1,136 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      :inline="true"
+      v-show="showSearch"
+    >
       <el-form-item label="菜单名称" prop="menuName">
-        <el-input v-model="queryParams.menuName" placeholder="请输入菜单名称" clearable size="small" @keyup.enter.native="handleQuery"/>
+        <el-input
+          v-model="queryParams.menuName"
+          placeholder="请输入菜单名称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="菜单状态" clearable size="small">
-          <el-option v-for="dict in statusDictDatas" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
+        <el-select
+          v-model="queryParams.status"
+          placeholder="菜单状态"
+          clearable
+          size="small"
+        >
+          <el-option
+            v-for="dict in statusDictDatas"
+            :key="parseInt(dict.value)"
+            :label="dict.label"
+            :value="parseInt(dict.value)"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button
+          type="cyan"
+          icon="el-icon-search"
+          size="small"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="small" @click="resetQuery"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" icon="el-icon-plus" size="mini" @click="handleAdd"
-                   v-hasPermi="['system:menu:create']">新增</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          size="small"
+          @click="handleAdd"
+          v-hasPermi="['system:menu:create']"
+          >新增</el-button
+        >
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :showSearch.sync="showSearch"
+        @queryTable="getList"
+      ></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="menuList" row-key="menuId"
-              :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-      <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="200"></el-table-column>
+    <el-table
+      v-loading="loading"
+      :data="menuList"
+      row-key="menuId"
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+    >
+      <el-table-column
+        prop="menuName"
+        label="菜单名称"
+        :show-overflow-tooltip="true"
+        width="200"
+      ></el-table-column>
       <el-table-column prop="icon" label="图标" align="center" width="100">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon" />
         </template>
       </el-table-column>
-      <el-table-column prop="menuSort" label="排序" width="60"></el-table-column>
-      <el-table-column prop="permission" label="权限标识" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="component" label="组件路径" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="enabled" label="状态" :formatter="statusFormat" width="80"></el-table-column>
+      <el-table-column prop="sort" label="排序" width="60"></el-table-column>
+      <el-table-column
+        prop="status"
+        label="状态"
+        :formatter="statusFormat"
+        width="80"
+      ></el-table-column>
+      <el-table-column
+        prop="permission"
+        label="权限标识"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+      <el-table-column
+        prop="component"
+        label="组件路径"
+        :show-overflow-tooltip="true"
+      ></el-table-column>
+
       <el-table-column label="创建时间" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-                     v-hasPermi="['system:menu:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-plus" @click="handleAdd(scope.row)"
-                     v-hasPermi="['system:menu:create']">新增</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['system:menu:delete']">删除</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['system:menu:update']"
+            >修改</el-button
+          >
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-plus"
+            @click="handleAdd(scope.row)"
+            v-hasPermi="['system:menu:create']"
+            >新增</el-button
+          >
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermi="['system:menu:delete']"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -58,26 +141,55 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="上级菜单">
-              <treeselect v-model="form.parentId" :options="menuOptions" :normalizer="normalizer" :show-count="true"
-                          placeholder="选择上级菜单"/>
+              <treeselect
+                v-model="form.parentId"
+                :options="menuOptions"
+                :normalizer="normalizer"
+                :show-count="true"
+                placeholder="选择上级菜单"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="菜单类型" prop="type">
               <el-radio-group v-model="form.type">
-                <el-radio v-for="dict in menuTypeDictDatas" :key="parseInt(dict.value)" :label="parseInt(dict.value)">
-                  {{dict.label}}</el-radio>
+                <el-radio
+                  v-for="dict in menuTypeDictDatas"
+                  :key="parseInt(dict.value)"
+                  :label="parseInt(dict.value)"
+                >
+                  {{ dict.label }}</el-radio
+                >
               </el-radio-group>
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item v-if="form.type != '3'" label="菜单图标">
-              <el-popover placement="bottom-start" width="460" trigger="click" @show="$refs['iconSelect'].reset()">
+              <el-popover
+                placement="bottom-start"
+                width="460"
+                trigger="click"
+                @show="$refs['iconSelect'].reset()"
+              >
                 <IconSelect ref="iconSelect" @selected="selected" />
-                <el-input slot="reference" v-model="form.icon" placeholder="点击选择图标" readonly>
-                  <svg-icon v-if="form.icon" slot="prefix" :icon-class="form.icon" class="el-input__icon"
-                            style="height: 32px;width: 16px;"/>
-                  <i v-else slot="prefix" class="el-icon-search el-input__icon" />
+                <el-input
+                  slot="reference"
+                  v-model="form.icon"
+                  placeholder="点击选择图标"
+                  readonly
+                >
+                  <svg-icon
+                    v-if="form.icon"
+                    slot="prefix"
+                    :icon-class="form.icon"
+                    class="el-input__icon"
+                    style="height: 32px; width: 16px"
+                  />
+                  <i
+                    v-else
+                    slot="prefix"
+                    class="el-icon-search el-input__icon"
+                  />
                 </el-input>
               </el-popover>
             </el-form-item>
@@ -89,7 +201,11 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="显示排序" prop="sort">
-              <el-input-number v-model="form.sort" controls-position="right" :min="0" />
+              <el-input-number
+                v-model="form.sort"
+                controls-position="right"
+                :min="0"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -104,14 +220,22 @@
           </el-col>
           <el-col :span="12">
             <el-form-item v-if="form.type != '1'" label="权限标识">
-              <el-input v-model="form.permission" placeholder="请权限标识" maxlength="50" />
+              <el-input
+                v-model="form.permission"
+                placeholder="请权限标识"
+                maxlength="50"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="菜单状态">
               <el-radio-group v-model="form.status">
-                <el-radio v-for="dict in this.getDictDatas(DICT_TYPE.SYS_COMMON_STATUS)"
-                          :key="dict.value" :label="parseInt(dict.value)">{{dict.label}}</el-radio>
+                <el-radio
+                  v-for="dict in this.getDictDatas(DICT_TYPE.SYS_COMMON_STATUS)"
+                  :key="dict.value"
+                  :label="parseInt(dict.value)"
+                  >{{ dict.label }}</el-radio
+                >
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -126,13 +250,19 @@
 </template>
 
 <script>
-import { listMenu, getMenu, delMenu, addMenu, updateMenu } from "@/api/system/manage/menu";
+import {
+  listMenu,
+  getMenu,
+  delMenu,
+  addMenu,
+  updateMenu,
+} from "@/api/system/manage/menu";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import IconSelect from "@/components/IconSelect";
 
-import { SysMenuTypeEnum, SysCommonStatusEnum } from '@/utils/constants'
-import { getDictDataLabel, getDictDatas, DICT_TYPE } from '@/utils/dict'
+import { SysMenuTypeEnum, SysCommonStatusEnum } from "@/utils/constants";
+import { getDictDataLabel, getDictDatas, DICT_TYPE } from "@/utils/dict";
 
 export default {
   name: "Menu",
@@ -154,24 +284,22 @@ export default {
       // 查询参数
       queryParams: {
         menuName: undefined,
-        visible: undefined
+        visible: undefined,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         menuName: [
-          { required: true, message: "菜单名称不能为空", trigger: "blur" }
+          { required: true, message: "菜单名称不能为空", trigger: "blur" },
         ],
         sort: [
-          { required: true, message: "菜单顺序不能为空", trigger: "blur" }
+          { required: true, message: "菜单顺序不能为空", trigger: "blur" },
         ],
         path: [
-          { required: true, message: "路由地址不能为空", trigger: "blur" }
+          { required: true, message: "路由地址不能为空", trigger: "blur" },
         ],
-        status: [
-          { required: true, message: "状态不能为空", trigger: "blur" }
-        ]
+        status: [{ required: true, message: "状态不能为空", trigger: "blur" }],
       },
 
       // 枚举
@@ -179,7 +307,7 @@ export default {
       CommonStatusEnum: SysCommonStatusEnum,
       // 数据字典
       menuTypeDictDatas: getDictDatas(DICT_TYPE.SYS_MENU_TYPE),
-      statusDictDatas: getDictDatas(DICT_TYPE.SYS_COMMON_STATUS)
+      statusDictDatas: getDictDatas(DICT_TYPE.SYS_COMMON_STATUS),
     };
   },
   created() {
@@ -193,7 +321,7 @@ export default {
     /** 查询菜单列表 */
     getList() {
       this.loading = true;
-      listMenu(this.queryParams).then(response => {
+      listMenu(this.queryParams).then((response) => {
         this.menuList = this.handleTree(response.data, "menuId");
         this.loading = false;
       });
@@ -206,21 +334,21 @@ export default {
       return {
         id: node.menuId,
         label: node.menuName,
-        children: node.children
+        children: node.children,
       };
     },
     /** 查询菜单下拉树结构 */
     getTreeselect() {
-      listMenu().then(response => {
+      listMenu().then((response) => {
         this.menuOptions = [];
-        const menu = { menuId: 0, menuName: '主类目', children: [] };
+        const menu = { menuId: 0, menuName: "主类目", children: [] };
         menu.children = this.handleTree(response.data, "menuId");
         this.menuOptions.push(menu);
       });
     },
     // 菜单状态字典翻译
     statusFormat(row, column) {
-      return getDictDataLabel(DICT_TYPE.SYS_COMMON_STATUS, row.status)
+      return getDictDataLabel(DICT_TYPE.SYS_COMMON_STATUS, row.status);
     },
     // 取消按钮
     cancel() {
@@ -236,7 +364,7 @@ export default {
         icon: undefined,
         type: SysMenuTypeEnum.DIR,
         sort: undefined,
-        status: SysCommonStatusEnum.ENABLE
+        status: SysCommonStatusEnum.ENABLE,
       };
       this.resetForm("form");
     },
@@ -265,42 +393,47 @@ export default {
     handleUpdate(row) {
       this.reset();
       this.getTreeselect();
-      getMenu(row.menuId).then(response => {
+      getMenu(row.menuId).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改菜单";
       });
     },
     /** 提交按钮 */
-    submitForm: function() {
-      this.$refs["form"].validate(valid => {
+    submitForm: function () {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           // 若权限类型为目录或者菜单时，进行 path 的校验，避免后续拼接出来的路由无法跳转
-          if (this.form.type === SysMenuTypeEnum.DIR
-            || this.form.type === SysMenuTypeEnum.MENU) {
+          if (
+            this.form.type === SysMenuTypeEnum.DIR ||
+            this.form.type === SysMenuTypeEnum.MENU
+          ) {
             // 如果是外链，则不进行校验
-            const path = this.form.path
-            if (path.indexOf('http://') === -1 || path.indexOf('https://') === -1) {
+            const path = this.form.path;
+            if (
+              path.indexOf("http://") === -1 ||
+              path.indexOf("https://") === -1
+            ) {
               // 父权限为根节点，path 必须以 / 开头
-              if (this.form.parentId === 0 && path.charAt(0) !== '/') {
-                this.msgSuccess('前端必须以 / 开头')
-                return
-              } else if (this.form.parentId !== 0 && path.charAt(0) === '/') {
-                this.msgSuccess('前端不能以 / 开头')
-                return
+              if (this.form.parentId === 0 && path.charAt(0) !== "/") {
+                this.msgSuccess("前端必须以 / 开头");
+                return;
+              } else if (this.form.parentId !== 0 && path.charAt(0) === "/") {
+                this.msgSuccess("前端不能以 / 开头");
+                return;
               }
             }
           }
 
           // 提交
           if (this.form.menuId !== undefined) {
-            updateMenu(this.form).then(response => {
+            updateMenu(this.form).then((response) => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addMenu(this.form).then(response => {
+            addMenu(this.form).then((response) => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -311,17 +444,23 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      this.$confirm('是否确认删除名称为"' + row.menuName + '"的数据项?', "警告", {
+      this.$confirm(
+        '是否确认删除名称为"' + row.menuName + '"的数据项?',
+        "警告",
+        {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
+          type: "warning",
+        }
+      )
+        .then(function () {
           return delMenu(row.menuId);
-        }).then(() => {
+        })
+        .then(() => {
           this.getList();
           this.msgSuccess("删除成功");
-        })
-    }
-  }
+        });
+    },
+  },
 };
 </script>

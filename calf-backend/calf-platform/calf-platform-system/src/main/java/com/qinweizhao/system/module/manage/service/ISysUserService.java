@@ -50,9 +50,10 @@ public interface ISysUserService extends IService<SysUser> {
      * 获取用户分页信息
      *
      * @param search search
+     * @param deptId deptId
      * @return IPage<SysUser>
      */
-    IPage<SysUserVO> pageUsers(Search search,Long deptId);
+    IPage<SysUserVO> pageUsers(Search search, Long deptId);
 
 
     /**
@@ -88,13 +89,27 @@ public interface ISysUserService extends IService<SysUser> {
      */
     void updateUserById(SysUserDTO sysUserDTO);
 
-    boolean updatePasswordById(Long userId, String password);
-
     /**
      * 通过用户 Id 修改用户状态
+     *
      * @param userId userId
      * @param status status
      * @return boolean
      */
     boolean updateUserStatusById(Long userId, Integer status);
+
+    /**
+     * 获取用户拥有的角色 Id 集合
+     * @param userId Id
+     * @return List<Long>
+     */
+    List<Long> listRoleIdsByUserId(Long userId);
+
+    /**
+     * 更改用户所属角色
+     * @param userId userId
+     * @param roleIds roleIds
+     * @return boolean
+     */
+    boolean updateUserRole(Long userId, List<Long> roleIds);
 }

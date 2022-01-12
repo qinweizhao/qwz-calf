@@ -18,7 +18,7 @@ import java.util.Date;
  * @since 2021/11/18
  */
 @Data
-@ApiModel("BaseEntity对象")
+@ApiModel("BaseEntity 对象")
 public abstract class BaseEntity implements Serializable {
 
     @ApiModelProperty("排序")

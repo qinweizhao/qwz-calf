@@ -8,6 +8,7 @@ import com.qinweizhao.system.module.manage.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,7 +37,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param userId userId
      * @return Set<String>
      */
-    Set<String> selectRolesByUserId(Long userId);
+    Set<String> selectRoleKeysByUserId(Long userId);
 
     /**
      * 通过用户 id 查询权限标识
@@ -69,7 +70,13 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
     SysUser selectUserByPhone(String phone);
 
-    boolean updatePasswordById(Long userId, String password);
-
     boolean updateUserStatusById(@Param("userId") Long userId, @Param("status") Integer status);
+
+    /**
+     * 通过用户 Id 获取所拥有的角色 Id 集合
+     * @param userId userId
+     * @return List<Long>
+     */
+    List<Long> selectRoleIdsByUserId(Long userId);
+
 }

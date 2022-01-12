@@ -4,6 +4,7 @@ package com.qinweizhao.system.module.manage.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qinweizhao.common.core.enums.MenuIdEnum;
 import com.qinweizhao.common.core.enums.MenuTypeEnum;
+import com.qinweizhao.common.core.enums.StatusEnum;
 import com.qinweizhao.common.core.exception.ServiceException;
 import com.qinweizhao.common.core.response.ResultCode;
 import com.qinweizhao.system.module.manage.entity.SysMenu;
@@ -34,7 +35,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public List<SysMenu> listWithTree(String currentLoginUsername) {
-        List<SysMenu> menus = this.baseMapper.selectMenuListByUsername(currentLoginUsername);
+        List<SysMenu> menus = this.baseMapper.selectMenuListByUsername(currentLoginUsername, MenuTypeEnum.BUTTON.getType());
         return buildTree(menus);
 
     }
@@ -81,6 +82,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         // 标记删除
         return this.baseMapper.deleteById(menuId);
 
+    }
+
+    @Override
+    public List<SysMenu> listSimpleRoles() {
+        return this.baseMapper.selectListSimpleMenus(StatusEnum.ENABLE.getStatus());
     }
 
     /**
