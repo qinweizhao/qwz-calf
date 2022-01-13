@@ -30,7 +30,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2021 qinweizhao.cn All Rights Reserved.</span>
+      <span>Copyright © 2021-2022 qinweizhao.cn All Rights Reserved.</span>
     </div>
   </div>
 </template>

@@ -2,11 +2,11 @@
   <div class="sidebar-logo-container" :class="{'collapse':collapse}" :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBg : variables.menuLightBg }">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
+        <h1 v-if="logo" class="sidebar-logo">{{ logo }}</h1>
         <h1 v-else class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.sidebarTitle : variables.sidebarLightTitle }">{{ title }} </h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
+         <h1 v-if="logo" class="sidebar-logo">{{ logo }}--</h1>
         <h1 class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.sidebarTitle : variables.sidebarLightTitle }">{{ title }} </h1>
       </router-link>
     </transition>
@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import logoImg from '@/assets/logo/logo.png'
 import variables from '@/assets/styles/variables.scss'
 
 export default {
@@ -35,23 +34,14 @@ export default {
   },
   data() {
     return {
-      title: 'Calf - Platform',
-      logo: logoImg
+      title: 'Platform',
+      logo: 'Calf'
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.sidebarLogoFade-enter-active {
-  transition: opacity 1.5s;
-}
-
-.sidebarLogoFade-enter,
-.sidebarLogoFade-leave-to {
-  opacity: 0;
-}
-
 .sidebar-logo-container {
   position: relative;
   width: 100%;
@@ -66,10 +56,14 @@ export default {
     width: 100%;
 
     & .sidebar-logo {
-      width: 32px;
-      height: 32px;
+      display: inline-block;
+      margin: 5;
+      color: #fff;
+      font-weight: 730;
+      line-height: 50px;
+      font-size: 16px;
+      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
-      margin-right: 12px;
     }
 
     & .sidebar-title {
@@ -78,15 +72,9 @@ export default {
       color: #fff;
       font-weight: 600;
       line-height: 50px;
-      font-size: 14px;
+      font-size: 17px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
-    }
-  }
-
-  &.collapse {
-    .sidebar-logo {
-      margin-right: 0px;
     }
   }
 }

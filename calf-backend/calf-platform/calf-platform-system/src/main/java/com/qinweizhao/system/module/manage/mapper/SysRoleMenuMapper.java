@@ -2,7 +2,9 @@ package com.qinweizhao.system.module.manage.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qinweizhao.system.module.manage.entity.SysRoleMenu;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -35,4 +37,19 @@ public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
      * @return List<Long>
      */
     List<Long> selectListMenuIdsByRoleId(Long roleId);
+
+
+    /**
+     * 批量插入
+     * @param roleId roleId
+     * @param insertMenuIds insertMenuIds
+     */
+    void insertRoleMenuByRoleIdAndMenuIds(@Param("roleId") Long roleId,@Param("menuIds") Collection<Long> insertMenuIds);
+
+    /**
+     * 批量删除
+     * @param roleId roleId
+     * @param deleteMenuIds deleteMenuIds
+     */
+    void deleteRoleMenuByRoleIdAndMenuIds(@Param("roleId")Long roleId,@Param("menuIds") Collection<Long> deleteMenuIds);
 }

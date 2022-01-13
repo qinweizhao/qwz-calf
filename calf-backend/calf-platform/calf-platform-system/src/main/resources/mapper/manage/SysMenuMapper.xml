@@ -20,6 +20,7 @@
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
+    
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         component
@@ -38,11 +39,15 @@
     </select>
 
     <select id="selectMenuByParentIdAndName" resultType="com.qinweizhao.system.module.manage.entity.SysMenu">
-         SELECT * FROM sys_menu WHERE parent_id=#{parentId} AND menu_name = #{menuName}
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_menu WHERE parent_id=#{parentId} AND menu_name = #{menuName}
     </select>
 
     <select id="selectCountByParentId" resultType="java.lang.Integer">
-        SELECT COUNT(0) FROM sys_menu WHERE parent_id = #{parentId}
+        SELECT COUNT(0)
+        FROM sys_menu
+        WHERE parent_id = #{parentId}
     </select>
 
     <select id="selectListSimpleMenus" resultType="com.qinweizhao.system.module.manage.entity.SysMenu">

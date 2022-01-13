@@ -7,7 +7,6 @@
         <id column="role_id" property="roleId"/>
         <result column="role_name" property="roleName"/>
         <result column="role_key" property="roleKey"/>
-        <result column="level" property="level"/>
         <result column="description" property="description"/>
         <result column="data_scope" property="dataScope"/>
         <result column="sort" property="sort"/>
@@ -22,7 +21,7 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         create_by
-        ,create_time,data_scope,deleted,description,level,role_id,role_key,role_name,sort,status,update_by,update_time
+        ,create_time,data_scope,deleted,description,role_id,role_key,role_name,sort,status,update_by,update_time
     </sql>
 
     <update id="updateRoleStatusById">
@@ -54,7 +53,7 @@
 
     <select id="selectPageRoles" resultType="com.qinweizhao.system.module.manage.entity.SysRole">
         SELECT
-        create_by,create_time,data_scope,deleted,description,level,role_id,role_key,role_name,sort,status,update_by,update_time
+        <include refid="Base_Column_List"/>
         FROM sys_role
         <where>
             <if test="search.keyword != null and search.keyword != ''">
@@ -68,6 +67,7 @@
             <if test="search.endTime != null and search.endTime != ''">
                 AND date_format(create_time,'%y%m%d') &lt;= date_format(#{search.endTime},'%y%m%d')
             </if>
+            AND deleted=0
         </where>
     </select>
 

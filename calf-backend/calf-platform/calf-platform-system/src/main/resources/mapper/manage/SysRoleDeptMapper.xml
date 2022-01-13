@@ -7,5 +7,15 @@
         <id column="role_id" property="roleId"/>
         <id column="dept_id" property="deptId"/>
     </resultMap>
+    <delete id="deleteRoleDeptByRoleIdAndDeptIds">
+        DELETE FROM sys_role_dept WHERE role_id=#{roleId} AND dept_id IN
+        <foreach collection="deptIds" item="deptId" open="(" separator="," close=")">
+            #{deptId}
+        </foreach>
+    </delete>
+
+    <select id="selectDeptIdsByRoleId" resultType="java.lang.Long">
+        SELECT dept_id FROM sys_role_dept WHERE role_id= #{roleId}
+    </select>
 
 </mapper>

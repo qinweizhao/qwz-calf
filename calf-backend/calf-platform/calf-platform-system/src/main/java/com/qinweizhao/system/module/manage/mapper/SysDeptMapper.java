@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.qinweizhao.system.module.manage.entity.SysDept;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 部门表 Mapper 接口
@@ -15,4 +17,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SysDeptMapper extends BaseMapper<SysDept> {
 
+    List<SysDept> selectListSimpleDepts(Integer status);
 }

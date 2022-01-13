@@ -8,6 +8,13 @@
         <id column="role_id" property="roleId"/>
     </resultMap>
 
+    <insert id="insertRoleMenuByRoleIdAndMenuIds">
+        insert into sys_role_menu(role_id,menu_id) values
+        <foreach item="menuId" collection="menuIds" separator=",">
+            (#{roleId},#{menuId})
+        </foreach>
+    </insert>
+
     <delete id="deleteRoleMenuByMenuId">
         DELETE
         FROM sys_role_menu
@@ -18,6 +25,13 @@
         DELETE
         FROM sys_role_menu
         WHERE role_id = #{roleId}
+    </delete>
+
+    <delete id="deleteRoleMenuByRoleIdAndMenuIds">
+        DELETE FROM sys_role_menu WHERE role_id=#{roleId} AND menu_id IN
+        <foreach collection="menuIds" item="menuId" open="(" separator="," close=")">
+            #{menuId}
+        </foreach>
     </delete>
 
     <select id="selectListMenuIdsByRoleId" resultType="java.lang.Long">

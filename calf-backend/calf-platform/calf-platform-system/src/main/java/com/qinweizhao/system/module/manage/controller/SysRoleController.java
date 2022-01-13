@@ -34,7 +34,7 @@ import java.util.List;
  * @since 2021-12-06
  */
 @RestController
-@RequestMapping("/system/manage/role")
+    @RequestMapping("/system/manage/role")
 public class SysRoleController {
 
     @Resource
@@ -46,9 +46,7 @@ public class SysRoleController {
     @ApiOperation("获得角色信息")
     @PreAuthorize("hasAuthority('system:role:query')")
     public Result<SysRoleVO> get(@RequestParam("roleId") Long roleId) {
-        SysRole byId = sysRoleService.getById(roleId);
-        System.out.println(byId);
-        return Result.success(SysRoleConvert.INSTANCE.convert(sysRoleService.getById(roleId)));
+        return Result.success(SysRoleConvert.INSTANCE.convertToVO(sysRoleService.getRoleById(roleId)));
     }
 
     @GetMapping("/list_role_menus")
@@ -88,6 +86,14 @@ public class SysRoleController {
         return Result.condition(sysRoleService.updateRoleStatusById(roleId, status));
     }
 
+    @SysLog("分配权限")
+    @PutMapping("/update_role_permission")
+    @ApiOperation("修改状态")
+    @PreAuthorize("hasAuthority('system:role:update')")
+    public Result<Boolean> updateRolePermission(@RequestBody SysRoleDTO sysRoleDTO) {
+        return Result.condition(sysRoleService.updateRolePermission(sysRoleDTO));
+    }
+
 
     @DeleteMapping("/remove")
     @ApiOperation("删除角色")
@@ -100,11 +106,11 @@ public class SysRoleController {
 
     @GetMapping("/list_simple")
     @ApiOperation(value = "获取角色精简信息列表", notes = "只包含被开启的角色，主要用于前端的下拉选项")
-    public Result<List<SysRole>> getSimpleRoles() {
+    public Result<List<SysRoleVO>> getSimpleRoles() {
         // 获得角色列表，只要开启状态的
-        List<SysRole> list = sysRoleService.listSimpleRoles();
+        List<SysRoleVO> list = SysRoleConvert.INSTANCE.convert(sysRoleService.listSimpleRoles());
         // 排序后，返回前端
-        list.sort(Comparator.comparing(SysRole::getSort));
+        list.sort(Comparator.comparing(SysRoleVO::getSort));
         return Result.success(list);
     }
 

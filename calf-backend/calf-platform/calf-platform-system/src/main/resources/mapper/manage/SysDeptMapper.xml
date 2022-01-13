@@ -18,4 +18,17 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_by
+        ,create_time,deleted,dept_id,dept_name,email,parent_id,phone,sort,status,update_by,update_time
+    </sql>
+
+    <select id="selectListSimpleDepts" resultType="com.qinweizhao.system.module.manage.entity.SysDept">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_dept
+        WHERE status = #{status}
+    </select>
+
 </mapper>

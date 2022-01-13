@@ -1,7 +1,11 @@
 package com.qinweizhao.system.module.manage.controller;
 
 
+import com.qinweizhao.api.system.vo.SysDeptVO;
+import com.qinweizhao.api.system.vo.SysMenuVO;
 import com.qinweizhao.common.core.response.Result;
+import com.qinweizhao.system.module.manage.convert.SysDeptConvert;
+import com.qinweizhao.system.module.manage.convert.SysMenuConvert;
 import com.qinweizhao.system.module.manage.entity.SysDept;
 import com.qinweizhao.system.module.manage.service.ISysDeptService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -23,7 +27,7 @@ import java.util.List;
  * @since 2021-12-06
  */
 @RestController
-@RequestMapping("/sys/dept")
+@RequestMapping("/system/manage/dept")
 public class SysDeptController {
 
     @Resource
@@ -37,6 +41,14 @@ public class SysDeptController {
         return Result.success(sysDeptService.list());
     }
 
+
+    @GetMapping("/list_simple")
+    @ApiOperation(value = "获取岗位精简信息列表", notes = "启用状态")
+    public Result<List<SysDeptVO>> getSimpleRoles() {
+        List<SysDeptVO> voList = SysDeptConvert.INSTANCE.convert(sysDeptService.listSimpleDepts());
+        voList.sort(Comparator.comparing(SysDeptVO::getSort));
+        return Result.success(voList);
+    }
 
     @PostMapping("save")
     @ApiOperation("创建部门")

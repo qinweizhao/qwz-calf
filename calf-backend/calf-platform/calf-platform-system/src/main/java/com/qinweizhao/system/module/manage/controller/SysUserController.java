@@ -7,7 +7,9 @@ import com.qinweizhao.api.system.vo.SysUserVO;
 import com.qinweizhao.common.core.base.BaseController;
 import com.qinweizhao.common.core.request.Search;
 import com.qinweizhao.common.core.response.Result;
+import com.qinweizhao.common.core.util.PageUtil;
 import com.qinweizhao.common.log.annotation.SysLog;
+import com.qinweizhao.system.module.manage.entity.SysUser;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -35,7 +37,6 @@ public class SysUserController extends BaseController {
 
     @Resource
     private ISysUserService sysUserService;
-
 
     @GetMapping("/info")
     @ApiOperation("初始信息")

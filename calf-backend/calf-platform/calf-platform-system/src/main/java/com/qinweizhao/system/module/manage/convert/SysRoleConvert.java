@@ -9,6 +9,8 @@ import com.qinweizhao.system.module.manage.entity.SysRole;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * (unmappedTargetPolicy = ReportingPolicy.IGNORE)
  *
@@ -29,6 +31,22 @@ public interface SysRoleConvert {
      */
     SysRole convert(SysRoleDTO sysRoleDTO);
 
+    /**
+     * DTO 转 DO
+     *
+     * @param rolePageDTO rolePageDTO
+     * @return SysRole
+     */
+    Page<SysRoleDTO> convertToPageDTO(IPage<SysRole> rolePageDTO);
+
+    /**
+     * DTO 转 VO
+     *
+     * @param roleDTO roleDTO
+     * @return SysRole
+     */
+    SysRoleVO convertToVO(SysRoleDTO roleDTO);
+
 
     /**
      * DO 转 VO
@@ -40,10 +58,18 @@ public interface SysRoleConvert {
 
 
     /**
-     * DO 转 VO
+     * DTO 转 VO
      *
      * @param rolePage userPage
      * @return SysUser
      */
-    Page<SysRoleVO> convert(IPage<SysRole> rolePage);
+    Page<SysRoleVO> convert(IPage<SysRoleDTO> rolePage);
+
+    /**
+     * DO 转 VO
+     *
+     * @param roleList roleList
+     * @return SysUser
+     */
+    List<SysRoleVO> convert(List<SysRole> roleList);
 }

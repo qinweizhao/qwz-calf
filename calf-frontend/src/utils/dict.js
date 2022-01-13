@@ -1,5 +1,5 @@
 /**
- * Created by Calf 源码
+ * Created by Calf
  *
  * 数据字典工具类
  */
@@ -13,7 +13,6 @@ export const DICT_TYPE = {
   SYS_ROLE_TYPE: 'sys_role_type',
   SYS_DATA_SCOPE: 'sys_data_scope',
   SYS_USER_SEX: 'sys_user_sex',
-  SYS_NOTICE_TYPE: 'sys_notice_type',
   SYS_OPERATE_TYPE: 'sys_operate_type',
   SYS_LOGIN_TYPE: 'sys_login_type',
   SYS_LOGIN_RESULT: 'sys_login_result',
@@ -23,14 +22,11 @@ export const DICT_TYPE = {
   SYS_SMS_SEND_STATUS: 'sys_sms_send_status',
   SYS_SMS_RECEIVE_STATUS: 'sys_sms_receive_status',
   SYS_ERROR_CODE_TYPE: 'sys_error_code_type',
-
   INF_REDIS_TIMEOUT_TYPE: 'inf_redis_timeout_type',
   INF_JOB_STATUS: 'inf_job_status',
   INF_JOB_LOG_STATUS: 'inf_job_log_status',
   INF_API_ERROR_LOG_PROCESS_STATUS: 'inf_api_error_log_process_status',
-
   TOOL_CODEGEN_TEMPLATE_TYPE: 'tool_codegen_template_type',
-
   OA_LEAVE_STATUS: 'oa_leave_status',
   OA_LEAVE_TYPE: 'oa_leave_type'
 }

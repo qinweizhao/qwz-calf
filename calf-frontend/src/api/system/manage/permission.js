@@ -9,10 +9,10 @@ export function listRoleMenus(roleId) {
 }
 
 // 赋予角色菜单
-export function assignRoleMenu(data) {
+export function updateRolePermission(data) {
   return request({
-    url: '/system/permission/assign-role-menu',
-    method: 'post',
+    url: '/system/manage/role/update_role_permission',
+    method: 'put',
     data: data
   })
 }
@@ -29,15 +29,6 @@ export function listUserRoles(userId) {
 export function assignUserRole(data) {
   return request({
     url: '/system/manage/user/update_user_role',
-    method: 'post',
-    data: data
-  })
-}
-
-// 赋予角色数据权限
-export function assignRoleDataScope(data) {
-  return request({
-    url: '/system/permission/assign-role-data-scope',
     method: 'post',
     data: data
   })

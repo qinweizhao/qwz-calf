@@ -9,9 +9,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
  * <p>
  * 角色表
@@ -39,12 +36,9 @@ public class SysRole extends BaseEntity {
     @ApiModelProperty("标识")
     private String roleKey;
 
-    @ApiModelProperty("级别")
-    private Integer level;
-
     @ApiModelProperty("描述")
     private String description;
 
     @ApiModelProperty("数据范围：1全部数据权限、2自定数据权限、3本部门数据权限、4本部门及以下数据权限")
-    private String dataScope;
+    private Integer dataScope;
 }

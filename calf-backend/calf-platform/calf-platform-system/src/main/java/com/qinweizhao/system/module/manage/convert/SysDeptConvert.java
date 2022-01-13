@@ -1,9 +1,12 @@
 package com.qinweizhao.system.module.manage.convert;
 
 import com.qinweizhao.api.system.dto.SysDeptDTO;
+import com.qinweizhao.api.system.vo.SysDeptVO;
 import com.qinweizhao.system.module.manage.entity.SysDept;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * <p>
@@ -27,5 +30,13 @@ public interface SysDeptConvert {
      */
     SysDeptDTO convert(SysDept sysDept);
 
+
+    /**
+     * DO 转 VO
+     *
+     * @param deptList deptList
+     * @return SysMenuVO
+     */
+    List<SysDeptVO> convert(List<SysDept> deptList);
 
 }

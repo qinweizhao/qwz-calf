@@ -60,7 +60,7 @@ public interface ISysRoleService extends IService<SysRole> {
      * @param search search
      * @return IPage<SysRoleVO>
      */
-    IPage<SysRoleVO> pageRoles(Search search);
+    IPage<SysRoleDTO> pageRoles(Search search);
 
     /**
      * 获取角色拥有的菜单
@@ -68,4 +68,18 @@ public interface ISysRoleService extends IService<SysRole> {
      * @return List<Long>
      */
     List<Long> listMenuIdsByRoleId(Long roleId);
+
+    /**
+     * 权限分配 部门和菜单
+     * @param sysRoleDTO sysRoleDTO
+     * @return int
+     */
+    int updateRolePermission(SysRoleDTO sysRoleDTO);
+
+    /**
+     * 通过 Id 获取角色
+     * @param roleId roleId
+     * @return SysRoleVO
+     */
+    SysRoleDTO getRoleById(Long roleId);
 }

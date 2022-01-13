@@ -26,7 +26,7 @@ import java.util.List;
  * @since 2021-12-06
  */
 @RestController
-@RequestMapping("/sys/menu")
+@RequestMapping("/system/manage/menu")
 public class SysMenuController extends BaseController {
 
     @Resource
@@ -48,10 +48,7 @@ public class SysMenuController extends BaseController {
     @GetMapping("/list_simple")
     @ApiOperation(value = "获取角色精简信息列表", notes = "只包含被开启的角色，主要用于前端的下拉选项")
     public Result<List<SysMenuVO>> getSimpleRoles() {
-        // 获得角色列表，只要开启状态的
-        List<SysMenu> list = sysMenuService.listSimpleRoles();
-        List<SysMenuVO> voList = SysMenuConvert.INSTANCE.convert(list);
-        // 排序后，返回前端
+        List<SysMenuVO> voList = SysMenuConvert.INSTANCE.convert(sysMenuService.listSimpleRoles());
         voList.sort(Comparator.comparing(SysMenuVO::getSort));
         return Result.success(voList);
     }

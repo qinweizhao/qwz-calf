@@ -24,7 +24,7 @@ public class UserConstants {
     /**
      * 删除标识
      */
-    public static final Integer DEFAULT_DELETED = 1;
+    public static final Integer DEFAULT_DELETED = 0;
 
 
     private UserConstants() {

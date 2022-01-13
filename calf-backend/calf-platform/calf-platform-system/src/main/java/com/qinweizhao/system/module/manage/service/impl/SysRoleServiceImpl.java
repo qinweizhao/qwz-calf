@@ -1,10 +1,11 @@
 package com.qinweizhao.system.module.manage.service.impl;
 
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qinweizhao.api.system.dto.SysRoleDTO;
-import com.qinweizhao.api.system.vo.SysRoleVO;
 import com.qinweizhao.common.core.constant.CalfConstants;
 import com.qinweizhao.common.core.enums.StatusEnum;
 import com.qinweizhao.common.core.exception.ServiceException;
@@ -13,17 +14,18 @@ import com.qinweizhao.common.core.response.ResultCode;
 import com.qinweizhao.common.core.util.PageUtil;
 import com.qinweizhao.system.module.manage.convert.SysRoleConvert;
 import com.qinweizhao.system.module.manage.entity.SysRole;
-import com.qinweizhao.system.module.manage.entity.SysUser;
+import com.qinweizhao.system.module.manage.entity.SysRoleDept;
+import com.qinweizhao.system.module.manage.mapper.SysRoleDeptMapper;
 import com.qinweizhao.system.module.manage.mapper.SysRoleMapper;
 import com.qinweizhao.system.module.manage.mapper.SysRoleMenuMapper;
 import com.qinweizhao.system.module.manage.mapper.SysUserRoleMapper;
 import com.qinweizhao.system.module.manage.service.ISysRoleService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionSynchronization;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -42,6 +44,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Resource
     private SysRoleMenuMapper sysRoleMenuMapper;
+
+    @Resource
+    private SysRoleDeptMapper sysRoleDeptMapper;
 
 
     @Override
@@ -88,14 +93,63 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
-    public IPage<SysRoleVO> pageRoles(Search search) {
-        IPage<SysRole> page =this.baseMapper.selectPageRoles(PageUtil.getPage(search),search);
-        return SysRoleConvert.INSTANCE.convert(page);
+    public IPage<SysRoleDTO> pageRoles(Search search) {
+        IPage<SysRole> page = this.baseMapper.selectPageRoles(PageUtil.getPage(search), search);
+        return SysRoleConvert.INSTANCE.convertToPageDTO(page);
     }
 
     @Override
     public List<Long> listMenuIdsByRoleId(Long roleId) {
         return sysRoleMenuMapper.selectListMenuIdsByRoleId(roleId);
+    }
+
+    @Override
+    public int updateRolePermission(SysRoleDTO sysRoleDTO) {
+        Long roleId = sysRoleDTO.getRoleId();
+        // 校验是否可以更新
+        checkUpdateRole(roleId);
+        // 更新数据范围
+        SysRole sysRole = new SysRole();
+        sysRole.setRoleId(sysRoleDTO.getRoleId());
+        sysRole.setDataScope(sysRoleDTO.getDataScope());
+        // 分配菜单权限
+        List<Long> menuIds = sysRoleDTO.getMenuIds();
+        List<Long> dbMenuIds = sysRoleMenuMapper.selectListMenuIdsByRoleId(roleId);
+        Collection<Long> insertMenuIds = CollUtil.subtract(menuIds, dbMenuIds);
+        Collection<Long> deleteMenuIds = CollUtil.subtract(dbMenuIds, menuIds);
+
+        if (!CollectionUtil.isEmpty(insertMenuIds)) {
+            sysRoleMenuMapper.insertRoleMenuByRoleIdAndMenuIds(roleId, insertMenuIds);
+        }
+
+        if (!CollectionUtil.isEmpty(deleteMenuIds)) {
+            sysRoleMenuMapper.deleteRoleMenuByRoleIdAndMenuIds(roleId, deleteMenuIds);
+        }
+        //分配数据权限
+        List<Long> deptIds = sysRoleDTO.getDeptIds();
+        // 获取 db 中存在的关联
+        List<Long> dbDeptIds = sysRoleDeptMapper.selectDeptIdsByRoleId(roleId);
+        Collection<Long> insertDeptIds = CollUtil.subtract(deptIds, dbDeptIds);
+        Collection<Long> deleteDeptIds = CollUtil.subtract(dbDeptIds, deptIds);
+        insertDeptIds.forEach(item -> {
+            SysRoleDept sysRoleDept = new SysRoleDept();
+            sysRoleDept.setRoleId(roleId);
+            sysRoleDept.setDeptId(item);
+            sysRoleDeptMapper.insert(sysRoleDept);
+        });
+        if (!CollectionUtil.isEmpty(deleteDeptIds)) {
+            sysRoleDeptMapper.deleteRoleDeptByRoleIdAndDeptIds(roleId, deleteDeptIds);
+        }
+        return this.baseMapper.updateById(sysRole);
+    }
+
+    @Override
+    public SysRoleDTO getRoleById(Long roleId) {
+        SysRole sysRole = this.baseMapper.selectById(roleId);
+        SysRoleDTO sysRoleDTO = new SysRoleDTO();
+        sysRoleDTO.setDeptIds(sysRoleDeptMapper.selectDeptIdsByRoleId(roleId));
+        BeanUtils.copyProperties(sysRole, sysRoleDTO);
+        return sysRoleDTO;
     }
 
     private void checkUpdateRole(Long roleId) {
@@ -112,9 +166,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     /**
      * 检查重复
+     *
      * @param roleName roleName
-     * @param roleKey roleKey
-     * @param roleId roleId
+     * @param roleKey  roleKey
+     * @param roleId   roleId
      */
     private void checkDuplicateRole(String roleName, String roleKey, Long roleId) {
         // 1. 该 name 名字被其它角色所使用

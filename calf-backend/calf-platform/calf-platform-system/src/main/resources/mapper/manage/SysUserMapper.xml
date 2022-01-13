@@ -83,6 +83,7 @@
             <if test="search.endTime != null and search.endTime != ''">
                 AND date_format(create_time,'%y%m%d') &lt;= date_format(#{search.endTime},'%y%m%d')
             </if>
+            AND deleted=0
         </where>
     </select>
 

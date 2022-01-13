@@ -71,19 +71,19 @@
         prop="menuName"
         label="菜单名称"
         :show-overflow-tooltip="true"
-        width="200"
+        width="160"
       ></el-table-column>
-      <el-table-column prop="icon" label="图标" align="center" width="100">
+      <el-table-column prop="icon" label="图标" align="center" width="160">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon" />
         </template>
       </el-table-column>
-      <el-table-column prop="sort" label="排序" width="60"></el-table-column>
+      <el-table-column prop="sort" label="排序" width="130"></el-table-column>
       <el-table-column
         prop="status"
         label="状态"
         :formatter="statusFormat"
-        width="80"
+        width="160"
       ></el-table-column>
       <el-table-column
         prop="permission"
@@ -92,11 +92,12 @@
       ></el-table-column>
       <el-table-column
         prop="component"
+        width="180"
         label="组件路径"
         :show-overflow-tooltip="true"
       ></el-table-column>
 
-      <el-table-column label="创建时间" align="center" prop="createTime">
+      <el-table-column label="创建时间" align="center" width="180" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
@@ -104,33 +105,34 @@
       <el-table-column
         label="操作"
         align="center"
+        width="200"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
+          <!-- 修改 -->
           <el-button
-            size="mini"
-            type="text"
+            size="small"
+            type="primary"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:menu:update']"
-            >修改</el-button
-          >
+          ></el-button>
+          <!-- 新增 -->
           <el-button
-            size="mini"
-            type="text"
+            size="small"
+            type="primary"
             icon="el-icon-plus"
             @click="handleAdd(scope.row)"
             v-hasPermi="['system:menu:create']"
-            >新增</el-button
-          >
+          ></el-button>
+          <!-- 删除 -->
           <el-button
-            size="mini"
-            type="text"
+            size="small"
+            type="primary"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:menu:delete']"
-            >删除</el-button
-          >
+          ></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -255,6 +257,7 @@ import {
   getMenu,
   delMenu,
   addMenu,
+  listSimpleMenus,
   updateMenu,
 } from "@/api/system/manage/menu";
 import Treeselect from "@riophae/vue-treeselect";
@@ -313,6 +316,7 @@ export default {
   created() {
     this.getList();
   },
+
   methods: {
     // 选择图标
     selected(name) {

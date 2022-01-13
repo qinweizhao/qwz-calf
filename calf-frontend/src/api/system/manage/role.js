@@ -59,7 +59,7 @@ export function changeRoleStatus(id, status) {
 // 删除角色
 export function delRole(roleId) {
   return request({
-    url: '/system/manage/role/delete?id=' + roleId,
+    url: '/system/manage/role/remove?roleId=' + roleId,
     method: 'delete'
   })
 }
