@@ -1,6 +1,7 @@
 package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qinweizhao.api.system.dto.SysMenuDTO;
 import com.qinweizhao.system.module.manage.entity.SysMenu;
 
 import java.util.List;
@@ -48,6 +49,5 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @return List<SysMenu>
      */
     List<SysMenu> listSimpleRoles();
-
 
 }

@@ -9,6 +9,7 @@ import com.qinweizhao.common.core.request.Search;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.common.core.util.PageUtil;
 import com.qinweizhao.common.log.annotation.SysLog;
+import com.qinweizhao.system.module.manage.convert.SysUserConvert;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
 import io.swagger.annotations.Api;
@@ -46,7 +47,7 @@ public class SysUserController extends BaseController {
 
     @GetMapping("/get")
     @ApiOperation(value = "用户详情")
-    public Result<SysUserVO> get(Long id) {
+    public Result<SysUserDTO> get(Long id) {
         return Result.success(sysUserService.getUserById(id));
     }
 

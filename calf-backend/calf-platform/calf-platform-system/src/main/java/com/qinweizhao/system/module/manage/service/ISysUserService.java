@@ -79,7 +79,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param id id
      * @return SysUserVO
      */
-    SysUserVO getUserById(Long id);
+    SysUserDTO getUserById(Long id);
 
 
     /**

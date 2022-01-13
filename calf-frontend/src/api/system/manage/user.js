@@ -61,7 +61,7 @@ export function changeUserStatus(userId, status) {
     status
   }
   return request({
-    url: '/system/manage/user/update/status',
+    url: '/system/manage/user/update_status',
     method: 'put',
     data: data
   })

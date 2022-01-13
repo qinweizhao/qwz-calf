@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.qinweizhao.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,10 +20,11 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-06
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_menu")
 @ApiModel(value = "SysMenu对象", description = "菜单权限表")
-public class SysMenu implements Serializable {
+public class SysMenu extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,27 +52,6 @@ public class SysMenu implements Serializable {
 
     @ApiModelProperty("图标")
     private String icon;
-
-    @ApiModelProperty("排序")
-    private Integer sort;
-
-    @ApiModelProperty("删除：1存在、0删除")
-    private Integer deleted;
-
-    @ApiModelProperty("状态：1正常、0停用")
-    private String status;
-
-    @ApiModelProperty("创建者")
-    private String createBy;
-
-    @ApiModelProperty("更新者")
-    private String updateBy;
-
-    @ApiModelProperty("创建时间")
-    private Date createTime;
-
-    @ApiModelProperty("更新时间")
-    private Date updateTime;
 
     @TableField(exist = false)
     private List<SysMenu> children;

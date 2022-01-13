@@ -30,12 +30,12 @@ public interface SysUserConvert {
 
 
     /**
-     * DO 转 VO
+     * DO 转 DTO
      *
      * @param sysUser sysDept
      * @return SysUser
      */
-    SysUserVO convert(SysUser sysUser);
+    SysUserDTO convert(SysUser sysUser);
 
     /**
      * DO 转 VO

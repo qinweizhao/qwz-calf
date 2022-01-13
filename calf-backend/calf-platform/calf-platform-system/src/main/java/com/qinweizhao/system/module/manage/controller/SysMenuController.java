@@ -1,6 +1,7 @@
 package com.qinweizhao.system.module.manage.controller;
 
 
+import com.qinweizhao.api.system.dto.SysMenuDTO;
 import com.qinweizhao.api.system.vo.SysMenuVO;
 import com.qinweizhao.common.core.base.BaseController;
 import com.qinweizhao.common.core.response.Result;
@@ -32,8 +33,9 @@ public class SysMenuController extends BaseController {
     @Resource
     private ISysMenuService sysMenuService;
 
-    @GetMapping("/tree")
-    public Result<List<SysMenu>> tree() {
+    @ApiOperation("获取路由列表")
+    @GetMapping("/route")
+    public Result<List<SysMenu>> route() {
         List<SysMenu> list = sysMenuService.listWithTree(getCurrentLoginUsername());
         return Result.success(list);
     }
@@ -41,7 +43,7 @@ public class SysMenuController extends BaseController {
     @ApiOperation("获取菜单列表")
     @PreAuthorize("hasAuthority('system:menu:query')")
     @GetMapping("/list")
-    public Result<List<SysMenu>> list() {
+    public Result<List<SysMenu>> tree() {
         return Result.success(sysMenuService.list());
     }
 

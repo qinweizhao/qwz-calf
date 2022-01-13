@@ -93,11 +93,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 
     @Override
-    public SysUserVO getUserById(Long id) {
-        SysUserVO sysUserVO = SysUserConvert.INSTANCE.convert(this.baseMapper.selectById(id));
+    public SysUserDTO getUserById(Long id) {
+        SysUserDTO sysUserDTO = SysUserConvert.INSTANCE.convert(this.baseMapper.selectById(id));
         List<Long> ids = sysUserPostMapper.selectPostIdsByUserId(id);
-        sysUserVO.setPostIds(ids);
-        return sysUserVO;
+        sysUserDTO.setPostIds(ids);
+        return sysUserDTO;
     }
 
     @Override

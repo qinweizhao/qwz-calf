@@ -154,7 +154,7 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="菜单类型" prop="type">
-              <el-radio-group v-model="form.type">
+              <el-radio-group v-model="form.menuType">
                 <el-radio
                   v-for="dict in menuTypeDictDatas"
                   :key="parseInt(dict.value)"
@@ -257,7 +257,6 @@ import {
   getMenu,
   delMenu,
   addMenu,
-  listSimpleMenus,
   updateMenu,
 } from "@/api/system/manage/menu";
 import Treeselect from "@riophae/vue-treeselect";
