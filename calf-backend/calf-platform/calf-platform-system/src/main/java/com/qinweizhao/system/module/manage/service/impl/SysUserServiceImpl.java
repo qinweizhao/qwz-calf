@@ -6,26 +6,21 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qinweizhao.api.system.command.SysUserSaveCmd;
 import com.qinweizhao.api.system.command.SysUserUpdateCmd;
 import com.qinweizhao.api.system.command.query.SysUserPageQry;
 import com.qinweizhao.api.system.dto.SysUserDTO;
-import com.qinweizhao.api.system.vo.SysUserVO;
 import com.qinweizhao.common.core.constant.UserConstants;
 import com.qinweizhao.common.core.enums.StatusEnum;
 import com.qinweizhao.common.core.exception.ServiceException;
-import com.qinweizhao.common.core.request.Search;
 import com.qinweizhao.common.core.response.ResultCode;
 import com.qinweizhao.common.core.util.PageUtil;
 import com.qinweizhao.common.core.util.SecurityUtils;
-import com.qinweizhao.system.module.manage.convert.SysDeptConvert;
 import com.qinweizhao.system.module.manage.convert.SysUserConvert;
 import com.qinweizhao.system.module.manage.entity.*;
 import com.qinweizhao.system.module.manage.mapper.*;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -132,9 +127,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         Collection<Long> insertRoleIds = CollUtil.subtract(roleIds, dbRoleIds);
         Collection<Long> deleteRoleIds = CollUtil.subtract(dbRoleIds, roleIds);
         // 执行新增和删除。对于已经授权的角色，不用做任何处理
-        List<SysUserRole> insertList= new ArrayList<>();
+        List<SysUserRole> insertList = new ArrayList<>();
         if (!CollectionUtil.isEmpty(insertRoleIds)) {
-            insertRoleIds.forEach(item->{
+            insertRoleIds.forEach(item -> {
                 SysUserRole sysUserRole = new SysUserRole();
                 sysUserRole.setUserId(userId);
                 sysUserRole.setRoleId(item);
@@ -302,8 +297,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public IPage<SysUserDTO> pageUsers(SysUserPageQry sysUserPageQry) {
-        Page<SysUser> tPage = new Page<>(sysUserPageQry.getCurrent(), sysUserPageQry.getSize());
-        IPage<SysUser> sysUserPage = this.baseMapper.selectPageUsers(tPage, sysUserPageQry);
+        IPage<SysUser> sysUserPage = this.baseMapper.selectPageUsers(PageUtil.getPage(sysUserPageQry), sysUserPageQry);
         IPage<SysUserDTO> userPage = SysUserConvert.INSTANCE.convertToDTO(sysUserPage);
         List<SysUserDTO> records = userPage.getRecords();
         records.forEach(item -> {

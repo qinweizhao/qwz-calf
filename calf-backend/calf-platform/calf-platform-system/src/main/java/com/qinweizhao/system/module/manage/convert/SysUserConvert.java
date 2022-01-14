@@ -48,6 +48,14 @@ public interface SysUserConvert {
     SysUserDTO convert(SysUser sysUser);
 
     /**
+     * DTO 转 VO
+     *
+     * @param sysUser sysDept
+     * @return SysUser
+     */
+    SysUserVO convert(SysUserDTO sysUser);
+
+    /**
      * DO 转 VO
      *
      * @param userPage userPage

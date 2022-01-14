@@ -8,7 +8,6 @@ import com.qinweizhao.api.system.command.query.SysUserPageQry;
 import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.vo.SysUserVO;
 import com.qinweizhao.common.core.base.BaseController;
-import com.qinweizhao.common.core.request.Search;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.common.log.annotation.SysLog;
 import com.qinweizhao.system.module.manage.convert.SysUserConvert;
@@ -48,8 +47,9 @@ public class SysUserController extends BaseController {
 
     @GetMapping("/get")
     @ApiOperation(value = "用户详情")
-    public Result<SysUserDTO> get(Long id) {
-        return Result.success(sysUserService.getUserById(id));
+    public Result<SysUserVO> get(Long id) {
+        SysUserDTO sysUserDTO = sysUserService.getUserById(id);
+        return Result.success(SysUserConvert.INSTANCE.convert(sysUserDTO));
     }
 
 
@@ -78,7 +78,7 @@ public class SysUserController extends BaseController {
     @PutMapping("update")
     @ApiOperation("修改用户")
     @PreAuthorize("hasAuthority('system:user:update')")
-    public Result<Object> update(@Valid @RequestBody SysUserUpdateCmd sysUserUpdateCmd) {
+    public Result<Boolean> update(@Valid @RequestBody SysUserUpdateCmd sysUserUpdateCmd) {
         return Result.condition(sysUserService.updateUserById(sysUserUpdateCmd));
     }
 

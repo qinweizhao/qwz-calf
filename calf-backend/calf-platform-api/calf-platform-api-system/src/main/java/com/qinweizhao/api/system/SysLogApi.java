@@ -11,6 +11,7 @@ public interface SysLogApi {
 
     /**
      * 保存日志
+     *
      * @param sysLog sysLog
      */
     void saveLog(SysLogDTO sysLog);

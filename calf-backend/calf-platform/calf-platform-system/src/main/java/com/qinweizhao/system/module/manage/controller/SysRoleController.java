@@ -2,6 +2,7 @@ package com.qinweizhao.system.module.manage.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.command.query.SysRolePageQry;
 import com.qinweizhao.api.system.dto.SysRoleDTO;
 import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.vo.SysRoleVO;
@@ -58,8 +59,8 @@ public class SysRoleController {
     @ApiOperation("获得角色分页")
     @PreAuthorize("hasAuthority('system:role:select')")
     @GetMapping("/page")
-    public Result<Object> page(Search search) {
-        return Result.success(sysRoleService.pageRoles(search));
+    public Result<Object> page(SysRolePageQry sysRolePageQry) {
+        return Result.success(sysRoleService.pageRoles(sysRolePageQry));
     }
 
     @PostMapping("/save")

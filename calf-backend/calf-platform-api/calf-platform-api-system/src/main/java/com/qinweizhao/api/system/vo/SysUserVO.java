@@ -87,5 +87,4 @@ public class SysUserVO implements Serializable {
     private SysDeptDTO dept;
 
 
-
 }

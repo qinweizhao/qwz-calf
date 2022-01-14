@@ -52,8 +52,7 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 获取用户分页信息
      *
-     * @param search search
-     * @param deptId deptId
+     * @param sysUserPageQry sysUserPageQry
      * @return IPage<SysUser>
      */
     IPage<SysUserDTO> pageUsers(SysUserPageQry sysUserPageQry);

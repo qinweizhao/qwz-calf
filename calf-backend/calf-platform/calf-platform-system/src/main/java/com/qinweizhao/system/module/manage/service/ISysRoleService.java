@@ -2,6 +2,7 @@ package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qinweizhao.api.system.command.query.SysRolePageQry;
 import com.qinweizhao.api.system.dto.SysRoleDTO;
 import com.qinweizhao.api.system.vo.SysRoleVO;
 import com.qinweizhao.common.core.request.Search;
@@ -57,10 +58,10 @@ public interface ISysRoleService extends IService<SysRole> {
 
     /**
      * 角色分页
-     * @param search search
+     * @param sysRolePageQry sysRolePageQry
      * @return IPage<SysRoleVO>
      */
-    IPage<SysRoleDTO> pageRoles(Search search);
+    IPage<SysRoleDTO> pageRoles(SysRolePageQry sysRolePageQry);
 
     /**
      * 获取角色拥有的菜单
