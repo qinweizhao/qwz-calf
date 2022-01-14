@@ -19,7 +19,6 @@ import java.util.Date;
  * @since 2021-12-06
  */
 @Data
-@TableName("sys_post")
 @ApiModel(value = "SysPost对象", description = "岗位信息表")
 public class SysPostDTO implements Serializable {
 

@@ -21,7 +21,6 @@ import java.util.Set;
  * @since 2021-12-06
  */
 @Data
-@TableName("sys_role")
 @ApiModel(value = "SysRole对象", description = "角色表")
 public class SysRoleDTO implements Serializable {
 

@@ -2,6 +2,8 @@ package com.qinweizhao.system.module.manage.convert;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.command.SysUserSaveCmd;
+import com.qinweizhao.api.system.command.SysUserUpdateCmd;
 import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.vo.SysUserVO;
 import com.qinweizhao.system.module.manage.entity.SysUser;
@@ -21,13 +23,21 @@ public interface SysUserConvert {
 
 
     /**
-     * DTO 转 DO
+     * sysUserUpdateCmd 转 DO
      *
-     * @param sysUser sysDept
+     * @param sysUserSaveCmd sysUserSaveCmd
      * @return SysUser
      */
-    SysUser convert(SysUserDTO sysUser);
+    SysUser convert(SysUserSaveCmd sysUserSaveCmd);
 
+
+    /**
+     * sysUserUpdateCmd 转 DO
+     *
+     * @param sysUserUpdateCmd sysUserUpdateCmd
+     * @return SysUser
+     */
+    SysUser convert(SysUserUpdateCmd sysUserUpdateCmd);
 
     /**
      * DO 转 DTO
@@ -43,7 +53,14 @@ public interface SysUserConvert {
      * @param userPage userPage
      * @return SysUser
      */
-    Page<SysUserVO> convert(IPage<SysUser> userPage);
+    Page<SysUserDTO> convertToDTO(IPage<SysUser> userPage);
 
 
+    /**
+     * DO 转 VO
+     *
+     * @param sysUser sysUser
+     * @return SysUser
+     */
+    Page<SysUserVO> convertToVO(IPage<SysUserDTO> sysUser);
 }

@@ -105,7 +105,7 @@
           <el-table-column
             label="部门"
             align="center"
-            prop="dept.deptName"
+            prop="deptName"
             :show-overflow-tooltip="true"
           />
           <el-table-column
@@ -182,69 +182,42 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="用户昵称" prop="nickName">
-              <el-input v-model="form.nickName" placeholder="请输入用户昵称" />
+            <el-form-item label="昵称" prop="nickName">
+              <el-input v-model="form.nickName" placeholder="请输入昵称" />
             </el-form-item>
           </el-col>
+
           <el-col :span="12">
-            <el-form-item label="归属部门" prop="deptId">
-              <treeselect
-                v-model="form.deptId"
-                :options="deptOptions"
-                :show-count="true"
-                placeholder="请选择归属部门"
-                :normalizer="normalizer"
-              />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="手机号码" prop="phone">
+            <el-form-item label="电话" prop="phone">
               <el-input
                 v-model="form.phone"
-                placeholder="请输入手机号码"
+                placeholder="请输入电话号码"
                 maxlength="11"
               />
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
-              <el-input
-                v-model="form.email"
-                placeholder="请输入邮箱"
-                maxlength="50"
-              />
-            </el-form-item>
-          </el-col>
         </el-row>
+        <el-col :span="12">
+          <el-form-item
+            v-if="form.userId === undefined"
+            label="名称"
+            prop="username"
+          >
+            <el-input v-model="form.username" placeholder="请输入用户名" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="邮箱" prop="email">
+            <el-input
+              v-model="form.email"
+              placeholder="请输入邮箱"
+              maxlength="50"
+            />
+          </el-form-item>
+        </el-col>
         <el-row>
           <el-col :span="12">
-            <el-form-item
-              v-if="form.userId === undefined"
-              label="用户名称"
-              prop="username"
-            >
-              <el-input v-model="form.username" placeholder="请输入用户名称" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item
-              v-if="form.userId === undefined"
-              label="用户密码"
-              prop="password"
-            >
-              <el-input
-                v-model="form.password"
-                placeholder="请输入用户密码"
-                type="password"
-              />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="用户性别">
+            <el-form-item label="性别">
               <el-select v-model="form.sex" placeholder="请选择">
                 <el-option
                   v-for="dict in sexDictDatas"
@@ -255,6 +228,20 @@
               </el-select>
             </el-form-item>
           </el-col>
+
+          <el-col :span="12">
+            <el-form-item label="角色" v-if="form.userId === undefined">
+              <el-select v-model="form.roleIds" multiple placeholder="请选择">
+                <el-option
+                  v-for="item in roleOptions"
+                  :key="parseInt(item.roleId)"
+                  :label="item.roleName"
+                  :value="parseInt(item.roleId)"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+
           <el-col :span="12">
             <el-form-item label="岗位">
               <el-select v-model="form.postIds" multiple placeholder="请选择">
@@ -267,15 +254,31 @@
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="部门" prop="deptId">
+              <treeselect
+                v-model="form.deptId"
+                :options="deptOptions"
+                :show-count="true"
+                placeholder="请选择归属部门"
+                :normalizer="normalizer"
+              />
+            </el-form-item>
+          </el-col>
         </el-row>
+
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注">
+            <el-form-item
+              v-if="form.userId === undefined"
+              label="密码"
+              prop="password"
+            >
               <el-input
-                v-model="form.remark"
-                type="textarea"
-                placeholder="请输入内容"
-              ></el-input>
+                v-model="form.password"
+                placeholder="请输入用户密码"
+                type="password"
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -461,6 +464,11 @@ export default {
         this.postOptions = [];
         this.postOptions.push(...response.data);
       });
+      listSimpleRoles().then((response) => {
+        // 处理 roleOptions 参数
+        this.roleOptions = [];
+        this.roleOptions.push(...response.data);
+      });
     },
     // 筛选节点
     filterNode(value, data) {
@@ -601,9 +609,8 @@ export default {
     },
     /** 提交按钮（角色权限） */
     submitRole: function () {
-      console.log("sss")
+      console.log("sss");
       if (this.form.userId !== undefined) {
-        
         assignUserRole({
           userId: this.form.userId,
           roleIds: this.form.roleIds,

@@ -34,6 +34,9 @@ public class SysUserDTO implements Serializable {
     @ApiModelProperty("部门编号")
     private Long deptId;
 
+    @ApiModelProperty("部门编号")
+    private String deptName;
+
     @ApiModelProperty("用户名")
     private String username;
 
@@ -74,5 +77,10 @@ public class SysUserDTO implements Serializable {
 
     @ApiModelProperty("角色编号")
     private List<Long> roleIds;
+
+
+    @ApiModelProperty("密码")
+    private SysDeptDTO dept;
+
 
 }

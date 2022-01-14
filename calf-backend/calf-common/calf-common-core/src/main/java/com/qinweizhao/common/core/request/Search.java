@@ -26,7 +26,6 @@ public class Search implements Serializable {
 	@ApiModelProperty(value = "关键词")
 	private String keyword;
 
-
 	/**
 	 * 开始日期
 	 */
@@ -38,18 +37,6 @@ public class Search implements Serializable {
 	 */
 	@ApiModelProperty(hidden = true)
 	private String endTime;
-
-	/**
-	 * 排序属性
-	 */
-	@ApiModelProperty(hidden = true)
-	private String prop;
-	
-	/**
-	 * 排序方式：asc,desc
-	 */
-	@ApiModelProperty(hidden = true)
-	private String order;
 
 	/**
 	 * 当前页

@@ -2,6 +2,9 @@ package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qinweizhao.api.system.command.SysUserSaveCmd;
+import com.qinweizhao.api.system.command.SysUserUpdateCmd;
+import com.qinweizhao.api.system.command.query.SysUserPageQry;
 import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.vo.SysUserVO;
 import com.qinweizhao.common.core.request.Search;
@@ -53,7 +56,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param deptId deptId
      * @return IPage<SysUser>
      */
-    IPage<SysUserVO> pageUsers(Search search, Long deptId);
+    IPage<SysUserDTO> pageUsers(SysUserPageQry sysUserPageQry);
 
 
     /**
@@ -67,10 +70,10 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 保存用户
      *
-     * @param sysUserDTO sysUserDTO
+     * @param sysUserSaveCmd sysUserSaveCmd
      * @return int
      */
-    int saveUser(SysUserDTO sysUserDTO);
+    int saveUser(SysUserSaveCmd sysUserSaveCmd);
 
 
     /**
@@ -85,9 +88,9 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 通过用户 Id 修改用户
      *
-     * @param sysUserDTO sysUserDTO
+     * @param sysUserUpdateCmd sysUserUpdateCmd
      */
-    void updateUserById(SysUserDTO sysUserDTO);
+    int updateUserById(SysUserUpdateCmd sysUserUpdateCmd);
 
     /**
      * 通过用户 Id 修改用户状态

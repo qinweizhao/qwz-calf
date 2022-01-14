@@ -51,20 +51,4 @@ public class SysConfig implements Serializable {
     @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty("是否删除")
-    @TableLogic
-    private Integer deleted;
-
-    @ApiModelProperty("创建时间")
-    private Date createTime;
-
-    @ApiModelProperty("更新时间")
-    private Date updateTime;
-
-    @ApiModelProperty("创建者")
-    private String createBy;
-
-    @ApiModelProperty("更新者")
-    private String updateBy;
-
 }

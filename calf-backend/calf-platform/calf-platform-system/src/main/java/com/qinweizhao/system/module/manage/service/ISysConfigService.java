@@ -17,16 +17,29 @@ import java.util.List;
  */
 public interface ISysConfigService extends IService<SysConfig> {
 
+    /**
+     * 通过 Key 获取配置
+     *
+     * @param key key
+     * @return SysConfig
+     */
     SysConfig getConfigByKey(String key);
 
     /**
      * 配置分页
-     * @param page page
+     *
+     * @param page      page
      * @param sysConfig sysConfig
      * @return return
      */
     IPage<SysConfig> pageConfigs(Page<SysConfig> page, SysConfig sysConfig);
 
+    /**
+     * 获取配置列表
+     *
+     * @param sysConfig sysConfig
+     * @return List<SysConfig>
+     */
     List<SysConfig> listConfigs(SysConfig sysConfig);
 
 }

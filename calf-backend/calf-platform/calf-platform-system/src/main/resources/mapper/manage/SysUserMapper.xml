@@ -69,19 +69,19 @@
         avatar,create_by,create_time,deleted,dept_id,email,nick_name,password,phone,sex,sort,status,update_by,update_time,user_id,username
         FROM sys_user
         <where>
-            <if test="search.keyword != null and search.keyword != ''">
-                username like concat('%', #{search.keyword}, '%')
+            <if test="query.username != null and query.username != ''">
+                username like concat('%', #{query.username}, '%')
             </if>
-            <if test="deptId != null and deptId != 0">
-                AND dept_id = #{deptId}
+            <if test="query.deptId != null and query.deptId != 0">
+                AND dept_id = #{query.deptId}
             </if>
             <!-- 开始时间检索 -->
-            <if test="search.beginTime != null and search.beginTime != ''">
-                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{search.beginTime},'%y%m%d')
+            <if test="query.beginTime != null and query.beginTime != ''">
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{query.beginTime},'%y%m%d')
             </if>
             <!-- 结束时间检索 -->
-            <if test="search.endTime != null and search.endTime != ''">
-                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{search.endTime},'%y%m%d')
+            <if test="query.endTime != null and query.endTime != ''">
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{query.endTime},'%y%m%d')
             </if>
             AND deleted=0
         </where>

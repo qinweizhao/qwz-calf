@@ -2,15 +2,16 @@ package com.qinweizhao.system.module.manage.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.qinweizhao.api.system.command.SysUserSaveCmd;
+import com.qinweizhao.api.system.command.SysUserUpdateCmd;
+import com.qinweizhao.api.system.command.query.SysUserPageQry;
 import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.vo.SysUserVO;
 import com.qinweizhao.common.core.base.BaseController;
 import com.qinweizhao.common.core.request.Search;
 import com.qinweizhao.common.core.response.Result;
-import com.qinweizhao.common.core.util.PageUtil;
 import com.qinweizhao.common.log.annotation.SysLog;
 import com.qinweizhao.system.module.manage.convert.SysUserConvert;
-import com.qinweizhao.system.module.manage.entity.SysUser;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -54,8 +55,9 @@ public class SysUserController extends BaseController {
 
     @GetMapping("/page")
     @ApiOperation(value = "查询用户")
-    public Result<IPage<SysUserVO>> page(Search search, Long deptId) {
-        return Result.success(sysUserService.pageUsers(search, deptId));
+    public Result<IPage<SysUserVO>> page(SysUserPageQry sysUserPageQry) {
+        IPage<SysUserDTO> page = sysUserService.pageUsers(sysUserPageQry);
+        return Result.success(SysUserConvert.INSTANCE.convertToVO(page));
     }
 
     @GetMapping("/list_user_roles")
@@ -68,17 +70,16 @@ public class SysUserController extends BaseController {
     @ApiOperation("新增用户")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('system:user:insert')")
-    public Result<Boolean> save(@RequestBody SysUserDTO sysUserDTO) {
-        return Result.condition(sysUserService.saveUser(sysUserDTO));
+    public Result<Boolean> save(@RequestBody SysUserSaveCmd sysUserSaveCmd) {
+        return Result.condition(sysUserService.saveUser(sysUserSaveCmd));
     }
 
     @SysLog("修改用户")
     @PutMapping("update")
     @ApiOperation("修改用户")
     @PreAuthorize("hasAuthority('system:user:update')")
-    public Result<Object> edit(@Valid @RequestBody SysUserDTO sysUserDTO) {
-        sysUserService.updateUserById(sysUserDTO);
-        return Result.success();
+    public Result<Object> update(@Valid @RequestBody SysUserUpdateCmd sysUserUpdateCmd) {
+        return Result.condition(sysUserService.updateUserById(sysUserUpdateCmd));
     }
 
     @SysLog("修改用户状态")
