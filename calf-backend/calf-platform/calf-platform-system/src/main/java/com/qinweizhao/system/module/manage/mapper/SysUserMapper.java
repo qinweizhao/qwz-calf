@@ -3,8 +3,7 @@ package com.qinweizhao.system.module.manage.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.qinweizhao.api.system.command.query.SysUserPageQry;
-import com.qinweizhao.common.core.request.Search;
+import com.qinweizhao.api.system.vo.req.SysUserPageReqVO;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -61,10 +60,10 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * 查询用户分页
      *
      * @param page   page
-     * @param sysUserPageQry sysUserPageQry
+     * @param sysUserPageReqVO sysUserPageQry
      * @return IPage<SysUser>
      */
-    IPage<SysUser> selectPageUsers(Page<SysUser> page, @Param("query") SysUserPageQry sysUserPageQry);
+    IPage<SysUser> selectPageUsers(Page<SysUser> page, @Param("query") SysUserPageReqVO sysUserPageReqVO);
 
     SysUser selectUserByEmail(String email);
 

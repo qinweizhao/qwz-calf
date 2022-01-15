@@ -1,8 +1,7 @@
 package com.qinweizhao.system.module.manage.controller;
 
 
-import com.qinweizhao.api.system.dto.SysMenuDTO;
-import com.qinweizhao.api.system.vo.SysMenuVO;
+import com.qinweizhao.api.system.vo.resp.SysMenuVO;
 import com.qinweizhao.common.core.base.BaseController;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysMenuConvert;

@@ -1,11 +1,9 @@
 package com.qinweizhao.system.module.manage.controller;
 
 
-import com.qinweizhao.api.system.vo.SysDeptVO;
-import com.qinweizhao.api.system.vo.SysMenuVO;
+import com.qinweizhao.api.system.vo.resp.SysDeptVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysDeptConvert;
-import com.qinweizhao.system.module.manage.convert.SysMenuConvert;
 import com.qinweizhao.system.module.manage.entity.SysDept;
 import com.qinweizhao.system.module.manage.service.ISysDeptService;
 import io.swagger.annotations.ApiImplicitParam;

@@ -5,7 +5,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qinweizhao.api.system.command.query.SysRolePageQry;
+import com.qinweizhao.api.system.vo.req.SysRolePageReqVO;
 import com.qinweizhao.api.system.dto.SysRoleDTO;
 import com.qinweizhao.common.core.constant.CalfConstants;
 import com.qinweizhao.common.core.enums.StatusEnum;
@@ -93,8 +93,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
-    public IPage<SysRoleDTO> pageRoles(SysRolePageQry sysRolePageQry) {
-        IPage<SysRole> page = this.baseMapper.selectPageRoles(PageUtil.getPage(sysRolePageQry), sysRolePageQry);
+    public IPage<SysRoleDTO> pageRoles(SysRolePageReqVO sysRolePageReqVO) {
+        IPage<SysRole> page = this.baseMapper.selectPageRoles(PageUtil.getPage(sysRolePageReqVO), sysRolePageReqVO);
         return SysRoleConvert.INSTANCE.convertToPageDTO(page);
     }
 

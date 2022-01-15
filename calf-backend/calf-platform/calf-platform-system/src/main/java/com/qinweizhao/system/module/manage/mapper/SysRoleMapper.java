@@ -3,11 +3,8 @@ package com.qinweizhao.system.module.manage.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.qinweizhao.api.system.command.query.SysRolePageQry;
-import com.qinweizhao.api.system.vo.SysRoleVO;
-import com.qinweizhao.common.core.request.Search;
+import com.qinweizhao.api.system.vo.req.SysRolePageReqVO;
 import com.qinweizhao.system.module.manage.entity.SysRole;
-import com.qinweizhao.system.module.manage.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -57,10 +54,10 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     /**
      * 分页
      * @param page page
-     * @param sysRolePageQry sysRolePageQry
+     * @param sysRolePageReqVO sysRolePageQry
      * @return IPage<SysRole>
      */
-    IPage<SysRole> selectPageRoles(Page<SysRole> page, @Param("query") SysRolePageQry sysRolePageQry);
+    IPage<SysRole> selectPageRoles(Page<SysRole> page, @Param("query") SysRolePageReqVO sysRolePageReqVO);
 
     /**
      * 获取角色拥有的菜单

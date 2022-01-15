@@ -4,7 +4,7 @@ package com.qinweizhao.system.module.manage.convert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.api.system.dto.SysRoleDTO;
-import com.qinweizhao.api.system.vo.SysRoleVO;
+import com.qinweizhao.api.system.vo.resp.SysRoleVO;
 import com.qinweizhao.system.module.manage.entity.SysRole;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

@@ -1,4 +1,4 @@
-package com.qinweizhao.api.system.vo;
+package com.qinweizhao.api.system.vo.resp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qinweizhao.api.system.dto.SysDeptDTO;

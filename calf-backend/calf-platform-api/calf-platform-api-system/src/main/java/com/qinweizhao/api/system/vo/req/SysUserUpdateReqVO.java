@@ -1,4 +1,4 @@
-package com.qinweizhao.api.system.command;
+package com.qinweizhao.api.system.vo.req;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,9 +17,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SysUserSaveCmd implements Serializable {
+public class SysUserUpdateReqVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty("部门编号")
+    private Long userId;
 
     @ApiModelProperty("部门编号")
     private Long deptId;

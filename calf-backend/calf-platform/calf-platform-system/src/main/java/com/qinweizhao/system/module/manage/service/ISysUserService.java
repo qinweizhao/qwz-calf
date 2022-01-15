@@ -2,12 +2,10 @@ package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.qinweizhao.api.system.command.SysUserSaveCmd;
-import com.qinweizhao.api.system.command.SysUserUpdateCmd;
-import com.qinweizhao.api.system.command.query.SysUserPageQry;
+import com.qinweizhao.api.system.vo.req.SysUserSaveReqVO;
+import com.qinweizhao.api.system.vo.req.SysUserUpdateReqVO;
+import com.qinweizhao.api.system.vo.req.SysUserPageReqVO;
 import com.qinweizhao.api.system.dto.SysUserDTO;
-import com.qinweizhao.api.system.vo.SysUserVO;
-import com.qinweizhao.common.core.request.Search;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 
 import java.util.List;
@@ -52,10 +50,10 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 获取用户分页信息
      *
-     * @param sysUserPageQry sysUserPageQry
+     * @param sysUserPageReqVO sysUserPageQry
      * @return IPage<SysUser>
      */
-    IPage<SysUserDTO> pageUsers(SysUserPageQry sysUserPageQry);
+    IPage<SysUserDTO> pageUsers(SysUserPageReqVO sysUserPageReqVO);
 
 
     /**
@@ -69,10 +67,10 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 保存用户
      *
-     * @param sysUserSaveCmd sysUserSaveCmd
+     * @param sysUserSaveReqVO sysUserSaveCmd
      * @return int
      */
-    int saveUser(SysUserSaveCmd sysUserSaveCmd);
+    int saveUser(SysUserSaveReqVO sysUserSaveReqVO);
 
 
     /**
@@ -87,9 +85,9 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 通过用户 Id 修改用户
      *
-     * @param sysUserUpdateCmd sysUserUpdateCmd
+     * @param sysUserUpdateReqVO sysUserUpdateCmd
      */
-    int updateUserById(SysUserUpdateCmd sysUserUpdateCmd);
+    int updateUserById(SysUserUpdateReqVO sysUserUpdateReqVO);
 
     /**
      * 通过用户 Id 修改用户状态

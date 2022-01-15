@@ -1,4 +1,4 @@
-package com.qinweizhao.api.system.command.query;
+package com.qinweizhao.api.system.vo.req;
 
 import com.qinweizhao.common.core.request.PageQry;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,20 +11,12 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SysUserPageQry extends PageQry {
-
+public class SysRolePageReqVO extends PageQry {
     /**
      * 用户名
      */
-    @ApiModelProperty(value = "用户名")
-    private String username;
-
-
-    /**
-     * 部门 Id
-     */
-    @ApiModelProperty(value = "部门 Id")
-    private Long deptId;
+    @ApiModelProperty(value = "角色 Id")
+    private String roleId;
 
     /**
      * 开始日期

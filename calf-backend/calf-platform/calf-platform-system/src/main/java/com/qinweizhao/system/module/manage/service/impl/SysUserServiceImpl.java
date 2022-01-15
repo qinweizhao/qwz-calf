@@ -7,9 +7,9 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qinweizhao.api.system.command.SysUserSaveCmd;
-import com.qinweizhao.api.system.command.SysUserUpdateCmd;
-import com.qinweizhao.api.system.command.query.SysUserPageQry;
+import com.qinweizhao.api.system.vo.req.SysUserSaveReqVO;
+import com.qinweizhao.api.system.vo.req.SysUserUpdateReqVO;
+import com.qinweizhao.api.system.vo.req.SysUserPageReqVO;
 import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.common.core.constant.UserConstants;
 import com.qinweizhao.common.core.enums.StatusEnum;
@@ -101,11 +101,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public int updateUserById(SysUserUpdateCmd sysUserUpdateCmd) {
-        this.checkSaveOrUpdate(sysUserUpdateCmd.getUserId(), sysUserUpdateCmd.getUsername(), sysUserUpdateCmd.getPhone(), sysUserUpdateCmd.getEmail(),
-                sysUserUpdateCmd.getDeptId(), sysUserUpdateCmd.getPostIds());
+    public int updateUserById(SysUserUpdateReqVO sysUserUpdateReqVO) {
+        this.checkSaveOrUpdate(sysUserUpdateReqVO.getUserId(), sysUserUpdateReqVO.getUsername(), sysUserUpdateReqVO.getPhone(), sysUserUpdateReqVO.getEmail(),
+                sysUserUpdateReqVO.getDeptId(), sysUserUpdateReqVO.getPostIds());
         // 更新用户
-        return this.baseMapper.updateById(SysUserConvert.INSTANCE.convert(sysUserUpdateCmd));
+        return this.baseMapper.updateById(SysUserConvert.INSTANCE.convert(sysUserUpdateReqVO));
     }
 
 
@@ -296,8 +296,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public IPage<SysUserDTO> pageUsers(SysUserPageQry sysUserPageQry) {
-        IPage<SysUser> sysUserPage = this.baseMapper.selectPageUsers(PageUtil.getPage(sysUserPageQry), sysUserPageQry);
+    public IPage<SysUserDTO> pageUsers(SysUserPageReqVO sysUserPageReqVO) {
+        IPage<SysUser> sysUserPage = this.baseMapper.selectPageUsers(PageUtil.getPage(sysUserPageReqVO), sysUserPageReqVO);
         IPage<SysUserDTO> userPage = SysUserConvert.INSTANCE.convertToDTO(sysUserPage);
         List<SysUserDTO> records = userPage.getRecords();
         records.forEach(item -> {
@@ -327,19 +327,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 
     @Override
-    public int saveUser(SysUserSaveCmd sysUserSaveCmd) {
-        this.checkSaveOrUpdate(null, sysUserSaveCmd.getUsername(), sysUserSaveCmd.getPhone(), sysUserSaveCmd.getEmail(),
-                sysUserSaveCmd.getDeptId(), sysUserSaveCmd.getPostIds());
-        SysUser sysUser = SysUserConvert.INSTANCE.convert(sysUserSaveCmd);
+    public int saveUser(SysUserSaveReqVO sysUserSaveReqVO) {
+        this.checkSaveOrUpdate(null, sysUserSaveReqVO.getUsername(), sysUserSaveReqVO.getPhone(), sysUserSaveReqVO.getEmail(),
+                sysUserSaveReqVO.getDeptId(), sysUserSaveReqVO.getPostIds());
+        SysUser sysUser = SysUserConvert.INSTANCE.convert(sysUserSaveReqVO);
         sysUser.setAvatar(UserConstants.DEFAULT_AVATAR);
         // 新增用户信息
         int i = this.baseMapper.insert(sysUser);
-        List<Long> postIds = sysUserSaveCmd.getPostIds();
+        List<Long> postIds = sysUserSaveReqVO.getPostIds();
         Long userId = sysUser.getUserId();
         // 新增用户岗位关联
         this.insertUserPost(postIds, userId);
         // 新增用户与角色管理
-        List<Long> roleIds = sysUserSaveCmd.getRoleIds();
+        List<Long> roleIds = sysUserSaveReqVO.getRoleIds();
         this.insertUserRole(roleIds, userId);
         return i;
     }

@@ -1,7 +1,7 @@
 package com.qinweizhao.system.module.manage.convert;
 
 import com.qinweizhao.api.system.dto.SysDeptDTO;
-import com.qinweizhao.api.system.vo.SysDeptVO;
+import com.qinweizhao.api.system.vo.resp.SysDeptVO;
 import com.qinweizhao.system.module.manage.entity.SysDept;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

@@ -2,11 +2,11 @@ package com.qinweizhao.system.module.manage.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.qinweizhao.api.system.command.SysUserSaveCmd;
-import com.qinweizhao.api.system.command.SysUserUpdateCmd;
-import com.qinweizhao.api.system.command.query.SysUserPageQry;
+import com.qinweizhao.api.system.vo.req.SysUserSaveReqVO;
+import com.qinweizhao.api.system.vo.req.SysUserUpdateReqVO;
+import com.qinweizhao.api.system.vo.req.SysUserPageReqVO;
 import com.qinweizhao.api.system.dto.SysUserDTO;
-import com.qinweizhao.api.system.vo.SysUserVO;
+import com.qinweizhao.api.system.vo.resp.SysUserVO;
 import com.qinweizhao.common.core.base.BaseController;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.common.log.annotation.SysLog;
@@ -55,8 +55,8 @@ public class SysUserController extends BaseController {
 
     @GetMapping("/page")
     @ApiOperation(value = "查询用户")
-    public Result<IPage<SysUserVO>> page(SysUserPageQry sysUserPageQry) {
-        IPage<SysUserDTO> page = sysUserService.pageUsers(sysUserPageQry);
+    public Result<IPage<SysUserVO>> page(SysUserPageReqVO sysUserPageReqVO) {
+        IPage<SysUserDTO> page = sysUserService.pageUsers(sysUserPageReqVO);
         return Result.success(SysUserConvert.INSTANCE.convertToVO(page));
     }
 
@@ -70,16 +70,16 @@ public class SysUserController extends BaseController {
     @ApiOperation("新增用户")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('system:user:insert')")
-    public Result<Boolean> save(@RequestBody SysUserSaveCmd sysUserSaveCmd) {
-        return Result.condition(sysUserService.saveUser(sysUserSaveCmd));
+    public Result<Boolean> save(@RequestBody SysUserSaveReqVO sysUserSaveReqVO) {
+        return Result.condition(sysUserService.saveUser(sysUserSaveReqVO));
     }
 
     @SysLog("修改用户")
     @PutMapping("update")
     @ApiOperation("修改用户")
     @PreAuthorize("hasAuthority('system:user:update')")
-    public Result<Boolean> update(@Valid @RequestBody SysUserUpdateCmd sysUserUpdateCmd) {
-        return Result.condition(sysUserService.updateUserById(sysUserUpdateCmd));
+    public Result<Boolean> update(@Valid @RequestBody SysUserUpdateReqVO sysUserUpdateReqVO) {
+        return Result.condition(sysUserService.updateUserById(sysUserUpdateReqVO));
     }
 
     @SysLog("修改用户状态")

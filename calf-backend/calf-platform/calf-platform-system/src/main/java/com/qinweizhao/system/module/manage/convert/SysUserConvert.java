@@ -2,10 +2,10 @@ package com.qinweizhao.system.module.manage.convert;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.qinweizhao.api.system.command.SysUserSaveCmd;
-import com.qinweizhao.api.system.command.SysUserUpdateCmd;
+import com.qinweizhao.api.system.vo.req.SysUserSaveReqVO;
+import com.qinweizhao.api.system.vo.req.SysUserUpdateReqVO;
 import com.qinweizhao.api.system.dto.SysUserDTO;
-import com.qinweizhao.api.system.vo.SysUserVO;
+import com.qinweizhao.api.system.vo.resp.SysUserVO;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -25,19 +25,19 @@ public interface SysUserConvert {
     /**
      * sysUserUpdateCmd 转 DO
      *
-     * @param sysUserSaveCmd sysUserSaveCmd
+     * @param sysUserSaveReqVO sysUserSaveCmd
      * @return SysUser
      */
-    SysUser convert(SysUserSaveCmd sysUserSaveCmd);
+    SysUser convert(SysUserSaveReqVO sysUserSaveReqVO);
 
 
     /**
      * sysUserUpdateCmd 转 DO
      *
-     * @param sysUserUpdateCmd sysUserUpdateCmd
+     * @param sysUserUpdateReqVO sysUserUpdateCmd
      * @return SysUser
      */
-    SysUser convert(SysUserUpdateCmd sysUserUpdateCmd);
+    SysUser convert(SysUserUpdateReqVO sysUserUpdateReqVO);
 
     /**
      * DO 转 DTO

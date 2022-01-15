@@ -1,7 +1,7 @@
 package com.qinweizhao.system.module.manage.convert;
 
 
-import com.qinweizhao.api.system.vo.SysMenuVO;
+import com.qinweizhao.api.system.vo.resp.SysMenuVO;
 import com.qinweizhao.system.module.manage.entity.SysMenu;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

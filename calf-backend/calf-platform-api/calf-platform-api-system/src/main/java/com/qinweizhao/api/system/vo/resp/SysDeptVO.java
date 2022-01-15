@@ -1,4 +1,4 @@
-package com.qinweizhao.api.system.vo;
+package com.qinweizhao.api.system.vo.resp;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

@@ -1,28 +1,20 @@
 package com.qinweizhao.system.module.manage.controller;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.qinweizhao.api.system.command.query.SysRolePageQry;
+import com.qinweizhao.api.system.vo.req.SysRolePageReqVO;
 import com.qinweizhao.api.system.dto.SysRoleDTO;
-import com.qinweizhao.api.system.dto.SysUserDTO;
-import com.qinweizhao.api.system.vo.SysRoleVO;
-import com.qinweizhao.common.core.request.Search;
+import com.qinweizhao.api.system.vo.resp.SysRoleVO;
 import com.qinweizhao.common.core.response.Result;
-import com.qinweizhao.common.core.util.ExcelUtils;
 import com.qinweizhao.common.log.annotation.SysLog;
 import com.qinweizhao.system.module.manage.convert.SysRoleConvert;
-import com.qinweizhao.system.module.manage.entity.SysRole;
 import com.qinweizhao.system.module.manage.service.ISysRoleService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
@@ -59,8 +51,8 @@ public class SysRoleController {
     @ApiOperation("获得角色分页")
     @PreAuthorize("hasAuthority('system:role:select')")
     @GetMapping("/page")
-    public Result<Object> page(SysRolePageQry sysRolePageQry) {
-        return Result.success(sysRoleService.pageRoles(sysRolePageQry));
+    public Result<Object> page(SysRolePageReqVO sysRolePageReqVO) {
+        return Result.success(sysRoleService.pageRoles(sysRolePageReqVO));
     }
 
     @PostMapping("/save")
