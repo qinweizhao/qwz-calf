@@ -1,4 +1,4 @@
-package com.qinweizhao.api.system.vo.req;
+package com.qinweizhao.api.system.dto.query;
 
 import com.qinweizhao.common.core.request.PageQry;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SysRolePageReqVO extends PageQry {
+public class SysRolePageQry extends PageQry {
     /**
      * 用户名
      */

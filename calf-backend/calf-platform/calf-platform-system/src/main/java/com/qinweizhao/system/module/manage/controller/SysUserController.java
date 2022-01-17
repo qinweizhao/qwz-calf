@@ -2,15 +2,19 @@ package com.qinweizhao.system.module.manage.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.qinweizhao.api.system.vo.req.SysUserSaveReqVO;
-import com.qinweizhao.api.system.vo.req.SysUserUpdateReqVO;
-import com.qinweizhao.api.system.vo.req.SysUserPageReqVO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.command.SysUserSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysUserUpdateCmd;
+import com.qinweizhao.api.system.dto.query.SysUserPageQry;
 import com.qinweizhao.api.system.dto.SysUserDTO;
-import com.qinweizhao.api.system.vo.resp.SysUserVO;
+import com.qinweizhao.api.system.vo.SysUserPageRespVO;
+import com.qinweizhao.api.system.vo.SysUserRespVO;
 import com.qinweizhao.common.core.base.BaseController;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.common.log.annotation.SysLog;
 import com.qinweizhao.system.module.manage.convert.SysUserConvert;
+import com.qinweizhao.system.module.manage.service.ISysDeptService;
+import com.qinweizhao.system.module.manage.service.ISysUserPostService;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -39,6 +43,10 @@ public class SysUserController extends BaseController {
     @Resource
     private ISysUserService sysUserService;
 
+    @Resource
+    private ISysDeptService sysDeptService;
+
+
     @GetMapping("/info")
     @ApiOperation("初始信息")
     public Result<Map<Object, Object>> info() {
@@ -47,17 +55,22 @@ public class SysUserController extends BaseController {
 
     @GetMapping("/get")
     @ApiOperation(value = "用户详情")
-    public Result<SysUserVO> get(Long id) {
+    public Result<SysUserRespVO> get(Long id) {
         SysUserDTO sysUserDTO = sysUserService.getUserById(id);
-        return Result.success(SysUserConvert.INSTANCE.convert(sysUserDTO));
+        return Result.success(SysUserConvert.INSTANCE.convertToVO(sysUserDTO));
     }
-
 
     @GetMapping("/page")
     @ApiOperation(value = "查询用户")
-    public Result<IPage<SysUserVO>> page(SysUserPageReqVO sysUserPageReqVO) {
-        IPage<SysUserDTO> page = sysUserService.pageUsers(sysUserPageReqVO);
-        return Result.success(SysUserConvert.INSTANCE.convertToVO(page));
+    public Result<IPage<SysUserPageRespVO>> page(SysUserPageQry sysUserPageQry) {
+        IPage<SysUserDTO> page = sysUserService.pageUsers(sysUserPageQry);
+        Page<SysUserPageRespVO> sysUserVO = SysUserConvert.INSTANCE.convertToVO(page);
+        List<SysUserPageRespVO> records = sysUserVO.getRecords();
+        // TODO 清除 deptId
+        records.forEach(item ->
+            item.setDeptName(sysDeptService.getById(item.getDeptId()).getDeptName())
+        );
+        return Result.success(sysUserVO);
     }
 
     @GetMapping("/list_user_roles")
@@ -70,16 +83,16 @@ public class SysUserController extends BaseController {
     @ApiOperation("新增用户")
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('system:user:insert')")
-    public Result<Boolean> save(@RequestBody SysUserSaveReqVO sysUserSaveReqVO) {
-        return Result.condition(sysUserService.saveUser(sysUserSaveReqVO));
+    public Result<Boolean> save(@RequestBody SysUserSaveCmd sysUserSaveCmd) {
+        return Result.condition(sysUserService.saveUser(sysUserSaveCmd));
     }
 
     @SysLog("修改用户")
     @PutMapping("update")
     @ApiOperation("修改用户")
     @PreAuthorize("hasAuthority('system:user:update')")
-    public Result<Boolean> update(@Valid @RequestBody SysUserUpdateReqVO sysUserUpdateReqVO) {
-        return Result.condition(sysUserService.updateUserById(sysUserUpdateReqVO));
+    public Result<Boolean> update(@Valid @RequestBody SysUserUpdateCmd sysUserUpdateCmd) {
+        return Result.condition(sysUserService.updateUserById(sysUserUpdateCmd));
     }
 
     @SysLog("修改用户状态")
@@ -103,7 +116,7 @@ public class SysUserController extends BaseController {
     @DeleteMapping("/remove")
     @ApiOperation("删除用户")
     @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
-    @PreAuthorize("hasAuthority('system:user:delete')")
+    @PreAuthorize("hasAuthority('system:user:remove')")
     public Result<Object> remove(@RequestParam List<Long> id) {
         return Result.condition(sysUserService.removeUserByIds(id));
     }

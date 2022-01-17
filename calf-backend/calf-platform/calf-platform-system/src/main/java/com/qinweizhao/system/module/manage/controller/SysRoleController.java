@@ -1,9 +1,9 @@
 package com.qinweizhao.system.module.manage.controller;
 
 
-import com.qinweizhao.api.system.vo.req.SysRolePageReqVO;
+import com.qinweizhao.api.system.dto.query.SysRolePageQry;
 import com.qinweizhao.api.system.dto.SysRoleDTO;
-import com.qinweizhao.api.system.vo.resp.SysRoleVO;
+import com.qinweizhao.api.system.vo.SysRoleVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.common.log.annotation.SysLog;
 import com.qinweizhao.system.module.manage.convert.SysRoleConvert;
@@ -51,8 +51,8 @@ public class SysRoleController {
     @ApiOperation("获得角色分页")
     @PreAuthorize("hasAuthority('system:role:select')")
     @GetMapping("/page")
-    public Result<Object> page(SysRolePageReqVO sysRolePageReqVO) {
-        return Result.success(sysRoleService.pageRoles(sysRolePageReqVO));
+    public Result<Object> page(SysRolePageQry sysRolePageQry) {
+        return Result.success(sysRoleService.pageRoles(sysRolePageQry));
     }
 
     @PostMapping("/save")

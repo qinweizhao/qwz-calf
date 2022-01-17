@@ -2,10 +2,10 @@ package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.qinweizhao.api.system.vo.req.SysUserSaveReqVO;
-import com.qinweizhao.api.system.vo.req.SysUserUpdateReqVO;
-import com.qinweizhao.api.system.vo.req.SysUserPageReqVO;
 import com.qinweizhao.api.system.dto.SysUserDTO;
+import com.qinweizhao.api.system.dto.query.SysUserPageQry;
+import com.qinweizhao.api.system.dto.command.SysUserSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysUserUpdateCmd;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.Map;
  * @author qinweizhao
  * @since 2021-12-10
  */
-public interface ISysUserService extends IService<SysUser> {
+public interface ISysUserService {
 
     /**
      * 通过用户名查询用户
@@ -37,7 +37,6 @@ public interface ISysUserService extends IService<SysUser> {
      */
     String getAuthorityByUserId(Long userId);
 
-
     /**
      * 获取项目初始化需要的信息
      *
@@ -46,15 +45,13 @@ public interface ISysUserService extends IService<SysUser> {
      */
     Map<Object, Object> getProjectInitInfo(String currentLoginUsername);
 
-
     /**
      * 获取用户分页信息
      *
-     * @param sysUserPageReqVO sysUserPageQry
+     * @param sysUserPageQry sysUserPageQry
      * @return IPage<SysUser>
      */
-    IPage<SysUserDTO> pageUsers(SysUserPageReqVO sysUserPageReqVO);
-
+    IPage<SysUserDTO> pageUsers(SysUserPageQry sysUserPageQry);
 
     /**
      * 通过用户 Id 集合删除用户
@@ -67,11 +64,10 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 保存用户
      *
-     * @param sysUserSaveReqVO sysUserSaveCmd
+     * @param sysUserSaveCmd sysUserSaveCmd
      * @return int
      */
-    int saveUser(SysUserSaveReqVO sysUserSaveReqVO);
-
+    int saveUser(SysUserSaveCmd sysUserSaveCmd);
 
     /**
      * 通过用户 Id 获取用户
@@ -81,13 +77,13 @@ public interface ISysUserService extends IService<SysUser> {
      */
     SysUserDTO getUserById(Long id);
 
-
     /**
      * 通过用户 Id 修改用户
      *
-     * @param sysUserUpdateReqVO sysUserUpdateCmd
+     * @param sysUserUpdateCmd sysUserUpdateCmd
+     * @return int
      */
-    int updateUserById(SysUserUpdateReqVO sysUserUpdateReqVO);
+    int updateUserById(SysUserUpdateCmd sysUserUpdateCmd);
 
     /**
      * 通过用户 Id 修改用户状态
@@ -100,6 +96,7 @@ public interface ISysUserService extends IService<SysUser> {
 
     /**
      * 获取用户拥有的角色 Id 集合
+     *
      * @param userId Id
      * @return List<Long>
      */
@@ -107,7 +104,8 @@ public interface ISysUserService extends IService<SysUser> {
 
     /**
      * 更改用户所属角色
-     * @param userId userId
+     *
+     * @param userId  userId
      * @param roleIds roleIds
      * @return boolean
      */

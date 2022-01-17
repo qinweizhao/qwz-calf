@@ -3,10 +3,10 @@
   <div class="top-right-btn">
     <el-row>
       <el-tooltip class="item" effect="dark" :content="showSearch ? '隐藏搜索' : '显示搜索'" placement="top">
-        <el-button size="mini" circle icon="el-icon-search" @click="toggleSearch()" />
+        <el-button size="small" circle icon="el-icon-search" @click="toggleSearch()" />
       </el-tooltip>
       <el-tooltip class="item" effect="dark" content="刷新" placement="top">
-        <el-button size="mini" circle icon="el-icon-refresh" @click="refresh()" />
+        <el-button size="small" circle icon="el-icon-refresh" @click="refresh()" />
       </el-tooltip>
     </el-row>
   </div>

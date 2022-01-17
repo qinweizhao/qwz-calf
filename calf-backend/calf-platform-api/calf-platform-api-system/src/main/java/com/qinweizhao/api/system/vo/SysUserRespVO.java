@@ -1,6 +1,7 @@
-package com.qinweizhao.api.system.dto;
+package com.qinweizhao.api.system.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,7 +17,7 @@ import java.util.List;
  * @since 2021-12-06
  */
 @Data
-public class SysUserDTO implements Serializable {
+public class SysUserRespVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,20 +27,20 @@ public class SysUserDTO implements Serializable {
     private Long userId;
 
     /**
-     * 部门编号
+     * 编号
      */
     private Long deptId;
+
+
+    /**
+     * 邮箱
+     */
+    private String email;
 
     /**
      * 用户名
      */
     private String username;
-
-
-    /**
-     * 用户名
-     */
-    private String password;
 
     /**
      * 昵称
@@ -51,51 +52,28 @@ public class SysUserDTO implements Serializable {
      */
     private String sex;
 
-
-    /**
-     * 手机号码
-     */
-    private String phone;
-
-
-    /**
-     * 邮箱
-     */
-    private String email;
-
-
-    /**
-     * 头像
-     */
-    private String avatar;
-
-
-    /**
-     * 状态：1启用、0禁用
-     */
-    private Integer status;
-
-
     /**
      * 岗位编号
      */
     private List<Long> postIds;
 
     /**
-     * 角色编号
+     * 部门名称
      */
-    private List<Long> roleIds;
+    private String deptName;
 
     /**
-     * 创建日期
+     * 手机号码
      */
+    private String phone;
+
+    /**
+     * 状态：1启用、0禁用
+     */
+    private Integer status;
+
+    @ApiModelProperty("创建日期")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updateTime;
 
 }

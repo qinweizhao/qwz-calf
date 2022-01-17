@@ -27,6 +27,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Result<?> handler(MethodArgumentNotValidException e) {
+        e.printStackTrace();
         BindingResult result = e.getBindingResult();
         ObjectError objectError = result.getAllErrors().stream().findFirst().get();
         log.error("实体校验异常：----------------{}", objectError.getDefaultMessage());
@@ -36,6 +37,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = IllegalArgumentException.class)
     public Result<?> handler(IllegalArgumentException e) {
+        e.printStackTrace();
         log.error("Assert异常：----------------{}", e.getMessage());
         return Result.failure(ResultCode.ERROR, e.getMessage());
     }
@@ -43,6 +45,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = CustomizeException.class)
     public Result<?> handler(CustomizeException e) {
+        e.printStackTrace();
         log.error("自定义异常：----------------{}", e.getMessage());
         return Result.failure(ResultCode.ERROR, e.getMessage());
     }
@@ -50,6 +53,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = RuntimeException.class)
     public Result<?> handler(RuntimeException e) {
+        e.printStackTrace();
         log.error("运行时异常：----------------{}", e.getMessage());
         return Result.failure(ResultCode.ERROR, e.getMessage());
     }
@@ -64,6 +68,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IOException.class)
     public Result<?> exception(IOException e) {
+        e.printStackTrace();
         log.error("全局异常===》IOException异常：", e);
         return Result.failure(ResultCode.ERROR, e.getMessage());
     }
@@ -77,6 +82,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(Exception.class)
     public Result<?> exception(Exception e) {
+        e.printStackTrace();
         log.error("全局异常===》Exception异常：", e);
         return Result.failure(ResultCode.ERROR, e.getMessage());
     }

@@ -1,6 +1,8 @@
 package com.qinweizhao.system.module.manage.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.query.SysMenuListQry;
 import com.qinweizhao.system.module.manage.entity.SysMenu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -51,4 +53,11 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @return List<SysMenu>
      */
     List<SysMenu> selectListSimpleMenus(Integer status);
+
+    /**
+     * 查询菜单列表
+     * @param sysMenuListQry sysMenuListQry
+     * @return List<SysMenu>
+     */
+    List<SysMenu> selectListMenus(@Param("query") SysMenuListQry sysMenuListQry);
 }

@@ -20,7 +20,7 @@
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
-    
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         component
@@ -55,6 +55,17 @@
         <include refid="Base_Column_List"/>
         FROM sys_menu
         WHERE status = #{status}
+    </select>
+
+    <select id="selectListMenus" resultType="com.qinweizhao.system.module.manage.entity.SysMenu">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_menu
+        <where>
+            <if test="query.menuName != null and query.menuName != ''">
+                menu_name = #{query.menuName}
+            </if>
+        </where>
     </select>
 
 </mapper>

@@ -18,14 +18,14 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="warning" icon="el-icon-download" size="mini" @click="handleExport"
+        <el-button type="warning" icon="el-icon-download" size="small" @click="handleExport"
                    v-hasPermi="['infra:job:export']">导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
@@ -54,7 +54,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row)"
+          <el-button size="small" type="primary" icon="el-icon-view" @click="handleView(scope.row)"
                      v-hasPermi="['infra:job:query']">详细</el-button>
         </template>
       </el-table-column>
@@ -65,7 +65,7 @@
 
     <!-- 调度日志详细 -->
     <el-dialog title="调度日志详细" :visible.sync="open" width="700px" append-to-body>
-      <el-form ref="form" :model="form" label-width="120px" size="mini">
+      <el-form ref="form" :model="form" label-width="120px" size="small">
         <el-row>
           <el-col :span="12">
             <el-form-item label="日志编号：">{{ form.id }}</el-form-item>

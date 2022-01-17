@@ -1,12 +1,17 @@
 package com.qinweizhao.system.module.manage.service.impl;
 
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qinweizhao.api.system.dto.SysMenuDTO;
+import com.qinweizhao.api.system.dto.command.SysMenuSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysMenuUpdateCmd;
+import com.qinweizhao.api.system.dto.query.SysMenuListQry;
 import com.qinweizhao.common.core.enums.MenuIdEnum;
 import com.qinweizhao.common.core.enums.MenuTypeEnum;
 import com.qinweizhao.common.core.enums.StatusEnum;
 import com.qinweizhao.common.core.exception.ServiceException;
 import com.qinweizhao.common.core.response.ResultCode;
+import com.qinweizhao.common.core.util.PageUtil;
+import com.qinweizhao.system.module.manage.convert.SysMenuConvert;
 import com.qinweizhao.system.module.manage.entity.SysMenu;
 import com.qinweizhao.system.module.manage.mapper.SysMenuMapper;
 import com.qinweizhao.system.module.manage.mapper.SysRoleMenuMapper;
@@ -26,84 +31,90 @@ import java.util.stream.Collectors;
  * @since 2021-12-07
  */
 @Service
-public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
+public class SysMenuServiceImpl implements ISysMenuService {
 
     private static final Long LONG_ZERO = 0L;
+
+    @Resource
+    private SysMenuMapper sysMenuMapper;
 
     @Resource
     private SysRoleMenuMapper sysRoleMenuMapper;
 
     @Override
     public List<SysMenu> listWithTree(String currentLoginUsername) {
-        List<SysMenu> menus = this.baseMapper.selectMenuListByUsername(currentLoginUsername, MenuTypeEnum.BUTTON.getType());
+        List<SysMenu> menus = sysMenuMapper.selectMenuListByUsername(currentLoginUsername, MenuTypeEnum.BUTTON.getType());
         return buildTree(menus);
 
     }
 
     @Override
-    public Integer saveMenu(SysMenu sysMenu) {
+    public Integer saveMenu(SysMenuSaveCmd sysMenuSaveCmd) {
         // 校验父菜单存在
-        this.checkParentResource(sysMenu.getParentId(), null);
+        this.checkParentResource(sysMenuSaveCmd.getParentId(), null);
         // 校验菜单（自己）
-        this.checkResource(sysMenu.getParentId(), sysMenu.getMenuName(), null);
+        this.checkResource(sysMenuSaveCmd.getParentId(), sysMenuSaveCmd.getMenuName(), null);
         // 插入数据库
-        this.initMenuProperty(sysMenu);
-        this.baseMapper.insert(sysMenu);
-        return null;
+        if (MenuTypeEnum.BUTTON.getType().equals(sysMenuSaveCmd.getMenuType())) {
+            sysMenuSaveCmd.setComponent("");
+            sysMenuSaveCmd.setIcon("");
+            sysMenuSaveCmd.setPath("");
+        }
+        return sysMenuMapper.insert(SysMenuConvert.INSTANCE.convert(sysMenuSaveCmd));
     }
 
     @Override
-    public Integer updateMenu(SysMenu sysMenu) {
+    public Integer updateMenu(SysMenuUpdateCmd sysMenuUpdateCmd) {
         // 校验更新的菜单是否存在
-        if (this.baseMapper.selectById(sysMenu.getMenuId()) == null) {
+        if (sysMenuMapper.selectById(sysMenuUpdateCmd.getMenuId()) == null) {
             throw new ServiceException(ResultCode.MENU_NOT_EXISTS);
         }
         // 校验父菜单存在
-        checkParentResource(sysMenu.getParentId(), sysMenu.getMenuId());
+        checkParentResource(sysMenuUpdateCmd.getParentId(), sysMenuUpdateCmd.getMenuId());
         // 校验菜单（自己）
-        checkResource(sysMenu.getParentId(), sysMenu.getMenuName(), sysMenu.getMenuId());
+        checkResource(sysMenuUpdateCmd.getParentId(), sysMenuUpdateCmd.getMenuName(), sysMenuUpdateCmd.getMenuId());
         // 更新到数据库
-        initMenuProperty(sysMenu);
-        return this.baseMapper.updateById(sysMenu);
+        // 菜单为按钮类型时，无需 component、icon、path 属性，进行置空
+        if (MenuTypeEnum.BUTTON.getType().equals(sysMenuUpdateCmd.getMenuType())) {
+            sysMenuUpdateCmd.setComponent("");
+            sysMenuUpdateCmd.setIcon("");
+            sysMenuUpdateCmd.setPath("");
+        }
+
+        return sysMenuMapper.updateById(SysMenuConvert.INSTANCE.convert(sysMenuUpdateCmd));
     }
 
     @Override
     public Integer removeMenuByMenuId(Long menuId) {
         // 校验是否还有子菜单
-        if (this.baseMapper.selectCountByParentId(menuId) > 0) {
+        if (sysMenuMapper.selectCountByParentId(menuId) > 0) {
             throw new ServiceException(ResultCode.MENU_EXISTS_CHILDREN);
         }
         // 校验删除的菜单是否存在
-        if (this.baseMapper.selectById(menuId) == null) {
+        if (sysMenuMapper.selectById(menuId) == null) {
             throw new ServiceException(ResultCode.MENU_NOT_EXISTS);
         }
         // 删除授予给角色的权限
         sysRoleMenuMapper.deleteRoleMenuByMenuId(menuId);
         // 标记删除
-        return this.baseMapper.deleteById(menuId);
-
+        return sysMenuMapper.deleteById(menuId);
     }
 
     @Override
-    public List<SysMenu> listSimpleRoles() {
-        return this.baseMapper.selectListSimpleMenus(StatusEnum.ENABLE.getStatus());
+    public List<SysMenuDTO> listSimpleRoles() {
+        return SysMenuConvert.INSTANCE.convertToDTO(sysMenuMapper.selectListSimpleMenus(StatusEnum.ENABLE.getStatus()));
     }
 
-    /**
-     * 初始化菜单的通用属性。
-     * <p>
-     * 例如说，只有目录或者菜单类型的菜单，才设置 icon
-     *
-     * @param sysMenu 菜单
-     */
-    private void initMenuProperty(SysMenu sysMenu) {
-        // 菜单为按钮类型时，无需 component、icon、path 属性，进行置空
-        if (MenuTypeEnum.BUTTON.getType().equals(sysMenu.getMenuType())) {
-            sysMenu.setComponent("");
-            sysMenu.setIcon("");
-            sysMenu.setPath("");
-        }
+    @Override
+    public List<SysMenuDTO> listSysMenus(SysMenuListQry sysMenuListQry) {
+        return SysMenuConvert.INSTANCE.convertToDTO(sysMenuMapper.selectListMenus(sysMenuListQry));
     }
+
+    @Override
+    public SysMenuDTO getMenuById(Long id) {
+        return SysMenuConvert.INSTANCE.convert(sysMenuMapper.selectById(id));
+    }
+
 
     /**
      * 校验菜单是否合法
@@ -115,7 +126,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * @param menuId   菜单编号
      */
     private void checkResource(Long parentId, String menuName, Long menuId) {
-        SysMenu sysMenu = this.baseMapper.selectMenuByParentIdAndName(parentId, menuName);
+        SysMenu sysMenu = sysMenuMapper.selectMenuByParentIdAndName(parentId, menuName);
         if (sysMenu == null) {
             return;
         }
@@ -146,7 +157,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         if (parentId.equals(childId)) {
             throw new ServiceException(ResultCode.MENU_PARENT_ERROR);
         }
-        SysMenu sysMenu = this.baseMapper.selectById(parentId);
+        SysMenu sysMenu = sysMenuMapper.selectById(parentId);
         // 父菜单不存在
         if (sysMenu == null) {
             throw new ServiceException(ResultCode.MENU_PARENT_NOT_EXISTS);

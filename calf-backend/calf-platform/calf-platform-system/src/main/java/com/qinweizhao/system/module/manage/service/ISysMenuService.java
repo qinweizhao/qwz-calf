@@ -1,7 +1,9 @@
 package com.qinweizhao.system.module.manage.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.qinweizhao.api.system.dto.SysMenuDTO;
+import com.qinweizhao.api.system.dto.command.SysMenuSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysMenuUpdateCmd;
+import com.qinweizhao.api.system.dto.query.SysMenuListQry;
 import com.qinweizhao.system.module.manage.entity.SysMenu;
 
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-10
  */
-public interface ISysMenuService extends IService<SysMenu> {
+public interface ISysMenuService  {
 
     /**
      * 树形菜单
@@ -25,17 +27,17 @@ public interface ISysMenuService extends IService<SysMenu> {
 
     /**
      * 保存
-     * @param sysMenu sysMenu
+     * @param sysMenuSaveCmd sysMenuSaveCmd
      * @return Integer
      */
-    Integer saveMenu(SysMenu sysMenu);
+    Integer saveMenu(SysMenuSaveCmd sysMenuSaveCmd);
 
     /**
      * 更新
-     * @param sysMenu sysMenu
+     * @param sysMenuUpdateCmd sysMenuUpdateQry
      * @return Integer
      */
-    Integer updateMenu(SysMenu sysMenu);
+    Integer updateMenu(SysMenuUpdateCmd sysMenuUpdateCmd);
 
     /**
      * 移除
@@ -48,6 +50,10 @@ public interface ISysMenuService extends IService<SysMenu> {
      * 开启的角色列表
      * @return List<SysMenu>
      */
-    List<SysMenu> listSimpleRoles();
+    List<SysMenuDTO> listSimpleRoles();
+
+    List<SysMenuDTO> listSysMenus(SysMenuListQry sysMenuListQry);
+
+    SysMenuDTO getMenuById(Long id);
 
 }

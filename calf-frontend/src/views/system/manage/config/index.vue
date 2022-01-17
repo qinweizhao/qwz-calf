@@ -1,21 +1,44 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
       <el-form-item label="参数名称" prop="name">
-        <el-input v-model="queryParams.name" placeholder="请输入参数名称" clearable size="small" style="width: 240px"
-                  @keyup.enter.native="handleQuery"/>
+        <el-input
+          v-model="queryParams.name"
+          placeholder="请输入参数名称"
+          clearable
+          size="small"
+          style="width: 240px"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item label="参数键名" prop="key">
-        <el-input v-model="queryParams.key" placeholder="请输入参数键名" clearable size="small" style="width: 240px"
-                  @keyup.enter.native="handleQuery"/>
+        <el-input
+          v-model="queryParams.key"
+          placeholder="请输入参数键名"
+          clearable
+          size="small"
+          style="width: 240px"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item label="系统内置" prop="type">
-        <el-select v-model="queryParams.type" placeholder="系统内置" clearable size="small">
+        <el-select
+          v-model="queryParams.type"
+          placeholder="系统内置"
+          clearable
+          size="small"
+        >
           <el-option
-              v-for="dict in this.getDictDatas(DICT_TYPE.SYS_CONFIG_TYPE)"
-              :key="parseInt(dict.value)"
-              :label="dict.label"
-              :value="parseInt(dict.value)"
+            v-for="dict in this.getDictDatas(DICT_TYPE.SYS_CONFIG_TYPE)"
+            :key="parseInt(dict.value)"
+            :label="dict.label"
+            :value="parseInt(dict.value)"
           />
         </el-select>
       </el-form-item>
@@ -32,8 +55,16 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button
+          type="cyan"
+          icon="el-icon-search"
+          size="small"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="small" @click="resetQuery"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
 
@@ -42,56 +73,105 @@
         <el-button
           type="primary"
           icon="el-icon-plus"
-          size="mini"
+          size="small"
           @click="handleAdd"
           v-hasPermi="['infra:config:create']"
-        >新增</el-button>
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
         <el-button
           type="warning"
           icon="el-icon-download"
-          size="mini"
+          size="small"
           @click="handleExport"
           v-hasPermi="['infra:config:export']"
-        >导出</el-button>
+          >导出</el-button
+        >
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :showSearch.sync="showSearch"
+        @queryTable="getList"
+      ></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="configList">
       <el-table-column label="参数主键" align="center" prop="configId" />
       <el-table-column label="参数分组" align="center" prop="configGroup" />
-      <el-table-column label="参数名称" align="center" prop="configName" :show-overflow-tooltip="true" />
-      <el-table-column label="参数键名" align="center" prop="configKey" :show-overflow-tooltip="true" />
+      <el-table-column
+        label="参数名称"
+        align="center"
+        prop="configName"
+        :show-overflow-tooltip="true"
+      />
+      <el-table-column
+        label="参数键名"
+        align="center"
+        prop="configKey"
+        :show-overflow-tooltip="true"
+      />
       <el-table-column label="参数键值" align="center" prop="configValue" />
       <el-table-column label="系统内置" align="center" prop="configType">
         <template slot-scope="scope">
-          <span>{{ getDictDataLabel(DICT_TYPE.SYS_CONFIG_TYPE, scope.row.configType) }}</span>
+          <span>{{
+            getDictDataLabel(DICT_TYPE.SYS_CONFIG_TYPE, scope.row.configType)
+          }}</span>
         </template>
       </el-table-column>
       <el-table-column label="是否敏感" align="center" prop="sensitive">
         <template slot-scope="scope">
-          <span>{{ scope.row.sensitive ? '是' : '否' }}</span>
+          <span>{{ scope.row.sensitive ? "是" : "否" }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column
+        label="备注"
+        align="center"
+        prop="remark"
+        :show-overflow-tooltip="true"
+      />
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column
+        label="操作"
+        align="center"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-                     v-hasPermi="['infra:config:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['infra:config:delete']">删除</el-button>
+          <!-- 修改 -->
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['infra:config:update']"
+          ></el-button>
+          <!-- 删除 -->
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermi="['infra:config:delete']"
+          ></el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="queryParams.current" :limit.sync="queryParams.size" @pagination="getList"/>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.current"
+      :limit.sync="queryParams.size"
+      @pagination="getList"
+    />
 
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
@@ -115,7 +195,11 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+          <el-input
+            v-model="form.remark"
+            type="textarea"
+            placeholder="请输入内容"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -127,7 +211,14 @@
 </template>
 
 <script>
-import { listConfig, getConfig, delConfig, addConfig, updateConfig, exportConfig } from "@/api/system/manage/config";
+import {
+  listConfig,
+  getConfig,
+  delConfig,
+  addConfig,
+  updateConfig,
+  exportConfig,
+} from "@/api/system/manage/config";
 
 export default {
   name: "Config",
@@ -155,25 +246,23 @@ export default {
         size: 10,
         name: undefined,
         key: undefined,
-        type: undefined
+        type: undefined,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         group: [
-          { required: true, message: "参数分组不能为空", trigger: "blur" }
+          { required: true, message: "参数分组不能为空", trigger: "blur" },
         ],
         name: [
-          { required: true, message: "参数名称不能为空", trigger: "blur" }
+          { required: true, message: "参数名称不能为空", trigger: "blur" },
         ],
-        key: [
-          { required: true, message: "参数键名不能为空", trigger: "blur" }
-        ],
+        key: [{ required: true, message: "参数键名不能为空", trigger: "blur" }],
         value: [
-          { required: true, message: "参数键值不能为空", trigger: "blur" }
-        ]
-      }
+          { required: true, message: "参数键值不能为空", trigger: "blur" },
+        ],
+      },
     };
   },
   created() {
@@ -183,15 +272,16 @@ export default {
     /** 查询参数列表 */
     getList() {
       this.loading = true;
-      listConfig(this.addDateRange(this.queryParams, [
-        this.dateRange[0] ? this.dateRange[0] + ' 00:00:00' : undefined,
-        this.dateRange[1] ? this.dateRange[1] + ' 23:59:59' : undefined,
-      ])).then(response => {
-          this.configList = response.data.records;
-          this.total = response.data.total;
-          this.loading = false;
-        }
-      );
+      listConfig(
+        this.addDateRange(this.queryParams, [
+          this.dateRange[0] ? this.dateRange[0] + " 00:00:00" : undefined,
+          this.dateRange[1] ? this.dateRange[1] + " 23:59:59" : undefined,
+        ])
+      ).then((response) => {
+        this.configList = response.data.records;
+        this.total = response.data.total;
+        this.loading = false;
+      });
     },
     // 参数系统内置字典翻译
     typeFormat(row, column) {
@@ -209,7 +299,7 @@ export default {
         name: undefined,
         key: undefined,
         value: undefined,
-        remark: undefined
+        remark: undefined,
       };
       this.resetForm("form");
     },
@@ -233,25 +323,25 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id || this.ids
-      getConfig(id).then(response => {
+      const id = row.id || this.ids;
+      getConfig(id).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改参数";
       });
     },
     /** 提交按钮 */
-    submitForm: function() {
-      this.$refs["form"].validate(valid => {
+    submitForm: function () {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (this.form.id !== undefined) {
-            updateConfig(this.form).then(response => {
+            updateConfig(this.form).then((response) => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addConfig(this.form).then(response => {
+            addConfig(this.form).then((response) => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -264,32 +354,36 @@ export default {
     handleDelete(row) {
       const ids = row.id || this.ids;
       this.$confirm('是否确认删除参数编号为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(function () {
           return delConfig(ids);
-        }).then(() => {
+        })
+        .then(() => {
           this.getList();
           this.msgSuccess("删除成功");
-        })
+        });
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.addDateRange(this.queryParams, [
-        this.dateRange[0] ? this.dateRange[0] + ' 00:00:00' : undefined,
-        this.dateRange[1] ? this.dateRange[1] + ' 23:59:59' : undefined,
+        this.dateRange[0] ? this.dateRange[0] + " 00:00:00" : undefined,
+        this.dateRange[1] ? this.dateRange[1] + " 23:59:59" : undefined,
       ]);
-      this.$confirm('是否确认导出所有参数数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
+      this.$confirm("是否确认导出所有参数数据项?", "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(function () {
           return exportConfig(queryParams);
-        }).then(response => {
-          this.downloadExcel(response, '参数配置.xls');
         })
+        .then((response) => {
+          this.downloadExcel(response, "参数配置.xls");
+        });
     },
-  }
+  },
 };
 </script>

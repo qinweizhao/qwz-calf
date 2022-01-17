@@ -15,21 +15,6 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select
-          v-model="queryParams.status"
-          placeholder="菜单状态"
-          clearable
-          size="small"
-        >
-          <el-option
-            v-for="dict in statusDictDatas"
-            :key="parseInt(dict.value)"
-            :label="dict.label"
-            :value="parseInt(dict.value)"
-          />
-        </el-select>
-      </el-form-item>
       <el-form-item>
         <el-button
           type="cyan"

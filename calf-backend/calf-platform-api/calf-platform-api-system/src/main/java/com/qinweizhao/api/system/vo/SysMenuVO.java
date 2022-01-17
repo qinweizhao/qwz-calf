@@ -1,9 +1,10 @@
-package com.qinweizhao.api.system.vo.resp;
+package com.qinweizhao.api.system.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qinweizhao.api.system.dto.SysMenuDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -60,7 +61,7 @@ public class SysMenuVO implements Serializable {
     private Integer deleted;
 
     @ApiModelProperty("状态：1正常、0停用")
-    private String status;
+    private Integer status;
 
     @ApiModelProperty("创建者")
     private String createBy;
@@ -69,11 +70,13 @@ public class SysMenuVO implements Serializable {
     private String updateBy;
 
     @ApiModelProperty("创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     @ApiModelProperty("更新时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     @TableField(exist = false)
-    private List<SysMenuDTO> children;
+    private List<SysMenuVO> children;
 }

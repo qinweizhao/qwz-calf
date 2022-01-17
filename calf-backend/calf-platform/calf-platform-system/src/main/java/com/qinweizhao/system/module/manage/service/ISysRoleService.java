@@ -2,7 +2,7 @@ package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.qinweizhao.api.system.vo.req.SysRolePageReqVO;
+import com.qinweizhao.api.system.dto.query.SysRolePageQry;
 import com.qinweizhao.api.system.dto.SysRoleDTO;
 import com.qinweizhao.system.module.manage.entity.SysRole;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-10
  */
-public interface ISysRoleService extends IService<SysRole> {
+public interface ISysRoleService {
 
 
     /**
@@ -56,10 +56,10 @@ public interface ISysRoleService extends IService<SysRole> {
 
     /**
      * 角色分页
-     * @param sysRolePageReqVO sysRolePageQry
+     * @param sysRolePageQry sysRolePageQry
      * @return IPage<SysRoleVO>
      */
-    IPage<SysRoleDTO> pageRoles(SysRolePageReqVO sysRolePageReqVO);
+    IPage<SysRoleDTO> pageRoles(SysRolePageQry sysRolePageQry);
 
     /**
      * 获取角色拥有的菜单

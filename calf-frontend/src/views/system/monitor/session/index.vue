@@ -8,8 +8,8 @@
         <el-input v-model="queryParams.username" placeholder="请输入用户名称" clearable size="small" @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item>
-        <el-button type="cyan" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="cyan" icon="el-icon-search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
 
     </el-form>
@@ -26,7 +26,7 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleForceLogout(scope.row)"
+          <el-button size="small" type="primary" icon="el-icon-delete" @click="handleForceLogout(scope.row)"
             v-hasPermi="['system:user-session:delete']">强退</el-button>
         </template>
       </el-table-column>
