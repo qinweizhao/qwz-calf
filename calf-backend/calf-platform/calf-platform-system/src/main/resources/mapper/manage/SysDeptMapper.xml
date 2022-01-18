@@ -49,5 +49,19 @@
         </where>
     </select>
 
+    <select id="selectDeptByParentIdAndName" resultType="com.qinweizhao.system.module.manage.entity.SysDept">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_dept
+        WHERE parent_id = #{parentId} AND dept_name=#{deptName}
+    </select>
+
+    <select id="selectCountByParentId" resultType="java.lang.Integer">
+        SELECT
+        COUNT(0)
+        FROM sys_dept
+        WHERE parent_id = #{parentId}
+    </select>
+
 
 </mapper>

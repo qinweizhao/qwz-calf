@@ -36,6 +36,11 @@ public interface ISysDeptService{
 
     List<SysDeptDTO> listDepts(SysDeptListQry sysDeptListQry);
 
+    /**
+     * 保存部门
+     * @param sysDeptSaveCmd sysDeptSaveCmd
+     * @return int
+     */
     int saveDept(SysDeptSaveCmd sysDeptSaveCmd);
 
     int updateDeptById(SysDeptUpdateCmd sysDeptUpdateCmd);

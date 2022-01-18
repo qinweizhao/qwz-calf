@@ -3,14 +3,13 @@ package com.qinweizhao.system.module.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.qinweizhao.common.core.response.Result;
-import com.qinweizhao.system.module.manage.service.ISysDictDataService;
 import com.qinweizhao.system.module.manage.entity.SysDictData;
+import com.qinweizhao.system.module.manage.service.ISysDictDataService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class SysDictDataController {
     }
 
     @GetMapping("/list")
-    @ApiOperation(value = "获得全部字典数据列表", notes = "一般用于管理后台缓存字典数据在本地")
+    @ApiOperation(value = "获得全部字典数据列表")
     public Result<List<SysDictData>> list() {
         return Result.success(sysDictDataService.list());
     }
@@ -68,9 +67,4 @@ public class SysDictDataController {
         return Result.success(sysDictDataService.getById(id));
     }
 
-    @GetMapping("/export")
-    @ApiOperation("导出字典数据")
-    public void export(HttpServletResponse response, @Valid SysDictData sysDictData) {
-
-    }
 }

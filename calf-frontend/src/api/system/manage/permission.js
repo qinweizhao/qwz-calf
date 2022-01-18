@@ -20,7 +20,7 @@ export function updateRolePermission(data) {
 // 查询用户拥有的角色数组
 export function listUserRoles(userId) {
   return request({
-    url: '/system/manage/user/list_user_roles?userId=' + userId,
+    url: '/system/manage/user/list-user-roles?userId=' + userId,
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function listUserRoles(userId) {
 // 赋予用户角色
 export function assignUserRole(data) {
   return request({
-    url: '/system/manage/user/update_user_role',
+    url: '/system/manage/user/update-user-role',
     method: 'post',
     data: data
   })

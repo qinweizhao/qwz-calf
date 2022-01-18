@@ -6,8 +6,11 @@ import com.qinweizhao.api.system.dto.SysPostDTO;
 import com.qinweizhao.api.system.dto.command.SysPostSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysPostUpdateCmd;
 import com.qinweizhao.api.system.dto.query.SysPostPageQry;
+import com.qinweizhao.common.core.exception.ServiceException;
+import com.qinweizhao.common.core.response.ResultCode;
 import com.qinweizhao.common.core.util.PageUtil;
 import com.qinweizhao.system.module.manage.convert.SysPostConvert;
+import com.qinweizhao.system.module.manage.entity.SysPost;
 import com.qinweizhao.system.module.manage.mapper.SysPostMapper;
 import com.qinweizhao.system.module.manage.service.ISysPostService;
 import org.springframework.stereotype.Service;
@@ -36,17 +39,82 @@ public class SysPostServiceImpl implements ISysPostService {
 
     @Override
     public int savePost(SysPostSaveCmd sysPostSaveCmd) {
+        // 校验正确性
+        this.checkCreateOrUpdate(null, sysPostSaveCmd.getPostName(), sysPostSaveCmd.getPostCode());
+        //TODO
         return 0;
+    }
+
+    /**
+     * 校验正确性
+     *
+     * @param postId   postId
+     * @param postName postName
+     * @param postCode postCode
+     */
+    private void checkCreateOrUpdate(Long postId, String postName, String postCode) {
+        // 校验自己存在
+        checkPostExists(postId);
+        // 校验岗位名的唯一性
+        checkPostNameUnique(postId, postName);
+        // 校验岗位编码的唯一性
+        checkPostCodeUnique(postId, postCode);
+    }
+
+
+    private void checkPostExists(Long postId) {
+        if (postId == null) {
+            return;
+        }
+        SysPost post = sysPostMapper.selectById(postId);
+        if (post == null) {
+            throw new ServiceException(ResultCode.POST_NOT_FOUND);
+        }
+    }
+
+    private void checkPostNameUnique(Long postId, String postName) {
+        SysPost post = sysPostMapper.selectPostByPostName(postName);
+        if (post == null) {
+            return;
+        }
+        // 如果 id 为空，说明不用比较是否为相同 id 的岗位
+        if (postId == null) {
+            throw new ServiceException(ResultCode.POST_NAME_DUPLICATE);
+        }
+        if (!post.getPostId().equals(postId)) {
+            throw new ServiceException(ResultCode.POST_NAME_DUPLICATE);
+        }
+    }
+
+    private void checkPostCodeUnique(Long id, String postCode) {
+        SysPost post = sysPostMapper.selectPostByPostCode(postCode);
+        if (post == null) {
+            return;
+        }
+        // 如果 id 为空，说明不用比较是否为相同 id 的岗位
+        if (id == null) {
+            throw new ServiceException(ResultCode.POST_CODE_DUPLICATE);
+        }
+        if (!post.getPostId().equals(id)) {
+            throw new ServiceException(ResultCode.POST_CODE_DUPLICATE);
+        }
     }
 
     @Override
     public int updatePostById(SysPostUpdateCmd sysPostUpdateCmd) {
-        return 0;
+        // 校验正确性
+        this.checkCreateOrUpdate(sysPostUpdateCmd.getPostId(), sysPostUpdateCmd.getPostName(), sysPostUpdateCmd.getPostCode());
+        // 更新岗位
+        SysPost sysPost = SysPostConvert.INSTANCE.convert(sysPostUpdateCmd);
+        return sysPostMapper.updateById(sysPost);
     }
 
     @Override
     public int removePostById(Long postId) {
-        return 0;
+        // 校验是否存在
+        this.checkPostExists(postId);
+        // 删除部门
+        return sysPostMapper.deleteById(postId);
     }
 
     @Override

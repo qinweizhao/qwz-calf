@@ -39,4 +39,19 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
      */
     List<SysDept> selectListDepts(@Param("query") SysDeptListQry sysDeptListQry);
 
+    /**
+     * 通过父 Id 和部门名称查询部门
+     * @param parentId parentId
+     * @param deptName deptName
+     * @return SysDept
+     */
+    SysDept selectDeptByParentIdAndName( @Param("parentId") Long parentId, @Param("deptName") String deptName);
+
+    /**
+     * 统计下属部门个数
+     * @param deptId deptId
+     * @return int
+     */
+    int selectCountByParentId(Long deptId);
+
 }

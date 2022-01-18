@@ -52,8 +52,18 @@ public interface ISysMenuService  {
      */
     List<SysMenuDTO> listSimpleRoles();
 
+    /**
+     * 获取菜单列表
+     * @param sysMenuListQry sysMenuListQry
+     * @return List<SysMenuDTO>
+     */
     List<SysMenuDTO> listSysMenus(SysMenuListQry sysMenuListQry);
 
+    /**
+     * 通过 Id 获取菜单
+     * @param id id
+     * @return SysMenuDTO
+     */
     SysMenuDTO getMenuById(Long id);
 
 }

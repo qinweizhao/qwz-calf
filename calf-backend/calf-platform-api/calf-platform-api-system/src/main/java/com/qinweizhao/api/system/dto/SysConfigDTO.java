@@ -31,7 +31,7 @@ public class SysConfigDTO implements Serializable {
     private Integer configId;
 
     @ApiModelProperty("参数分组")
-    private String configGroup;
+    private String group;
 
     @ApiModelProperty("参数类型")
     private Integer configType;
@@ -40,10 +40,10 @@ public class SysConfigDTO implements Serializable {
     private String configName;
 
     @ApiModelProperty("参数键名")
-    private String configKey;
+    private String key;
 
     @ApiModelProperty("参数键值")
-    private String configValue;
+    private String value;
 
     @ApiModelProperty("是否敏感")
     private Boolean sensitive;

@@ -35,5 +35,17 @@
             </if>
         </where>
     </select>
+    <select id="selectPostByPostName" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_post
+        WHERE post_name=#{postName}
+    </select>
+    <select id="selectPostByPostCode" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_post
+        WHERE post_code=#{postCode}
+    </select>
 
 </mapper>

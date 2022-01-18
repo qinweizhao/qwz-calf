@@ -71,7 +71,7 @@ public class SysUserController extends BaseController {
         return Result.success(sysUserVO);
     }
 
-    @GetMapping("/list_user_roles")
+    @GetMapping("/list-user-roles")
     @ApiOperation(value = "用户详情")
     public Result<List<Long>> listUserRoles(Long userId) {
         return Result.success(sysUserService.listRoleIdsByUserId(userId));

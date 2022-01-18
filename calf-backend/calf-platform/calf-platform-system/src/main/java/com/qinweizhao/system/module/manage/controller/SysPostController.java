@@ -2,28 +2,22 @@ package com.qinweizhao.system.module.manage.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.api.system.dto.SysPostDTO;
 import com.qinweizhao.api.system.dto.command.SysPostSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysPostUpdateCmd;
 import com.qinweizhao.api.system.dto.query.SysPostPageQry;
-import com.qinweizhao.api.system.vo.SysPostRespVO;
 import com.qinweizhao.api.system.vo.SysPostVO;
 import com.qinweizhao.common.core.response.Result;
-import com.qinweizhao.common.core.util.ExcelUtils;
 import com.qinweizhao.system.module.manage.convert.SysPostConvert;
 import com.qinweizhao.system.module.manage.entity.SysPost;
 import com.qinweizhao.system.module.manage.service.ISysPostService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -80,11 +74,9 @@ public class SysPostController {
     @ApiOperation("获得岗位信息")
     @ApiImplicitParam(name = "id", value = "岗位编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("hasAuthority('system:post:query')")
-    public Result<SysPost> get(@RequestParam("postId") Long postId) {
-        SysPostDTO postById = sysPostService.getPostById(postId);
-        return Result.success();
+    public Result<SysPostVO> get(@RequestParam("postId") Long postId) {
+        return Result.success(SysPostConvert.INSTANCE.convert(sysPostService.getPostById(postId)));
     }
-
 
 
 }

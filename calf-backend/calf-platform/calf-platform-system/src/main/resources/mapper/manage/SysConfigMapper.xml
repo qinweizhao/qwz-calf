@@ -5,11 +5,11 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.manage.entity.SysConfig">
         <id column="config_id" property="configId"/>
-        <result column="config_group" property="configGroup"/>
+        <result column="group" property="group"/>
         <result column="config_type" property="configType"/>
         <result column="config_name" property="configName"/>
-        <result column="config_key" property="configKey"/>
-        <result column="config_value" property="configValue"/>
+        <result column="key" property="key"/>
+        <result column="value" property="value"/>
         <result column="sensitive" property="sensitive"/>
         <result column="remark" property="remark"/>
         <result column="deleted" property="deleted"/>
@@ -26,8 +26,9 @@
     </sql>
 
     <select id="selectPageConfigs" resultType="com.qinweizhao.system.module.manage.entity.SysConfig">
-        select *
-        from sys_config
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_config
     </select>
 
 </mapper>

@@ -21,7 +21,36 @@ import java.util.List;
 @Mapper
 public interface SysPostMapper extends BaseMapper<SysPost> {
 
+    /**
+     * 通过岗位 Id 集合查询岗位集合
+     *
+     * @param postIds postIds
+     * @return List<SysPost>
+     */
     List<SysPost> selectListPosts(List<Long> postIds);
 
-    IPage<SysPost> selectPagePosts(Page<Object> page,@Param("query") SysPostPageQry sysPostPageQry);
+    /**
+     * 查询岗位分页数据
+     *
+     * @param page           page
+     * @param sysPostPageQry sysPostPageQry
+     * @return IPage<SysPost>
+     */
+    IPage<SysPost> selectPagePosts(Page<Object> page, @Param("query") SysPostPageQry sysPostPageQry);
+
+    /**
+     * 通过岗位名称查询岗位
+     *
+     * @param postName postName
+     * @return SysPost
+     */
+    SysPost selectPostByPostName(String postName);
+
+    /**
+     * 通过岗位编码查询岗位
+     *
+     * @param postCode postCode
+     * @return SysPost
+     */
+    SysPost selectPostByPostCode(String postCode);
 }
