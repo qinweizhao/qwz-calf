@@ -1,9 +1,16 @@
 package com.qinweizhao.system.module.manage.convert;
 
-import com.qinweizhao.api.system.dto.SysDeptDTO;
-import com.qinweizhao.system.module.manage.entity.SysDept;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.SysPostDTO;
+import com.qinweizhao.api.system.dto.command.SysPostSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysPostUpdateCmd;
+import com.qinweizhao.api.system.vo.SysPostVO;
+import com.qinweizhao.system.module.manage.entity.SysPost;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * <p>
@@ -22,10 +29,72 @@ public interface SysPostConvert {
     /**
      * DO 转 DTO
      *
-     * @param sysDept sysDept
-     * @return SysDeptDTO
+     * @param SysPost SysPost
+     * @return SysPostDTO
      */
-    SysDeptDTO convert(SysDept sysDept);
+    SysPostDTO convert(SysPost SysPost);
+
+    /**
+     * DO 转 DTO
+     *
+     * @param SysPost SysPost
+     * @return SysPostDTO
+     */
+    SysPostVO convert(SysPostDTO SysPost);
+    /**
+     * DO 转 DTO
+     *
+     * @param SysPostSaveCmd SysPostSaveCmd
+     * @return SysPostDTO
+     */
+    SysPost convert(SysPostSaveCmd SysPostSaveCmd);
+
+    /**
+     * DO 转 DTO
+     *
+     * @param SysPostUpdateCmd SysPostUpdateCmd
+     * @return SysPostDTO
+     */
+    SysPost convert(SysPostUpdateCmd SysPostUpdateCmd);
 
 
+    /**
+     * DO 转 DTO
+     *
+     * @param SysPost SysPost
+     * @return SysPostDTO
+     */
+    Page<SysPostVO> convertToVO(IPage<SysPostDTO> SysPost);
+
+
+    /**
+     * DO 转 DTO
+     *
+     * @param SysPost SysPost
+     * @return SysPostDTO
+     */
+    List<SysPostVO> convertToVO(List<SysPostDTO> SysPost);
+
+    /**
+     * DO 转 VO
+     *
+     * @param deptList deptList
+     * @return SysMenuVO
+     */
+    List<SysPostVO> convert(List<SysPost> deptList);
+
+
+    /**
+     * DO 转 DTO
+     * @param selectListDepts selectListDepts
+     * @return List<SysPostDTO>
+     */
+    Page<SysPostDTO> convertToDTO(IPage<SysPost> selectListDepts);
+
+    /**
+     * DO 转 DTO
+     * @param selectListDepts selectListDepts
+     * @return List<SysPostDTO>
+     */
+    List<SysPostDTO> convertToDTO(List<SysPost> selectListDepts);
 }

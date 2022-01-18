@@ -31,4 +31,23 @@
         WHERE status = #{status}
     </select>
 
+    <select id="selectDeptNameByUserId" resultType="java.lang.String">
+        SELECT dept_name
+        FROM sys_dept d
+                 LEFT JOIN sys_user u ON d.dept_id = u.dept_id
+        WHERE u.user_id = #{userId}
+    </select>
+
+    <select id="selectListDepts" resultType="com.qinweizhao.system.module.manage.entity.SysDept">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_dept
+        <where>
+            <if test="query.deptName != null and query.deptName != ''">
+                dept_name like concat('%', #{query.deptName}, '%')
+            </if>
+        </where>
+    </select>
+
+
 </mapper>

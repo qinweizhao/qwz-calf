@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.qinweizhao.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -22,7 +24,8 @@ import java.util.Date;
 @Data
 @TableName("sys_dept")
 @ApiModel(value = "SysDept对象", description = "部门表")
-public class SysDept implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class SysDept extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -44,25 +47,5 @@ public class SysDept implements Serializable {
 
     @ApiModelProperty("排序")
     private Integer sort;
-
-    @TableLogic
-    @ApiModelProperty("删除：1存在、0删除")
-    private Integer deleted;
-
-    @ApiModelProperty("状态：1启用、0禁用")
-    private Integer status;
-
-    @ApiModelProperty("创建者")
-    private String createBy;
-
-    @ApiModelProperty("创建时间")
-    private Date createTime;
-
-    @ApiModelProperty("更新者")
-    private String updateBy;
-
-    @ApiModelProperty("更新时间")
-    private Date updateTime;
-
 
 }

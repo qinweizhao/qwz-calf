@@ -2,6 +2,8 @@ package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.qinweizhao.api.system.dto.command.SysRoleSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysRoleUpdateCmd;
 import com.qinweizhao.api.system.dto.query.SysRolePageQry;
 import com.qinweizhao.api.system.dto.SysRoleDTO;
 import com.qinweizhao.system.module.manage.entity.SysRole;
@@ -29,17 +31,17 @@ public interface ISysRoleService {
 
     /**
      * 保存用户
-     * @param sysRoleDTO sysRoleDTO
+     * @param sysRoleSaveCmd sysRoleSaveCmd
      * @return int
      */
-    int saveRole(SysRoleDTO sysRoleDTO);
+    int saveRole(SysRoleSaveCmd sysRoleSaveCmd);
 
     /**
      * 通过 Id 更新角色
-     * @param sysRoleDTO sysRoleDTO
+     * @param sysRoleUpdateCmd sysRoleUpdateCmd
      * @return int
      */
-    int updateSysRoleById(SysRoleDTO sysRoleDTO);
+    int updateSysRoleById(SysRoleUpdateCmd sysRoleUpdateCmd);
 
     /**
      * 删除角色
@@ -52,7 +54,7 @@ public interface ISysRoleService {
      * 获得角色列表，只要开启状态的
      * @return List<SysRole>
      */
-    List<SysRole> listSimpleRoles();
+    List<SysRoleDTO> listSimpleRoles();
 
     /**
      * 角色分页

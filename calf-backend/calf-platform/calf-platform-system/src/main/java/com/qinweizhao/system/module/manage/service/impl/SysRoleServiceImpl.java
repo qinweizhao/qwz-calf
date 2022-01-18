@@ -4,9 +4,10 @@ package com.qinweizhao.system.module.manage.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qinweizhao.api.system.dto.query.SysRolePageQry;
 import com.qinweizhao.api.system.dto.SysRoleDTO;
+import com.qinweizhao.api.system.dto.command.SysRoleSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysRoleUpdateCmd;
+import com.qinweizhao.api.system.dto.query.SysRolePageQry;
 import com.qinweizhao.common.core.constant.CalfConstants;
 import com.qinweizhao.common.core.enums.StatusEnum;
 import com.qinweizhao.common.core.exception.ServiceException;
@@ -37,11 +38,11 @@ import java.util.List;
  * @since 2021-12-07
  */
 @Service
-public class SysRoleServiceImpl  implements ISysRoleService {
+public class SysRoleServiceImpl implements ISysRoleService {
 
     @Resource
     private SysRoleMapper sysRoleMapper;
-    
+
     @Resource
     private SysUserRoleMapper sysUserRoleMapper;
 
@@ -58,21 +59,21 @@ public class SysRoleServiceImpl  implements ISysRoleService {
     }
 
     @Override
-    public int saveRole(SysRoleDTO sysRoleDTO) {
+    public int saveRole(SysRoleSaveCmd sysRoleSaveCmd) {
         // 校验角色
-        this.checkDuplicateRole(sysRoleDTO.getRoleName(), sysRoleDTO.getRoleKey(), null);
+        this.checkDuplicateRole(sysRoleSaveCmd.getRoleName(), sysRoleSaveCmd.getRoleKey(), null);
         // 插入到数据库
-        SysRole sysRole = SysRoleConvert.INSTANCE.convert(sysRoleDTO);
+        SysRole sysRole = SysRoleConvert.INSTANCE.convert(sysRoleSaveCmd);
         return sysRoleMapper.insert(sysRole);
     }
 
     @Override
-    public int updateSysRoleById(SysRoleDTO sysRoleDTO) {
+    public int updateSysRoleById(SysRoleUpdateCmd sysRoleUpdateCmd) {
         // 校验是否可以更新
-        this.checkUpdateRole(sysRoleDTO.getRoleId());
+        this.checkUpdateRole(sysRoleUpdateCmd.getRoleId());
         // 校验角色的唯一字段是否重复
-        checkDuplicateRole(sysRoleDTO.getRoleName(), sysRoleDTO.getRoleKey(), sysRoleDTO.getRoleId());
-        SysRole sysRole = SysRoleConvert.INSTANCE.convert(sysRoleDTO);
+        checkDuplicateRole(sysRoleUpdateCmd.getRoleName(), sysRoleUpdateCmd.getRoleKey(), sysRoleUpdateCmd.getRoleId());
+        SysRole sysRole = SysRoleConvert.INSTANCE.convert(sysRoleUpdateCmd);
         return sysRoleMapper.updateById(sysRole);
     }
 
@@ -91,8 +92,8 @@ public class SysRoleServiceImpl  implements ISysRoleService {
     }
 
     @Override
-    public List<SysRole> listSimpleRoles() {
-        return sysRoleMapper.selectListSimpleRoles(StatusEnum.ENABLE.getStatus());
+    public List<SysRoleDTO> listSimpleRoles() {
+        return SysRoleConvert.INSTANCE.convertToDTO(sysRoleMapper.selectListSimpleRoles(StatusEnum.ENABLE.getStatus()));
     }
 
     @Override

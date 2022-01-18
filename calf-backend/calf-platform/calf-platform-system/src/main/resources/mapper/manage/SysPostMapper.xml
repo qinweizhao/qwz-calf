@@ -16,8 +16,24 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_by,create_time,deleted,post_code,post_id,post_name,sort,status,update_by,update_time
+    </sql>
+
     <select id="selectListPosts" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
-        select * from sys_post
+        select <include refid="Base_Column_List"/> from sys_post
+    </select>
+
+    <select id="selectPagePosts" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_post
+        <where>
+            <if test="query.postName != null and query.postName != ''">
+                post_name like concat('%', #{query.postName}, '%')
+            </if>
+        </where>
     </select>
 
 </mapper>

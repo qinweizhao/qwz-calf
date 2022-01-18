@@ -1,10 +1,12 @@
 package com.qinweizhao.system.module.manage.controller;
 
 
+import com.qinweizhao.api.system.dto.command.SysDeptSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysDeptUpdateCmd;
+import com.qinweizhao.api.system.dto.query.SysDeptListQry;
 import com.qinweizhao.api.system.vo.SysDeptVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysDeptConvert;
-import com.qinweizhao.system.module.manage.entity.SysDept;
 import com.qinweizhao.system.module.manage.service.ISysDeptService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -35,15 +37,15 @@ public class SysDeptController {
     @ApiOperation("获取部门列表")
     @PreAuthorize("hasAuthority('system:dept:query')")
     @GetMapping("/list")
-    public Result<Object> list() {
-        return Result.success(sysDeptService.list());
+    public Result<List<SysDeptVO>> list(SysDeptListQry sysDeptListQry) {
+        return Result.success(SysDeptConvert.INSTANCE.convertToVO(sysDeptService.listDepts(sysDeptListQry)));
     }
 
 
-    @GetMapping("/list_simple")
+    @GetMapping("/list-simple")
     @ApiOperation(value = "获取岗位精简信息列表", notes = "启用状态")
     public Result<List<SysDeptVO>> getSimpleRoles() {
-        List<SysDeptVO> voList = SysDeptConvert.INSTANCE.convert(sysDeptService.listSimpleDepts());
+        List<SysDeptVO> voList = SysDeptConvert.INSTANCE.convertToVO(sysDeptService.listSimpleDepts());
         voList.sort(Comparator.comparing(SysDeptVO::getSort));
         return Result.success(voList);
     }
@@ -51,42 +53,31 @@ public class SysDeptController {
     @PostMapping("save")
     @ApiOperation("创建部门")
     @PreAuthorize("hasAuthority('system:dept:create')")
-    public Result<Boolean> createDept(@Valid @RequestBody SysDept sysDept) {
-        return Result.condition(sysDeptService.save(sysDept));
+    public Result<Boolean> createDept(@Valid @RequestBody SysDeptSaveCmd sysDeptSaveCmd) {
+        return Result.condition(sysDeptService.saveDept(sysDeptSaveCmd));
     }
 
     @PutMapping("update")
     @ApiOperation("更新部门")
     @PreAuthorize("hasAuthority('system:dept:update')")
-    public Result<Boolean> updateDept(@Valid @RequestBody SysDept sysDept) {
-        return Result.condition(sysDeptService.updateById(sysDept));
+    public Result<Boolean> updateDept(@Valid @RequestBody SysDeptUpdateCmd sysDeptUpdateCmd) {
+        return Result.condition(sysDeptService.updateDeptById(sysDeptUpdateCmd));
     }
 
-    @DeleteMapping("delete")
+    @DeleteMapping("remove")
     @ApiOperation("删除部门")
     @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("hasAuthority('system:dept:delete')")
-    public Result<Boolean> deleteDept(@RequestParam("id") Long id) {
-        return Result.success(sysDeptService.removeById(id));
-    }
-
-
-    @GetMapping("/list-all-simple")
-    @ApiOperation(value = "获取部门精简信息列表", notes = "只包含被开启的部门，主要用于前端的下拉选项")
-    public Result<List<SysDept>> getSimpleDepts() {
-        // 获得部门列表，只要开启状态的
-        List<SysDept> list = sysDeptService.list();
-        // 排序后，返回给前端
-        list.sort(Comparator.comparing(SysDept::getSort));
-        return Result.success(list);
+    public Result<Boolean> remove(@RequestParam("deptId") Long deptId) {
+        return Result.condition(sysDeptService.removeDeptById(deptId));
     }
 
     @GetMapping("/get")
     @ApiOperation("获得部门信息")
     @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("hasAuthority('system:dept:query')")
-    public Result<SysDept> getDept(@RequestParam("id") Long id) {
-        return Result.success(sysDeptService.getById(id));
+    public Result<SysDeptVO> getDept(@RequestParam("deptId") Long deptId) {
+        return Result.success(SysDeptConvert.INSTANCE.convert(sysDeptService.getDeptById(deptId)));
     }
 
 }

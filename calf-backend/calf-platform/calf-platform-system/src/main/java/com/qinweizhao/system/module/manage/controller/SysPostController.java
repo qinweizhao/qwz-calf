@@ -3,8 +3,15 @@ package com.qinweizhao.system.module.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.SysPostDTO;
+import com.qinweizhao.api.system.dto.command.SysPostSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysPostUpdateCmd;
+import com.qinweizhao.api.system.dto.query.SysPostPageQry;
+import com.qinweizhao.api.system.vo.SysPostRespVO;
+import com.qinweizhao.api.system.vo.SysPostVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.common.core.util.ExcelUtils;
+import com.qinweizhao.system.module.manage.convert.SysPostConvert;
 import com.qinweizhao.system.module.manage.entity.SysPost;
 import com.qinweizhao.system.module.manage.service.ISysPostService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -31,58 +38,53 @@ import java.util.List;
 @RequestMapping("/sys/post")
 public class SysPostController {
 
-
     @Resource
     private ISysPostService sysPostService;
 
-    @GetMapping("/list")
-    public Result<List<SysPost>> list() {
-        return Result.success(sysPostService.list());
+
+    @GetMapping("/page")
+    @ApiOperation("获得岗位分页列表")
+    @PreAuthorize("hasAuthority('system:post:query')")
+    public Result<IPage<SysPostVO>> page(SysPostPageQry sysPostPageQry) {
+        return Result.success(SysPostConvert.INSTANCE.convertToVO(sysPostService.pageSysPosts(sysPostPageQry)));
+    }
+
+
+    @GetMapping("/list-simple")
+    public Result<List<SysPostVO>> sample() {
+        return Result.success(SysPostConvert.INSTANCE.convertToVO(sysPostService.listSimplePost()));
     }
 
     @PostMapping("/save")
     @ApiOperation("创建岗位")
     @PreAuthorize("hasAuthority('system:post:save')")
-    public Result<Long> save(@Valid @RequestBody SysPost sysPost) {
-        return Result.condition(sysPostService.save(sysPost));
+    public Result<Long> save(@Valid @RequestBody SysPostSaveCmd sysPostSaveCmd) {
+        return Result.condition(sysPostService.savePost(sysPostSaveCmd));
     }
 
     @PutMapping("/update")
     @ApiOperation("修改岗位")
     @PreAuthorize("hasAuthority('system:post:update')")
-    public Result<Boolean> updatePost(@Valid @RequestBody SysPost sysPost) {
-        return Result.condition(sysPostService.updateById(sysPost));
+    public Result<Boolean> updatePost(@Valid @RequestBody SysPostUpdateCmd sysPostUpdateCmd) {
+        return Result.condition(sysPostService.updatePostById(sysPostUpdateCmd));
     }
 
     @DeleteMapping("/remove")
     @ApiOperation("删除岗位")
     @PreAuthorize("hasAuthority('system:post:remove')")
-    public Result<Boolean> remove(@RequestParam("id") Long id) {
-        return Result.condition(sysPostService.removeById(id));
+    public Result<Boolean> remove(@RequestParam("postId") Long postId) {
+        return Result.condition(sysPostService.removePostById(postId));
     }
 
     @GetMapping(value = "/get")
     @ApiOperation("获得岗位信息")
     @ApiImplicitParam(name = "id", value = "岗位编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("hasAuthority('system:post:query')")
-    public Result<SysPost> get(@RequestParam("id") Long id) {
-        return Result.success(sysPostService.getById(id));
+    public Result<SysPost> get(@RequestParam("postId") Long postId) {
+        SysPostDTO postById = sysPostService.getPostById(postId);
+        return Result.success();
     }
 
-    @GetMapping("/page")
-    @ApiOperation("获得岗位分页列表")
-    @PreAuthorize("hasAuthority('system:post:query')")
-    public Result<IPage<SysPost>> page(Page<SysPost> page, @Validated SysPost sysPost) {
-        return Result.success(sysPostService.page(page));
-    }
 
-    @GetMapping("/export")
-    @ApiOperation("岗位管理")
-    @PreAuthorize("hasAuthority('system:post:export')")
-    //@SysLog(value = "EXPORT")
-    public void export(HttpServletResponse response, @Validated SysPost sysPost) throws IOException {
-        List<SysPost> posts = sysPostService.list();
-        ExcelUtils.write(response, "岗位数据.xls", "岗位列表", SysPost.class, posts);
-    }
 
 }

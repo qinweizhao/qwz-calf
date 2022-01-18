@@ -3,10 +3,10 @@ package com.qinweizhao.system.module.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.dto.command.SysUserSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysUserUpdateCmd;
 import com.qinweizhao.api.system.dto.query.SysUserPageQry;
-import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.vo.SysUserPageRespVO;
 import com.qinweizhao.api.system.vo.SysUserRespVO;
 import com.qinweizhao.common.core.base.BaseController;
@@ -14,7 +14,6 @@ import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.common.log.annotation.SysLog;
 import com.qinweizhao.system.module.manage.convert.SysUserConvert;
 import com.qinweizhao.system.module.manage.service.ISysDeptService;
-import com.qinweizhao.system.module.manage.service.ISysUserPostService;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -66,10 +65,9 @@ public class SysUserController extends BaseController {
         IPage<SysUserDTO> page = sysUserService.pageUsers(sysUserPageQry);
         Page<SysUserPageRespVO> sysUserVO = SysUserConvert.INSTANCE.convertToVO(page);
         List<SysUserPageRespVO> records = sysUserVO.getRecords();
-        // TODO 清除 deptId
         records.forEach(item ->
-            item.setDeptName(sysDeptService.getById(item.getDeptId()).getDeptName())
-        );
+                item.setDeptName(sysDeptService.getDeptNameByUserId(item.getUserId())
+                ));
         return Result.success(sysUserVO);
     }
 

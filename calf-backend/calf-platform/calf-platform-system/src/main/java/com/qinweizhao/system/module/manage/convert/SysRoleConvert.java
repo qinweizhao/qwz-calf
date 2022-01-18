@@ -4,6 +4,8 @@ package com.qinweizhao.system.module.manage.convert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.api.system.dto.SysRoleDTO;
+import com.qinweizhao.api.system.dto.command.SysRoleSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysRoleUpdateCmd;
 import com.qinweizhao.api.system.vo.SysRoleVO;
 import com.qinweizhao.system.module.manage.entity.SysRole;
 import org.mapstruct.Mapper;
@@ -26,10 +28,18 @@ public interface SysRoleConvert {
     /**
      * DTO 转 DO
      *
-     * @param sysRoleDTO sysRoleDTO
+     * @param sysRoleSaveCmd sysRoleSaveCmd
      * @return SysRole
      */
-    SysRole convert(SysRoleDTO sysRoleDTO);
+    SysRole convert(SysRoleSaveCmd sysRoleSaveCmd);
+
+    /**
+     * DTO 转 DO
+     *
+     * @param sysRoleUpdateCmd sysRoleUpdateCmd
+     * @return SysRole
+     */
+    SysRole convert(SysRoleUpdateCmd sysRoleUpdateCmd);
 
     /**
      * DTO 转 DO
@@ -63,7 +73,7 @@ public interface SysRoleConvert {
      * @param rolePage userPage
      * @return SysUser
      */
-    Page<SysRoleVO> convert(IPage<SysRoleDTO> rolePage);
+    Page<SysRoleVO> convertToVO(IPage<SysRoleDTO> rolePage);
 
     /**
      * DO 转 VO
@@ -72,4 +82,9 @@ public interface SysRoleConvert {
      * @return SysUser
      */
     List<SysRoleVO> convert(List<SysRole> roleList);
+
+    List<SysRoleVO> convertToVO(List<SysRoleDTO> listSimpleRoles);
+
+    List<SysRoleDTO> convertToDTO(List<SysRole> selectListSimpleRoles);
+
 }
