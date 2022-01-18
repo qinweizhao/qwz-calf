@@ -459,11 +459,11 @@ export default {
         this.deptOptions = [];
         this.deptOptions.push(...this.handleTree(response.data, "deptId"));
       });
-      listSimplePosts().then((response) => {
-        // 处理 postOptions 参数
-        this.postOptions = [];
-        this.postOptions.push(...response.data);
-      });
+      // listSimplePosts().then((response) => {
+      //   // 处理 postOptions 参数
+      //   this.postOptions = [];
+      //   this.postOptions.push(...response.data);
+      // });
       listSimpleRoles().then((response) => {
         // 处理 roleOptions 参数
         this.roleOptions = [];
@@ -563,6 +563,11 @@ export default {
         this.open = true;
         this.title = "修改用户";
         this.form.password = "";
+      });
+      listSimplePosts().then((response) => {
+        // 处理 postOptions 参数
+        this.postOptions = [];
+        this.postOptions.push(...response.data);
       });
     },
     /** 分配用户角色操作 */

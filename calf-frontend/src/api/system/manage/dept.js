@@ -20,7 +20,7 @@ export function listDeptExcludeChild(deptId) {
 // 查询部门详细
 export function getDept(deptId) {
   return request({
-    url: '/system/manage/dept/get?id=' + deptId,
+    url: '/system/manage/dept/get?deptId=' + deptId,
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function getDept(deptId) {
 // 获取部门精简信息列表
 export function listSimpleDepts() {
   return request({
-    url: '/system/manage/dept/list_simple',
+    url: '/system/manage/dept/list-simple',
     method: 'get'
   })
 }
@@ -52,9 +52,9 @@ export function updateDept(data) {
 }
 
 // 删除部门
-export function delDept(id) {
+export function delDept(deptId) {
   return request({
-    url: '/system/manage/dept/remove?id=' + id,
+    url: '/system/manage/dept/remove?deptId=' + deptId,
     method: 'delete'
   })
 }

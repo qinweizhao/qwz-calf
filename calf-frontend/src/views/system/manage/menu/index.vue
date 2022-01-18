@@ -369,8 +369,8 @@ export default {
     handleAdd(row) {
       this.reset();
       this.getTreeselect();
-      if (row != null && row.id) {
-        this.form.parentId = row.id;
+      if (row != null && row.menuId) {
+        this.form.parentId = row.menuId;
       } else {
         this.form.parentId = 0;
       }

@@ -7,38 +7,14 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-form-item label="岗位编码" prop="code">
+      <el-form-item label="岗位名称" prop="postName">
         <el-input
-          v-model="queryParams.code"
-          placeholder="请输入岗位编码"
-          clearable
-          size="small"
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="岗位名称" prop="name">
-        <el-input
-          v-model="queryParams.name"
+          v-model="queryParams.postName"
           placeholder="请输入岗位名称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select
-          v-model="queryParams.status"
-          placeholder="岗位状态"
-          clearable
-          size="small"
-        >
-          <el-option
-            v-for="dict in statusDictDatas"
-            :key="parseInt(dict.value)"
-            :label="dict.label"
-            :value="parseInt(dict.value)"
-          />
-        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button
@@ -104,6 +80,7 @@
       </el-table-column>
       <el-table-column
         label="操作"
+        width="260"
         align="center"
         class-name="small-padding fixed-width"
       >
@@ -214,9 +191,7 @@ export default {
       queryParams: {
         current: 1,
         size: 10,
-        code: undefined,
-        name: undefined,
-        status: undefined,
+        postName: undefined,
       },
       // 表单参数
       form: {},

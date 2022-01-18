@@ -12,7 +12,7 @@ export function listRole(query) {
 // 查询角色（精简)列表
 export function listSimpleRoles() {
   return request({
-    url: '/system/manage/role/list_simple',
+    url: '/system/manage/role/list-simple',
     method: 'get'
   })
 }

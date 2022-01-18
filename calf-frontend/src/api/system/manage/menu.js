@@ -12,7 +12,7 @@ export function listMenu(query) {
 // 查询菜单（精简)列表
 export function listSimpleMenus() {
   return request({
-    url: '/system/manage/menu/list_simple',
+    url: '/system/manage/menu/list-simple',
     method: 'get'
   })
 }
