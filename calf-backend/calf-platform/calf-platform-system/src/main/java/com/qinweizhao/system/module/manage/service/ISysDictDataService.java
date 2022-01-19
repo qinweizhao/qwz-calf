@@ -2,7 +2,7 @@ package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.qinweizhao.system.module.manage.entity.SysDictData;
+import com.qinweizhao.system.module.manage.entity.SysDictItem;
 
 /**
  * <p>
@@ -12,13 +12,13 @@ import com.qinweizhao.system.module.manage.entity.SysDictData;
  * @author qinweizhao
  * @since 2021-12-21
  */
-public interface ISysDictDataService extends IService<SysDictData> {
+public interface ISysDictDataService extends IService<SysDictItem> {
 
-    Long saveDictData(SysDictData sysDictData);
+    Long saveDictData(SysDictItem sysDictItem);
 
-    int updateDictData(SysDictData sysDictData);
+    int updateDictData(SysDictItem sysDictItem);
 
     int removeDictData(Long id);
 
-    IPage<SysDictData> pageDictDatas(SysDictData sysDictData);
+    IPage<SysDictItem> pageDictDatas(SysDictItem sysDictItem);
 }

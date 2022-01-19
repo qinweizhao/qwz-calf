@@ -37,9 +37,9 @@ CREATE TABLE `sys_api_access_log`  (
   `duration` int(0) NOT NULL COMMENT '执行时长',
   `result_code` int(0) NOT NULL DEFAULT 0 COMMENT '结果码',
   `result_msg` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '结果提示',
-  `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `createBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `updater` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `updateBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
   `tenant_id` bigint(0) NOT NULL DEFAULT 0 COMMENT '租户编号',
@@ -77,9 +77,9 @@ CREATE TABLE `sys_api_error_log`  (
   `process_status` tinyint(0) NOT NULL COMMENT '处理状态',
   `process_time` datetime(0) NULL DEFAULT NULL COMMENT '处理时间',
   `process_user_id` int(0) NULL DEFAULT 0 COMMENT '处理用户编号',
-  `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `createBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `updater` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `updateBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
   `tenant_id` bigint(0) NOT NULL DEFAULT 0 COMMENT '租户编号',
@@ -127,7 +127,7 @@ DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE `sys_dept`  (
   `dept_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `parent_id` bigint(0) NULL DEFAULT 0 COMMENT '父ID',
-  `dept_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '名称',
+  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '名称',
   `phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '电话',
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
   `sort` int(0) NULL DEFAULT 0 COMMENT '排序',
@@ -150,10 +150,10 @@ INSERT INTO `sys_dept` VALUES (4, 1, '浦东', '3679', 'yvkg@qq.com', 0, '1', '1
 INSERT INTO `sys_dept` VALUES (5, 1, '宝山', '3679', 'yvkg@qq.com', 0, '1', '1', 'admin', '2021-12-22 17:25:27', 'admin', NULL);
 
 -- ----------------------------
--- Table structure for sys_dict_data
+-- Table structure for sys_dict_item
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_dict_data`;
-CREATE TABLE `sys_dict_data`  (
+DROP TABLE IF EXISTS `sys_dict_item`;
+CREATE TABLE `sys_dict_item`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '字典编码',
   `sort` int(0) NOT NULL DEFAULT 0 COMMENT '字典排序',
   `label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '字典标签',
@@ -161,112 +161,112 @@ CREATE TABLE `sys_dict_data`  (
   `dict_type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '字典类型',
   `status` tinyint(0) NOT NULL DEFAULT 0 COMMENT '状态（0正常 1停用）',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `createBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `updater` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `updateBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 92 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '字典数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of sys_dict_data
+-- Records of sys_dict_item
 -- ----------------------------
-INSERT INTO `sys_dict_data` VALUES (1, 1, '男', '1', 'sys_user_sex', 0, '性别男', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 05:48:53', b'0');
-INSERT INTO `sys_dict_data` VALUES (2, 2, '女', '2', 'sys_user_sex', 0, '性别女', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 05:48:55', b'0');
-INSERT INTO `sys_dict_data` VALUES (8, 1, '正常', '1', 'sys_job_status', 0, '正常状态', 'admin', '2021-01-05 17:03:48', '', '2021-12-23 13:22:05', b'1');
-INSERT INTO `sys_dict_data` VALUES (9, 2, '暂停', '0', 'sys_job_status', 0, '停用状态', 'admin', '2021-01-05 17:03:48', '', '2021-12-23 13:22:07', b'1');
-INSERT INTO `sys_dict_data` VALUES (10, 1, '默认', 'DEFAULT', 'sys_job_group', 0, '默认分组', 'admin', '2021-01-05 17:03:48', '', '2021-02-07 07:43:44', b'1');
-INSERT INTO `sys_dict_data` VALUES (11, 2, '系统', 'SYSTEM', 'sys_job_group', 0, '系统分组', 'admin', '2021-01-05 17:03:48', '', '2021-02-07 07:43:45', b'1');
-INSERT INTO `sys_dict_data` VALUES (12, 1, '系统内置', '1', 'sys_config_type', 0, '参数类型 - 系统内置', 'admin', '2021-01-05 17:03:48', '', '2021-01-18 07:41:59', b'0');
-INSERT INTO `sys_dict_data` VALUES (13, 2, '自定义', '2', 'sys_config_type', 0, '参数类型 - 自定义', 'admin', '2021-01-05 17:03:48', '', '2021-01-18 07:41:51', b'0');
-INSERT INTO `sys_dict_data` VALUES (14, 1, '通知', '1', 'sys_notice_type', 0, '通知', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 00:02:28', b'0');
-INSERT INTO `sys_dict_data` VALUES (15, 2, '公告', '2', 'sys_notice_type', 0, '公告', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 00:02:28', b'0');
-INSERT INTO `sys_dict_data` VALUES (16, 0, '其它', '0', 'sys_operate_type', 0, '其它操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:51:12', b'0');
-INSERT INTO `sys_dict_data` VALUES (17, 1, '查询', '1', 'sys_operate_type', 0, '查询操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:51:10', b'0');
-INSERT INTO `sys_dict_data` VALUES (18, 2, '新增', '2', 'sys_operate_type', 0, '新增操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:51:17', b'0');
-INSERT INTO `sys_dict_data` VALUES (19, 3, '修改', '3', 'sys_operate_type', 0, '修改操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:51:20', b'0');
-INSERT INTO `sys_dict_data` VALUES (20, 4, '删除', '4', 'sys_operate_type', 0, '删除操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:51:24', b'0');
-INSERT INTO `sys_dict_data` VALUES (22, 5, '导出', '5', 'sys_operate_type', 0, '导出操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:49:20', b'0');
-INSERT INTO `sys_dict_data` VALUES (23, 6, '导入', '6', 'sys_operate_type', 0, '导入操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:49:24', b'0');
-INSERT INTO `sys_dict_data` VALUES (27, 1, '开启', '1', 'sys_common_status', 0, '开启状态', 'admin', '2021-01-05 17:03:48', '', '2021-12-23 13:23:06', b'0');
-INSERT INTO `sys_dict_data` VALUES (28, 2, '关闭', '0', 'sys_common_status', 0, '关闭状态', 'admin', '2021-01-05 17:03:48', '', '2021-12-23 13:23:09', b'0');
-INSERT INTO `sys_dict_data` VALUES (29, 1, '目录', '1', 'sys_menu_type', 0, '目录', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 13:33:30', b'0');
-INSERT INTO `sys_dict_data` VALUES (30, 2, '菜单', '2', 'sys_menu_type', 0, '菜单', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 13:33:35', b'0');
-INSERT INTO `sys_dict_data` VALUES (31, 3, '按钮', '3', 'sys_menu_type', 0, '按钮', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 13:33:38', b'0');
-INSERT INTO `sys_dict_data` VALUES (32, 1, '内置', '1', 'sys_role_type', 0, '内置角色', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 13:34:22', b'0');
-INSERT INTO `sys_dict_data` VALUES (33, 2, '自定义', '2', 'sys_role_type', 0, '自定义角色', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 13:34:26', b'0');
-INSERT INTO `sys_dict_data` VALUES (34, 1, '全部数据权限', '1', 'sys_data_scope', 0, '全部数据权限', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 19:38:02', b'0');
-INSERT INTO `sys_dict_data` VALUES (35, 2, '指定部门数据权限', '2', 'sys_data_scope', 0, '指定部门数据权限', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 19:38:20', b'0');
-INSERT INTO `sys_dict_data` VALUES (36, 3, '本部门数据权限', '3', 'sys_data_scope', 0, '本部门数据权限', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 19:38:29', b'0');
-INSERT INTO `sys_dict_data` VALUES (37, 4, '本部门及以下数据权限', '4', 'sys_data_scope', 0, '本部门及以下数据权限', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 19:38:32', b'0');
-INSERT INTO `sys_dict_data` VALUES (38, 5, '仅本人数据权限', '5', 'sys_data_scope', 0, '仅本人数据权限', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 19:38:38', b'0');
-INSERT INTO `sys_dict_data` VALUES (39, 0, '成功', '0', 'sys_login_result', 0, '登陆结果 - 成功', '', '2021-01-18 06:17:36', '', '2021-01-18 06:17:36', b'0');
-INSERT INTO `sys_dict_data` VALUES (40, 10, '账号或密码不正确', '10', 'sys_login_result', 0, '登陆结果 - 账号或密码不正确', '', '2021-01-18 06:17:54', '', '2021-01-18 06:17:54', b'0');
-INSERT INTO `sys_dict_data` VALUES (41, 20, '用户被禁用', '20', 'sys_login_result', 0, '登陆结果 - 用户被禁用', '', '2021-01-18 06:17:54', '', '2021-01-18 06:19:02', b'0');
-INSERT INTO `sys_dict_data` VALUES (42, 30, '验证码不存在', '30', 'sys_login_result', 0, '登陆结果 - 验证码不存在', '', '2021-01-18 06:17:54', '', '2021-01-18 06:19:24', b'0');
-INSERT INTO `sys_dict_data` VALUES (43, 31, '验证码不正确', '31', 'sys_login_result', 0, '登陆结果 - 验证码不正确', '', '2021-01-18 06:17:54', '', '2021-01-18 06:19:33', b'0');
-INSERT INTO `sys_dict_data` VALUES (44, 100, '未知异常', '100', 'sys_login_result', 0, '登陆结果 - 未知异常', '', '2021-01-18 06:17:54', '', '2021-01-18 06:19:57', b'0');
-INSERT INTO `sys_dict_data` VALUES (45, 1, '是', 'true', 'sys_boolean_string', 0, 'Boolean 是否类型 - 是', '', '2021-01-19 03:20:55', '', '2021-01-19 03:21:08', b'0');
-INSERT INTO `sys_dict_data` VALUES (46, 1, '否', 'false', 'sys_boolean_string', 0, 'Boolean 是否类型 - 否', '', '2021-01-19 03:20:55', '', '2021-01-19 03:21:39', b'0');
-INSERT INTO `sys_dict_data` VALUES (47, 1, '永不超时', '1', 'inf_redis_timeout_type', 0, 'Redis 未设置超时的情况', '', '2021-01-26 00:53:17', '', '2021-01-26 00:53:17', b'0');
-INSERT INTO `sys_dict_data` VALUES (48, 1, '动态超时', '2', 'inf_redis_timeout_type', 0, '程序里动态传入超时时间，无法固定', '', '2021-01-26 00:55:00', '', '2021-01-26 00:55:00', b'0');
-INSERT INTO `sys_dict_data` VALUES (49, 3, '固定超时', '3', 'inf_redis_timeout_type', 0, 'Redis 设置了过期时间', '', '2021-01-26 00:55:26', '', '2021-01-26 00:55:26', b'0');
-INSERT INTO `sys_dict_data` VALUES (50, 1, '单表（增删改查）', '1', 'tool_codegen_template_type', 0, NULL, '', '2021-02-05 07:09:06', '', '2021-02-05 07:21:52', b'0');
-INSERT INTO `sys_dict_data` VALUES (51, 2, '树表（增删改查）', '2', 'tool_codegen_template_type', 0, NULL, '', '2021-02-05 07:14:46', '', '2021-02-05 07:21:49', b'0');
-INSERT INTO `sys_dict_data` VALUES (52, 3, '主子表（增删改查）', '3', 'tool_codegen_template_type', 0, NULL, '', '2021-02-05 07:21:45', '', '2021-02-06 18:54:26', b'1');
-INSERT INTO `sys_dict_data` VALUES (53, 0, '初始化中', '0', 'inf_job_status', 0, NULL, '', '2021-02-07 07:46:49', '', '2021-02-07 07:46:49', b'0');
-INSERT INTO `sys_dict_data` VALUES (54, 1, '开启', '1', 'inf_job_status', 0, NULL, '', '2021-02-07 07:46:57', '', '2021-02-07 11:54:09', b'0');
-INSERT INTO `sys_dict_data` VALUES (56, 3, '暂停', '2', 'inf_job_status', 0, NULL, '', '2021-02-07 07:47:16', '', '2021-02-08 04:54:11', b'0');
-INSERT INTO `sys_dict_data` VALUES (57, 0, '运行中', '0', 'inf_job_log_status', 0, 'RUNNING', '', '2021-02-08 10:04:24', '', '2021-02-08 10:04:24', b'0');
-INSERT INTO `sys_dict_data` VALUES (58, 1, '成功', '1', 'inf_job_log_status', 0, NULL, '', '2021-02-08 10:06:57', '', '2021-02-08 10:06:57', b'0');
-INSERT INTO `sys_dict_data` VALUES (59, 2, '失败', '2', 'inf_job_log_status', 0, '失败', '', '2021-02-08 10:07:38', '', '2021-02-08 10:07:38', b'0');
-INSERT INTO `sys_dict_data` VALUES (60, 1, '会员', '1', 'user_type', 0, NULL, '', '2021-02-26 00:16:27', '', '2021-02-26 00:16:27', b'0');
-INSERT INTO `sys_dict_data` VALUES (61, 2, '管理员', '2', 'user_type', 0, NULL, '', '2021-02-26 00:16:34', '', '2021-02-26 00:16:34', b'0');
-INSERT INTO `sys_dict_data` VALUES (62, 0, '未处理', '0', 'inf_api_error_log_process_status', 0, NULL, '', '2021-02-26 07:07:19', '', '2021-02-26 08:11:23', b'0');
-INSERT INTO `sys_dict_data` VALUES (63, 1, '已处理', '1', 'inf_api_error_log_process_status', 0, NULL, '', '2021-02-26 07:07:26', '', '2021-02-26 08:11:29', b'0');
-INSERT INTO `sys_dict_data` VALUES (64, 2, '已忽略', '2', 'inf_api_error_log_process_status', 0, NULL, '', '2021-02-26 07:07:34', '', '2021-02-26 08:11:34', b'0');
-INSERT INTO `sys_dict_data` VALUES (65, 1, '云片', 'YUN_PIAN', 'sys_sms_channel_code', 0, NULL, '1', '2021-04-05 01:05:14', '1', '2021-04-13 00:20:13', b'0');
-INSERT INTO `sys_dict_data` VALUES (66, 2, '阿里云', 'ALIYUN', 'sys_sms_channel_code', 0, NULL, '1', '2021-04-05 01:05:26', '1', '2021-04-13 00:20:16', b'0');
-INSERT INTO `sys_dict_data` VALUES (67, 1, '验证码', '1', 'sys_sms_template_type', 0, NULL, '1', '2021-04-05 21:50:57', '1', '2021-04-05 21:50:57', b'0');
-INSERT INTO `sys_dict_data` VALUES (68, 2, '通知', '2', 'sys_sms_template_type', 0, NULL, '1', '2021-04-05 21:51:08', '1', '2021-04-05 21:51:08', b'0');
-INSERT INTO `sys_dict_data` VALUES (69, 0, '营销', '3', 'sys_sms_template_type', 0, NULL, '1', '2021-04-05 21:51:15', '1', '2021-04-05 21:51:15', b'0');
-INSERT INTO `sys_dict_data` VALUES (70, 0, '初始化', '0', 'sys_sms_send_status', 0, NULL, '1', '2021-04-11 20:18:33', '1', '2021-04-11 09:30:18', b'0');
-INSERT INTO `sys_dict_data` VALUES (71, 1, '发送成功', '10', 'sys_sms_send_status', 0, NULL, '1', '2021-04-11 20:18:43', '1', '2021-04-11 09:30:20', b'0');
-INSERT INTO `sys_dict_data` VALUES (72, 2, '发送失败', '20', 'sys_sms_send_status', 0, NULL, '1', '2021-04-11 20:18:49', '1', '2021-04-11 09:30:22', b'0');
-INSERT INTO `sys_dict_data` VALUES (73, 3, '不发送', '30', 'sys_sms_send_status', 0, NULL, '1', '2021-04-11 20:19:44', '1', '2021-04-11 09:30:23', b'0');
-INSERT INTO `sys_dict_data` VALUES (74, 0, '等待结果', '0', 'sys_sms_receive_status', 0, NULL, '1', '2021-04-11 20:27:43', '1', '2021-04-17 23:05:19', b'0');
-INSERT INTO `sys_dict_data` VALUES (75, 1, '接收成功', '10', 'sys_sms_receive_status', 0, NULL, '1', '2021-04-11 20:29:25', '1', '2021-04-11 20:29:35', b'0');
-INSERT INTO `sys_dict_data` VALUES (76, 2, '接收失败', '20', 'sys_sms_receive_status', 0, NULL, '1', '2021-04-11 20:29:31', '1', '2021-04-11 20:29:39', b'0');
-INSERT INTO `sys_dict_data` VALUES (77, 0, '调试(钉钉)', 'DEBUG_DING_TALK', 'sys_sms_channel_code', 0, NULL, '1', '2021-04-13 00:20:37', '1', '2021-04-13 00:20:37', b'0');
-INSERT INTO `sys_dict_data` VALUES (78, 1, '自动生成', '1', 'sys_error_code_type', 0, NULL, '1', '2021-04-21 00:06:48', '1', '2021-04-13 22:06:44', b'0');
-INSERT INTO `sys_dict_data` VALUES (79, 2, '手动编辑', '2', 'sys_error_code_type', 0, NULL, '1', '2021-04-21 00:07:14', '1', '2021-04-13 22:06:49', b'0');
-INSERT INTO `sys_dict_data` VALUES (80, 100, '账号登录', '100', 'sys_login_type', 0, '账号登录', '1', '2021-10-06 00:52:02', '1', '2021-10-06 00:52:43', b'0');
-INSERT INTO `sys_dict_data` VALUES (81, 101, '社交登录', '101', 'sys_login_type', 0, '社交登录', '1', '2021-10-06 00:52:17', '1', '2021-10-06 00:52:17', b'0');
-INSERT INTO `sys_dict_data` VALUES (82, 102, 'Mock 登录', '102', 'sys_login_type', 0, 'Mock 登录', '1', '2021-10-06 00:52:32', '1', '2021-10-06 00:52:39', b'0');
-INSERT INTO `sys_dict_data` VALUES (83, 200, '主动登出', '200', 'sys_login_type', 0, '主动登出', '1', '2021-10-06 00:52:58', '1', '2021-10-06 00:52:58', b'0');
-INSERT INTO `sys_dict_data` VALUES (84, 201, '超时登出', '201', 'sys_login_type', 0, '超时登出', '1', '2021-10-06 00:53:17', '1', '2021-10-06 00:53:17', b'0');
-INSERT INTO `sys_dict_data` VALUES (85, 202, '强制登出', '202', 'sys_login_type', 0, '强制退出', '1', '2021-10-06 00:53:41', '1', '2021-10-06 00:53:41', b'0');
-INSERT INTO `sys_dict_data` VALUES (86, 0, '病假', '1', 'oa_leave_type', 0, NULL, '1', '2021-09-21 22:35:28', '1', '2021-09-21 14:59:27', b'0');
-INSERT INTO `sys_dict_data` VALUES (87, 1, '事假', '2', 'oa_leave_type', 0, NULL, '1', '2021-09-21 22:36:11', '1', '2021-09-21 14:59:27', b'0');
-INSERT INTO `sys_dict_data` VALUES (88, 2, '婚假', '3', 'oa_leave_type', 0, NULL, '1', '2021-09-21 22:36:38', '1', '2021-09-21 14:59:27', b'0');
-INSERT INTO `sys_dict_data` VALUES (89, 0, '处理中', '1', 'oa_leave_status', 0, NULL, '1', '2021-09-21 22:46:46', '1', '2021-10-12 22:12:20', b'0');
-INSERT INTO `sys_dict_data` VALUES (90, 1, '流程结束', '2', 'oa_leave_status', 0, NULL, '1', '2021-09-21 22:47:03', '1', '2021-10-12 22:12:58', b'0');
-INSERT INTO `sys_dict_data` VALUES (91, 2, '完成', '3', 'oa_leave_status', 0, NULL, '1', '2021-09-21 22:47:25', '1', '2021-10-12 14:13:06', b'1');
+INSERT INTO `sys_dict_item` VALUES (1, 1, '男', '1', 'sys_user_sex', 0, '性别男', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 05:48:53', b'0');
+INSERT INTO `sys_dict_item` VALUES (2, 2, '女', '2', 'sys_user_sex', 0, '性别女', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 05:48:55', b'0');
+INSERT INTO `sys_dict_item` VALUES (8, 1, '正常', '1', 'sys_job_status', 0, '正常状态', 'admin', '2021-01-05 17:03:48', '', '2021-12-23 13:22:05', b'1');
+INSERT INTO `sys_dict_item` VALUES (9, 2, '暂停', '0', 'sys_job_status', 0, '停用状态', 'admin', '2021-01-05 17:03:48', '', '2021-12-23 13:22:07', b'1');
+INSERT INTO `sys_dict_item` VALUES (10, 1, '默认', 'DEFAULT', 'sys_job_group', 0, '默认分组', 'admin', '2021-01-05 17:03:48', '', '2021-02-07 07:43:44', b'1');
+INSERT INTO `sys_dict_item` VALUES (11, 2, '系统', 'SYSTEM', 'sys_job_group', 0, '系统分组', 'admin', '2021-01-05 17:03:48', '', '2021-02-07 07:43:45', b'1');
+INSERT INTO `sys_dict_item` VALUES (12, 1, '系统内置', '1', 'sys_config_type', 0, '参数类型 - 系统内置', 'admin', '2021-01-05 17:03:48', '', '2021-01-18 07:41:59', b'0');
+INSERT INTO `sys_dict_item` VALUES (13, 2, '自定义', '2', 'sys_config_type', 0, '参数类型 - 自定义', 'admin', '2021-01-05 17:03:48', '', '2021-01-18 07:41:51', b'0');
+INSERT INTO `sys_dict_item` VALUES (14, 1, '通知', '1', 'sys_notice_type', 0, '通知', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 00:02:28', b'0');
+INSERT INTO `sys_dict_item` VALUES (15, 2, '公告', '2', 'sys_notice_type', 0, '公告', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 00:02:28', b'0');
+INSERT INTO `sys_dict_item` VALUES (16, 0, '其它', '0', 'sys_operate_type', 0, '其它操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:51:12', b'0');
+INSERT INTO `sys_dict_item` VALUES (17, 1, '查询', '1', 'sys_operate_type', 0, '查询操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:51:10', b'0');
+INSERT INTO `sys_dict_item` VALUES (18, 2, '新增', '2', 'sys_operate_type', 0, '新增操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:51:17', b'0');
+INSERT INTO `sys_dict_item` VALUES (19, 3, '修改', '3', 'sys_operate_type', 0, '修改操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:51:20', b'0');
+INSERT INTO `sys_dict_item` VALUES (20, 4, '删除', '4', 'sys_operate_type', 0, '删除操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:51:24', b'0');
+INSERT INTO `sys_dict_item` VALUES (22, 5, '导出', '5', 'sys_operate_type', 0, '导出操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:49:20', b'0');
+INSERT INTO `sys_dict_item` VALUES (23, 6, '导入', '6', 'sys_operate_type', 0, '导入操作', 'admin', '2021-01-05 17:03:48', '', '2021-01-16 13:49:24', b'0');
+INSERT INTO `sys_dict_item` VALUES (27, 1, '开启', '1', 'sys_common_status', 0, '开启状态', 'admin', '2021-01-05 17:03:48', '', '2021-12-23 13:23:06', b'0');
+INSERT INTO `sys_dict_item` VALUES (28, 2, '关闭', '0', 'sys_common_status', 0, '关闭状态', 'admin', '2021-01-05 17:03:48', '', '2021-12-23 13:23:09', b'0');
+INSERT INTO `sys_dict_item` VALUES (29, 1, '目录', '1', 'sys_menu_type', 0, '目录', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 13:33:30', b'0');
+INSERT INTO `sys_dict_item` VALUES (30, 2, '菜单', '2', 'sys_menu_type', 0, '菜单', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 13:33:35', b'0');
+INSERT INTO `sys_dict_item` VALUES (31, 3, '按钮', '3', 'sys_menu_type', 0, '按钮', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 13:33:38', b'0');
+INSERT INTO `sys_dict_item` VALUES (32, 1, '内置', '1', 'sys_role_type', 0, '内置角色', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 13:34:22', b'0');
+INSERT INTO `sys_dict_item` VALUES (33, 2, '自定义', '2', 'sys_role_type', 0, '自定义角色', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 13:34:26', b'0');
+INSERT INTO `sys_dict_item` VALUES (34, 1, '全部数据权限', '1', 'sys_data_scope', 0, '全部数据权限', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 19:38:02', b'0');
+INSERT INTO `sys_dict_item` VALUES (35, 2, '指定部门数据权限', '2', 'sys_data_scope', 0, '指定部门数据权限', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 19:38:20', b'0');
+INSERT INTO `sys_dict_item` VALUES (36, 3, '本部门数据权限', '3', 'sys_data_scope', 0, '本部门数据权限', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 19:38:29', b'0');
+INSERT INTO `sys_dict_item` VALUES (37, 4, '本部门及以下数据权限', '4', 'sys_data_scope', 0, '本部门及以下数据权限', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 19:38:32', b'0');
+INSERT INTO `sys_dict_item` VALUES (38, 5, '仅本人数据权限', '5', 'sys_data_scope', 0, '仅本人数据权限', 'admin', '2021-01-05 17:03:48', '', '2021-01-06 19:38:38', b'0');
+INSERT INTO `sys_dict_item` VALUES (39, 0, '成功', '0', 'sys_login_result', 0, '登陆结果 - 成功', '', '2021-01-18 06:17:36', '', '2021-01-18 06:17:36', b'0');
+INSERT INTO `sys_dict_item` VALUES (40, 10, '账号或密码不正确', '10', 'sys_login_result', 0, '登陆结果 - 账号或密码不正确', '', '2021-01-18 06:17:54', '', '2021-01-18 06:17:54', b'0');
+INSERT INTO `sys_dict_item` VALUES (41, 20, '用户被禁用', '20', 'sys_login_result', 0, '登陆结果 - 用户被禁用', '', '2021-01-18 06:17:54', '', '2021-01-18 06:19:02', b'0');
+INSERT INTO `sys_dict_item` VALUES (42, 30, '验证码不存在', '30', 'sys_login_result', 0, '登陆结果 - 验证码不存在', '', '2021-01-18 06:17:54', '', '2021-01-18 06:19:24', b'0');
+INSERT INTO `sys_dict_item` VALUES (43, 31, '验证码不正确', '31', 'sys_login_result', 0, '登陆结果 - 验证码不正确', '', '2021-01-18 06:17:54', '', '2021-01-18 06:19:33', b'0');
+INSERT INTO `sys_dict_item` VALUES (44, 100, '未知异常', '100', 'sys_login_result', 0, '登陆结果 - 未知异常', '', '2021-01-18 06:17:54', '', '2021-01-18 06:19:57', b'0');
+INSERT INTO `sys_dict_item` VALUES (45, 1, '是', 'true', 'sys_boolean_string', 0, 'Boolean 是否类型 - 是', '', '2021-01-19 03:20:55', '', '2021-01-19 03:21:08', b'0');
+INSERT INTO `sys_dict_item` VALUES (46, 1, '否', 'false', 'sys_boolean_string', 0, 'Boolean 是否类型 - 否', '', '2021-01-19 03:20:55', '', '2021-01-19 03:21:39', b'0');
+INSERT INTO `sys_dict_item` VALUES (47, 1, '永不超时', '1', 'inf_redis_timeout_type', 0, 'Redis 未设置超时的情况', '', '2021-01-26 00:53:17', '', '2021-01-26 00:53:17', b'0');
+INSERT INTO `sys_dict_item` VALUES (48, 1, '动态超时', '2', 'inf_redis_timeout_type', 0, '程序里动态传入超时时间，无法固定', '', '2021-01-26 00:55:00', '', '2021-01-26 00:55:00', b'0');
+INSERT INTO `sys_dict_item` VALUES (49, 3, '固定超时', '3', 'inf_redis_timeout_type', 0, 'Redis 设置了过期时间', '', '2021-01-26 00:55:26', '', '2021-01-26 00:55:26', b'0');
+INSERT INTO `sys_dict_item` VALUES (50, 1, '单表（增删改查）', '1', 'tool_codegen_template_type', 0, NULL, '', '2021-02-05 07:09:06', '', '2021-02-05 07:21:52', b'0');
+INSERT INTO `sys_dict_item` VALUES (51, 2, '树表（增删改查）', '2', 'tool_codegen_template_type', 0, NULL, '', '2021-02-05 07:14:46', '', '2021-02-05 07:21:49', b'0');
+INSERT INTO `sys_dict_item` VALUES (52, 3, '主子表（增删改查）', '3', 'tool_codegen_template_type', 0, NULL, '', '2021-02-05 07:21:45', '', '2021-02-06 18:54:26', b'1');
+INSERT INTO `sys_dict_item` VALUES (53, 0, '初始化中', '0', 'inf_job_status', 0, NULL, '', '2021-02-07 07:46:49', '', '2021-02-07 07:46:49', b'0');
+INSERT INTO `sys_dict_item` VALUES (54, 1, '开启', '1', 'inf_job_status', 0, NULL, '', '2021-02-07 07:46:57', '', '2021-02-07 11:54:09', b'0');
+INSERT INTO `sys_dict_item` VALUES (56, 3, '暂停', '2', 'inf_job_status', 0, NULL, '', '2021-02-07 07:47:16', '', '2021-02-08 04:54:11', b'0');
+INSERT INTO `sys_dict_item` VALUES (57, 0, '运行中', '0', 'inf_job_log_status', 0, 'RUNNING', '', '2021-02-08 10:04:24', '', '2021-02-08 10:04:24', b'0');
+INSERT INTO `sys_dict_item` VALUES (58, 1, '成功', '1', 'inf_job_log_status', 0, NULL, '', '2021-02-08 10:06:57', '', '2021-02-08 10:06:57', b'0');
+INSERT INTO `sys_dict_item` VALUES (59, 2, '失败', '2', 'inf_job_log_status', 0, '失败', '', '2021-02-08 10:07:38', '', '2021-02-08 10:07:38', b'0');
+INSERT INTO `sys_dict_item` VALUES (60, 1, '会员', '1', 'user_type', 0, NULL, '', '2021-02-26 00:16:27', '', '2021-02-26 00:16:27', b'0');
+INSERT INTO `sys_dict_item` VALUES (61, 2, '管理员', '2', 'user_type', 0, NULL, '', '2021-02-26 00:16:34', '', '2021-02-26 00:16:34', b'0');
+INSERT INTO `sys_dict_item` VALUES (62, 0, '未处理', '0', 'inf_api_error_log_process_status', 0, NULL, '', '2021-02-26 07:07:19', '', '2021-02-26 08:11:23', b'0');
+INSERT INTO `sys_dict_item` VALUES (63, 1, '已处理', '1', 'inf_api_error_log_process_status', 0, NULL, '', '2021-02-26 07:07:26', '', '2021-02-26 08:11:29', b'0');
+INSERT INTO `sys_dict_item` VALUES (64, 2, '已忽略', '2', 'inf_api_error_log_process_status', 0, NULL, '', '2021-02-26 07:07:34', '', '2021-02-26 08:11:34', b'0');
+INSERT INTO `sys_dict_item` VALUES (65, 1, '云片', 'YUN_PIAN', 'sys_sms_channel_code', 0, NULL, '1', '2021-04-05 01:05:14', '1', '2021-04-13 00:20:13', b'0');
+INSERT INTO `sys_dict_item` VALUES (66, 2, '阿里云', 'ALIYUN', 'sys_sms_channel_code', 0, NULL, '1', '2021-04-05 01:05:26', '1', '2021-04-13 00:20:16', b'0');
+INSERT INTO `sys_dict_item` VALUES (67, 1, '验证码', '1', 'sys_sms_template_type', 0, NULL, '1', '2021-04-05 21:50:57', '1', '2021-04-05 21:50:57', b'0');
+INSERT INTO `sys_dict_item` VALUES (68, 2, '通知', '2', 'sys_sms_template_type', 0, NULL, '1', '2021-04-05 21:51:08', '1', '2021-04-05 21:51:08', b'0');
+INSERT INTO `sys_dict_item` VALUES (69, 0, '营销', '3', 'sys_sms_template_type', 0, NULL, '1', '2021-04-05 21:51:15', '1', '2021-04-05 21:51:15', b'0');
+INSERT INTO `sys_dict_item` VALUES (70, 0, '初始化', '0', 'sys_sms_send_status', 0, NULL, '1', '2021-04-11 20:18:33', '1', '2021-04-11 09:30:18', b'0');
+INSERT INTO `sys_dict_item` VALUES (71, 1, '发送成功', '10', 'sys_sms_send_status', 0, NULL, '1', '2021-04-11 20:18:43', '1', '2021-04-11 09:30:20', b'0');
+INSERT INTO `sys_dict_item` VALUES (72, 2, '发送失败', '20', 'sys_sms_send_status', 0, NULL, '1', '2021-04-11 20:18:49', '1', '2021-04-11 09:30:22', b'0');
+INSERT INTO `sys_dict_item` VALUES (73, 3, '不发送', '30', 'sys_sms_send_status', 0, NULL, '1', '2021-04-11 20:19:44', '1', '2021-04-11 09:30:23', b'0');
+INSERT INTO `sys_dict_item` VALUES (74, 0, '等待结果', '0', 'sys_sms_receive_status', 0, NULL, '1', '2021-04-11 20:27:43', '1', '2021-04-17 23:05:19', b'0');
+INSERT INTO `sys_dict_item` VALUES (75, 1, '接收成功', '10', 'sys_sms_receive_status', 0, NULL, '1', '2021-04-11 20:29:25', '1', '2021-04-11 20:29:35', b'0');
+INSERT INTO `sys_dict_item` VALUES (76, 2, '接收失败', '20', 'sys_sms_receive_status', 0, NULL, '1', '2021-04-11 20:29:31', '1', '2021-04-11 20:29:39', b'0');
+INSERT INTO `sys_dict_item` VALUES (77, 0, '调试(钉钉)', 'DEBUG_DING_TALK', 'sys_sms_channel_code', 0, NULL, '1', '2021-04-13 00:20:37', '1', '2021-04-13 00:20:37', b'0');
+INSERT INTO `sys_dict_item` VALUES (78, 1, '自动生成', '1', 'sys_error_code_type', 0, NULL, '1', '2021-04-21 00:06:48', '1', '2021-04-13 22:06:44', b'0');
+INSERT INTO `sys_dict_item` VALUES (79, 2, '手动编辑', '2', 'sys_error_code_type', 0, NULL, '1', '2021-04-21 00:07:14', '1', '2021-04-13 22:06:49', b'0');
+INSERT INTO `sys_dict_item` VALUES (80, 100, '账号登录', '100', 'sys_login_type', 0, '账号登录', '1', '2021-10-06 00:52:02', '1', '2021-10-06 00:52:43', b'0');
+INSERT INTO `sys_dict_item` VALUES (81, 101, '社交登录', '101', 'sys_login_type', 0, '社交登录', '1', '2021-10-06 00:52:17', '1', '2021-10-06 00:52:17', b'0');
+INSERT INTO `sys_dict_item` VALUES (82, 102, 'Mock 登录', '102', 'sys_login_type', 0, 'Mock 登录', '1', '2021-10-06 00:52:32', '1', '2021-10-06 00:52:39', b'0');
+INSERT INTO `sys_dict_item` VALUES (83, 200, '主动登出', '200', 'sys_login_type', 0, '主动登出', '1', '2021-10-06 00:52:58', '1', '2021-10-06 00:52:58', b'0');
+INSERT INTO `sys_dict_item` VALUES (84, 201, '超时登出', '201', 'sys_login_type', 0, '超时登出', '1', '2021-10-06 00:53:17', '1', '2021-10-06 00:53:17', b'0');
+INSERT INTO `sys_dict_item` VALUES (85, 202, '强制登出', '202', 'sys_login_type', 0, '强制退出', '1', '2021-10-06 00:53:41', '1', '2021-10-06 00:53:41', b'0');
+INSERT INTO `sys_dict_item` VALUES (86, 0, '病假', '1', 'oa_leave_type', 0, NULL, '1', '2021-09-21 22:35:28', '1', '2021-09-21 14:59:27', b'0');
+INSERT INTO `sys_dict_item` VALUES (87, 1, '事假', '2', 'oa_leave_type', 0, NULL, '1', '2021-09-21 22:36:11', '1', '2021-09-21 14:59:27', b'0');
+INSERT INTO `sys_dict_item` VALUES (88, 2, '婚假', '3', 'oa_leave_type', 0, NULL, '1', '2021-09-21 22:36:38', '1', '2021-09-21 14:59:27', b'0');
+INSERT INTO `sys_dict_item` VALUES (89, 0, '处理中', '1', 'oa_leave_status', 0, NULL, '1', '2021-09-21 22:46:46', '1', '2021-10-12 22:12:20', b'0');
+INSERT INTO `sys_dict_item` VALUES (90, 1, '流程结束', '2', 'oa_leave_status', 0, NULL, '1', '2021-09-21 22:47:03', '1', '2021-10-12 22:12:58', b'0');
+INSERT INTO `sys_dict_item` VALUES (91, 2, '完成', '3', 'oa_leave_status', 0, NULL, '1', '2021-09-21 22:47:25', '1', '2021-10-12 14:13:06', b'1');
 
 -- ----------------------------
--- Table structure for sys_dict_type
+-- Table structure for sys_dict
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_dict_type`;
-CREATE TABLE `sys_dict_type`  (
+DROP TABLE IF EXISTS `sys_dict`;
+CREATE TABLE `sys_dict`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '字典主键',
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '字典名称',
   `type` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '字典类型',
   `status` tinyint(0) NOT NULL DEFAULT 0 COMMENT '状态（0正常 1停用）',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `createBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `updater` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `updateBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE,
@@ -274,33 +274,33 @@ CREATE TABLE `sys_dict_type`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 119 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of sys_dict_type
+-- Records of sys_dict
 -- ----------------------------
-INSERT INTO `sys_dict_type` VALUES (1, '用户性别', 'sys_user_sex', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-05 17:03:48', b'0');
-INSERT INTO `sys_dict_type` VALUES (3, '系统开关', 'sys_normal_disable', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-07 19:47:48', b'1');
-INSERT INTO `sys_dict_type` VALUES (4, '任务状态的枚举', 'sys_job_status', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-02-07 07:44:06', b'1');
-INSERT INTO `sys_dict_type` VALUES (5, '任务分组', 'sys_job_group', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-02-07 07:43:52', b'1');
-INSERT INTO `sys_dict_type` VALUES (6, '参数类型', 'sys_config_type', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-18 07:41:04', b'0');
-INSERT INTO `sys_dict_type` VALUES (7, '通知类型', 'sys_notice_type', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-05 17:03:48', b'0');
-INSERT INTO `sys_dict_type` VALUES (8, '通知状态', 'sys_notice_status', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-05 17:03:48', b'0');
-INSERT INTO `sys_dict_type` VALUES (9, '操作类型', 'sys_oper_type', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-05 17:03:48', b'0');
-INSERT INTO `sys_dict_type` VALUES (10, '系统状态', 'sys_common_status', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-05 17:03:48', b'0');
-INSERT INTO `sys_dict_type` VALUES (11, 'Boolean 是否类型', 'sys_boolean_string', 0, 'boolean 转是否', '', '2021-01-19 03:20:08', '', '2021-01-19 03:20:08', b'0');
-INSERT INTO `sys_dict_type` VALUES (104, '登陆结果', 'sys_login_result', 0, '登陆结果', '', '2021-01-18 06:17:11', '', '2021-01-18 06:17:11', b'0');
-INSERT INTO `sys_dict_type` VALUES (105, 'Redis 超时类型', 'inf_redis_timeout_type', 0, 'RedisKeyDefine.TimeoutTypeEnum', '', '2021-01-26 00:52:50', '', '2021-01-26 00:52:50', b'0');
-INSERT INTO `sys_dict_type` VALUES (106, '代码生成模板类型', 'tool_codegen_template_type', 0, NULL, '', '2021-02-05 07:08:06', '', '2021-02-05 07:08:06', b'0');
-INSERT INTO `sys_dict_type` VALUES (107, '定时任务状态', 'inf_job_status', 0, NULL, '', '2021-02-07 07:44:16', '', '2021-02-07 07:44:16', b'0');
-INSERT INTO `sys_dict_type` VALUES (108, '定时任务日志状态', 'inf_job_log_status', 0, NULL, '', '2021-02-08 10:03:51', '', '2021-02-08 10:03:51', b'0');
-INSERT INTO `sys_dict_type` VALUES (109, '用户类型', 'user_type', 0, NULL, '', '2021-02-26 00:15:51', '', '2021-02-26 00:15:51', b'0');
-INSERT INTO `sys_dict_type` VALUES (110, 'API 异常数据的处理状态', 'inf_api_error_log_process_status', 0, NULL, '', '2021-02-26 07:07:01', '', '2021-02-26 07:07:01', b'0');
-INSERT INTO `sys_dict_type` VALUES (111, '短信渠道编码', 'sys_sms_channel_code', 0, NULL, '1', '2021-04-05 01:04:50', '1', '2021-04-05 01:04:50', b'0');
-INSERT INTO `sys_dict_type` VALUES (112, '短信模板的类型', 'sys_sms_template_type', 0, NULL, '1', '2021-04-05 21:50:43', '1', '2021-04-05 21:50:43', b'0');
-INSERT INTO `sys_dict_type` VALUES (113, '短信发送状态', 'sys_sms_send_status', 0, NULL, '1', '2021-04-11 20:18:03', '1', '2021-04-11 09:30:02', b'0');
-INSERT INTO `sys_dict_type` VALUES (114, '短信接收状态', 'sys_sms_receive_status', 0, NULL, '1', '2021-04-11 20:27:14', '1', '2021-04-11 20:27:14', b'0');
-INSERT INTO `sys_dict_type` VALUES (115, '错误码的类型', 'sys_error_code_type', 0, NULL, '1', '2021-04-21 00:06:30', '1', '2021-04-13 22:07:12', b'0');
-INSERT INTO `sys_dict_type` VALUES (116, '登陆日志的类型', 'sys_login_type', 0, '登陆日志的类型', '1', '2021-10-06 00:50:46', '1', '2021-10-06 00:50:46', b'0');
-INSERT INTO `sys_dict_type` VALUES (117, '请假类型', 'oa_leave_type', 0, NULL, '1', '2021-09-21 22:34:33', '1', '2021-09-21 15:00:38', b'0');
-INSERT INTO `sys_dict_type` VALUES (118, '请假流程状态', 'oa_leave_status', 0, NULL, '1', '2021-09-21 22:46:04', '1', '2021-09-21 15:00:38', b'0');
+INSERT INTO `sys_dict` VALUES (1, '用户性别', 'sys_user_sex', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-05 17:03:48', b'0');
+INSERT INTO `sys_dict` VALUES (3, '系统开关', 'sys_normal_disable', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-07 19:47:48', b'1');
+INSERT INTO `sys_dict` VALUES (4, '任务状态的枚举', 'sys_job_status', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-02-07 07:44:06', b'1');
+INSERT INTO `sys_dict` VALUES (5, '任务分组', 'sys_job_group', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-02-07 07:43:52', b'1');
+INSERT INTO `sys_dict` VALUES (6, '参数类型', 'sys_config_type', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-18 07:41:04', b'0');
+INSERT INTO `sys_dict` VALUES (7, '通知类型', 'sys_notice_type', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-05 17:03:48', b'0');
+INSERT INTO `sys_dict` VALUES (8, '通知状态', 'sys_notice_status', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-05 17:03:48', b'0');
+INSERT INTO `sys_dict` VALUES (9, '操作类型', 'sys_oper_type', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-05 17:03:48', b'0');
+INSERT INTO `sys_dict` VALUES (10, '系统状态', 'sys_common_status', 0, NULL, 'admin', '2021-01-05 17:03:48', '', '2021-01-05 17:03:48', b'0');
+INSERT INTO `sys_dict` VALUES (11, 'Boolean 是否类型', 'sys_boolean_string', 0, 'boolean 转是否', '', '2021-01-19 03:20:08', '', '2021-01-19 03:20:08', b'0');
+INSERT INTO `sys_dict` VALUES (104, '登陆结果', 'sys_login_result', 0, '登陆结果', '', '2021-01-18 06:17:11', '', '2021-01-18 06:17:11', b'0');
+INSERT INTO `sys_dict` VALUES (105, 'Redis 超时类型', 'inf_redis_timeout_type', 0, 'RedisKeyDefine.TimeoutTypeEnum', '', '2021-01-26 00:52:50', '', '2021-01-26 00:52:50', b'0');
+INSERT INTO `sys_dict` VALUES (106, '代码生成模板类型', 'tool_codegen_template_type', 0, NULL, '', '2021-02-05 07:08:06', '', '2021-02-05 07:08:06', b'0');
+INSERT INTO `sys_dict` VALUES (107, '定时任务状态', 'inf_job_status', 0, NULL, '', '2021-02-07 07:44:16', '', '2021-02-07 07:44:16', b'0');
+INSERT INTO `sys_dict` VALUES (108, '定时任务日志状态', 'inf_job_log_status', 0, NULL, '', '2021-02-08 10:03:51', '', '2021-02-08 10:03:51', b'0');
+INSERT INTO `sys_dict` VALUES (109, '用户类型', 'user_type', 0, NULL, '', '2021-02-26 00:15:51', '', '2021-02-26 00:15:51', b'0');
+INSERT INTO `sys_dict` VALUES (110, 'API 异常数据的处理状态', 'inf_api_error_log_process_status', 0, NULL, '', '2021-02-26 07:07:01', '', '2021-02-26 07:07:01', b'0');
+INSERT INTO `sys_dict` VALUES (111, '短信渠道编码', 'sys_sms_channel_code', 0, NULL, '1', '2021-04-05 01:04:50', '1', '2021-04-05 01:04:50', b'0');
+INSERT INTO `sys_dict` VALUES (112, '短信模板的类型', 'sys_sms_template_type', 0, NULL, '1', '2021-04-05 21:50:43', '1', '2021-04-05 21:50:43', b'0');
+INSERT INTO `sys_dict` VALUES (113, '短信发送状态', 'sys_sms_send_status', 0, NULL, '1', '2021-04-11 20:18:03', '1', '2021-04-11 09:30:02', b'0');
+INSERT INTO `sys_dict` VALUES (114, '短信接收状态', 'sys_sms_receive_status', 0, NULL, '1', '2021-04-11 20:27:14', '1', '2021-04-11 20:27:14', b'0');
+INSERT INTO `sys_dict` VALUES (115, '错误码的类型', 'sys_error_code_type', 0, NULL, '1', '2021-04-21 00:06:30', '1', '2021-04-13 22:07:12', b'0');
+INSERT INTO `sys_dict` VALUES (116, '登陆日志的类型', 'sys_login_type', 0, '登陆日志的类型', '1', '2021-10-06 00:50:46', '1', '2021-10-06 00:50:46', b'0');
+INSERT INTO `sys_dict` VALUES (117, '请假类型', 'oa_leave_type', 0, NULL, '1', '2021-09-21 22:34:33', '1', '2021-09-21 15:00:38', b'0');
+INSERT INTO `sys_dict` VALUES (118, '请假流程状态', 'oa_leave_status', 0, NULL, '1', '2021-09-21 22:46:04', '1', '2021-09-21 15:00:38', b'0');
 
 -- ----------------------------
 -- Table structure for sys_error_code
@@ -313,9 +313,9 @@ CREATE TABLE `sys_error_code`  (
   `code` int(0) NOT NULL DEFAULT 0 COMMENT '错误码编码',
   `message` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '错误码错误提示',
   `memo` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
-  `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `createBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `updater` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `updateBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
@@ -420,9 +420,9 @@ CREATE TABLE `sys_job`  (
   `retry_count` int(0) NOT NULL DEFAULT 0 COMMENT '重试次数',
   `retry_interval` int(0) NOT NULL DEFAULT 0 COMMENT '重试间隔',
   `monitor_timeout` int(0) NOT NULL DEFAULT 0 COMMENT '监控超时时间',
-  `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `createBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `updater` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `updateBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
@@ -451,9 +451,9 @@ CREATE TABLE `sys_job_log`  (
   `duration` int(0) NULL DEFAULT NULL COMMENT '执行时长',
   `status` tinyint(0) NOT NULL COMMENT '任务状态',
   `result` varchar(4000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '结果数据',
-  `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `createBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `updater` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `updateBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
@@ -477,9 +477,9 @@ CREATE TABLE `sys_login_log`  (
   `result` tinyint(0) NOT NULL COMMENT '登陆结果',
   `user_ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户 IP',
   `user_agent` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '浏览器 UA',
-  `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `createBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `updater` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `updateBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
@@ -495,7 +495,7 @@ CREATE TABLE `sys_login_log`  (
 DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu`  (
   `menu_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `menu_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '名称',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '名称',
   `parent_id` bigint(0) NULL DEFAULT 0 COMMENT '父ID',
   `path` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '路径',
   `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '组件',
@@ -602,9 +602,9 @@ CREATE TABLE `sys_notice`  (
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '公告内容',
   `notice_type` tinyint(0) NOT NULL COMMENT '公告类型（1通知 2公告）',
   `status` tinyint(0) NOT NULL DEFAULT 0 COMMENT '公告状态（0正常 1关闭）',
-  `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `createBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `updater` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `updateBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
@@ -641,9 +641,9 @@ CREATE TABLE `sys_operate_log`  (
   `result_code` int(0) NOT NULL DEFAULT 0 COMMENT '结果码',
   `result_msg` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '结果提示',
   `result_data` varchar(4000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '结果数据',
-  `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `createBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `updater` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `updateBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
@@ -659,8 +659,8 @@ CREATE TABLE `sys_operate_log`  (
 DROP TABLE IF EXISTS `sys_post`;
 CREATE TABLE `sys_post`  (
   `post_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
-  `post_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '岗位编码',
-  `post_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '岗位名称',
+  `code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '岗位编码',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '岗位名称',
   `sort` int(0) NOT NULL COMMENT '显示顺序',
   `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '状态（1正常 0停用）',
   `deleted` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '删除标志：1存在、0删除',
@@ -682,7 +682,7 @@ INSERT INTO `sys_post` VALUES (1, '1', '1', 1, '1', NULL, '', NULL, '', NULL);
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role`  (
   `role_id` bigint(20) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `role_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
   `code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标识',
   `level` int(0) NULL DEFAULT NULL COMMENT '级别',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
@@ -695,8 +695,8 @@ CREATE TABLE `sys_role`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建日期',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`role_id`) USING BTREE,
-  UNIQUE INDEX `uniq_name`(`role_name`) USING BTREE,
-  INDEX `role_name_index`(`role_name`) USING BTREE
+  UNIQUE INDEX `uniq_name`(`name`) USING BTREE,
+  INDEX `name_index`(`name`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Compact;
 
 -- ----------------------------
@@ -985,9 +985,9 @@ CREATE TABLE `sys_user_session`  (
   `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户账号',
   `user_ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户 IP',
   `user_agent` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '浏览器 UA',
-  `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `createBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `create_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `updater` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  `updateBy` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE

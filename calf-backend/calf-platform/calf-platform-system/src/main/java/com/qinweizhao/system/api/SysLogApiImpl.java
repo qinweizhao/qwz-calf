@@ -1,8 +1,6 @@
 package com.qinweizhao.system.api;
 
 import com.qinweizhao.api.system.SysLogApi;
-
-
 import com.qinweizhao.api.system.dto.SysLogDTO;
 import com.qinweizhao.system.module.monitor.entity.SysLog;
 import com.qinweizhao.system.module.monitor.service.ISysLogService;
@@ -26,7 +24,7 @@ public class SysLogApiImpl implements SysLogApi {
     @Override
     public void saveLog(SysLogDTO sysLog) {
         SysLog sysOperateLog = new SysLog();
-        BeanUtils.copyProperties(sysLog,sysOperateLog);
+        BeanUtils.copyProperties(sysLog, sysOperateLog);
         sysLogService.save(sysOperateLog);
     }
 }

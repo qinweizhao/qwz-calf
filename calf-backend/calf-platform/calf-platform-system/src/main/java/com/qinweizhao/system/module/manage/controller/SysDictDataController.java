@@ -3,7 +3,7 @@ package com.qinweizhao.system.module.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.qinweizhao.common.core.response.Result;
-import com.qinweizhao.system.module.manage.entity.SysDictData;
+import com.qinweizhao.system.module.manage.entity.SysDictItem;
 import com.qinweizhao.system.module.manage.service.ISysDictDataService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -30,15 +30,15 @@ public class SysDictDataController {
 
     @PostMapping("/save")
     @ApiOperation("新增字典数据")
-    public Result<Long> save(@Valid @RequestBody SysDictData sysDictData) {
-        Long dictDataId = sysDictDataService.saveDictData(sysDictData);
+    public Result<Long> save(@Valid @RequestBody SysDictItem sysDictItem) {
+        Long dictDataId = sysDictDataService.saveDictData(sysDictItem);
         return Result.success(dictDataId);
     }
 
     @PutMapping("update")
     @ApiOperation("修改字典数据")
-    public Result<Boolean> updateDictData(@Valid @RequestBody SysDictData sysDictData) {
-        return Result.condition(sysDictDataService.updateDictData(sysDictData));
+    public Result<Boolean> updateDictData(@Valid @RequestBody SysDictItem sysDictItem) {
+        return Result.condition(sysDictDataService.updateDictData(sysDictItem));
     }
 
     @DeleteMapping("/delete")
@@ -50,20 +50,20 @@ public class SysDictDataController {
 
     @GetMapping("/list")
     @ApiOperation(value = "获得全部字典数据列表")
-    public Result<List<SysDictData>> list() {
+    public Result<List<SysDictItem>> list() {
         return Result.success(sysDictDataService.list());
     }
 
     @GetMapping("/page")
     @ApiOperation("/获得字典类型的分页列表")
-    public Result<IPage<SysDictData>> getDictTypePage(@Valid SysDictData sysDictData) {
-        return Result.success(sysDictDataService.pageDictDatas(sysDictData));
+    public Result<IPage<SysDictItem>> getDictTypePage(@Valid SysDictItem sysDictItem) {
+        return Result.success(sysDictDataService.pageDictDatas(sysDictItem));
     }
 
     @GetMapping(value = "/get")
     @ApiOperation("/查询字典数据详细")
     @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
-    public Result<SysDictData> getDictData(@RequestParam("id") Long id) {
+    public Result<SysDictItem> getDictData(@RequestParam("id") Long id) {
         return Result.success(sysDictDataService.getById(id));
     }
 

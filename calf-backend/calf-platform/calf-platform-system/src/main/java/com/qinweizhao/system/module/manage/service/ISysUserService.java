@@ -1,11 +1,10 @@
 package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.qinweizhao.api.system.dto.SysUserDTO;
-import com.qinweizhao.api.system.dto.query.SysUserPageQry;
 import com.qinweizhao.api.system.dto.command.SysUserSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysUserUpdateCmd;
+import com.qinweizhao.api.system.dto.query.SysUserPageQry;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 
 import java.util.List;

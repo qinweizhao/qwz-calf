@@ -2,10 +2,10 @@ package com.qinweizhao.system.module.manage.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.qinweizhao.api.system.dto.SysRoleDTO;
 import com.qinweizhao.api.system.dto.command.SysRoleSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysRoleUpdateCmd;
 import com.qinweizhao.api.system.dto.query.SysRolePageQry;
-import com.qinweizhao.api.system.dto.SysRoleDTO;
 import com.qinweizhao.api.system.vo.SysRoleVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.common.log.annotation.SysLog;
@@ -30,12 +30,11 @@ import java.util.List;
  * @since 2021-12-06
  */
 @RestController
-    @RequestMapping("/system/manage/role")
+@RequestMapping("/system/manage/role")
 public class SysRoleController {
 
     @Resource
     private ISysRoleService sysRoleService;
-
 
 
     @GetMapping("/get")
@@ -68,7 +67,7 @@ public class SysRoleController {
     @PutMapping("/update")
     @ApiOperation("修改角色")
     @PreAuthorize("hasAuthority('system:role:update')")
-    public Result<Boolean> updateRole(@Valid @RequestBody SysRoleUpdateCmd sysRoleUpdateCmd) {
+    public Result<Boolean> updateByole(@Valid @RequestBody SysRoleUpdateCmd sysRoleUpdateCmd) {
         return Result.condition(sysRoleService.updateSysRoleById(sysRoleUpdateCmd));
     }
 
@@ -76,18 +75,18 @@ public class SysRoleController {
     @PutMapping("/update_status")
     @ApiOperation("修改状态")
     @PreAuthorize("hasAuthority('system:role:update')")
-    public Result<Boolean> updateRoleStatus(@RequestBody SysRoleDTO sysRoleDTO) {
+    public Result<Boolean> updateByoleStatus(@RequestBody SysRoleDTO sysRoleDTO) {
         Long roleId = sysRoleDTO.getRoleId();
         Integer status = sysRoleDTO.getStatus();
-        return Result.condition(sysRoleService.updateRoleStatusById(roleId, status));
+        return Result.condition(sysRoleService.updateByoleStatusById(roleId, status));
     }
 
     @SysLog("分配权限")
     @PutMapping("/update_role_permission")
     @ApiOperation("修改状态")
     @PreAuthorize("hasAuthority('system:role:update')")
-    public Result<Boolean> updateRolePermission(@RequestBody SysRoleDTO sysRoleDTO) {
-        return Result.condition(sysRoleService.updateRolePermission(sysRoleDTO));
+    public Result<Boolean> updateByolePermission(@RequestBody SysRoleDTO sysRoleDTO) {
+        return Result.condition(sysRoleService.updateByolePermission(sysRoleDTO));
     }
 
 

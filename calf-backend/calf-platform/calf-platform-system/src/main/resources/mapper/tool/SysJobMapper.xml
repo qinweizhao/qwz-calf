@@ -13,16 +13,16 @@
         <result column="retry_count" property="retryCount" />
         <result column="retry_interval" property="retryInterval" />
         <result column="monitor_timeout" property="monitorTimeout" />
-        <result column="creator" property="creator" />
+        <result column="createBy" property="createBy" />
         <result column="create_time" property="createTime" />
-        <result column="updater" property="updater" />
+        <result column="updateBy" property="updateBy" />
         <result column="update_time" property="updateTime" />
         <result column="deleted" property="deleted" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, status, handler_name, handler_param, cron_expression, retry_count, retry_interval, monitor_timeout, creator, create_time, updater, update_time, deleted
+        id, name, status, handler_name, handler_param, cron_expression, retry_count, retry_interval, monitor_timeout, createBy, create_time, updateBy, update_time, deleted
     </sql>
 
 </mapper>

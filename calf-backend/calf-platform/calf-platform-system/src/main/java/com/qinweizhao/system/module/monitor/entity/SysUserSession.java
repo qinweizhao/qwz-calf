@@ -46,13 +46,13 @@ public class SysUserSession implements Serializable {
     private String userAgent;
 
     @ApiModelProperty("创建者")
-    private String creator;
+    private String createBy;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
 
     @ApiModelProperty("更新者")
-    private String updater;
+    private String updateBy;
 
     @ApiModelProperty("更新时间")
     private LocalDateTime updateTime;

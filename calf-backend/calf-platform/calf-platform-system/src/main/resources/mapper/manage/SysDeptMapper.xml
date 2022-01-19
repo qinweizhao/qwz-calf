@@ -6,7 +6,7 @@
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.manage.entity.SysDept">
         <id column="dept_id" property="deptId"/>
         <result column="parent_id" property="parentId"/>
-        <result column="dept_name" property="name"/>
+        <result column="name" property="name"/>
         <result column="phone" property="phone"/>
         <result column="email" property="email"/>
         <result column="dept_sort" property="sort"/>
@@ -21,7 +21,7 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         create_by
-        ,create_time,deleted,dept_id,dept_name,email,parent_id,phone,sort,status,update_by,update_time
+        ,create_time,deleted,dept_id,name,email,parent_id,phone,sort,status,update_by,update_time
     </sql>
 
     <select id="selectListSimpleDepts" resultType="com.qinweizhao.system.module.manage.entity.SysDept">
@@ -32,7 +32,7 @@
     </select>
 
     <select id="selectnameByUserId" resultType="java.lang.String">
-        SELECT dept_name
+        SELECT name
         FROM sys_dept d
                  LEFT JOIN sys_user u ON d.dept_id = u.dept_id
         WHERE u.user_id = #{userId}
@@ -44,7 +44,7 @@
         FROM sys_dept
         <where>
             <if test="query.name != null and query.name != ''">
-                dept_name like concat('%', #{query.name}, '%')
+                name like concat('%', #{query.name}, '%')
             </if>
         </where>
     </select>
@@ -53,7 +53,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_dept
-        WHERE parent_id = #{parentId} AND dept_name=#{name}
+        WHERE parent_id = #{parentId} AND name=#{name}
     </select>
 
     <select id="selectCountByParentId" resultType="java.lang.Integer">

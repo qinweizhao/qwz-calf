@@ -13,7 +13,6 @@ import org.springframework.boot.jackson.JsonComponent;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -26,6 +25,9 @@ import java.util.Date;
 public class DateFormatConfig {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    private DateFormatConfig() {
+    }
 
     /**
      * 日期格式化
@@ -42,7 +44,7 @@ public class DateFormatConfig {
      */
     public static class DateJsonDeserializer extends JsonDeserializer<Date> {
         @Override
-        public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+        public Date deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
             try {
                 return DATE_FORMAT.parse(jsonParser.getText());
             } catch (ParseException e) {

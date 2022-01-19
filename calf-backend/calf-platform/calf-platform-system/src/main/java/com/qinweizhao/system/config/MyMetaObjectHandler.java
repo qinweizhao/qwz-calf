@@ -21,7 +21,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         log.info("start insert fill ....");
         Integer status = CalfDefaultValueUtils.getStatus();
-        log.info("default"+status);
+        log.info("default" + status);
         this
                 .strictInsertFill(metaObject, "sort", CalfDefaultValueUtils::getSort, Integer.class)
                 .strictInsertFill(metaObject, "deleted", CalfDefaultValueUtils::getDeleted, Integer.class)

@@ -19,6 +19,7 @@ public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
 
     /**
      * 通过菜单 Id 删除角色菜单
+     *
      * @param menuId menuId
      * @return int
      */
@@ -26,6 +27,7 @@ public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
 
     /**
      * 通过角色 Id 删除角色菜单
+     *
      * @param roleId roleId
      */
     int deleteRoleMenuByRoleId(Long roleId);
@@ -33,6 +35,7 @@ public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
 
     /**
      * 获取角色拥有的菜单 Id 集合
+     *
      * @param roleId Id
      * @return List<Long>
      */
@@ -41,15 +44,17 @@ public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
 
     /**
      * 批量插入
-     * @param roleId roleId
+     *
+     * @param roleId        roleId
      * @param insertMenuIds insertMenuIds
      */
-    void insertRoleMenuByRoleIdAndMenuIds(@Param("roleId") Long roleId,@Param("menuIds") Collection<Long> insertMenuIds);
+    void insertRoleMenuByRoleIdAndMenuIds(@Param("roleId") Long roleId, @Param("menuIds") Collection<Long> insertMenuIds);
 
     /**
      * 批量删除
-     * @param roleId roleId
+     *
+     * @param roleId        roleId
      * @param deleteMenuIds deleteMenuIds
      */
-    void deleteRoleMenuByRoleIdAndMenuIds(@Param("roleId")Long roleId,@Param("menuIds") Collection<Long> deleteMenuIds);
+    void deleteRoleMenuByRoleIdAndMenuIds(@Param("roleId") Long roleId, @Param("menuIds") Collection<Long> deleteMenuIds);
 }

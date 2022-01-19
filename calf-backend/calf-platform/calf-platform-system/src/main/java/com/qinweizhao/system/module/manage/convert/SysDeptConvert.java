@@ -3,7 +3,6 @@ package com.qinweizhao.system.module.manage.convert;
 import com.qinweizhao.api.system.dto.SysDeptDTO;
 import com.qinweizhao.api.system.dto.command.SysDeptSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysDeptUpdateCmd;
-import com.qinweizhao.api.system.dto.query.SysDeptListQry;
 import com.qinweizhao.api.system.vo.SysDeptVO;
 import com.qinweizhao.system.module.manage.entity.SysDept;
 import org.mapstruct.Mapper;
@@ -40,6 +39,7 @@ public interface SysDeptConvert {
      * @return SysDeptDTO
      */
     SysDeptVO convert(SysDeptDTO sysDept);
+
     /**
      * DO 转 DTO
      *
@@ -76,6 +76,7 @@ public interface SysDeptConvert {
 
     /**
      * DO 转 DTO
+     *
      * @param selectListDepts selectListDepts
      * @return List<SysDeptDTO>
      */

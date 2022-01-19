@@ -1,7 +1,6 @@
 package com.qinweizhao.system.module.manage.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.api.system.dto.query.SysMenuListQry;
 import com.qinweizhao.system.module.manage.entity.SysMenu;
 import org.apache.ibatis.annotations.Mapper;
@@ -24,7 +23,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * 获取菜单列表
      *
      * @param currentLoginUsername currentLoginUsername
-     * @param type             type
+     * @param type                 type
      * @return List<SysMenu>
      */
     List<SysMenu> selectMenuListByUsername(@Param("username") String currentLoginUsername, @Param("type") Integer type);
@@ -33,7 +32,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * 通过父 Id 和 菜单名称获取菜单
      *
      * @param parentId parentId
-     * @param name name
+     * @param name     name
      * @return SysMenu
      */
     SysMenu selectMenuByParentIdAndName(@Param("parentId") Long parentId, @Param("name") String name);
@@ -56,6 +55,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     /**
      * 查询菜单列表
+     *
      * @param sysMenuListQry sysMenuListQry
      * @return List<SysMenu>
      */

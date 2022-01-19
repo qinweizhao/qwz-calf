@@ -14,16 +14,16 @@
         <result column="duration" property="duration" />
         <result column="status" property="status" />
         <result column="result" property="result" />
-        <result column="creator" property="creator" />
+        <result column="createBy" property="createBy" />
         <result column="create_time" property="createTime" />
-        <result column="updater" property="updater" />
+        <result column="updateBy" property="updateBy" />
         <result column="update_time" property="updateTime" />
         <result column="deleted" property="deleted" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, job_id, handler_name, handler_param, execute_index, begin_time, end_time, duration, status, result, creator, create_time, updater, update_time, deleted
+        id, job_id, handler_name, handler_param, execute_index, begin_time, end_time, duration, status, result, createBy, create_time, updateBy, update_time, deleted
     </sql>
 
 </mapper>

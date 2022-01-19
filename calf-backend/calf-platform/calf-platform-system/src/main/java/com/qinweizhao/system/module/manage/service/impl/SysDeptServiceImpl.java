@@ -49,7 +49,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      * @return String
      */
     @Override
-    public String getnameByUserId(Long userId) {
+    public String getNameByUserId(Long userId) {
         return sysDeptMapper.selectnameByUserId(userId);
     }
 
@@ -137,7 +137,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      *
      * @param deptId   deptId
      * @param parentId parentId
-     * @param name name
+     * @param name     name
      */
     private void checknameUnique(Long deptId, Long parentId, String name) {
         SysDept menu = sysDeptMapper.selectDeptByParentIdAndName(parentId, name);

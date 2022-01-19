@@ -30,20 +30,23 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
     /**
      * 批量新增用户和角色关联
+     *
      * @param list list
      */
     int insertBatchUserRole(List<SysUserRole> list);
 
     /**
      * 通过用户 Id 和 角色 Ids 删除用户和角色关联
-     * @param userId userId
-     * @param roleIds  roleIds
+     *
+     * @param userId  userId
+     * @param roleIds roleIds
      * @return int
      */
     int deleteUserRoleByUserIdAndRoleIds(@Param("userId") Long userId, @Param("roleIds") Collection<Long> roleIds);
 
     /**
      * 通过角色 Id 删除用户和角色关联
+     *
      * @param roleId roleId
      * @return int
      */

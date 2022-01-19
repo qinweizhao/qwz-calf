@@ -41,14 +41,16 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
 
     /**
      * 通过父 Id 和部门名称查询部门
+     *
      * @param parentId parentId
-     * @param name name
+     * @param name     name
      * @return SysDept
      */
-    SysDept selectDeptByParentIdAndName( @Param("parentId") Long parentId, @Param("name") String name);
+    SysDept selectDeptByParentIdAndName(@Param("parentId") Long parentId, @Param("name") String name);
 
     /**
      * 统计下属部门个数
+     *
      * @param deptId deptId
      * @return int
      */

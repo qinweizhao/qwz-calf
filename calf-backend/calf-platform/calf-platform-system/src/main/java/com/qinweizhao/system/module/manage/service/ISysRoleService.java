@@ -1,12 +1,10 @@
 package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.qinweizhao.api.system.dto.SysRoleDTO;
 import com.qinweizhao.api.system.dto.command.SysRoleSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysRoleUpdateCmd;
 import com.qinweizhao.api.system.dto.query.SysRolePageQry;
-import com.qinweizhao.api.system.dto.SysRoleDTO;
-import com.qinweizhao.system.module.manage.entity.SysRole;
 
 import java.util.List;
 
@@ -23,14 +21,16 @@ public interface ISysRoleService {
 
     /**
      * 修改角色状态
+     *
      * @param roleId roleId
      * @param status status
      * @return boolean
      */
-    boolean updateRoleStatusById(Long roleId, Integer status);
+    boolean updateByoleStatusById(Long roleId, Integer status);
 
     /**
      * 保存用户
+     *
      * @param sysRoleSaveCmd sysRoleSaveCmd
      * @return int
      */
@@ -38,6 +38,7 @@ public interface ISysRoleService {
 
     /**
      * 通过 Id 更新角色
+     *
      * @param sysRoleUpdateCmd sysRoleUpdateCmd
      * @return int
      */
@@ -45,6 +46,7 @@ public interface ISysRoleService {
 
     /**
      * 删除角色
+     *
      * @param roleId roleId
      * @return int
      */
@@ -52,12 +54,14 @@ public interface ISysRoleService {
 
     /**
      * 获得角色列表，只要开启状态的
+     *
      * @return List<SysRole>
      */
     List<SysRoleDTO> listSimpleRoles();
 
     /**
      * 角色分页
+     *
      * @param sysRolePageQry sysRolePageQry
      * @return IPage<SysRoleVO>
      */
@@ -65,6 +69,7 @@ public interface ISysRoleService {
 
     /**
      * 获取角色拥有的菜单
+     *
      * @param roleId roleId
      * @return List<Long>
      */
@@ -72,13 +77,15 @@ public interface ISysRoleService {
 
     /**
      * 权限分配 部门和菜单
+     *
      * @param sysRoleDTO sysRoleDTO
      * @return int
      */
-    int updateRolePermission(SysRoleDTO sysRoleDTO);
+    int updateByolePermission(SysRoleDTO sysRoleDTO);
 
     /**
      * 通过 Id 获取角色
+     *
      * @param roleId roleId
      * @return SysRoleVO
      */

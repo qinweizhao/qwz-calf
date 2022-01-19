@@ -2,9 +2,9 @@ package com.qinweizhao.system.module.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.qinweizhao.system.module.manage.mapper.SysDictDataMapper;
+import com.qinweizhao.system.module.manage.entity.SysDictItem;
+import com.qinweizhao.system.module.manage.mapper.SysDictItemMapper;
 import com.qinweizhao.system.module.manage.service.ISysDictDataService;
-import com.qinweizhao.system.module.manage.entity.SysDictData;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,16 +16,16 @@ import org.springframework.stereotype.Service;
  * @since 2021-12-21
  */
 @Service
-public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataMapper, SysDictData> implements ISysDictDataService {
+public class SysDictDataServiceImpl extends ServiceImpl<SysDictItemMapper, SysDictItem> implements ISysDictDataService {
 
 
     @Override
-    public Long saveDictData(SysDictData sysDictData) {
+    public Long saveDictData(SysDictItem sysDictItem) {
         return null;
     }
 
     @Override
-    public int updateDictData(SysDictData sysDictData) {
+    public int updateDictData(SysDictItem sysDictItem) {
         return 0;
     }
 
@@ -35,7 +35,7 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataMapper, SysDi
     }
 
     @Override
-    public IPage<SysDictData> pageDictDatas(SysDictData sysDictData) {
+    public IPage<SysDictItem> pageDictDatas(SysDictItem sysDictItem) {
         return null;
     }
 }

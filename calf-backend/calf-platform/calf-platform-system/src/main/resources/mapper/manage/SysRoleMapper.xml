@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.manage.entity.SysRole">
         <id column="role_id" property="roleId"/>
-        <result column="role_name" property="roleName"/>
+        <result column="name" property="roleName"/>
         <result column="code" property="code"/>
         <result column="description" property="description"/>
         <result column="data_scope" property="dataScope"/>
@@ -21,10 +21,10 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         create_by
-        ,create_time,data_scope,deleted,description,role_id,code,role_name,sort,status,update_by,update_time
+        ,create_time,data_scope,deleted,description,role_id,code,name,sort,status,update_by,update_time
     </sql>
 
-    <update id="updateRoleStatusById">
+    <update id="updateByoleStatusById">
         UPDATE sys_role
         SET status=#{status}
         WHERE role_id = #{roleId}
@@ -34,7 +34,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_role
-        WHERE role_name = #{roleName}
+        WHERE name = #{roleName}
     </select>
 
     <select id="selectRoleBycode" resultType="com.qinweizhao.system.module.manage.entity.SysRole">
@@ -57,7 +57,7 @@
         FROM sys_role
         <where>
             <if test="query.roleId != null and query.roleId != ''">
-                role_name like concat('%', #{query.roleId}, '%')
+                name like concat('%', #{query.roleId}, '%')
             </if>
             <!-- 开始时间检索 -->
             <if test="query.beginTime != null and query.beginTime != ''">

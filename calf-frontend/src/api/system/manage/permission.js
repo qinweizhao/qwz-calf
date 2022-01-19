@@ -9,7 +9,7 @@ export function listRoleMenus(roleId) {
 }
 
 // 赋予角色菜单
-export function updateRolePermission(data) {
+export function updateByolePermission(data) {
   return request({
     url: '/system/manage/role/update_role_permission',
     method: 'put',

@@ -6,10 +6,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.qinweizhao.common.core.exception.ServiceException;
-import com.qinweizhao.system.module.manage.mapper.SysDictDataMapper;
-import com.qinweizhao.system.module.manage.mapper.SysDictTypeMapper;
-import com.qinweizhao.system.module.manage.service.ISysDictTypeService;
-import com.qinweizhao.system.module.manage.entity.SysDictType;
+import com.qinweizhao.system.module.manage.entity.SysDict;
+import com.qinweizhao.system.module.manage.mapper.SysDictItemMapper;
+import com.qinweizhao.system.module.manage.mapper.SysDictMapper;
+import com.qinweizhao.system.module.manage.service.ISysDictService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,18 +25,18 @@ import static com.qinweizhao.common.core.response.ResultCode.*;
  * @since 2021-12-21
  */
 @Service
-public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDictType> implements ISysDictTypeService {
+public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> implements ISysDictService {
 
     @Resource
-    SysDictDataMapper sysDictDataMapper;
+    SysDictItemMapper sysDictItemMapper;
 
 
     @Override
-    public int saveDictType(SysDictType sysDictType) {
+    public int saveDictType(SysDict sysDict) {
         // 校验正确性
-        this.checkSaveOrUpdate(null, sysDictType.getName(), sysDictType.getType());
+        this.checkSaveOrUpdate(null, sysDict.getName(), sysDict.getType());
         // 插入字典类型
-        return this.baseMapper.insert(sysDictType);
+        return this.baseMapper.insert(sysDict);
     }
 
     /**
@@ -59,13 +59,13 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
      * 检查字典类型是否存在
      *
      * @param id id
-     * @return SysDictType
+     * @return SysDict
      */
-    private SysDictType checkDictTypeExists(Long id) {
+    private SysDict checkDictTypeExists(Long id) {
         if (id == null) {
             return null;
         }
-        SysDictType dictType = this.baseMapper.selectById(id);
+        SysDict dictType = this.baseMapper.selectById(id);
         if (dictType == null) {
             throw new ServiceException(DICT_TYPE_NOT_EXISTS);
         }
@@ -79,7 +79,7 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
      * @param name name
      */
     private void checkDictTypeNameUnique(Long id, String name) {
-        SysDictType dictType = this.baseMapper.selectDictTypeByName(name);
+        SysDict dictType = this.baseMapper.selectDictTypeByName(name);
         if (dictType == null) {
             return;
         }
@@ -99,7 +99,7 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
      * @param type type
      */
     private void checkDictTypeUnique(Long id, String type) {
-        SysDictType dictType = this.baseMapper.selectDictTypeByType(type);
+        SysDict dictType = this.baseMapper.selectDictTypeByType(type);
         if (dictType == null) {
             return;
         }
@@ -113,19 +113,19 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
     }
 
     @Override
-    public int updateDictType(SysDictType sysDictType) {
+    public int updateDictType(SysDict sysDict) {
         // 校验正确性
-        this.checkSaveOrUpdate(sysDictType.getId(), sysDictType.getName(), null);
+        this.checkSaveOrUpdate(sysDict.getId(), sysDict.getName(), null);
         // 更新字典类型
-        return this.baseMapper.updateById(sysDictType);
+        return this.baseMapper.updateById(sysDict);
     }
 
     @Override
     public int removeDictType(Long id) {
         // 校验是否存在
-        SysDictType dictType = this.checkDictTypeExists(id);
+        SysDict dictType = this.checkDictTypeExists(id);
         // 校验是否有字典数据
-        if (sysDictDataMapper.selectCountByDictType(dictType.getType()) > 0) {
+        if (sysDictItemMapper.selectCountByDictType(dictType.getType()) > 0) {
             throw new ServiceException(DICT_TYPE_HAS_CHILDREN);
         }
         // 删除字典类型
@@ -133,8 +133,8 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
     }
 
     @Override
-    public IPage<SysDictType> pageDictTypes(Page<SysDictType> page, SysDictType sysDictType) {
-        QueryWrapper<SysDictType> queryWrapper = new QueryWrapper<>();
-        return this.baseMapper.selectPage(page,queryWrapper);
+    public IPage<SysDict> pageDictTypes(Page<SysDict> page, SysDict sysDict) {
+        QueryWrapper<SysDict> queryWrapper = new QueryWrapper<>();
+        return this.baseMapper.selectPage(page, queryWrapper);
     }
 }

@@ -2,9 +2,9 @@ package com.qinweizhao.system.api;
 
 import cn.hutool.core.codec.Base64;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.qinweizhao.api.system.SysUserApi;
 import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.common.core.constant.AuthConstants;
-import com.qinweizhao.api.system.SysUserApi;
 import com.qinweizhao.common.core.util.GuavaCacheUtils;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
@@ -57,7 +57,7 @@ public class SysUserApiImpl implements SysUserApi {
     public SysUserDTO getUserIdByUsername(String username) {
         SysUser sysUser = sysUserService.selectUserByUsername(username);
         SysUserDTO user = new SysUserDTO();
-        BeanUtils.copyProperties(sysUser,user);
+        BeanUtils.copyProperties(sysUser, user);
         return user;
     }
 }

@@ -25,5 +25,4 @@ public interface SysUserPostMapper extends BaseMapper<SysUserPost> {
     List<Long> selectPostIdsByUserId(Long userId);
 
 
-
 }

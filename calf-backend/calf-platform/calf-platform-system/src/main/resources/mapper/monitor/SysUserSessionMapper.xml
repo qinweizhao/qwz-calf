@@ -11,16 +11,16 @@
         <result column="username" property="username" />
         <result column="user_ip" property="userIp" />
         <result column="user_agent" property="userAgent" />
-        <result column="creator" property="creator" />
+        <result column="createBy" property="createBy" />
         <result column="create_time" property="createTime" />
-        <result column="updater" property="updater" />
+        <result column="updateBy" property="updateBy" />
         <result column="update_time" property="updateTime" />
         <result column="deleted" property="deleted" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_id, user_type, session_timeout, username, user_ip, user_agent, creator, create_time, updater, update_time, deleted
+        id, user_id, user_type, session_timeout, username, user_ip, user_agent, createBy, create_time, updateBy, update_time, deleted
     </sql>
 
 </mapper>

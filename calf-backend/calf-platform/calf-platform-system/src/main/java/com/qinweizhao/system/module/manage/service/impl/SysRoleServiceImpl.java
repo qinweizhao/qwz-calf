@@ -53,8 +53,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
 
     @Override
-    public boolean updateRoleStatusById(Long roleId, Integer status) {
-        return sysRoleMapper.updateRoleStatusById(roleId, status);
+    public boolean updateByoleStatusById(Long roleId, Integer status) {
+        return sysRoleMapper.updateByoleStatusById(roleId, status);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public int updateSysRoleById(SysRoleUpdateCmd sysRoleUpdateCmd) {
         // 校验是否可以更新
-        this.checkUpdateRole(sysRoleUpdateCmd.getRoleId());
+        this.checkupdateByole(sysRoleUpdateCmd.getRoleId());
         // 校验角色的唯一字段是否重复
         checkDuplicateRole(sysRoleUpdateCmd.getRoleName(), sysRoleUpdateCmd.getCode(), sysRoleUpdateCmd.getRoleId());
         SysRole sysRole = SysRoleConvert.INSTANCE.convert(sysRoleUpdateCmd);
@@ -79,7 +79,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public int removeRole(Long roleId) {
         // 校验是否可以更新
-        this.checkUpdateRole(roleId);
+        this.checkupdateByole(roleId);
         // 标记删除
         int i = sysRoleMapper.deleteById(roleId);
         // 删除相关数据
@@ -107,10 +107,10 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
-    public int updateRolePermission(SysRoleDTO sysRoleDTO) {
+    public int updateByolePermission(SysRoleDTO sysRoleDTO) {
         Long roleId = sysRoleDTO.getRoleId();
         // 校验是否可以更新
-        checkUpdateRole(roleId);
+        checkupdateByole(roleId);
         // 更新数据范围
         SysRole sysRole = new SysRole();
         sysRole.setRoleId(sysRoleDTO.getRoleId());
@@ -155,7 +155,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return sysRoleDTO;
     }
 
-    private void checkUpdateRole(Long roleId) {
+    private void checkupdateByole(Long roleId) {
         SysRole sysRole = sysRoleMapper.selectById(roleId);
         if (sysRole == null) {
             throw new ServiceException(ResultCode.ROLE_NOT_EXISTS);

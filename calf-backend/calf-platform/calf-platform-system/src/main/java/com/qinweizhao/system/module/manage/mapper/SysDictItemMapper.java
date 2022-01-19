@@ -2,7 +2,7 @@ package com.qinweizhao.system.module.manage.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.qinweizhao.system.module.manage.entity.SysDictData;
+import com.qinweizhao.system.module.manage.entity.SysDictItem;
 
 /**
  * <p>
@@ -12,7 +12,7 @@ import com.qinweizhao.system.module.manage.entity.SysDictData;
  * @author qinweizhao
  * @since 2021-12-21
  */
-public interface SysDictDataMapper extends BaseMapper<SysDictData> {
+public interface SysDictItemMapper extends BaseMapper<SysDictItem> {
 
     int selectCountByDictType(String type);
 }

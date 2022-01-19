@@ -1,8 +1,5 @@
 package com.qinweizhao.system.module.manage.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.qinweizhao.system.module.manage.entity.SysUserPost;
-
 import java.util.List;
 
 /**

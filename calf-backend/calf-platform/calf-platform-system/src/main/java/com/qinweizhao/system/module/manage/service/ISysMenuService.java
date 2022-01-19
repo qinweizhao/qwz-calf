@@ -16,10 +16,11 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-10
  */
-public interface ISysMenuService  {
+public interface ISysMenuService {
 
     /**
      * 树形菜单
+     *
      * @param currentLoginUsername currentLoginUsername
      * @return List<SysMenu>
      */
@@ -27,6 +28,7 @@ public interface ISysMenuService  {
 
     /**
      * 保存
+     *
      * @param sysMenuSaveCmd sysMenuSaveCmd
      * @return Integer
      */
@@ -34,6 +36,7 @@ public interface ISysMenuService  {
 
     /**
      * 更新
+     *
      * @param sysMenuUpdateCmd sysMenuUpdateQry
      * @return Integer
      */
@@ -41,6 +44,7 @@ public interface ISysMenuService  {
 
     /**
      * 移除
+     *
      * @param menuId menuId
      * @return Integer
      */
@@ -48,12 +52,14 @@ public interface ISysMenuService  {
 
     /**
      * 开启的角色列表
+     *
      * @return List<SysMenu>
      */
     List<SysMenuDTO> listSimpleRoles();
 
     /**
      * 获取菜单列表
+     *
      * @param sysMenuListQry sysMenuListQry
      * @return List<SysMenuDTO>
      */
@@ -61,6 +67,7 @@ public interface ISysMenuService  {
 
     /**
      * 通过 Id 获取菜单
+     *
      * @param id id
      * @return SysMenuDTO
      */

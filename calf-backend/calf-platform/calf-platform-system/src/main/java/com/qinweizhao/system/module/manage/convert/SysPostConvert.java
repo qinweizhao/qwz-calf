@@ -41,6 +41,7 @@ public interface SysPostConvert {
      * @return SysPostDTO
      */
     SysPostVO convert(SysPostDTO SysPost);
+
     /**
      * DO 转 DTO
      *
@@ -86,6 +87,7 @@ public interface SysPostConvert {
 
     /**
      * DO 转 DTO
+     *
      * @param selectListDepts selectListDepts
      * @return List<SysPostDTO>
      */
@@ -93,6 +95,7 @@ public interface SysPostConvert {
 
     /**
      * DO 转 DTO
+     *
      * @param selectListDepts selectListDepts
      * @return List<SysPostDTO>
      */

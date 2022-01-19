@@ -59,7 +59,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     /**
      * 查询用户分页
      *
-     * @param page   page
+     * @param page           page
      * @param sysUserPageQry sysUserPageQry
      * @return IPage<SysUser>
      */
@@ -73,6 +73,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**
      * 通过用户 Id 获取所拥有的角色 Id 集合
+     *
      * @param userId userId
      * @return List<Long>
      */

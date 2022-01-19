@@ -293,11 +293,11 @@ import {
   delRole,
   getRole,
   listRole,
-  updateRole,
+  updateByole,
 } from "@/api/system/manage/role";
 import { listSimpleMenus } from "@/api/system/manage/menu";
 import {
-  updateRolePermission,
+  updateByolePermission,
   listRoleMenus,
 } from "@/api/system/manage/permission";
 import { listSimpleDepts } from "@/api/system/manage/dept";
@@ -551,7 +551,7 @@ export default {
       this.$refs["form"].validate((valid) => {
         if (valid) {
           if (this.form.roleId !== undefined) {
-            updateRole(this.form).then((response) => {
+            updateByole(this.form).then((response) => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
@@ -569,7 +569,7 @@ export default {
     /** 提交按钮（权限分配） */
     submitMenu: function () {
       if (this.form.roleId !== undefined) {
-        updateRolePermission({
+        updateByolePermission({
           roleId: this.form.roleId,
           dataScope: this.form.dataScope,
           deptIds:

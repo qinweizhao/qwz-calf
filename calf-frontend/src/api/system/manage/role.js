@@ -35,7 +35,7 @@ export function addRole(data) {
 }
 
 // 修改角色
-export function updateRole(data) {
+export function updateByole(data) {
   return request({
     url: '/system/manage/role/update',
     method: 'put',

@@ -21,6 +21,7 @@ public interface SysRoleDeptMapper extends BaseMapper<SysRoleDept> {
 
     /**
      * 查询部门 Ids
+     *
      * @param roleId roleId
      * @return List<Long>
      */
@@ -28,10 +29,11 @@ public interface SysRoleDeptMapper extends BaseMapper<SysRoleDept> {
 
     /**
      * 删除角色部门关联
-     * @param roleId roleId
+     *
+     * @param roleId        roleId
      * @param deleteRoleIds deleteRoleIds
      */
-    void deleteRoleDeptByRoleIdAndDeptIds(@Param("roleId") Long roleId,@Param("deptIds") Collection<Long> deleteRoleIds);
+    void deleteRoleDeptByRoleIdAndDeptIds(@Param("roleId") Long roleId, @Param("deptIds") Collection<Long> deleteRoleIds);
 
     void deleteRoleDeptByDeptId(Long deptId);
 }

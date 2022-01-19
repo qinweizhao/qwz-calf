@@ -3,7 +3,7 @@ package com.qinweizhao.system.module.manage.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.qinweizhao.system.module.manage.entity.SysDictType;
+import com.qinweizhao.system.module.manage.entity.SysDict;
 
 /**
  * <p>
@@ -13,23 +13,23 @@ import com.qinweizhao.system.module.manage.entity.SysDictType;
  * @author qinweizhao
  * @since 2021-12-21
  */
-public interface ISysDictTypeService extends IService<SysDictType> {
+public interface ISysDictService extends IService<SysDict> {
 
     /**
      * 保存字典类型
      *
-     * @param sysDictType sysDictType
+     * @param sysDict sysDict
      * @return int
      */
-    int saveDictType(SysDictType sysDictType);
+    int saveDictType(SysDict sysDict);
 
     /**
      * 修改字典类型
      *
-     * @param sysDictType sysDictType
+     * @param sysDict sysDict
      * @return int
      */
-    int updateDictType(SysDictType sysDictType);
+    int updateDictType(SysDict sysDict);
 
     /**
      * 删除字典类型
@@ -42,8 +42,8 @@ public interface ISysDictTypeService extends IService<SysDictType> {
     /**
      * 分页
      *
-     * @param sysDictType sysDictType
-     * @return IPage<SysDictType>
+     * @param sysDict sysDict
+     * @return IPage<SysDict>
      */
-    IPage<SysDictType> pageDictTypes(Page<SysDictType> page, SysDictType sysDictType);
+    IPage<SysDict> pageDictTypes(Page<SysDict> page, SysDict sysDict);
 }
