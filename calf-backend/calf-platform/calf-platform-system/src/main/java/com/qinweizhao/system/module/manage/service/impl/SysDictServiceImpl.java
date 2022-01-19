@@ -4,8 +4,11 @@ package com.qinweizhao.system.module.manage.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.qinweizhao.api.system.dto.SysDictDTO;
+import com.qinweizhao.api.system.dto.command.SysDictSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysDictUpdateCmd;
 import com.qinweizhao.common.core.exception.ServiceException;
+import com.qinweizhao.system.module.manage.convert.SysDictConvert;
 import com.qinweizhao.system.module.manage.entity.SysDict;
 import com.qinweizhao.system.module.manage.mapper.SysDictItemMapper;
 import com.qinweizhao.system.module.manage.mapper.SysDictMapper;
@@ -13,6 +16,7 @@ import com.qinweizhao.system.module.manage.service.ISysDictService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 import static com.qinweizhao.common.core.response.ResultCode.*;
 
@@ -25,18 +29,21 @@ import static com.qinweizhao.common.core.response.ResultCode.*;
  * @since 2021-12-21
  */
 @Service
-public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> implements ISysDictService {
+public class SysDictServiceImpl implements ISysDictService {
+
+    @Resource
+    private SysDictMapper sysDictMapper;
 
     @Resource
     SysDictItemMapper sysDictItemMapper;
 
-
     @Override
-    public int saveDictType(SysDict sysDict) {
+    public int saveDictType(SysDictSaveCmd sysDictSaveCmd) {
         // 校验正确性
-        this.checkSaveOrUpdate(null, sysDict.getName(), sysDict.getType());
+        this.checkSaveOrUpdate(null, sysDictSaveCmd.getName(), sysDictSaveCmd.getType());
+        SysDict sysDict = SysDictConvert.INSTANCE.convert(sysDictSaveCmd);
         // 插入字典类型
-        return this.baseMapper.insert(sysDict);
+        return sysDictMapper.insert(sysDict);
     }
 
     /**
@@ -65,7 +72,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
         if (id == null) {
             return null;
         }
-        SysDict dictType = this.baseMapper.selectById(id);
+        SysDict dictType = sysDictMapper.selectById(id);
         if (dictType == null) {
             throw new ServiceException(DICT_TYPE_NOT_EXISTS);
         }
@@ -79,7 +86,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
      * @param name name
      */
     private void checkDictTypeNameUnique(Long id, String name) {
-        SysDict dictType = this.baseMapper.selectDictTypeByName(name);
+        SysDict dictType = sysDictMapper.selectDictTypeByName(name);
         if (dictType == null) {
             return;
         }
@@ -87,7 +94,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
         if (id == null) {
             throw new ServiceException(DICT_TYPE_TYPE_DUPLICATE);
         }
-        if (!dictType.getId().equals(id)) {
+        if (!dictType.getDictId().equals(id)) {
             throw new ServiceException(DICT_TYPE_TYPE_DUPLICATE);
         }
     }
@@ -99,7 +106,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
      * @param type type
      */
     private void checkDictTypeUnique(Long id, String type) {
-        SysDict dictType = this.baseMapper.selectDictTypeByType(type);
+        SysDict dictType = sysDictMapper.selectDictTypeByType(type);
         if (dictType == null) {
             return;
         }
@@ -107,34 +114,59 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
         if (id == null) {
             throw new ServiceException(DICT_TYPE_TYPE_DUPLICATE);
         }
-        if (!dictType.getId().equals(id)) {
+        if (!dictType.getDictId().equals(id)) {
             throw new ServiceException(DICT_TYPE_TYPE_DUPLICATE);
         }
     }
 
     @Override
-    public int updateDictType(SysDict sysDict) {
+    public int updateDictType(SysDictUpdateCmd sysDictUpdateCmd) {
         // 校验正确性
-        this.checkSaveOrUpdate(sysDict.getId(), sysDict.getName(), null);
+        this.checkSaveOrUpdate(sysDictUpdateCmd.getDictId(), sysDictUpdateCmd.getName(), null);
         // 更新字典类型
-        return this.baseMapper.updateById(sysDict);
+        SysDict sysDict = SysDictConvert.INSTANCE.convert(sysDictUpdateCmd);
+        return sysDictMapper.updateById(sysDict);
     }
 
     @Override
-    public int removeDictType(Long id) {
+    public int removeDict(Long id) {
         // 校验是否存在
-        SysDict dictType = this.checkDictTypeExists(id);
-        // 校验是否有字典数据
-        if (sysDictItemMapper.selectCountByDictType(dictType.getType()) > 0) {
-            throw new ServiceException(DICT_TYPE_HAS_CHILDREN);
+        SysDict sysDict = this.checkDictTypeExists(id);
+        if (sysDict != null) {
+            // 校验是否有字典数据
+            int i = sysDictItemMapper.selectCountByDictType(sysDict.getType());
+            if (i > 0) {
+                throw new ServiceException(DICT_TYPE_HAS_CHILDREN);
+            }
         }
         // 删除字典类型
-        return this.baseMapper.deleteById(id);
+        return sysDictMapper.deleteById(id);
     }
 
     @Override
     public IPage<SysDict> pageDictTypes(Page<SysDict> page, SysDict sysDict) {
         QueryWrapper<SysDict> queryWrapper = new QueryWrapper<>();
-        return this.baseMapper.selectPage(page, queryWrapper);
+        return sysDictMapper.selectPage(page, queryWrapper);
+    }
+
+    /**
+     * 获取字典
+     *
+     * @param dictId dictId
+     * @return SysDictDTO
+     */
+    @Override
+    public SysDictDTO getDict(Long dictId) {
+        return SysDictConvert.INSTANCE.convert(sysDictMapper.selectById(dictId));
+    }
+
+    /**
+     * 获取字典列表
+     *
+     * @return List<SysDictDTO>
+     */
+    @Override
+    public List<SysDictDTO> listSimpleDicts() {
+        return SysDictConvert.INSTANCE.convertToDTO(sysDictMapper.selectList(null));
     }
 }

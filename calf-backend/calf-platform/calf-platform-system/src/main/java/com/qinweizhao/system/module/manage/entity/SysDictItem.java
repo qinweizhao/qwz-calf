@@ -27,8 +27,8 @@ public class SysDictItem implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("字典编码")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "dict_item_id", type = IdType.AUTO)
+    private Long dictItemId;
 
     @ApiModelProperty("字典排序")
     private Integer sort;

@@ -22,6 +22,11 @@ public interface SysUserPostMapper extends BaseMapper<SysUserPost> {
 
     int insertBatchUserPost(@Param("list") List<SysUserPost> list);
 
+    /**
+     * 通过用户 Id 查询所属岗位集合
+     * @param userId userId
+     * @return List<Long>
+     */
     List<Long> selectPostIdsByUserId(Long userId);
 
 

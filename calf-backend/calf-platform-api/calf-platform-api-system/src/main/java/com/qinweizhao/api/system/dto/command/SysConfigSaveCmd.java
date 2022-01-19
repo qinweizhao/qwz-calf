@@ -1,4 +1,4 @@
-package com.qinweizhao.system.module.manage.entity;
+package com.qinweizhao.api.system.dto.command;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Data
 @TableName("sys_config")
 @ApiModel(value = "SysConfig对象", description = "参数配置表")
-public class SysConfig implements Serializable {
+public class SysConfigSaveCmd implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,6 @@ public class SysConfig implements Serializable {
     @ApiModelProperty("参数键值")
     private String value;
 
-     
 
     @ApiModelProperty("备注")
     private String remark;

@@ -114,6 +114,7 @@ public enum ResultCode implements IResultCode {
      * 角色代码已存在
      */
     ROLE_IS_EXIST(13002, "角色代码已存在"),
+
     /**
      * 配置信息为空
      */
@@ -134,6 +135,16 @@ public enum ResultCode implements IResultCode {
      * 系统配置不允许删除
      */
     CONFIG_IS_NOT_DELETE(14003, "系统配置不允许删除"),
+    /**
+     * 参数配置不存在
+     */
+    CONFIG_NOT_EXISTS(14004, "参数配置不存在"),
+
+
+    CONFIG_KEY_DUPLICATE(1001000002, "参数配置 key 重复"),
+
+
+    CONFIG_CAN_NOT_DELETE_SYSTEM_TYPE(1001000003, "不能删除类型为系统内置的参数配置"),
     /**
      * 文件不存在
      */

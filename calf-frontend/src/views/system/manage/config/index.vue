@@ -97,24 +97,24 @@
 
     <el-table v-loading="loading" :data="configList">
       <el-table-column label="参数主键" align="center" prop="configId" />
-      <el-table-column label="参数分组" align="center" prop="configGroup" />
+      <el-table-column label="参数分组" align="center" prop="group" />
       <el-table-column
         label="参数名称"
         align="center"
-        prop="configName"
+        prop="name"
         :show-overflow-tooltip="true"
       />
       <el-table-column
         label="参数键名"
         align="center"
-        prop="configKey"
+        prop="key"
         :show-overflow-tooltip="true"
       />
-      <el-table-column label="参数键值" align="center" prop="configValue" />
-      <el-table-column label="系统内置" align="center" prop="configType">
+      <el-table-column label="参数键值" align="center" prop="value" />
+      <el-table-column label="系统内置" align="center" prop="type">
         <template slot-scope="scope">
           <span>{{
-            getDictDataLabel(DICT_TYPE.SYS_CONFIG_TYPE, scope.row.configType)
+            getDictDataLabel(DICT_TYPE.SYS_CONFIG_TYPE, scope.row.type)
           }}</span>
         </template>
       </el-table-column>

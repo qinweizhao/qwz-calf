@@ -1,4 +1,4 @@
-package com.qinweizhao.system.module.manage.entity;
+package com.qinweizhao.api.system.dto.query;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -22,7 +22,7 @@ import java.util.Date;
 @Data
 @TableName("sys_dict")
 @ApiModel(value = "SysDictType对象", description = "字典类型表")
-public class SysDict implements Serializable {
+public class SysDictPageQry implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

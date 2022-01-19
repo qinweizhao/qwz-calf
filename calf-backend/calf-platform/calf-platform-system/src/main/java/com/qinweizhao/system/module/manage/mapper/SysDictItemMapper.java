@@ -14,5 +14,10 @@ import com.qinweizhao.system.module.manage.entity.SysDictItem;
  */
 public interface SysDictItemMapper extends BaseMapper<SysDictItem> {
 
-    int selectCountByDictType(String type);
+    /**
+     * 通过字典类型统计字典项个数
+     * @param dictType dictType
+     * @return int
+     */
+    int selectCountByDictType(String dictType);
 }

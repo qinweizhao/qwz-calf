@@ -41,7 +41,6 @@ public class SysDeptController {
         return Result.success(SysDeptConvert.INSTANCE.convertToVO(sysDeptService.listDepts(sysDeptListQry)));
     }
 
-
     @GetMapping("/list-simple")
     @ApiOperation(value = "获取岗位精简信息列表", notes = "启用状态")
     public Result<List<SysDeptVO>> getSimpleRoles() {

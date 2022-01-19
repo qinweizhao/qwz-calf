@@ -1,8 +1,9 @@
-package com.qinweizhao.system.module.manage.entity;
+package com.qinweizhao.api.system.dto.query;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.qinweizhao.common.core.request.PageQry;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,7 +21,7 @@ import java.io.Serializable;
 @Data
 @TableName("sys_config")
 @ApiModel(value = "SysConfig对象", description = "参数配置表")
-public class SysConfig implements Serializable {
+public class SysConfigPageQry extends PageQry {
 
     private static final long serialVersionUID = 1L;
 

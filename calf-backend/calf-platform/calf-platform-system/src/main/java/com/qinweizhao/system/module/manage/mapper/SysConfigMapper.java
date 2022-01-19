@@ -3,7 +3,9 @@ package com.qinweizhao.system.module.manage.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.query.SysConfigPageQry;
 import com.qinweizhao.system.module.manage.entity.SysConfig;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -15,5 +17,7 @@ import com.qinweizhao.system.module.manage.entity.SysConfig;
  */
 public interface SysConfigMapper extends BaseMapper<SysConfig> {
 
-    IPage<SysConfig> selectPageConfigs(Page<SysConfig> page, SysConfig sysConfig);
+    IPage<SysConfig> selectPageConfigs(Page<SysConfig> page, @Param("query") SysConfigPageQry sysConfigPageQry);
+
+    SysConfig selectByCode(String code);
 }

@@ -53,6 +53,9 @@ public class SysMenu extends BaseEntity {
     @ApiModelProperty("图标")
     private String icon;
 
+    @ApiModelProperty("排序")
+    private Integer sort;
+
     @TableField(exist = false)
     private List<SysMenu> children;
 }

@@ -3,7 +3,11 @@ package com.qinweizhao.system.module.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.command.SysDictSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysDictUpdateCmd;
+import com.qinweizhao.api.system.vo.SysDictVO;
 import com.qinweizhao.common.core.response.Result;
+import com.qinweizhao.system.module.manage.convert.SysDictConvert;
 import com.qinweizhao.system.module.manage.entity.SysDict;
 import com.qinweizhao.system.module.manage.service.ISysDictService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -33,21 +37,21 @@ public class SysDictController {
 
     @PostMapping("/save")
     @ApiOperation("创建字典类型")
-    public Result<Boolean> createDictType(@Valid @RequestBody SysDict sysDict) {
-        return Result.condition(sysDictTypeService.saveDictType(sysDict));
+    public Result<Boolean> createDictType(@Valid @RequestBody SysDictSaveCmd sysDictSaveCmd) {
+        return Result.condition(sysDictTypeService.saveDictType(sysDictSaveCmd));
     }
 
     @PutMapping("/update")
     @ApiOperation("修改字典类型")
-    public Result<Boolean> updateDictType(@Valid @RequestBody SysDict sysDict) {
-        return Result.condition(sysDictTypeService.updateDictType(sysDict));
+    public Result<Boolean> updateDictType(@Valid @RequestBody SysDictUpdateCmd sysDictUpdateCmd) {
+        return Result.condition(sysDictTypeService.updateDictType(sysDictUpdateCmd));
     }
 
     @DeleteMapping("/remove")
     @ApiOperation("删除字典类型")
     @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
-    public Result<Boolean> deleteDictType(Long id) {
-        return Result.condition(sysDictTypeService.removeDictType(id));
+    public Result<Boolean> deleteDictType(Long dictId) {
+        return Result.condition(sysDictTypeService.removeDict(dictId));
     }
 
     @ApiOperation("/获得字典类型的分页列表")
@@ -59,20 +63,15 @@ public class SysDictController {
     @ApiOperation("/查询字典类型详细")
     @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     @GetMapping(value = "/get")
-    public Result<SysDict> getDictType(@RequestParam("id") Long id) {
-        return Result.success(sysDictTypeService.getById(id));
+    public Result<SysDictVO> get(@RequestParam("dictId") Long dictId) {
+        return Result.success(SysDictConvert.INSTANCE.convert(sysDictTypeService.getDict(dictId)));
     }
 
-    @GetMapping("/list")
+
+    @GetMapping("/list-simple")
     @ApiOperation(value = "获得全部字典类型列表", notes = "包括开启 + 禁用的字典类型，主要用于前端的下拉选项")
-    public Result<List<SysDict>> list() {
-        return Result.success(sysDictTypeService.list());
-    }
-
-    @ApiOperation("导出数据类型")
-    @GetMapping("/export")
-    public void export(HttpServletResponse response, @Valid SysDict sysDict) {
-        // 输出
+    public Result<List<SysDictVO>> list() {
+        return Result.success(SysDictConvert.INSTANCE.convert(sysDictTypeService.listSimpleDicts()));
     }
 
 }

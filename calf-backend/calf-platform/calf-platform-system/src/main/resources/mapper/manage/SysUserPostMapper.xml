@@ -8,6 +8,10 @@
         <id column="post_id" property="postId"/>
     </resultMap>
 
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id,post_id
+    </sql>
     <insert id="insertBatchUserPost">
         insert into sys_user_post(user_id, post_id) values
         <foreach item="item" index="index" collection="list" separator=",">
@@ -22,9 +26,10 @@
             #{userId}
         </foreach>
     </delete>
+
     <select id="selectPostIdsByUserId" resultType="java.lang.Long">
-        select *
-        from sys_user_post
+        SELECT post_id
+        from 'sys_user_post'
         where user_id = #{id}
     </select>
 
