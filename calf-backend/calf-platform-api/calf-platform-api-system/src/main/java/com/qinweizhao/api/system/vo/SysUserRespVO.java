@@ -50,7 +50,7 @@ public class SysUserRespVO implements Serializable {
     /**
      * 性别
      */
-    private String sex;
+    private Integer sex;
 
     /**
      * 岗位编号

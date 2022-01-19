@@ -29,7 +29,7 @@ public class SysRoleDTO implements Serializable {
     private Long roleId;
 
     @ApiModelProperty("名称")
-    private String roleName;
+    private String name;
 
     @ApiModelProperty("标识")
     private String code;

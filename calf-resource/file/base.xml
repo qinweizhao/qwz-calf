@@ -1,0 +1,5 @@
+<!-- 通用查询结果列 -->
+<sql id="Base_Column_List">
+    create_by
+    ,create_time,data_scope,deleted,description,role_id,code,name,sort,status,update_by,update_time
+</sql>

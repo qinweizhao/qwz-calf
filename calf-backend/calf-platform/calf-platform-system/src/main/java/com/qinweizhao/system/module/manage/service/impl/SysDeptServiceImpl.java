@@ -50,7 +50,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
      */
     @Override
     public String getNameByUserId(Long userId) {
-        return sysDeptMapper.selectnameByUserId(userId);
+        return sysDeptMapper.selectNameByUserId(userId);
     }
 
     @Override

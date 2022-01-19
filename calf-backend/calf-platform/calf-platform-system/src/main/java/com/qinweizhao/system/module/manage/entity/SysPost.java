@@ -3,9 +3,11 @@ package com.qinweizhao.system.module.manage.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.qinweizhao.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -21,7 +23,8 @@ import java.util.Date;
 @Data
 @TableName("sys_post")
 @ApiModel(value = "SysPost对象", description = "岗位信息表")
-public class SysPost implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class SysPost extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,22 +41,7 @@ public class SysPost implements Serializable {
     @ApiModelProperty("显示顺序")
     private Integer sort;
 
-    @ApiModelProperty("删除标志：1存在、0删除")
-    private Integer deleted;
-
     @ApiModelProperty("状态（1正常 0停用）")
     private Integer status;
-
-    @ApiModelProperty("创建者")
-    private String createBy;
-
-    @ApiModelProperty("创建时间")
-    private Date createTime;
-
-    @ApiModelProperty("更新者")
-    private String updateBy;
-
-    @ApiModelProperty("更新时间")
-    private Date updateTime;
 
 }

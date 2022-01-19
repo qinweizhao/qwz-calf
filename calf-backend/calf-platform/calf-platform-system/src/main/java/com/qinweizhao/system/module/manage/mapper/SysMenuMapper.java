@@ -26,7 +26,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @param type                 type
      * @return List<SysMenu>
      */
-    List<SysMenu> selectMenuListByUsername(@Param("username") String currentLoginUsername, @Param("type") Integer type);
+    List<SysMenu> selectListByUsername(@Param("username") String currentLoginUsername, @Param("type") Integer type);
 
     /**
      * 通过父 Id 和 菜单名称获取菜单

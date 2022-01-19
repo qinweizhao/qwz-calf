@@ -41,12 +41,13 @@ public class SysPostServiceImpl implements ISysPostService {
     public int savePost(SysPostSaveCmd sysPostSaveCmd) {
         // 校验正确性
         this.checkSaveOrUpdate(null, sysPostSaveCmd.getName(), sysPostSaveCmd.getCode());
-        //TODO
-        return 0;
+        SysPost sysPost = SysPostConvert.INSTANCE.convert(sysPostSaveCmd);
+        return sysPostMapper.insert(sysPost);
     }
 
     /**
      * 校验正确性
+     *
      *
      * @param postId postId
      * @param name   name

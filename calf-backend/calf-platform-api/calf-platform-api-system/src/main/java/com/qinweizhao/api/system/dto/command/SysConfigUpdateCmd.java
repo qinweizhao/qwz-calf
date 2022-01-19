@@ -43,8 +43,6 @@ public class SysConfigUpdateCmd implements Serializable {
     @ApiModelProperty("参数键值")
     private String value;
 
-     
-
     @ApiModelProperty("备注")
     private String remark;
 

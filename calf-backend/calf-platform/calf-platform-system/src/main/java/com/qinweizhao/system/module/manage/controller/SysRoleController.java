@@ -86,7 +86,7 @@ public class SysRoleController {
     @ApiOperation("修改状态")
     @PreAuthorize("hasAuthority('system:role:update')")
     public Result<Boolean> updateByolePermission(@RequestBody SysRoleDTO sysRoleDTO) {
-        return Result.condition(sysRoleService.updateByolePermission(sysRoleDTO));
+        return Result.condition(sysRoleService.updateByRolePermission(sysRoleDTO));
     }
 
 

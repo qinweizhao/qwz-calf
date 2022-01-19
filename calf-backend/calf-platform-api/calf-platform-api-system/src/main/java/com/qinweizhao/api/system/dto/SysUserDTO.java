@@ -49,7 +49,7 @@ public class SysUserDTO implements Serializable {
     /**
      * 性别
      */
-    private String sex;
+    private Integer sex;
 
 
     /**

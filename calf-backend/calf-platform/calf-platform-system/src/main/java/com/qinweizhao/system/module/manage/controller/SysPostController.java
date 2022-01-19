@@ -27,7 +27,7 @@ import java.util.List;
  * @since 2021-12-06
  */
 @RestController
-@RequestMapping("/sys/post")
+@RequestMapping("/system/manage/post")
 public class SysPostController {
 
     @Resource

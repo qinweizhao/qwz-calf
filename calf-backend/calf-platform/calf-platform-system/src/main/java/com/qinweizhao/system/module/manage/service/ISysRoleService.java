@@ -81,7 +81,7 @@ public interface ISysRoleService {
      * @param sysRoleDTO sysRoleDTO
      * @return int
      */
-    int updateByolePermission(SysRoleDTO sysRoleDTO);
+    int updateByRolePermission(SysRoleDTO sysRoleDTO);
 
     /**
      * 通过 Id 获取角色

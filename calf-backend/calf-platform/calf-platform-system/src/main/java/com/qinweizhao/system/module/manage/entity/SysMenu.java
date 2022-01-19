@@ -20,13 +20,11 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-06
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_menu")
 @ApiModel(value = "SysMenu对象", description = "菜单权限表")
+@EqualsAndHashCode(callSuper = true)
 public class SysMenu extends BaseEntity {
-
-    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("ID")
     @TableId(value = "menu_id", type = IdType.AUTO)
@@ -56,6 +54,4 @@ public class SysMenu extends BaseEntity {
     @ApiModelProperty("排序")
     private Integer sort;
 
-    @TableField(exist = false)
-    private List<SysMenu> children;
 }

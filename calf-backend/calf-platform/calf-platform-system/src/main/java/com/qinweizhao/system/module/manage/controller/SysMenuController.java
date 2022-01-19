@@ -8,7 +8,6 @@ import com.qinweizhao.api.system.vo.SysMenuVO;
 import com.qinweizhao.common.core.base.BaseController;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysMenuConvert;
-import com.qinweizhao.system.module.manage.entity.SysMenu;
 import com.qinweizhao.system.module.manage.service.ISysMenuService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -37,9 +36,10 @@ public class SysMenuController extends BaseController {
 
     @ApiOperation("获取路由列表")
     @GetMapping("/route")
-    public Result<List<SysMenu>> route() {
-        List<SysMenu> list = sysMenuService.listWithTree(getCurrentLoginUsername());
-        return Result.success(list);
+    public Result<List<SysMenuVO>> route() {
+        return Result.success(
+                SysMenuConvert.INSTANCE.convertToVO(sysMenuService.listWithTree(getCurrentLoginUsername()))
+        );
     }
 
     @ApiOperation("获取菜单列表")

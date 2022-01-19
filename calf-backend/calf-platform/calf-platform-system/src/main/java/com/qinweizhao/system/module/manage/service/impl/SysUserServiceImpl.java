@@ -63,7 +63,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     public String getAuthorityByUserId(Long userId) {
         String authority = "";
-        Set<String> roleSet = sysUserMapper.selectcodesByUserId(userId);
+        Set<String> roleSet = sysUserMapper.selectCodesByUserId(userId);
         if (!roleSet.isEmpty()) {
             String roles = roleSet.stream().map(
                     "ROLE_"::concat
@@ -87,7 +87,7 @@ public class SysUserServiceImpl implements ISysUserService {
         // 清除密码
         sysUser.setPassword("");
         Long userId = sysUser.getUserId();
-        Set<String> roles = sysUserMapper.selectcodesByUserId(userId);
+        Set<String> roles = sysUserMapper.selectCodesByUserId(userId);
         Set<String> permissions = sysUserMapper.selectPermissionsByUserId(userId);
         return MapUtil.builder()
                 .put("user", sysUser)

@@ -15,7 +15,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -28,7 +27,7 @@ import java.util.List;
  * @since 2021-12-21
  */
 @RestController
-@RequestMapping("/sys/dict/type")
+@RequestMapping("/system/manage/dict")
 public class SysDictController {
 
     @Resource
@@ -71,7 +70,7 @@ public class SysDictController {
     @GetMapping("/list-simple")
     @ApiOperation(value = "获得全部字典类型列表", notes = "包括开启 + 禁用的字典类型，主要用于前端的下拉选项")
     public Result<List<SysDictVO>> list() {
-        return Result.success(SysDictConvert.INSTANCE.convert(sysDictTypeService.listSimpleDicts()));
+        return Result.success(SysDictConvert.INSTANCE.convertToVO(sysDictTypeService.listSimpleDicts()));
     }
 
 }

@@ -37,7 +37,7 @@ public class SysUserUpdateCmd implements Serializable {
     private String nickName;
 
     @ApiModelProperty("性别")
-    private String sex;
+    private Integer sex;
 
     @ApiModelProperty("手机号码")
     private String phone;

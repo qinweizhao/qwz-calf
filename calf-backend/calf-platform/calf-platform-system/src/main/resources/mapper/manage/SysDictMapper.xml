@@ -16,6 +16,7 @@
         <result column="deleted" property="deleted"/>
     </resultMap>
 
+
     <select id="selectDictTypeByName" resultType="com.qinweizhao.system.module.manage.entity.SysDict">
 
     </select>

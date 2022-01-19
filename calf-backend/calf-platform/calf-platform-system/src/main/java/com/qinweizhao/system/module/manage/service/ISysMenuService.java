@@ -24,7 +24,7 @@ public interface ISysMenuService {
      * @param currentLoginUsername currentLoginUsername
      * @return List<SysMenu>
      */
-    List<SysMenu> listWithTree(String currentLoginUsername);
+    List<SysMenuDTO> listWithTree(String currentLoginUsername);
 
     /**
      * 保存

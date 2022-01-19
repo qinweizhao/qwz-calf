@@ -35,11 +35,11 @@
     </select>
 
 
-    <select id="selectcodesByUserId" resultType="java.lang.String">
+    <select id="selectCodesByUserId" resultType="java.lang.String">
         SELECT r.code
         FROM sys_role r
                  LEFT JOIN sys_user_role ur ON r.role_id = ur.role_id
-        WHERE ur.user_id = #{id}
+        WHERE ur.user_id = #{userId}
     </select>
 
     <select id="selectRoleIdsByUserId" resultType="java.lang.Long">

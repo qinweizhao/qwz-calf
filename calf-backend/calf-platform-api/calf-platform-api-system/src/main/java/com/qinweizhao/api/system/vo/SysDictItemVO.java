@@ -1,14 +1,12 @@
-package com.qinweizhao.system.module.manage.entity;
+package com.qinweizhao.api.system.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.qinweizhao.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -24,8 +22,7 @@ import java.util.Date;
 @Data
 @TableName("sys_dict_item")
 @ApiModel(value = "SysDictData对象", description = "字典数据表")
-@EqualsAndHashCode(callSuper = true)
-public class SysDictItem extends BaseEntity {
+public class SysDictItemVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -50,5 +47,21 @@ public class SysDictItem extends BaseEntity {
 
     @ApiModelProperty("备注")
     private String remark;
+
+    @ApiModelProperty("创建者")
+    private String createBy;
+
+    @ApiModelProperty("创建时间")
+    private Date createTime;
+
+    @ApiModelProperty("更新者")
+    private String updateBy;
+
+    @ApiModelProperty("更新时间")
+    private Date updateTime;
+
+    @ApiModelProperty("是否删除")
+    @TableLogic
+    private Integer deleted;
 
 }

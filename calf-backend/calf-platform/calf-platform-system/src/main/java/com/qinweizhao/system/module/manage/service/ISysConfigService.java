@@ -1,8 +1,6 @@
 package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.qinweizhao.api.system.dto.SysConfigDTO;
 import com.qinweizhao.api.system.dto.command.SysConfigSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysConfigUpdateCmd;
@@ -19,7 +17,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-22
  */
-public interface ISysConfigService  {
+public interface ISysConfigService {
 
     /**
      * 通过 Key 获取配置
@@ -32,8 +30,7 @@ public interface ISysConfigService  {
     /**
      * 配置分页
      *
-     * @param page      page
-     * @param sysConfig sysConfig
+     * @param sysConfigPageQry sysConfigPageQry
      * @return return
      */
     IPage<SysConfigDTO> pageConfigs(SysConfigPageQry sysConfigPageQry);

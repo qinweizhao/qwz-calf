@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.manage.entity.SysRole">
         <id column="role_id" property="roleId"/>
-        <result column="name" property="roleName"/>
+        <result column="name" property="name"/>
         <result column="code" property="code"/>
         <result column="description" property="description"/>
         <result column="data_scope" property="dataScope"/>
@@ -34,7 +34,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_role
-        WHERE name = #{roleName}
+        WHERE name = #{name}
     </select>
 
     <select id="selectRoleBycode" resultType="com.qinweizhao.system.module.manage.entity.SysRole">
@@ -56,8 +56,8 @@
         <include refid="Base_Column_List"/>
         FROM sys_role
         <where>
-            <if test="query.roleId != null and query.roleId != ''">
-                name like concat('%', #{query.roleId}, '%')
+            <if test="query.name != null and query.name != ''">
+                name like concat('%', #{query.name}, '%')
             </if>
             <!-- 开始时间检索 -->
             <if test="query.beginTime != null and query.beginTime != ''">

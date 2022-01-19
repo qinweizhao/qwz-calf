@@ -29,8 +29,8 @@
 
     <select id="selectPostIdsByUserId" resultType="java.lang.Long">
         SELECT post_id
-        from 'sys_user_post'
-        where user_id = #{id}
+        FROM sys_user_post
+        WHERE user_id = #{userId}
     </select>
 
 </mapper>

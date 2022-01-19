@@ -60,7 +60,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public int saveRole(SysRoleSaveCmd sysRoleSaveCmd) {
         // 校验角色
-        this.checkDuplicateRole(sysRoleSaveCmd.getRoleName(), sysRoleSaveCmd.getCode(), null);
+        this.checkDuplicateRole(sysRoleSaveCmd.getName(), sysRoleSaveCmd.getCode(), null);
         // 插入到数据库
         SysRole sysRole = SysRoleConvert.INSTANCE.convert(sysRoleSaveCmd);
         return sysRoleMapper.insert(sysRole);
@@ -71,7 +71,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         // 校验是否可以更新
         this.checkupdateByole(sysRoleUpdateCmd.getRoleId());
         // 校验角色的唯一字段是否重复
-        checkDuplicateRole(sysRoleUpdateCmd.getRoleName(), sysRoleUpdateCmd.getCode(), sysRoleUpdateCmd.getRoleId());
+        checkDuplicateRole(sysRoleUpdateCmd.getName(), sysRoleUpdateCmd.getCode(), sysRoleUpdateCmd.getRoleId());
         SysRole sysRole = SysRoleConvert.INSTANCE.convert(sysRoleUpdateCmd);
         return sysRoleMapper.updateById(sysRole);
     }
@@ -107,7 +107,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
-    public int updateByolePermission(SysRoleDTO sysRoleDTO) {
+    public int updateByRolePermission(SysRoleDTO sysRoleDTO) {
         Long roleId = sysRoleDTO.getRoleId();
         // 校验是否可以更新
         checkupdateByole(roleId);

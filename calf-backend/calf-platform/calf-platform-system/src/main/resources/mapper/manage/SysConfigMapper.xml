@@ -25,12 +25,14 @@
     </sql>
 
     <select id="selectPageConfigs" resultType="com.qinweizhao.system.module.manage.entity.SysConfig">
-        SELECT <include refid="Base_Column_List"/>
+        SELECT
+        <include refid="Base_Column_List"/>
         FROM sys_config
     </select>
 
     <select id="selectByCode" resultType="com.qinweizhao.system.module.manage.entity.SysConfig">
-        SELECT <include refid="Base_Column_List"/>
+        SELECT
+        <include refid="Base_Column_List"/>
         FROM sys_config WHERE code =#{code}
     </select>
 

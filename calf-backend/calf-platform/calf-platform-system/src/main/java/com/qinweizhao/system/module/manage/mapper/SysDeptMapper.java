@@ -29,7 +29,7 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
      * @param userId userId
      * @return String
      */
-    String selectnameByUserId(Long userId);
+    String selectNameByUserId(Long userId);
 
     /**
      * 查询部门列表

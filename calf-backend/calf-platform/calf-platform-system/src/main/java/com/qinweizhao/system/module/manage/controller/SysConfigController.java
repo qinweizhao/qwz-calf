@@ -58,8 +58,8 @@ public class SysConfigController {
         return Result.success(SysConfigConvert.INSTANCE.convert(sysConfigService.getConfig(configId)));
     }
 
-    @GetMapping(value = "/get-value-by-key")
-    public Result<String> getkey(@RequestParam("code") String code) {
+    @GetMapping(value = "/get-value-by-code")
+    public Result<String> getCode(@RequestParam("code") String code) {
         SysConfig config = sysConfigService.getConfigByCode(code);
         return Result.success(config.getValue());
     }

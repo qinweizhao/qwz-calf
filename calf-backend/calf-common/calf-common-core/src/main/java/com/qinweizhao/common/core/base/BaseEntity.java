@@ -21,9 +21,6 @@ import java.util.Date;
 @ApiModel("BaseEntity 对象")
 public abstract class BaseEntity implements Serializable {
 
-//    @ApiModelProperty("排序")
-//    @TableField(fill = FieldFill.INSERT)
-//    private Integer sort;
 
     @ApiModelProperty("删除：0存在、1删除")
     @TableLogic

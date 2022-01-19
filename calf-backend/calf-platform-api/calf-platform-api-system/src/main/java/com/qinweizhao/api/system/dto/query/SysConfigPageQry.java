@@ -7,6 +7,7 @@ import com.qinweizhao.common.core.request.PageQry;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -21,6 +22,7 @@ import java.io.Serializable;
 @Data
 @TableName("sys_config")
 @ApiModel(value = "SysConfig对象", description = "参数配置表")
+@EqualsAndHashCode(callSuper = true)
 public class SysConfigPageQry extends PageQry {
 
     private static final long serialVersionUID = 1L;
@@ -43,8 +45,6 @@ public class SysConfigPageQry extends PageQry {
 
     @ApiModelProperty("参数键值")
     private String value;
-
-     
 
     @ApiModelProperty("备注")
     private String remark;

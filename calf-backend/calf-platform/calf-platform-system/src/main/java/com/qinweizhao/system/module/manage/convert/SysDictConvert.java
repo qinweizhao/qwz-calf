@@ -1,5 +1,7 @@
 package com.qinweizhao.system.module.manage.convert;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.api.system.dto.SysDictDTO;
 import com.qinweizhao.api.system.dto.command.SysDictSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysDictUpdateCmd;
@@ -27,58 +29,67 @@ public interface SysDictConvert {
     /**
      * DO 转 DTO
      *
-     * @param SysDict SysDict
+     * @param sysDict sysDict
      * @return SysDictDTO
      */
-    SysDictDTO convert(SysDict SysDict);
+    SysDictDTO convert(SysDict sysDict);
 
     /**
      * DO 转 DTO
      *
-     * @param SysDict SysDict
+     * @param sysDict sysDict
      * @return SysDictDTO
      */
-    SysDictVO convert(SysDictDTO SysDict);
+    SysDictVO convert(SysDictDTO sysDict);
 
     /**
      * DO 转 DTO
      *
-     * @param SysDictSaveCmd SysDictSaveCmd
+     * @param sysDictSaveCmd sysDictSaveCmd
      * @return SysDictDTO
      */
-    SysDict convert(SysDictSaveCmd SysDictSaveCmd);
+    SysDict convert(SysDictSaveCmd sysDictSaveCmd);
 
     /**
      * DO 转 DTO
      *
-     * @param SysDictUpdateCmd SysDictUpdateCmd
+     * @param sysDictUpdateCmd sysDictUpdateCmd
      * @return SysDictDTO
      */
-    SysDict convert(SysDictUpdateCmd SysDictUpdateCmd);
-
-
-    /**
-     * DO 转 DTO
-     *
-     * @param SysDict SysDict
-     * @return SysDictDTO
-     */
-    List<SysDictVO> convertToVO(List<SysDictDTO> SysDict);
-
-    /**
-     * DO 转 VO
-     *
-     * @param deptList deptList
-     * @return SysMenuVO
-     */
-    List<SysDictVO> convert(List<SysDictDTO> deptList);
+    SysDict convert(SysDictUpdateCmd sysDictUpdateCmd);
 
 
     /**
      * DO 转 DTO
      *
-     * @param selectListDepts selectListDepts
+     * @param sysDict sysDict
+     * @return List<SysDictVO>
+     */
+    List<SysDictVO> convertToVO(List<SysDictDTO> sysDict);
+
+
+    /**
+     * DO 转 DTO
+     *
+     * @param sysDict sysDict
+     * @return SysDictDTO
+     */
+    Page<SysDictVO> convertToVO(IPage<SysDictDTO> sysDict);
+
+    /**
+     * DO 转 DTO
+     *
+     * @param listDict listDict
      * @return List<SysDictDTO>
      */
-    List<SysDictDTO> convertToDTO(List<SysDict> selectListDepts);
+    List<SysDictDTO> convertToDTO(List<SysDict> listDict);
+
+
+    /**
+     * DO 转 DTO
+     *
+     * @param pageDict pageDict
+     * @return IPage<SysDictDTO>
+     */
+    Page<SysDictDTO> convertToDTO(IPage<SysDict> pageDict);
 }

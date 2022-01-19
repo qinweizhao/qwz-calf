@@ -41,9 +41,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
     private SysRoleMenuMapper sysRoleMenuMapper;
 
     @Override
-    public List<SysMenu> listWithTree(String currentLoginUsername) {
-        List<SysMenu> menus = sysMenuMapper.selectMenuListByUsername(currentLoginUsername, MenuTypeEnum.BUTTON.getType());
-        return buildTree(menus);
+    public List<SysMenuDTO> listWithTree(String currentLoginUsername) {
+        List<SysMenuDTO> dto = SysMenuConvert.INSTANCE.convertToDTO(sysMenuMapper.selectListByUsername(currentLoginUsername, MenuTypeEnum.BUTTON.getType()));
+        return buildTree(dto);
 
     }
 
@@ -174,7 +174,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @param menus 所有菜单
      * @return 树形菜单
      */
-    private List<SysMenu> buildTree(List<SysMenu> menus) {
+    private List<SysMenuDTO> buildTree(List<SysMenuDTO> menus) {
         return menus.stream().filter(item ->
                 LONG_ZERO.equals(item.getParentId())
         ).peek(item -> item.setChildren(getChildrenMenu(item, menus))).collect(Collectors.toList());
@@ -187,7 +187,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @param menus 收集菜单的容器
      * @return 返回容器
      */
-    private List<SysMenu> getChildrenMenu(SysMenu menu, List<SysMenu> menus) {
+    private List<SysMenuDTO> getChildrenMenu(SysMenuDTO menu, List<SysMenuDTO> menus) {
         menus.stream().filter(
                 i -> menu.getMenuId().equals(i.getParentId())
         ).forEach(item -> item.setChildren(getChildrenMenu(item, menus)));

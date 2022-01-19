@@ -12,11 +12,12 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SysRolePageQry extends PageQry {
+
     /**
      * 用户名
      */
-    @ApiModelProperty(value = "角色 Id")
-    private String roleId;
+    @ApiModelProperty(value = "角色名称")
+    private String name;
 
     /**
      * 开始日期
