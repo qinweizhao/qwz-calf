@@ -34,7 +34,7 @@ public class SysRole extends BaseEntity {
     private String roleName;
 
     @ApiModelProperty("标识")
-    private String roleKey;
+    private String code;
 
     @ApiModelProperty("描述")
     private String description;

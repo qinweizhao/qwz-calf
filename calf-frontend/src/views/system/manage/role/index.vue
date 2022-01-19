@@ -75,7 +75,7 @@
       <el-table-column
         label="角色标识"
         align="center"
-        prop="roleKey"
+        prop="code"
         :show-overflow-tooltip="true"
         width="180"
       />
@@ -177,7 +177,7 @@
           <el-input v-model="form.roleName" placeholder="请输入角色名称" />
         </el-form-item>
         <el-form-item label="角色标识" prop="code">
-          <el-input v-model="form.roleKey" placeholder="请输入角色标识" />
+          <el-input v-model="form.code" placeholder="请输入角色标识" />
         </el-form-item>
         <el-form-item label="角色顺序" prop="sort">
           <el-input-number
@@ -212,7 +212,7 @@
           <el-input v-model="form.roleName" :disabled="true" />
         </el-form-item>
         <el-form-item label="角色标识">
-          <el-input v-model="form.roleKey" :disabled="true" />
+          <el-input v-model="form.code" :disabled="true" />
         </el-form-item>
         <el-form-item label="菜单权限">
           <el-checkbox
@@ -342,11 +342,11 @@ export default {
       // 表单参数
       form: {},
       defaultProps: {
-        label: "menuName",
+        label: "name",
         children: "children",
       },
       deptProps: {
-        label: "deptName",
+        label: "name",
         children: "children",
       },
       // 表单校验
@@ -354,7 +354,7 @@ export default {
         roleName: [
           { required: true, message: "角色名称不能为空", trigger: "blur" },
         ],
-        roleKey: [
+        code: [
           { required: true, message: "角色标识不能为空", trigger: "blur" },
         ],
         sort: [
@@ -438,7 +438,7 @@ export default {
       this.form = {
         roleId: undefined,
         roleName: undefined,
-        roleKey: undefined,
+        code: undefined,
         sort: 0,
         deptIds: [],
         menuIds: [],
@@ -509,10 +509,10 @@ export default {
     handleMenu(row) {
       this.reset();
       const roleId = row.roleId;
-      // 处理了 form 的角色 roleName 和 roleKey 的展示
+      // 处理了 form 的角色 roleName 和 code 的展示
       this.form.roleId = roleId;
       this.form.roleName = row.roleName;
-      this.form.roleKey = row.roleKey;
+      this.form.code = row.code;
       // 打开弹窗
       this.openMenu = true;
       // 菜单权限

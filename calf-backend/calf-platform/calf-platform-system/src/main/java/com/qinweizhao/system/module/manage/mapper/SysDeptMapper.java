@@ -29,7 +29,7 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
      * @param userId userId
      * @return String
      */
-    String selectDeptNameByUserId(Long userId);
+    String selectnameByUserId(Long userId);
 
     /**
      * 查询部门列表
@@ -42,10 +42,10 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
     /**
      * 通过父 Id 和部门名称查询部门
      * @param parentId parentId
-     * @param deptName deptName
+     * @param name name
      * @return SysDept
      */
-    SysDept selectDeptByParentIdAndName( @Param("parentId") Long parentId, @Param("deptName") String deptName);
+    SysDept selectDeptByParentIdAndName( @Param("parentId") Long parentId, @Param("name") String name);
 
     /**
      * 统计下属部门个数

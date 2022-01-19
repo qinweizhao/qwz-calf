@@ -24,19 +24,19 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * 获取菜单列表
      *
      * @param currentLoginUsername currentLoginUsername
-     * @param menuType             menuType
+     * @param type             type
      * @return List<SysMenu>
      */
-    List<SysMenu> selectMenuListByUsername(@Param("username") String currentLoginUsername, @Param("menuType") Integer menuType);
+    List<SysMenu> selectMenuListByUsername(@Param("username") String currentLoginUsername, @Param("type") Integer type);
 
     /**
      * 通过父 Id 和 菜单名称获取菜单
      *
      * @param parentId parentId
-     * @param menuName menuName
+     * @param name name
      * @return SysMenu
      */
-    SysMenu selectMenuByParentIdAndName(@Param("parentId") Long parentId, @Param("menuName") String menuName);
+    SysMenu selectMenuByParentIdAndName(@Param("parentId") Long parentId, @Param("name") String name);
 
     /**
      * 通过菜单父 Id 统计个数

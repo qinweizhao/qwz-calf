@@ -69,7 +69,7 @@ public class SysConfigController {
         if (config.getSensitive()) {
             throw new ServiceException("ResultCode.CONFIG_GET_VALUE_ERROR_IF_SENSITIVE");
         }
-        return Result.success(config.getValue());
+        return Result.success(config.getConfigValue());
     }
 
     @GetMapping("/page")

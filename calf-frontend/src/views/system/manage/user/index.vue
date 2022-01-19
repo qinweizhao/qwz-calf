@@ -5,7 +5,7 @@
       <el-col :span="3" :xs="24">
         <div class="head-container">
           <el-input
-            v-model="deptName"
+            v-model="name"
             placeholder="请输入部门名称"
             clearable
             size="small"
@@ -105,7 +105,7 @@
           <el-table-column
             label="部门"
             align="center"
-            prop="deptName"
+            prop="name"
             :show-overflow-tooltip="true"
           />
           <el-table-column
@@ -248,7 +248,7 @@
                 <el-option
                   v-for="item in postOptions"
                   :key="item.postId"
-                  :label="item.postName"
+                  :label="item.name"
                   :value="item.postId"
                 ></el-option>
               </el-select>
@@ -362,7 +362,7 @@ export default {
       // 是否显示弹出层
       open: false,
       // 部门名称
-      deptName: undefined,
+      name: undefined,
       // 默认密码
       initPassword: undefined,
       // 日期范围
@@ -379,7 +379,7 @@ export default {
       form: {},
       defaultProps: {
         children: "children",
-        label: "deptName",
+        label: "name",
       },
       // 查询参数
       queryParams: {
@@ -426,7 +426,7 @@ export default {
   },
   watch: {
     // 根据名称筛选部门树
-    deptName(val) {
+    name(val) {
       this.$refs.tree.filter(val);
     },
   },
@@ -473,7 +473,7 @@ export default {
     // 筛选节点
     filterNode(value, data) {
       if (!value) return true;
-      return data.deptName.indexOf(value) !== -1;
+      return data.name.indexOf(value) !== -1;
     },
     // 节点单击事件
     handleNodeClick(data) {
@@ -646,7 +646,7 @@ export default {
     normalizer(node) {
       return {
         id: node.deptId,
-        label: node.deptName,
+        label: node.name,
         children: node.children,
       };
     },

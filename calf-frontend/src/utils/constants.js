@@ -15,7 +15,7 @@ export const SysCommonStatusEnum = {
 /**
  * 菜单的类型枚举
  */
-export const SysMenuTypeEnum = {
+export const SystypeEnum = {
   DIR : 1, // 目录
   MENU: 2, // 菜单
   BUTTON: 3 // 按钮

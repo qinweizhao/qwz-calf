@@ -27,7 +27,7 @@ const permission = {
           const sdata = JSON.parse(JSON.stringify(res.data));
           const rdata = JSON.parse(JSON.stringify(res.data));
           const sidebarRoutes = filterAsyncRouter(sdata);
-          const rewriteRoutes = filterAsyncRouter(rdata, true);  
+          const rewriteRoutes = filterAsyncRouter(rdata, true);
           rewriteRoutes.push({ path: "*", redirect: "/404", hidden: true });
           commit("SET_ROUTES", rewriteRoutes);
           commit("SET_SIDEBAR_ROUTERS", sidebarRoutes);
@@ -43,7 +43,7 @@ function filterAsyncRouter(asyncRouterMap, isRewrite = false) {
   return asyncRouterMap.filter((route) => {
     // 处理 meta 属性
     route.meta = {
-      title: route.menuName,
+      title: route.name,
       icon: route.icon,
     };
     // 处理 component 属性

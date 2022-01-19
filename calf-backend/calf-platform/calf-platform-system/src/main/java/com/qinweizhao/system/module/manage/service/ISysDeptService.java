@@ -32,7 +32,7 @@ public interface ISysDeptService{
      * @param userId userId
      * @return String
      */
-    String getDeptNameByUserId(Long userId);
+    String getnameByUserId(Long userId);
 
     List<SysDeptDTO> listDepts(SysDeptListQry sysDeptListQry);
 

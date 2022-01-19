@@ -49,8 +49,8 @@ public class SysDeptServiceImpl implements ISysDeptService {
      * @return String
      */
     @Override
-    public String getDeptNameByUserId(Long userId) {
-        return sysDeptMapper.selectDeptNameByUserId(userId);
+    public String getnameByUserId(Long userId) {
+        return sysDeptMapper.selectnameByUserId(userId);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
     @Override
     public int saveDept(SysDeptSaveCmd sysDeptSaveCmd) {
         // 校验正确性
-        checkSaveOrUpdate(null, sysDeptSaveCmd.getParentId(), sysDeptSaveCmd.getDeptName());
+        checkSaveOrUpdate(null, sysDeptSaveCmd.getParentId(), sysDeptSaveCmd.getName());
         // 更新部门
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(sysDeptSaveCmd);
         return sysDeptMapper.insert(sysDept);
@@ -70,7 +70,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
     @Override
     public int updateDeptById(SysDeptUpdateCmd sysDeptUpdateCmd) {
         // 校验正确性
-        checkSaveOrUpdate(sysDeptUpdateCmd.getDeptId(), sysDeptUpdateCmd.getParentId(), sysDeptUpdateCmd.getDeptName());
+        checkSaveOrUpdate(sysDeptUpdateCmd.getDeptId(), sysDeptUpdateCmd.getParentId(), sysDeptUpdateCmd.getName());
 
         SysDept sysDept = SysDeptConvert.INSTANCE.convert(sysDeptUpdateCmd);
 
@@ -89,7 +89,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
         // 校验父部门的有效性
         checkParentDeptEnable(deptId, parentId);
         // 校验部门名的唯一性
-        checkDeptNameUnique(deptId, parentId, name);
+        checknameUnique(deptId, parentId, name);
     }
 
     /**
@@ -137,10 +137,10 @@ public class SysDeptServiceImpl implements ISysDeptService {
      *
      * @param deptId   deptId
      * @param parentId parentId
-     * @param deptName deptName
+     * @param name name
      */
-    private void checkDeptNameUnique(Long deptId, Long parentId, String deptName) {
-        SysDept menu = sysDeptMapper.selectDeptByParentIdAndName(parentId, deptName);
+    private void checknameUnique(Long deptId, Long parentId, String name) {
+        SysDept menu = sysDeptMapper.selectDeptByParentIdAndName(parentId, name);
         if (menu == null) {
             return;
         }

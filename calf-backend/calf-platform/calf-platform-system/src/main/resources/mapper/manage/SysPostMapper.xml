@@ -5,8 +5,8 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.manage.entity.SysPost">
         <id column="post_id" property="postId"/>
-        <result column="post_code" property="postCode"/>
-        <result column="post_name" property="postName"/>
+        <result column="post_code" property="code"/>
+        <result column="post_name" property="name"/>
         <result column="sort" property="sort"/>
         <result column="deleted" property="deleted"/>
         <result column="status" property="status"/>
@@ -30,22 +30,22 @@
         <include refid="Base_Column_List"/>
         FROM sys_post
         <where>
-            <if test="query.postName != null and query.postName != ''">
-                post_name like concat('%', #{query.postName}, '%')
+            <if test="query.name != null and query.name != ''">
+                post_name like concat('%', #{query.name}, '%')
             </if>
         </where>
     </select>
-    <select id="selectPostByPostName" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
+    <select id="selectPostByname" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_post
-        WHERE post_name=#{postName}
+        WHERE post_name=#{name}
     </select>
-    <select id="selectPostByPostCode" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
+    <select id="selectPostBycode" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_post
-        WHERE post_code=#{postCode}
+        WHERE post_code=#{code}
     </select>
 
 </mapper>

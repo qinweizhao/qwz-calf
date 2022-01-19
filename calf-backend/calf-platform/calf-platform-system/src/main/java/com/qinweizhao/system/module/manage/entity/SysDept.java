@@ -37,7 +37,7 @@ public class SysDept extends BaseEntity {
     private Long parentId;
 
     @ApiModelProperty("名称")
-    private String deptName;
+    private String name;
 
     @ApiModelProperty("电话")
     private String phone;

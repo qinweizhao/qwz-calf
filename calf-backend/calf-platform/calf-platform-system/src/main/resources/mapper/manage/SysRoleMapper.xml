@@ -6,7 +6,7 @@
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.manage.entity.SysRole">
         <id column="role_id" property="roleId"/>
         <result column="role_name" property="roleName"/>
-        <result column="role_key" property="roleKey"/>
+        <result column="code" property="code"/>
         <result column="description" property="description"/>
         <result column="data_scope" property="dataScope"/>
         <result column="sort" property="sort"/>
@@ -21,7 +21,7 @@
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         create_by
-        ,create_time,data_scope,deleted,description,role_id,role_key,role_name,sort,status,update_by,update_time
+        ,create_time,data_scope,deleted,description,role_id,code,role_name,sort,status,update_by,update_time
     </sql>
 
     <update id="updateRoleStatusById">
@@ -37,11 +37,11 @@
         WHERE role_name = #{roleName}
     </select>
 
-    <select id="selectRoleByRoleKey" resultType="com.qinweizhao.system.module.manage.entity.SysRole">
+    <select id="selectRoleBycode" resultType="com.qinweizhao.system.module.manage.entity.SysRole">
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_role
-        WHERE role_key = #{roleKey}
+        WHERE code = #{code}
     </select>
 
     <select id="selectListSimpleRoles" resultType="com.qinweizhao.system.module.manage.entity.SysRole">

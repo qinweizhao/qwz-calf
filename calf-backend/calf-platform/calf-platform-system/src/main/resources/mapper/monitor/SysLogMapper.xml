@@ -5,8 +5,8 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.monitor.entity.SysLog">
         <id column="log_id" property="logId" />
-        <result column="log_type" property="logType" />
-        <result column="log_title" property="logTitle" />
+        <result column="log_type" property="type" />
+        <result column="log_title" property="title" />
         <result column="request" property="request" />
         <result column="exception" property="exception" />
         <result column="time" property="time" />

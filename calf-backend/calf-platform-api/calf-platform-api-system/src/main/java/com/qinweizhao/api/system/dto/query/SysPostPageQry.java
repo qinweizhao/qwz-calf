@@ -31,10 +31,10 @@ public class SysPostPageQry extends PageQry {
     private Long postId;
 
     @ApiModelProperty("岗位编码")
-    private String postCode;
+    private String code;
 
     @ApiModelProperty("岗位名称")
-    private String postName;
+    private String name;
 
     @ApiModelProperty("显示顺序")
     private Integer sort;

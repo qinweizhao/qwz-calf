@@ -37,7 +37,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param userId userId
      * @return Set<String>
      */
-    Set<String> selectRoleKeysByUserId(Long userId);
+    Set<String> selectcodesByUserId(Long userId);
 
     /**
      * 通过用户 id 查询权限标识

@@ -49,8 +49,8 @@ public class SysLogAspect {
 
         SysLogDTO sysLogDTO = SysLogUtils.getSysLog();
 
-        sysLogDTO.setLogType(sysLog.type());
-        sysLogDTO.setLogTitle(sysLog.value());
+        sysLogDTO.setType(sysLog.type());
+        sysLogDTO.setTitle(sysLog.value());
         HttpServletRequest request = ((ServletRequestAttributes) Objects
                 .requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         String path = URLUtil.getPath(request.getRequestURI());

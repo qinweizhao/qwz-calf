@@ -60,7 +60,7 @@ public class SysUserRespVO implements Serializable {
     /**
      * 部门名称
      */
-    private String deptName;
+    private String name;
 
     /**
      * 手机号码

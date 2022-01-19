@@ -34,7 +34,7 @@ public class SysDeptListQry implements Serializable {
     private Long parentId;
 
     @ApiModelProperty("名称")
-    private String deptName;
+    private String name;
 
     @ApiModelProperty("电话")
     private String phone;

@@ -66,7 +66,7 @@ public class SysUserController extends BaseController {
         Page<SysUserPageRespVO> sysUserVO = SysUserConvert.INSTANCE.convertToVO(page);
         List<SysUserPageRespVO> records = sysUserVO.getRecords();
         records.forEach(item ->
-                item.setDeptName(sysDeptService.getDeptNameByUserId(item.getUserId())
+                item.setDeptName(sysDeptService.getnameByUserId(item.getUserId())
                 ));
         return Result.success(sysUserVO);
     }

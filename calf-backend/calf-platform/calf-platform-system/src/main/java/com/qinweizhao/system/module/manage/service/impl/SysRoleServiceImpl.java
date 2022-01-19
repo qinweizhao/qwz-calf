@@ -2,7 +2,6 @@ package com.qinweizhao.system.module.manage.service.impl;
 
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.qinweizhao.api.system.dto.SysRoleDTO;
 import com.qinweizhao.api.system.dto.command.SysRoleSaveCmd;
@@ -61,7 +60,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public int saveRole(SysRoleSaveCmd sysRoleSaveCmd) {
         // 校验角色
-        this.checkDuplicateRole(sysRoleSaveCmd.getRoleName(), sysRoleSaveCmd.getRoleKey(), null);
+        this.checkDuplicateRole(sysRoleSaveCmd.getRoleName(), sysRoleSaveCmd.getCode(), null);
         // 插入到数据库
         SysRole sysRole = SysRoleConvert.INSTANCE.convert(sysRoleSaveCmd);
         return sysRoleMapper.insert(sysRole);
@@ -72,7 +71,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         // 校验是否可以更新
         this.checkUpdateRole(sysRoleUpdateCmd.getRoleId());
         // 校验角色的唯一字段是否重复
-        checkDuplicateRole(sysRoleUpdateCmd.getRoleName(), sysRoleUpdateCmd.getRoleKey(), sysRoleUpdateCmd.getRoleId());
+        checkDuplicateRole(sysRoleUpdateCmd.getRoleName(), sysRoleUpdateCmd.getCode(), sysRoleUpdateCmd.getRoleId());
         SysRole sysRole = SysRoleConvert.INSTANCE.convert(sysRoleUpdateCmd);
         return sysRoleMapper.updateById(sysRole);
     }
@@ -122,11 +121,11 @@ public class SysRoleServiceImpl implements ISysRoleService {
         Collection<Long> insertMenuIds = CollUtil.subtract(menuIds, dbMenuIds);
         Collection<Long> deleteMenuIds = CollUtil.subtract(dbMenuIds, menuIds);
 
-        if (!CollectionUtil.isEmpty(insertMenuIds)) {
+        if (!CollUtil.isEmpty(insertMenuIds)) {
             sysRoleMenuMapper.insertRoleMenuByRoleIdAndMenuIds(roleId, insertMenuIds);
         }
 
-        if (!CollectionUtil.isEmpty(deleteMenuIds)) {
+        if (!CollUtil.isEmpty(deleteMenuIds)) {
             sysRoleMenuMapper.deleteRoleMenuByRoleIdAndMenuIds(roleId, deleteMenuIds);
         }
         //分配数据权限
@@ -141,7 +140,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
             sysRoleDept.setDeptId(item);
             sysRoleDeptMapper.insert(sysRoleDept);
         });
-        if (!CollectionUtil.isEmpty(deleteDeptIds)) {
+        if (!CollUtil.isEmpty(deleteDeptIds)) {
             sysRoleDeptMapper.deleteRoleDeptByRoleIdAndDeptIds(roleId, deleteDeptIds);
         }
         return sysRoleMapper.updateById(sysRole);
@@ -172,21 +171,21 @@ public class SysRoleServiceImpl implements ISysRoleService {
      * 检查重复
      *
      * @param roleName roleName
-     * @param roleKey  roleKey
+     * @param code     code
      * @param roleId   roleId
      */
-    private void checkDuplicateRole(String roleName, String roleKey, Long roleId) {
+    private void checkDuplicateRole(String roleName, String code, Long roleId) {
         // 1. 该 name 名字被其它角色所使用
         SysRole sysRole = sysRoleMapper.selectRoleByRoleName(roleName);
         if (sysRole != null && !sysRole.getRoleId().equals(roleId)) {
             throw new ServiceException(ResultCode.ROLE_NAME_DUPLICATE);
         }
         // 2. 是否存在相同编码的角色
-        if (!StringUtils.hasText(roleKey)) {
+        if (!StringUtils.hasText(code)) {
             return;
         }
         // 3. 该 key 是否被其他角色使用
-        sysRole = sysRoleMapper.selectRoleByRoleKey(roleKey);
+        sysRole = sysRoleMapper.selectRoleBycode(code);
         if (sysRole != null && !sysRole.getRoleId().equals(roleId)) {
             throw new ServiceException(ResultCode.ROLE_CODE_DUPLICATE);
         }

@@ -7,9 +7,9 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-form-item label="岗位名称" prop="postName">
+      <el-form-item label="岗位名称" prop="name">
         <el-input
-          v-model="queryParams.postName"
+          v-model="queryParams.name"
           placeholder="请输入岗位名称"
           clearable
           size="small"
@@ -59,8 +59,8 @@
 
     <el-table v-loading="loading" :data="postList">
       <el-table-column label="岗位编号" align="center" prop="postId" />
-      <el-table-column label="岗位编码" align="center" prop="postCode" />
-      <el-table-column label="岗位名称" align="center" prop="postName" />
+      <el-table-column label="岗位编码" align="center" prop="code" />
+      <el-table-column label="岗位名称" align="center" prop="name" />
       <el-table-column label="岗位排序" align="center" prop="sort" />
       <el-table-column
         label="状态"
@@ -191,7 +191,7 @@ export default {
       queryParams: {
         current: 1,
         size: 10,
-        postName: undefined,
+        name: undefined,
       },
       // 表单参数
       form: {},

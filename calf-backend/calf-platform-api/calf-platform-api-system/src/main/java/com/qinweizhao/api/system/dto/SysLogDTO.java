@@ -28,10 +28,10 @@ public class SysLogDTO implements Serializable {
     private Long logId;
 
     @ApiModelProperty("日志类型")
-    private String logType;
+    private String type;
 
     @ApiModelProperty("日志标题")
-    private String logTitle;
+    private String title;
 
     @ApiModelProperty("请求信息")
     private String request;

@@ -6,9 +6,9 @@
       :inline="true"
       v-show="showSearch"
     >
-      <el-form-item label="菜单名称" prop="menuName">
+      <el-form-item label="菜单名称" prop="name">
         <el-input
-          v-model="queryParams.menuName"
+          v-model="queryParams.name"
           placeholder="请输入菜单名称"
           clearable
           size="small"
@@ -53,7 +53,7 @@
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
       <el-table-column
-        prop="menuName"
+        prop="name"
         label="菜单名称"
         :show-overflow-tooltip="true"
         width="160"
@@ -139,9 +139,9 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="菜单类型" prop="type">
-              <el-radio-group v-model="form.menuType">
+              <el-radio-group v-model="form.type">
                 <el-radio
-                  v-for="dict in menuTypeDictDatas"
+                  v-for="dict in typeDictDatas"
                   :key="parseInt(dict.value)"
                   :label="parseInt(dict.value)"
                 >
@@ -183,7 +183,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="菜单名称" prop="name">
-              <el-input v-model="form.menuName" placeholder="请输入菜单名称" />
+              <el-input v-model="form.name" placeholder="请输入菜单名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -248,7 +248,7 @@ import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import IconSelect from "@/components/IconSelect";
 
-import { SysMenuTypeEnum, SysCommonStatusEnum } from "@/utils/constants";
+import { SystypeEnum, SysCommonStatusEnum } from "@/utils/constants";
 import { getDictDataLabel, getDictDatas, DICT_TYPE } from "@/utils/dict";
 
 export default {
@@ -270,14 +270,14 @@ export default {
       open: false,
       // 查询参数
       queryParams: {
-        menuName: undefined,
+        name: undefined,
         visible: undefined,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        menuName: [
+        name: [
           { required: true, message: "菜单名称不能为空", trigger: "blur" },
         ],
         sort: [
@@ -290,10 +290,10 @@ export default {
       },
 
       // 枚举
-      MenuTypeEnum: SysMenuTypeEnum,
+      typeEnum: SystypeEnum,
       CommonStatusEnum: SysCommonStatusEnum,
       // 数据字典
-      menuTypeDictDatas: getDictDatas(DICT_TYPE.SYS_MENU_TYPE),
+      typeDictDatas: getDictDatas(DICT_TYPE.SYS_MENU_TYPE),
       statusDictDatas: getDictDatas(DICT_TYPE.SYS_COMMON_STATUS),
     };
   },
@@ -321,7 +321,7 @@ export default {
       }
       return {
         id: node.menuId,
-        label: node.menuName,
+        label: node.name,
         children: node.children,
       };
     },
@@ -329,7 +329,7 @@ export default {
     getTreeselect() {
       listMenu().then((response) => {
         this.menuOptions = [];
-        const menu = { menuId: 0, menuName: "主类目", children: [] };
+        const menu = { menuId: 0, name: "主类目", children: [] };
         menu.children = this.handleTree(response.data, "menuId");
         this.menuOptions.push(menu);
       });
@@ -350,7 +350,7 @@ export default {
         parentId: 0,
         name: undefined,
         icon: undefined,
-        type: SysMenuTypeEnum.DIR,
+        type: SystypeEnum.DIR,
         sort: undefined,
         status: SysCommonStatusEnum.ENABLE,
       };
@@ -393,8 +393,8 @@ export default {
         if (valid) {
           // 若权限类型为目录或者菜单时，进行 path 的校验，避免后续拼接出来的路由无法跳转
           if (
-            this.form.type === SysMenuTypeEnum.DIR ||
-            this.form.type === SysMenuTypeEnum.MENU
+            this.form.type === SystypeEnum.DIR ||
+            this.form.type === SystypeEnum.MENU
           ) {
             // 如果是外链，则不进行校验
             const path = this.form.path;
@@ -433,7 +433,7 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       this.$confirm(
-        '是否确认删除名称为"' + row.menuName + '"的数据项?',
+        '是否确认删除名称为"' + row.name + '"的数据项?',
         "警告",
         {
           confirmButtonText: "确定",

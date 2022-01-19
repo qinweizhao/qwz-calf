@@ -40,7 +40,7 @@ public class SysPostServiceImpl implements ISysPostService {
     @Override
     public int savePost(SysPostSaveCmd sysPostSaveCmd) {
         // 校验正确性
-        this.checkCreateOrUpdate(null, sysPostSaveCmd.getPostName(), sysPostSaveCmd.getPostCode());
+        this.checkCreateOrUpdate(null, sysPostSaveCmd.getName(), sysPostSaveCmd.getCode());
         //TODO
         return 0;
     }
@@ -49,16 +49,16 @@ public class SysPostServiceImpl implements ISysPostService {
      * 校验正确性
      *
      * @param postId   postId
-     * @param postName postName
-     * @param postCode postCode
+     * @param name name
+     * @param code code
      */
-    private void checkCreateOrUpdate(Long postId, String postName, String postCode) {
+    private void checkCreateOrUpdate(Long postId, String name, String code) {
         // 校验自己存在
         checkPostExists(postId);
         // 校验岗位名的唯一性
-        checkPostNameUnique(postId, postName);
+        checknameUnique(postId, name);
         // 校验岗位编码的唯一性
-        checkPostCodeUnique(postId, postCode);
+        checkcodeUnique(postId, code);
     }
 
 
@@ -72,8 +72,8 @@ public class SysPostServiceImpl implements ISysPostService {
         }
     }
 
-    private void checkPostNameUnique(Long postId, String postName) {
-        SysPost post = sysPostMapper.selectPostByPostName(postName);
+    private void checknameUnique(Long postId, String name) {
+        SysPost post = sysPostMapper.selectPostByname(name);
         if (post == null) {
             return;
         }
@@ -86,8 +86,8 @@ public class SysPostServiceImpl implements ISysPostService {
         }
     }
 
-    private void checkPostCodeUnique(Long id, String postCode) {
-        SysPost post = sysPostMapper.selectPostByPostCode(postCode);
+    private void checkcodeUnique(Long id, String code) {
+        SysPost post = sysPostMapper.selectPostBycode(code);
         if (post == null) {
             return;
         }
@@ -103,7 +103,7 @@ public class SysPostServiceImpl implements ISysPostService {
     @Override
     public int updatePostById(SysPostUpdateCmd sysPostUpdateCmd) {
         // 校验正确性
-        this.checkCreateOrUpdate(sysPostUpdateCmd.getPostId(), sysPostUpdateCmd.getPostName(), sysPostUpdateCmd.getPostCode());
+        this.checkCreateOrUpdate(sysPostUpdateCmd.getPostId(), sysPostUpdateCmd.getName(), sysPostUpdateCmd.getCode());
         // 更新岗位
         SysPost sysPost = SysPostConvert.INSTANCE.convert(sysPostUpdateCmd);
         return sysPostMapper.updateById(sysPost);

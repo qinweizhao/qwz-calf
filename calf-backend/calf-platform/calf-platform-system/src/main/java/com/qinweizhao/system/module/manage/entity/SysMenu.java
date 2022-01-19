@@ -33,7 +33,7 @@ public class SysMenu extends BaseEntity {
     private Long menuId;
 
     @ApiModelProperty("名称")
-    private String menuName;
+    private String name;
 
     @ApiModelProperty("父ID")
     private Long parentId;
@@ -45,7 +45,7 @@ public class SysMenu extends BaseEntity {
     private String component;
 
     @ApiModelProperty("类型：M目录、C菜单、F按钮")
-    private Integer menuType;
+    private Integer type;
 
     @ApiModelProperty("权限")
     private String permission;

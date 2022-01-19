@@ -5,11 +5,11 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.manage.entity.SysMenu">
         <id column="menu_id" property="menuId"/>
-        <result column="menu_name" property="menuName"/>
+        <result column="menu_name" property="name"/>
         <result column="parent_id" property="parentId"/>
         <result column="path" property="path"/>
         <result column="component" property="component"/>
-        <result column="menu_type" property="menuType"/>
+        <result column="menu_type" property="type"/>
         <result column="permission" property="permission"/>
         <result column="icon" property="icon"/>
         <result column="sort" property="sort"/>
@@ -35,13 +35,13 @@
                  LEFT JOIN sys_user_role ur ON r.role_id = ur.role_id
                  LEFT JOIN sys_user u ON u.user_id = ur.user_id
         WHERE u.username = #{username}
-          AND m.menu_type !=#{menuType}
+          AND m.menu_type !=#{type}
     </select>
 
     <select id="selectMenuByParentIdAndName" resultType="com.qinweizhao.system.module.manage.entity.SysMenu">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM sys_menu WHERE parent_id=#{parentId} AND menu_name = #{menuName}
+        FROM sys_menu WHERE parent_id=#{parentId} AND menu_name = #{name}
     </select>
 
     <select id="selectCountByParentId" resultType="java.lang.Integer">
@@ -62,8 +62,8 @@
         <include refid="Base_Column_List"/>
         FROM sys_menu
         <where>
-            <if test="query.menuName != null and query.menuName != ''">
-                menu_name = #{query.menuName}
+            <if test="query.name != null and query.name != ''">
+                menu_name = #{query.name}
             </if>
         </where>
     </select>

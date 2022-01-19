@@ -41,16 +41,16 @@ public interface SysPostMapper extends BaseMapper<SysPost> {
     /**
      * 通过岗位名称查询岗位
      *
-     * @param postName postName
+     * @param name name
      * @return SysPost
      */
-    SysPost selectPostByPostName(String postName);
+    SysPost selectPostByname(String name);
 
     /**
      * 通过岗位编码查询岗位
      *
-     * @param postCode postCode
+     * @param code code
      * @return SysPost
      */
-    SysPost selectPostByPostCode(String postCode);
+    SysPost selectPostBycode(String code);
 }

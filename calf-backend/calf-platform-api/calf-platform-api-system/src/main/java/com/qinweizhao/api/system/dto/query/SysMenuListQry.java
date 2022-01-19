@@ -27,6 +27,6 @@ import java.util.List;
 public class SysMenuListQry extends PageQry {
 
     @ApiModelProperty("名称")
-    private String menuName;
+    private String name;
 
 }

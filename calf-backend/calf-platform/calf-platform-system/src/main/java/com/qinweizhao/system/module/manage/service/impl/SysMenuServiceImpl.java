@@ -10,7 +10,6 @@ import com.qinweizhao.common.core.enums.MenuTypeEnum;
 import com.qinweizhao.common.core.enums.StatusEnum;
 import com.qinweizhao.common.core.exception.ServiceException;
 import com.qinweizhao.common.core.response.ResultCode;
-import com.qinweizhao.common.core.util.PageUtil;
 import com.qinweizhao.system.module.manage.convert.SysMenuConvert;
 import com.qinweizhao.system.module.manage.entity.SysMenu;
 import com.qinweizhao.system.module.manage.mapper.SysMenuMapper;
@@ -53,9 +52,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
         // 校验父菜单存在
         this.checkParentResource(sysMenuSaveCmd.getParentId(), null);
         // 校验菜单（自己）
-        this.checkResource(sysMenuSaveCmd.getParentId(), sysMenuSaveCmd.getMenuName(), null);
+        this.checkResource(sysMenuSaveCmd.getParentId(), sysMenuSaveCmd.getName(), null);
         // 插入数据库
-        if (MenuTypeEnum.BUTTON.getType().equals(sysMenuSaveCmd.getMenuType())) {
+        if (MenuTypeEnum.BUTTON.getType().equals(sysMenuSaveCmd.getType())) {
             sysMenuSaveCmd.setComponent("");
             sysMenuSaveCmd.setIcon("");
             sysMenuSaveCmd.setPath("");
@@ -72,10 +71,10 @@ public class SysMenuServiceImpl implements ISysMenuService {
         // 校验父菜单存在
         checkParentResource(sysMenuUpdateCmd.getParentId(), sysMenuUpdateCmd.getMenuId());
         // 校验菜单（自己）
-        checkResource(sysMenuUpdateCmd.getParentId(), sysMenuUpdateCmd.getMenuName(), sysMenuUpdateCmd.getMenuId());
+        checkResource(sysMenuUpdateCmd.getParentId(), sysMenuUpdateCmd.getName(), sysMenuUpdateCmd.getMenuId());
         // 更新到数据库
         // 菜单为按钮类型时，无需 component、icon、path 属性，进行置空
-        if (MenuTypeEnum.BUTTON.getType().equals(sysMenuUpdateCmd.getMenuType())) {
+        if (MenuTypeEnum.BUTTON.getType().equals(sysMenuUpdateCmd.getType())) {
             sysMenuUpdateCmd.setComponent("");
             sysMenuUpdateCmd.setIcon("");
             sysMenuUpdateCmd.setPath("");
@@ -121,12 +120,12 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * <p>
      * 1. 校验相同父菜单编号下，是否存在相同的菜单名
      *
-     * @param menuName 菜单名字
+     * @param name     菜单名字
      * @param parentId 父菜单编号
      * @param menuId   菜单编号
      */
-    private void checkResource(Long parentId, String menuName, Long menuId) {
-        SysMenu sysMenu = sysMenuMapper.selectMenuByParentIdAndName(parentId, menuName);
+    private void checkResource(Long parentId, String name, Long menuId) {
+        SysMenu sysMenu = sysMenuMapper.selectMenuByParentIdAndName(parentId, name);
         if (sysMenu == null) {
             return;
         }
@@ -163,8 +162,8 @@ public class SysMenuServiceImpl implements ISysMenuService {
             throw new ServiceException(ResultCode.MENU_PARENT_NOT_EXISTS);
         }
         // 父菜单必须是目录或者菜单类型
-        if (!MenuTypeEnum.DIR.getType().equals(sysMenu.getMenuType())
-                && !MenuTypeEnum.MENU.getType().equals(sysMenu.getMenuType())) {
+        if (!MenuTypeEnum.DIR.getType().equals(sysMenu.getType())
+                && !MenuTypeEnum.MENU.getType().equals(sysMenu.getType())) {
             throw new ServiceException(ResultCode.MENU_PARENT_NOT_DIR_OR_MENU);
         }
     }

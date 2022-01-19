@@ -38,10 +38,10 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
 
     /**
      * 通过 Key 查询角色
-     * @param roleKey roleKey
+     * @param code code
      * @return SysRole
      */
-    SysRole selectRoleByRoleKey(String roleKey);
+    SysRole selectRoleBycode(String code);
 
 
     /**

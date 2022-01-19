@@ -35,8 +35,8 @@
     </select>
 
 
-    <select id="selectRoleKeysByUserId" resultType="java.lang.String">
-        SELECT r.role_key
+    <select id="selectcodesByUserId" resultType="java.lang.String">
+        SELECT r.code
         FROM sys_role r
                  LEFT JOIN sys_user_role ur ON r.role_id = ur.role_id
         WHERE ur.user_id = #{id}

@@ -6,9 +6,9 @@
       :inline="true"
       v-show="showSearch"
     >
-      <el-form-item label="部门名称" prop="deptName">
+      <el-form-item label="部门名称" prop="name">
         <el-input
-          v-model="queryParams.deptName"
+          v-model="queryParams.name"
           placeholder="请输入部门名称"
           clearable
           size="small"
@@ -54,7 +54,7 @@
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
       <el-table-column
-        prop="deptName"
+        prop="name"
         label="部门名称"
         width="260"
       ></el-table-column>
@@ -138,8 +138,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="部门名称" prop="deptName">
-              <el-input v-model="form.deptName" placeholder="请输入部门名称" />
+            <el-form-item label="部门名称" prop="name">
+              <el-input v-model="form.name" placeholder="请输入部门名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -236,7 +236,7 @@ export default {
       statusOptions: [],
       // 查询参数
       queryParams: {
-        deptName: undefined,
+        name: undefined,
       },
       // 表单参数
       form: {},
@@ -293,7 +293,7 @@ export default {
       }
       return {
         id: node.deptId,
-        label: node.deptName,
+        label: node.name,
         children: node.children,
       };
     },
@@ -375,7 +375,7 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      this.$confirm('是否确认删除名称为"' + row.deptName + '"的数据项?', "警告", {
+      this.$confirm('是否确认删除名称为"' + row.name + '"的数据项?', "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
