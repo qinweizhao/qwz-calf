@@ -2,14 +2,12 @@ package com.qinweizhao.system.module.manage.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.qinweizhao.api.system.dto.SysPostDTO;
 import com.qinweizhao.api.system.dto.command.SysPostSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysPostUpdateCmd;
 import com.qinweizhao.api.system.dto.query.SysPostPageQry;
 import com.qinweizhao.api.system.vo.SysPostVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysPostConvert;
-import com.qinweizhao.system.module.manage.entity.SysPost;
 import com.qinweizhao.system.module.manage.service.ISysPostService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
