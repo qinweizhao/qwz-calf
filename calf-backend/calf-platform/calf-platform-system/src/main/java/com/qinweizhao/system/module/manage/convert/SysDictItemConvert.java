@@ -85,7 +85,6 @@ public interface SysDictItemConvert {
     List<SysDictItemDTO> convertToDTO(List<SysDictItem> selectListDepts);
 
 
-
     /**
      * DO 转 DTO
      *

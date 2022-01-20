@@ -9,12 +9,12 @@ public class LogConstants {
     /**
      * 日志正常状态
      */
-    public static final String LOG_STATUS_NORMAL = "1";
+    public static final Integer LOG_STATUS_NORMAL = 1;
 
     /**
      * 日志错误状态
      */
-    public static final String LOG_STATUS_ERROR = "0";
+    public static final Integer LOG_STATUS_ERROR = 0;
 
     /**
      * 日志类型

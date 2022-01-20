@@ -2,8 +2,6 @@ package com.qinweizhao.common.core.util;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.common.core.request.PageQry;
-import com.qinweizhao.common.core.request.Query;
-import com.qinweizhao.common.core.request.Search;
 
 /**
  * 分页工具类

@@ -1,14 +1,11 @@
 package com.qinweizhao.api.system.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.qinweizhao.api.system.dto.SysDeptDTO;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * <p>

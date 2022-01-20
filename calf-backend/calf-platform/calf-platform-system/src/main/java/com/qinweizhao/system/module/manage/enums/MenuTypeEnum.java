@@ -1,4 +1,4 @@
-package com.qinweizhao.common.core.enums;
+package com.qinweizhao.system.module.manage.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Getter;
 /**
  * 菜单类型枚举类
  *
- * @author 芋道源码
+ * @author qinweizhao
  */
 @Getter
 @AllArgsConstructor

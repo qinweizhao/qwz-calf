@@ -26,7 +26,7 @@ public class SysConfigSaveCmd implements Serializable {
 
     @ApiModelProperty("参数主键")
     @TableId(value = "config_id", type = IdType.AUTO)
-     private Long configId;
+    private Long configId;
 
     @ApiModelProperty("参数分组")
     private String category;

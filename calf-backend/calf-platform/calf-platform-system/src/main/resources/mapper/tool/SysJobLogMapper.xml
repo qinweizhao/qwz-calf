@@ -4,7 +4,7 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.tool.entity.SysJobLog">
-        <id column="id" property="id" />
+        <id column="job_log_id" property="jobLogId" />
         <result column="job_id" property="jobId" />
         <result column="handler_name" property="handlerName" />
         <result column="handler_param" property="handlerParam" />
@@ -14,16 +14,25 @@
         <result column="duration" property="duration" />
         <result column="status" property="status" />
         <result column="result" property="result" />
-        <result column="createBy" property="createBy" />
+        <result column="create_by" property="createBy" />
         <result column="create_time" property="createTime" />
-        <result column="updateBy" property="updateBy" />
+        <result column="update_by" property="updateBy" />
         <result column="update_time" property="updateTime" />
         <result column="deleted" property="deleted" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, job_id, handler_name, handler_param, execute_index, begin_time, end_time, duration, status, result, createBy, create_time, updateBy, update_time, deleted
+        job_log_id, job_id, handler_name, handler_param, execute_index, begin_time, end_time, duration, status, result, create_by, create_time, update_by, update_time, deleted
     </sql>
+
+    <select id="selectPageJobLogs" resultType="com.qinweizhao.system.module.tool.entity.SysJobLog">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_job_log
+        <where>
+             deleted=0
+        </where>
+    </select>
 
 </mapper>

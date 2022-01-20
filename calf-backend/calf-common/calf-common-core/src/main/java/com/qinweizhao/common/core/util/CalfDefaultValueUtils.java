@@ -1,8 +1,6 @@
 package com.qinweizhao.common.core.util;
 
 import com.qinweizhao.common.core.constant.UserConstants;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
 
 /**
  * @author qinweizhao

@@ -1,8 +1,9 @@
 package com.qinweizhao.common.log.aspect;
 
 import cn.hutool.core.util.URLUtil;
+import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.qinweizhao.api.system.dto.SysLogDTO;
 import com.qinweizhao.common.log.annotation.SysLog;
 import com.qinweizhao.common.log.constant.LogConstants;
@@ -10,7 +11,6 @@ import com.qinweizhao.common.log.event.SysLogEvent;
 import com.qinweizhao.common.log.util.SysLogUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.map.HashedMap;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -45,24 +45,23 @@ public class SysLogAspect {
     public Object around(ProceedingJoinPoint point, SysLog sysLog) {
         String strClassName = point.getTarget().getClass().getName();
         String strMethodName = point.getSignature().getName();
-        log.debug("[类名]:{},[方法]:{}", strClassName, strMethodName);
 
         SysLogDTO sysLogDTO = SysLogUtils.getSysLog();
-
         sysLogDTO.setType(sysLog.type());
         sysLogDTO.setTitle(sysLog.value());
         HttpServletRequest request = ((ServletRequestAttributes) Objects
                 .requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        sysLogDTO.setIp(ServletUtil.getClientIP(request));
         String path = URLUtil.getPath(request.getRequestURI());
-        Map<String,Object> map = new HashMap<>();
-        map.put("className",strClassName);
-        map.put("methodName",strMethodName);
-        map.put("path",path);
+        Map<String, Object> map = new HashMap<>(6);
+        map.put("className", strClassName);
+        map.put("methodName", strMethodName);
+        map.put("methodParam", HttpUtil.toParams(request.getParameterMap()));
+        map.put("path", path);
         String method = request.getMethod();
-        map.put("method",method);
+        map.put("method", method);
         String s = JSON.toJSONString(map);
         sysLogDTO.setRequest(s);
-
 
         // 发送异步日志事件
         Long startTime = System.currentTimeMillis();
@@ -71,6 +70,7 @@ public class SysLogAspect {
         try {
             obj = point.proceed();
             sysLogDTO.setStatus(LogConstants.LOG_STATUS_NORMAL);
+            sysLogDTO.setResponse(JSON.toJSONString(obj));
         } catch (Exception e) {
             sysLogDTO.setStatus(LogConstants.LOG_STATUS_ERROR);
             sysLogDTO.setException(e.getMessage());

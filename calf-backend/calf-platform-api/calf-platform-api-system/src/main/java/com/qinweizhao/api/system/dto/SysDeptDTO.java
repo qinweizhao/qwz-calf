@@ -1,6 +1,5 @@
 package com.qinweizhao.api.system.dto;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -40,7 +39,7 @@ public class SysDeptDTO implements Serializable {
     @ApiModelProperty("排序")
     private String sort;
 
-    @TableLogic
+
     @ApiModelProperty("删除：1存在、0删除")
     private Integer deleted;
 

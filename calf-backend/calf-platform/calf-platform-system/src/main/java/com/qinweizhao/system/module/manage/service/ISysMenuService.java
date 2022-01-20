@@ -4,7 +4,6 @@ import com.qinweizhao.api.system.dto.SysMenuDTO;
 import com.qinweizhao.api.system.dto.command.SysMenuSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysMenuUpdateCmd;
 import com.qinweizhao.api.system.dto.query.SysMenuListQry;
-import com.qinweizhao.system.module.manage.entity.SysMenu;
 
 import java.util.List;
 

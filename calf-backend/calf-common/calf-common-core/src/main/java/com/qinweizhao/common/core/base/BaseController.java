@@ -14,16 +14,6 @@ public class BaseController {
 
 
     /**
-     * 获取当前登录用户的用户名
-     *
-     * @return String
-     */
-    public String getCurrentLoginUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return String.valueOf(authentication.getPrincipal());
-    }
-
-    /**
      * 获取 page 对象
      *
      * @param search search
@@ -32,5 +22,15 @@ public class BaseController {
      */
     public static <T> IPage<T> getPage(Search search) {
         return new Page<>(search.getCurrent(), search.getSize());
+    }
+
+    /**
+     * 获取当前登录用户的用户名
+     *
+     * @return String
+     */
+    public String getCurrentLoginUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return String.valueOf(authentication.getPrincipal());
     }
 }

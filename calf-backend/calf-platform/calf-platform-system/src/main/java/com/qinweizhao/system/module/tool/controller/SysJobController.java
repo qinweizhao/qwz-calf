@@ -3,19 +3,23 @@ package com.qinweizhao.system.module.tool.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.SysJobDTO;
+import com.qinweizhao.api.system.dto.command.SysJobSaveCmd;
+import com.qinweizhao.api.system.dto.command.SysJobUpdateCmd;
+import com.qinweizhao.api.system.dto.query.SysJobPageQry;
+import com.qinweizhao.api.system.vo.SysJobVO;
 import com.qinweizhao.common.core.response.Result;
-import com.qinweizhao.common.core.util.ExcelUtils;
-import com.qinweizhao.system.module.tool.entity.SysJob;
+import com.qinweizhao.system.module.tool.convert.SysJobConvert;
 import com.qinweizhao.system.module.tool.service.ISysJobService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,109 +31,83 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-27
  */
+@Api(tags = "定时任务")
 @RestController
-@RequestMapping("/system/job")
+@RequestMapping("/system/tool/job")
 public class SysJobController {
 
     @Resource
-    private ISysJobService jobService;
+    private ISysJobService sysJobService;
+
 
     @PostMapping("/save")
     @ApiOperation("创建定时任务")
     @PreAuthorize("hasAuthority('system:job:create')")
-    public Result<Long> saveJob(@Valid @RequestBody SysJob sysJob) {
-        return Result.condition(jobService.save(sysJob));
+    public Result<Boolean> createJob(@Valid @RequestBody SysJobSaveCmd sysJobSaveCmd) {
+        return Result.condition(sysJobService.saveJob(sysJobSaveCmd));
     }
 
     @PutMapping("/update")
     @ApiOperation("更新定时任务")
     @PreAuthorize("hasAuthority('system:job:update')")
-    public Result<Boolean> updateJob(@Valid @RequestBody SysJob sysJob) {
-        jobService.updateById(sysJob);
-        return Result.success(true);
+    public Result<Boolean> updateJob(@Valid @RequestBody SysJobUpdateCmd sysJobUpdateCmd) {
+        return Result.condition(sysJobService.updateJob(sysJobUpdateCmd));
     }
-    //
-    //@PutMapping("/update-status")
-    //@ApiOperation("更新定时任务的状态")
-    //@ApiImplicitParams({
-    //        @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class),
-    //        @ApiImplicitParam(name = "status", value = "状态", required = true, example = "1", dataTypeClass = Integer.class),
-    //})
-    //@PreAuthorize("hasAuthority('system:job:update')")
-    //public Result<Boolean> updateJobStatus(@RequestParam(value = "id") Long id, @RequestParam("status") Integer status)
-    //{
-    //    jobService.updateJobStatus(id, status);
-    //    return Result.success(true);
-    //}
 
-    @DeleteMapping("/remove")
-    @ApiOperation("删除定时任务")
-    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
-    @PreAuthorize("hasAuthority('system:job:delete')")
-    public Result<Boolean> deleteJob(@RequestParam("id") Long id) {
-        jobService.removeById(id);
+    @PutMapping("/update-status")
+    @ApiOperation("更新定时任务的状态")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "jobId", value = "编号", required = true, example = "1024", dataTypeClass = Long.class),
+            @ApiImplicitParam(name = "status", value = "状态", required = true, example = "1", dataTypeClass = Integer.class),
+    })
+    @PreAuthorize("hasAuthority('system:job:update')")
+    public Result<Boolean> updateJobStatus(@RequestParam(value = "jobId") Long jobId, @RequestParam("status") Integer status) {
+        sysJobService.updateJobStatus(jobId, status);
         return Result.success(true);
     }
-    //
-    //@PutMapping("/trigger")
-    //@ApiOperation("触发定时任务")
-    //@ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
-    //@PreAuthorize("hasAuthority('system:job:trigger')")
-    //public Result<Boolean> triggerJob(@RequestParam("id") Long id) throws SchedulerException {
-    //    jobService.triggerJob(id);
-    //    return Result.success(true);
-    //}
+
+    @DeleteMapping("/delete")
+    @ApiOperation("删除定时任务")
+    @ApiImplicitParam(name = "jobId", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
+    @PreAuthorize("hasAuthority('system:job:delete')")
+    public Result<Boolean> deleteJob(@RequestParam("jobId") Long jobId) {
+        return Result.condition(sysJobService.removeJob(jobId));
+    }
+
+    @PutMapping("/trigger")
+    @ApiOperation("触发定时任务")
+    @ApiImplicitParam(name = "jobId", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
+    @PreAuthorize("hasAuthority('system:job:trigger')")
+    public Result<Boolean> triggerJob(@RequestParam("jobId") Long jobId) {
+        sysJobService.triggerJob(jobId);
+        return Result.success(true);
+    }
 
     @GetMapping("/get")
     @ApiOperation("获得定时任务")
-    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
+    @ApiImplicitParam(name = "jobId", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("hasAuthority('system:job:query')")
-    public Result<SysJob> getJob(@RequestParam("id") Long id) {
-        SysJob job = jobService.getById(id);
-        return Result.success(job);
+    public Result<SysJobVO> getJob(@RequestParam("jobId") Long jobId) {
+        SysJobDTO job = sysJobService.getJob(jobId);
+        return Result.success(SysJobConvert.INSTANCE.convert(job));
     }
 
     @GetMapping("/list")
     @ApiOperation("获得定时任务列表")
-    @ApiImplicitParam(name = "ids", value = "编号列表", required = true, dataTypeClass = List.class)
+    @ApiImplicitParam(name = "jobIds", value = "编号列表", required = true, dataTypeClass = List.class)
     @PreAuthorize("hasAuthority('system:job:query')")
-    public Result<List<SysJob>> getJobList(@RequestParam("ids") Collection<Long> ids) {
-        List<SysJob> list = jobService.list();
-        return Result.success(list);
+    public Result<List<SysJobVO>> list(@RequestParam("jobIds") Collection<Long> jobIds) {
+        List<SysJobDTO> list = sysJobService.listJobs(jobIds);
+        return Result.success(SysJobConvert.INSTANCE.convertToVO(list));
     }
 
     @GetMapping("/page")
     @ApiOperation("获得定时任务分页")
     @PreAuthorize("hasAuthority('system:job:query')")
-    public Result<IPage<SysJob>> getJobPage(Page<SysJob> page) {
-        IPage<SysJob> pageResult = jobService.page(page);
-        return Result.success(pageResult);
+    public Result<Page<SysJobVO>> getJobPage(@Valid SysJobPageQry sysJobPageQry) {
+        IPage<SysJobDTO> pageResult = sysJobService.pageJobs(sysJobPageQry);
+        return Result.success(SysJobConvert.INSTANCE.convertToVO(pageResult));
     }
 
-    @GetMapping("/export-excel")
-    @ApiOperation("导出定时任务 Excel")
-    @PreAuthorize("hasAuthority('system:job:export')")
-    //@SysLog(value = "EXPORT")
-    public void exportJobExcel(@Valid SysJob exportReqVO,
-                               HttpServletResponse response) throws IOException {
-        List<SysJob> list = jobService.list();
-        // 导出 Excel
-        ExcelUtils.write(response, "定时任务.xls", "数据", SysJob.class, list);
-    }
 
-    //@GetMapping("/get_next_times")
-    //@ApiOperation("获得定时任务的下 n 次执行时间")
-    //@ApiImplicitParams({
-    //        @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class),
-    //        @ApiImplicitParam(name = "count", value = "数量", example = "5", dataTypeClass = Long.class)
-    //})
-    //@PreAuthorize("hasAuthority('system:job:query')")
-    //public Result<List<Date>> getJobNextTimes(@RequestParam("id") Long id,
-    //                                                @RequestParam(value = "count", required = false, defaultValue = "5") Integer count) {
-    //    SysJob job = jobService.getById(id);
-    //    if (job == null) {
-    //        return Result.success(Collections.emptyList());
-    //    }
-    //    return Result.success(CronUtils.getNextTimes(job.getCronExpression(), count));
-    //}
 }

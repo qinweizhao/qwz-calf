@@ -6,12 +6,12 @@ import com.qinweizhao.api.system.dto.SysConfigDTO;
 import com.qinweizhao.api.system.dto.command.SysConfigSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysConfigUpdateCmd;
 import com.qinweizhao.api.system.dto.query.SysConfigPageQry;
-import com.qinweizhao.common.core.enums.SysConfigTypeEnum;
 import com.qinweizhao.common.core.exception.ServiceException;
 import com.qinweizhao.common.core.response.ResultCode;
 import com.qinweizhao.common.core.util.PageUtil;
 import com.qinweizhao.system.module.manage.convert.SysConfigConvert;
 import com.qinweizhao.system.module.manage.entity.SysConfig;
+import com.qinweizhao.system.module.manage.enums.SysConfigTypeEnum;
 import com.qinweizhao.system.module.manage.mapper.SysConfigMapper;
 import com.qinweizhao.system.module.manage.service.ISysConfigService;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ import java.util.List;
  * @since 2021-12-22
  */
 @Service
-public class SysConfigServiceImpl  implements ISysConfigService {
+public class SysConfigServiceImpl implements ISysConfigService {
 
     @Resource
     private SysConfigMapper sysConfigMapper;

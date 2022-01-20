@@ -1,14 +1,16 @@
-package com.qinweizhao.common.core.enums;
+package com.qinweizhao.system.module.manage.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * Menu 编号枚举
+ * 部门编号枚举
+ *
+ * @author YVKG
  */
 @Getter
 @AllArgsConstructor
-public enum MenuIdEnum {
+public enum DeptIdEnum {
 
     /**
      * 根节点

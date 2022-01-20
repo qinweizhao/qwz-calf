@@ -293,7 +293,21 @@ public enum ResultCode implements IResultCode {
 
     DICT_DATA_NOT_ENABLE(1002007002, "字典数据不处于开启状态，不允许选择"),
 
-    DICT_DATA_VALUE_DUPLICATE(1002007003, "已经存在该值的字典数据");
+    DICT_DATA_VALUE_DUPLICATE(1002007003, "已经存在该值的字典数据"),
+
+
+    // ========== 定时任务 1001001000 ==========
+    JOB_NOT_EXISTS(1001001000, "定时任务不存在"),
+
+    JOB_HANDLER_EXISTS(1001001001, "定时任务的处理器已经存在"),
+
+    JOB_CHANGE_STATUS_INVALID(1001001002, "只允许修改为开启或者关闭状态"),
+
+    JOB_CHANGE_STATUS_EQUALS(1001001003, "定时任务已经处于该状态，无需修改"),
+
+    JOB_UPDATE_ONLY_NORMAL_STATUS(1001001004, "只有开启状态的任务，才可以修改"),
+
+    JOB_CRON_EXPRESSION_VALID(1001001005, "CRON 表达式不正确");
 
     /**
      * 状态码

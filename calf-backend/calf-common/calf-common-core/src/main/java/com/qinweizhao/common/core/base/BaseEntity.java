@@ -2,14 +2,12 @@ package com.qinweizhao.common.core.base;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * 实体类的基类
@@ -23,7 +21,6 @@ public abstract class BaseEntity implements Serializable {
 
 
     @ApiModelProperty("删除：0存在、1删除")
-    @TableLogic
     @TableField(fill = FieldFill.INSERT)
     private Integer deleted;
 

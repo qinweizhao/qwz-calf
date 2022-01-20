@@ -29,6 +29,13 @@
             <groupId>com.qinweizhao</groupId>
             <artifactId>calf-common-log</artifactId>
         </dependency>
+
+        <!-- Job 定时任务相关 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

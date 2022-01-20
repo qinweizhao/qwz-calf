@@ -4,25 +4,52 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.tool.entity.SysJob">
-        <id column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="status" property="status" />
-        <result column="handler_name" property="handlerName" />
-        <result column="handler_param" property="handlerParam" />
-        <result column="cron_expression" property="cronExpression" />
-        <result column="retry_count" property="retryCount" />
-        <result column="retry_interval" property="retryInterval" />
-        <result column="monitor_timeout" property="monitorTimeout" />
-        <result column="createBy" property="createBy" />
-        <result column="create_time" property="createTime" />
-        <result column="updateBy" property="updateBy" />
-        <result column="update_time" property="updateTime" />
-        <result column="deleted" property="deleted" />
+        <id column="job_id" property="jobId"/>
+        <result column="name" property="name"/>
+        <result column="status" property="status"/>
+        <result column="handler_name" property="handlerName"/>
+        <result column="handler_param" property="handlerParam"/>
+        <result column="cron_expression" property="cronExpression"/>
+        <result column="retry_count" property="retryCount"/>
+        <result column="retry_interval" property="retryInterval"/>
+        <result column="monitor_timeout" property="monitorTimeout"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="deleted" property="deleted"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, status, handler_name, handler_param, cron_expression, retry_count, retry_interval, monitor_timeout, createBy, create_time, updateBy, update_time, deleted
+        job_id, name, status, handler_name, handler_param, cron_expression, retry_count, retry_interval, monitor_timeout,create_by, create_time, update_by, update_time, deleted
     </sql>
+
+    <select id="selectByHandlerName" resultType="com.qinweizhao.system.module.tool.entity.SysJob">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_job WHERE handlerName #{handlerName}
+    </select>
+
+
+    <select id="selectPageJobs" resultType="com.qinweizhao.system.module.tool.entity.SysJob">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_job
+        <where>
+            <if test="query.name != null and query.name != ''">
+                name like concat('%', #{query.name}, '%')
+            </if>
+            <!-- 开始时间检索 -->
+            <if test="query.beginTime != null and query.beginTime != ''">
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{query.beginTime},'%y%m%d')
+            </if>
+            <!-- 结束时间检索 -->
+            <if test="query.endTime != null and query.endTime != ''">
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{query.endTime},'%y%m%d')
+            </if>
+            AND deleted=0
+        </where>
+    </select>
 
 </mapper>

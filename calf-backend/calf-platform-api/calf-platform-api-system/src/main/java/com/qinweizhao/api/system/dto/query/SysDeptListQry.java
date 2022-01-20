@@ -2,7 +2,6 @@ package com.qinweizhao.api.system.dto.query;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -45,7 +44,7 @@ public class SysDeptListQry implements Serializable {
     @ApiModelProperty("排序")
     private Integer sort;
 
-    @TableLogic
+
     @ApiModelProperty("删除：1存在、0删除")
     private Integer deleted;
 
