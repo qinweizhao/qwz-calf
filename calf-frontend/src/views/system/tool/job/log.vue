@@ -24,20 +24,16 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button type="warning" icon="el-icon-download" size="small" @click="handleExport"
-                   v-hasPermi="['infra:job:export']">导出</el-button>
-      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="list">
-      <el-table-column label="日志编号" align="center" prop="id" />
+      <el-table-column label="日志编号" align="center" prop="jobLogId" width="100"/>
       <el-table-column label="任务编号" align="center" prop="jobId" />
       <el-table-column label="处理器的名字" align="center" prop="handlerName" />
       <el-table-column label="处理器的参数" align="center" prop="handlerParam" />
       <el-table-column label="第几次执行" align="center" prop="executeIndex" />
-      <el-table-column label="执行时间" align="center" width="180">
+      <el-table-column label="执行时间" align="center" width="300">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.beginTime) + ' ~ ' + parseTime(scope.row.endTime) }}</span>
         </template>
@@ -54,8 +50,9 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
+          <!-- 详细 v-hasPermi="['system:job:query']" -->
           <el-button size="small" type="primary" icon="el-icon-view" @click="handleView(scope.row)"
-                     v-hasPermi="['infra:job:query']">详细</el-button>
+                     ></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -68,7 +65,7 @@
       <el-form ref="form" :model="form" label-width="120px" size="small">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="日志编号：">{{ form.id }}</el-form-item>
+            <el-form-item label="日志编号：">{{ form.jobLogId }}</el-form-item>
             <el-form-item label="任务编号：">{{ form.jobId }}</el-form-item>
             <el-form-item label="处理器的名字：">{{ form.handlerName }}</el-form-item>
             <el-form-item label="处理器的参数：">{{ form.handlerParam }}</el-form-item>
@@ -130,7 +127,7 @@ export default {
         beginTime: this.queryParams.beginTime ? this.queryParams.beginTime + ' 00:00:00' : undefined,
         endTime: this.queryParams.endTime ? this.queryParams.endTime + ' 23:59:59' : undefined,
       }).then(response => {
-          this.list = response.data.list;
+          this.list = response.data.records;
           this.total = response.data.total;
           this.loading = false;
         }

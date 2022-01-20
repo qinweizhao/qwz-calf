@@ -31,7 +31,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="处理器的名字" prop="handlerName">
+      <el-form-item label="处理器的名字" prop="handlerName" >
         <el-input
           v-model="queryParams.handlerName"
           placeholder="请输入处理器的名字"
@@ -76,12 +76,12 @@
         >
       </el-col>
       <el-col :span="1.5">
+        <!-- v-hasPermi="['system:job:query']" -->
         <el-button
           type="info"
           icon="el-icon-s-operation"
           size="small"
           @click="handleJobLog"
-          v-hasPermi="['system:job:query']"
           >执行日志</el-button
         >
       </el-col>
@@ -92,16 +92,16 @@
     </el-row>
 
     <el-table v-loading="loading" :data="jobList">
-      <el-table-column label="任务编号" align="center" prop="id" />
-      <el-table-column label="任务名称" align="center" prop="name" />
-      <el-table-column label="任务状态" align="center" prop="status">
+      <el-table-column label="编号" align="center" prop="jobId" width="100" />
+      <el-table-column label="名称" align="center" prop="name" width="180px" />
+      <el-table-column label="状态" align="center" prop="status">
         <template slot-scope="scope">
           <span>{{
             getDictDataLabel(DICT_TYPE.INF_JOB_STATUS, scope.row.status)
           }}</span>
         </template> </el-table-column
       >>
-      <el-table-column label="处理器的名字" align="center" prop="handlerName" />
+      <el-table-column label="处理器的名字" align="center" prop="handlerName" width="220px" />
       <el-table-column
         label="处理器的参数"
         align="center"
@@ -110,64 +110,59 @@
       <el-table-column
         label="CRON 表达式"
         align="center"
+        width="180px"
         prop="cronExpression"
       />
       <el-table-column
         label="操作"
         align="center"
+        width="400px"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
-          <!-- 详细 -->
+          <!-- 详细 v-hasPermi="['system:job:query']" -->
           <el-button
             size="small"
             type="primary"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            v-hasPermi="['system:job:query']"
+            
           ></el-button>
-          <!-- 执行日志 -->
+          <!-- 执行日志  v-hasPermi="['system:job:query']" -->
           <el-button
             size="small"
             icon="el-icon-s-operation"
             @click="handleJobLog(scope.row)"
-            v-hasPermi="['system:job:query']"
           ></el-button>
-          <!-- 修改 -->
+          <!-- 修改  v-hasPermi="['system:job:update']" -->
           <el-button
             size="small"
             type="primary"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:job:update']"
           ></el-button>
-          <!-- 开启 -->
+          <!-- 开启 v-hasPermi="['system:job:update']"  v-if="scope.row.status === InfJobStatusEnum.STOP"-->
           <el-button
             size="small"
             type="primary"
             icon="el-icon-check"
             @click="handleChangeStatus(scope.row, true)"
-            v-if="scope.row.status === InfJobStatusEnum.STOP"
-            v-hasPermi="['system:job:update']"
             ></el-button
           >
-          <!-- 暂停 -->
+          <!-- 暂停 v-hasPermi="['system:job:update']" v-if="scope.row.status === InfJobStatusEnum.NORMAL" -->
           <el-button
             size="small"
             type="primary"
             icon="el-icon-close"
             @click="handleChangeStatus(scope.row, false)"
-            v-if="scope.row.status === InfJobStatusEnum.NORMAL"
-            v-hasPermi="['system:job:update']"
             ></el-button
           >
-          <!-- 执行一次 -->
+          <!-- 执行一次 v-hasPermi="['system:job:trigger']" -->
           <el-button
             size="small"
             type="primary"
             icon="el-icon-caret-right"
             @click="handleRun(scope.row)"
-            v-hasPermi="['system:job:trigger']"
             ></el-button
           >
           <!-- 删除 -->
@@ -251,9 +246,9 @@
       <el-form ref="form" :model="form" label-width="200px" size="small">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="任务编号：">{{ form.id }}</el-form-item>
-            <el-form-item label="任务名称：">{{ form.name }}</el-form-item>
-            <el-form-item label="任务名称：">{{
+            <el-form-item label="编号：">{{ form.jobId }}</el-form-item>
+            <el-form-item label="名称：">{{ form.name }}</el-form-item>
+            <el-form-item label="状态：">{{
               getDictDataLabel(DICT_TYPE.INF_JOB_STATUS, form.status)
             }}</el-form-item>
             <el-form-item label="处理器的名字：">{{
@@ -274,9 +269,7 @@
             <el-form-item label="监控超时时间：">{{
               form.monitorTimeout > 0 ? form.monitorTimeout + " 毫秒" : "未开启"
             }}</el-form-item>
-            <el-form-item label="后续执行时间：">{{
-              Array.from(nextTimes, (x) => parseTime(x)).join("; ")
-            }}</el-form-item>
+      
           </el-col>
         </el-row>
       </el-form>
@@ -297,7 +290,6 @@ import {
   exportJob,
   runJob,
   updateJobStatus,
-  getJobNextTimes,
 } from "@/api/system/tool/job";
 import { InfJobStatusEnum } from "@/utils/constants";
 
@@ -376,7 +368,7 @@ export default {
     /** 表单重置 */
     reset() {
       this.form = {
-        id: undefined,
+        jobId: undefined,
         name: undefined,
         handlerName: undefined,
         handlerParam: undefined,
@@ -406,7 +398,7 @@ export default {
         type: "warning",
       })
         .then(function () {
-          return runJob(row.id);
+          return runJob(row.jobId);
         })
         .then(() => {
           this.msgSuccess("执行成功");
@@ -414,22 +406,18 @@ export default {
     },
     /** 任务详细信息 */
     handleView(row) {
-      getJob(row.id).then((response) => {
+      getJob(row.jobId).then((response) => {
         this.form = response.data;
         this.openView = true;
-      });
-      // 获取下一次执行时间
-      getJobNextTimes(row.id).then((response) => {
-        this.nextTimes = response.data;
       });
     },
     /** 任务日志列表查询 */
     handleJobLog(row) {
-      if (row.id) {
+      if (row.jobId) {
         this.$router.push({
           path: "/job/log",
           query: {
-            jobId: row.id,
+            jobId: row.jobId,
           },
         });
       } else {
@@ -445,7 +433,7 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id;
+      const id = row.jobId;
       getJob(id).then((response) => {
         this.form = response.data;
         this.open = true;
@@ -474,7 +462,7 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id;
+      const ids = row.jobId;
       this.$confirm(
         '是否确认删除定时任务编号为"' + ids + '"的数据项?',
         "警告",
@@ -494,7 +482,7 @@ export default {
     },
     /** 更新状态操作 */
     handleChangeStatus(row, open) {
-      const id = row.id;
+      const id = row.jobId;
       let status = open ? InfJobStatusEnum.NORMAL : InfJobStatusEnum.STOP;
       let statusStr = open ? "开启" : "关闭";
       this.$confirm(

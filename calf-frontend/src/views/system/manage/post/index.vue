@@ -41,16 +41,6 @@
           >新增</el-button
         >
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          icon="el-icon-download"
-          size="small"
-          @click="handleExport"
-          v-hasPermi="['system:post:export']"
-          >导出</el-button
-        >
-      </el-col>
       <right-toolbar
         :showSearch.sync="showSearch"
         @queryTable="getList"
@@ -162,8 +152,7 @@ import {
   getPost,
   delPost,
   addPost,
-  updatePost,
-  exportPost,
+  updatePost
 } from "@/api/system/manage/post";
 
 import { SysCommonStatusEnum } from "@/utils/constants";
@@ -239,7 +228,7 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        id: undefined,
+        postId: undefined,
         code: undefined,
         name: undefined,
         sort: 0,
@@ -267,8 +256,8 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id;
-      getPost(id).then((response) => {
+      const postId = row.postId;
+      getPost(postId).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改岗位";
@@ -278,7 +267,7 @@ export default {
     submitForm: function () {
       this.$refs["form"].validate((valid) => {
         if (valid) {
-          if (this.form.id !== undefined) {
+          if (this.form.postId !== undefined) {
             updatePost(this.form).then((response) => {
               this.msgSuccess("修改成功");
               this.open = false;
@@ -296,7 +285,7 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id;
+      const ids = row.postId;
       this.$confirm('是否确认删除岗位编号为"' + ids + '"的数据项?', "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -308,21 +297,6 @@ export default {
         .then(() => {
           this.getList();
           this.msgSuccess("删除成功");
-        });
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm("是否确认导出所有岗位数据项?", "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(function () {
-          return exportPost(queryParams);
-        })
-        .then((response) => {
-          this.downloadExcel(response, "岗位数据.xls");
         });
     },
   },

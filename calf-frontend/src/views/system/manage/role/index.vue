@@ -68,7 +68,7 @@
       <el-table-column
         label="角色名称"
         align="center"
-        prop="roleName"
+        prop="name"
         :show-overflow-tooltip="true"
         width="180"
       />
@@ -174,7 +174,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="角色名称" prop="name">
-          <el-input v-model="form.roleName" placeholder="请输入角色名称" />
+          <el-input v-model="form.name" placeholder="请输入角色名称" />
         </el-form-item>
         <el-form-item label="角色标识" prop="code">
           <el-input v-model="form.code" placeholder="请输入角色标识" />
@@ -209,7 +209,7 @@
     >
       <el-form :model="form" label-width="80px">
         <el-form-item label="角色名称">
-          <el-input v-model="form.roleName" :disabled="true" />
+          <el-input v-model="form.name" :disabled="true" />
         </el-form-item>
         <el-form-item label="角色标识">
           <el-input v-model="form.code" :disabled="true" />
@@ -351,7 +351,7 @@ export default {
       },
       // 表单校验
       rules: {
-        roleName: [
+        name: [
           { required: true, message: "角色名称不能为空", trigger: "blur" },
         ],
         code: [
@@ -437,7 +437,7 @@ export default {
       this.deptNodeAll = false;
       this.form = {
         roleId: undefined,
-        roleName: undefined,
+        name: undefined,
         code: undefined,
         sort: 0,
         deptIds: [],
@@ -509,9 +509,9 @@ export default {
     handleMenu(row) {
       this.reset();
       const roleId = row.roleId;
-      // 处理了 form 的角色 roleName 和 code 的展示
+      // 处理了 form 的角色 name 和 code 的展示
       this.form.roleId = roleId;
-      this.form.roleName = row.roleName;
+      this.form.name = row.name;
       this.form.code = row.code;
       // 打开弹窗
       this.openMenu = true;

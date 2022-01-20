@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询操作日志列表
 export function listOperateLog(query) {
   return request({
-    url: '/system/operate-log/page',
+    url: '/system/monitor/log/page',
     method: 'get',
     params: query
   })

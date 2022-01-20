@@ -78,7 +78,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="创建时间"
+        label="更新时间"
         align="center"
         prop="updateTime"
         width="200"
@@ -350,7 +350,7 @@ export default {
         this.title = "修改部门";
       });
       listDept(row.id).then((response) => {
-        this.deptOptions = this.handleTree(response.data, "id");
+        this.deptOptions = this.handleTree(response.data, "deptId");
       });
     },
     /** 提交按钮 */

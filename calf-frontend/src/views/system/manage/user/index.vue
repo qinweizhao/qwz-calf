@@ -105,7 +105,7 @@
           <el-table-column
             label="部门"
             align="center"
-            prop="name"
+            prop="deptName"
             :show-overflow-tooltip="true"
           />
           <el-table-column

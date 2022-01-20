@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询字典数据列表
 export function listData(query) {
   return request({
-    url: '/system/dict-data/page',
+    url: '/system/manage/dict/item/page',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listData(query) {
 // 查询字典数据详细
 export function getData(dictCode) {
   return request({
-    url: '/system/dict-data/get?id=' + dictCode,
+    url: '/system/manage/dict/item/get?id=' + dictCode,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getData(dictCode) {
 // 根据字典类型查询字典数据信息
 export function getDicts(dictType) {
   return request({
-    url: '/system/dict-data/type/' + dictType,
+    url: '/system/manage/dict/item/type/' + dictType,
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function getDicts(dictType) {
 // 新增字典数据
 export function addData(data) {
   return request({
-    url: '/system/dict-data/create',
+    url: '/system/manage/dict/item/create',
     method: 'post',
     data: data
   })
@@ -37,7 +37,7 @@ export function addData(data) {
 // 修改字典数据
 export function updateData(data) {
   return request({
-    url: '/system/dict-data/update',
+    url: '/system/manage/dict/item/update',
     method: 'put',
     data: data
   })
@@ -46,7 +46,7 @@ export function updateData(data) {
 // 删除字典数据
 export function delData(dictCode) {
   return request({
-    url: '/system/dict-data/delete?id=' + dictCode,
+    url: '/system/manage/dict/item/delete?id=' + dictCode,
     method: 'delete'
   })
 }
@@ -54,7 +54,7 @@ export function delData(dictCode) {
 // 导出字典数据
 export function exportData(query) {
   return request({
-    url: '/system/dict-data/export',
+    url: '/system/manage/dict/item/export',
     method: 'get',
     params: query,
     responseType: 'blob'
@@ -64,7 +64,7 @@ export function exportData(query) {
 // 查询全部字典数据列表
 export function listSimpleDictDatas() {
   return request({
-    url: '/sys/dict/data/list',
+    url: '/system/manage/dict/item/list-simple',
     method: 'get',
   })
 }

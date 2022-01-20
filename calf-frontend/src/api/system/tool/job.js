@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询定时任务调度列表
 export function listJob(query) {
   return request({
-    url: '/system/job/page',
+    url: '/system/tool/job/page',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listJob(query) {
 // 查询定时任务调度详细
 export function getJob(jobId) {
   return request({
-    url: '/system/job/get?id=' + jobId,
+    url: '/system/tool/job/get?jobId=' + jobId,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getJob(jobId) {
 // 新增定时任务调度
 export function addJob(data) {
   return request({
-    url: '/system/job/create',
+    url: '/system/tool/job/save',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addJob(data) {
 // 修改定时任务调度
 export function updateJob(data) {
   return request({
-    url: '/system/job/update',
+    url: '/system/tool/job/update',
     method: 'put',
     data: data
   })
@@ -38,38 +38,28 @@ export function updateJob(data) {
 // 删除定时任务调度
 export function delJob(jobId) {
   return request({
-    url: '/system/job/delete?id=' + jobId,
+    url: '/system/tool/job/remove?jobId=' + jobId,
     method: 'delete'
   })
 }
 
-// 导出定时任务调度
-export function exportJob(query) {
-  return request({
-    url: '/system/job/export-excel',
-    method: 'get',
-    params: query,
-    responseType: 'blob'
-  })
-}
 
 // 任务状态修改
 export function updateJobStatus(jobId, status) {
   return request({
-    url: '/system/job/update-status',
+    url: '/system/tool/job/update-status',
     method: 'put',
     headers:{
       'Content-type': 'application/x-www-form-urlencoded'
     },
-    data: 'id=' + jobId + "&status=" + status,
+    data: 'jobId=' + jobId + "&status=" + status,
   })
 }
-
 
 // 定时任务立即执行一次
 export function runJob(jobId) {
   return request({
-    url: '/system/job/trigger?id=' + jobId,
+    url: '/system/tool/job/trigger?jobId=' + jobId,
     method: 'put'
   })
 }
@@ -77,7 +67,8 @@ export function runJob(jobId) {
 // 获得定时任务的下 n 次执行时间
 export function getJobNextTimes(jobId) {
   return request({
-    url: '/system/job/get_next_times?id=' + jobId,
+    url: '/system/tool/job/get_next_times?jobId=' + jobId,
     method: 'get'
   })
 }
+            

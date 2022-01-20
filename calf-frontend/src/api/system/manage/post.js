@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询岗位列表
 export function listPost(query) {
   return request({
-    url: '/sys/post/page',
+    url: '/system/manage/post/page',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listPost(query) {
 // 获取岗位精简信息列表
 export function listSimplePosts() {
   return request({
-    url: '/sys/post/list-simple',
+    url: '/system/manage/post/list-simple',
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function listSimplePosts() {
 // 查询岗位详细
 export function getPost(postId) {
   return request({
-    url: '/sys/post/get?id=' + postId,
+    url: '/system/manage/post/get?postId=' + postId,
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function getPost(postId) {
 // 新增岗位
 export function addPost(data) {
   return request({
-    url: '/sys/post/create',
+    url: '/system/manage/post/save',
     method: 'post',
     data: data
   })
@@ -37,7 +37,7 @@ export function addPost(data) {
 // 修改岗位
 export function updatePost(data) {
   return request({
-    url: '/sys/post/update',
+    url: '/system/manage/post/update',
     method: 'put',
     data: data
   })
@@ -46,17 +46,8 @@ export function updatePost(data) {
 // 删除岗位
 export function delPost(postId) {
   return request({
-    url: '/sys/post/remove?id=' + postId,
+    url: '/system/manage/post/remove?postId=' + postId,
     method: 'delete'
   })
 }
 
-// 导出岗位
-export function exportPost(query) {
-  return request({
-    url: '/sys/post/export',
-    method: 'get',
-    params: query,
-    responseType: 'blob'
-  })
-}

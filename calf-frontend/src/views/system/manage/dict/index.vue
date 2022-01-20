@@ -97,7 +97,7 @@
     </el-row>
 
     <el-table v-loading="loading" :data="typeList">
-      <el-table-column label="字典编号" align="center" prop="id" />
+      <el-table-column label="字典编号" align="center" prop="dictId" />
       <el-table-column
         label="字典名称"
         align="center"
@@ -111,7 +111,7 @@
       >
         <template slot-scope="scope">
           <router-link
-            :to="'/dict/type/data/' + scope.row.id"
+            :to="'/dict/type/data/' + scope.row.dictId"
             class="link-type"
           >
             <span>{{ scope.row.type }}</span>
@@ -142,6 +142,7 @@
       </el-table-column>
       <el-table-column
         label="操作"
+         width="200"
         align="center"
         class-name="small-padding fixed-width"
       >
@@ -297,7 +298,7 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        id: undefined,
+        dictId: undefined,
         name: undefined,
         type: undefined,
         status: SysCommonStatusEnum.ENABLE,
@@ -325,8 +326,8 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id;
-      getType(id).then((response) => {
+      const dictId = row.dictId;
+      getType(dictId).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改字典类型";
@@ -336,7 +337,7 @@ export default {
     submitForm: function () {
       this.$refs["form"].validate((valid) => {
         if (valid) {
-          if (this.form.id !== undefined) {
+          if (this.form.dictId !== undefined) {
             updateType(this.form).then((response) => {
               this.msgSuccess("修改成功");
               this.open = false;

@@ -1,61 +1,148 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form
+      :model="queryParams"
+      ref="queryForm"
+      :inline="true"
+      v-show="showSearch"
+      label-width="68px"
+    >
       <el-form-item label="字典名称" prop="dictType">
         <el-select v-model="queryParams.dictType" size="small">
-          <el-option v-for="item in typeOptions" :key="item.id" :label="item.name" :value="item.type"/>
+          <el-option
+            v-for="item in typeOptions"
+            :key="item.id"
+            :label="item.name"
+            :value="item.type"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="字典标签" prop="label">
-        <el-input v-model="queryParams.label" placeholder="请输入字典标签" clearable size="small" @keyup.enter.native="handleQuery"/>
+        <el-input
+          v-model="queryParams.label"
+          placeholder="请输入字典标签"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="数据状态" clearable size="small">
-          <el-option v-for="dict in statusOptions" :key="dict.value" :label="dict.label" :value="dict.value"/>
+        <el-select
+          v-model="queryParams.status"
+          placeholder="数据状态"
+          clearable
+          size="small"
+        >
+          <el-option
+            v-for="dict in statusOptions"
+            :key="dict.value"
+            :label="dict.label"
+            :value="dict.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="cyan" icon="el-icon-search" size="small" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="small" @click="resetQuery">重置</el-button>
+        <el-button
+          type="cyan"
+          icon="el-icon-search"
+          size="small"
+          @click="handleQuery"
+          >搜索</el-button
+        >
+        <el-button icon="el-icon-refresh" size="small" @click="resetQuery"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" icon="el-icon-plus" size="small" @click="handleAdd"
-                   v-hasPermi="['system:dict:create']">新增</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          size="small"
+          @click="handleAdd"
+          v-hasPermi="['system:dict:create']"
+          >新增</el-button
+        >
       </el-col>
       <el-col :span="1.5">
-        <el-button type="warning" icon="el-icon-download" size="small" @click="handleExport"
-                   v-hasPermi="['system:dict:export']">导出</el-button>
+        <el-button
+          type="warning"
+          icon="el-icon-download"
+          size="small"
+          @click="handleExport"
+          v-hasPermi="['system:dict:export']"
+          >导出</el-button
+        >
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar
+        :showSearch.sync="showSearch"
+        @queryTable="getList"
+      ></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="dataList" >
-      <el-table-column label="字典编码" align="center" prop="id" />
+    <el-table v-loading="loading" :data="dataList">
+      <el-table-column label="字典编码" align="center" prop="dictItemId" />
       <el-table-column label="字典标签" align="center" prop="label" />
       <el-table-column label="字典键值" align="center" prop="value" />
       <el-table-column label="字典排序" align="center" prop="sort" />
-      <el-table-column label="状态" align="center" prop="status" :formatter="statusFormat" />
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column
+        label="状态"
+        align="center"
+        prop="status"
+        :formatter="statusFormat"
+      />
+      <el-table-column
+        label="备注"
+        align="center"
+        prop="remark"
+        :show-overflow-tooltip="true"
+      />
+      <el-table-column
+        label="创建时间"
+        align="center"
+        prop="createTime"
+        width="180"
+      >
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column
+        label="操作"
+        align="center"
+         width="200"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
-          <el-button size="small" type="primary" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-                     v-hasPermi="['system:dict:update']">修改</el-button>
-          <el-button size="small" type="primary" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['system:dict:delete']">删除</el-button>
+          <!-- 修改 -->
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['system:dict:update']"
+          ></el-button>
+          <!-- 删除 -->
+          <el-button
+            size="small"
+            type="primary"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermi="['system:dict:delete']"
+          ></el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="queryParams.current" :limit.sync="queryParams.size"
-                @pagination="getList"/>
+    <pagination
+      v-show="total > 0"
+      :total="total"
+      :page.sync="queryParams.current"
+      :limit.sync="queryParams.size"
+      @pagination="getList"
+    />
 
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
@@ -70,15 +157,28 @@
           <el-input v-model="form.value" placeholder="请输入数据键值" />
         </el-form-item>
         <el-form-item label="显示排序" prop="sort">
-          <el-input-number v-model="form.sort" controls-position="right" :min="0" />
+          <el-input-number
+            v-model="form.sort"
+            controls-position="right"
+            :min="0"
+          />
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-radio-group v-model="form.status">
-            <el-radio v-for="dict in statusDictDatas" :key="parseInt(dict.value)" :label="parseInt(dict.value)">{{dict.label}}</el-radio>
+            <el-radio
+              v-for="dict in statusDictDatas"
+              :key="parseInt(dict.value)"
+              :label="parseInt(dict.value)"
+              >{{ dict.label }}</el-radio
+            >
           </el-radio-group>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+          <el-input
+            v-model="form.remark"
+            type="textarea"
+            placeholder="请输入内容"
+          ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -90,11 +190,18 @@
 </template>
 
 <script>
-import { listData, getData, delData, addData, updateData, exportData } from "@/api/system/manage/dict/data";
+import {
+  listData,
+  getData,
+  delData,
+  addData,
+  updateData,
+  exportData,
+} from "@/api/system/manage/dict/data";
 import { listAllSimple, getType } from "@/api/system/manage/dict/type";
 
-import { SysCommonStatusEnum } from '@/utils/constants'
-import { getDictDataLabel, getDictDatas, DICT_TYPE } from '@/utils/dict'
+import { SysCommonStatusEnum } from "@/utils/constants";
+import { getDictDataLabel, getDictDatas, DICT_TYPE } from "@/utils/dict";
 
 export default {
   name: "Data",
@@ -124,27 +231,27 @@ export default {
         size: 10,
         dictName: undefined,
         dictType: undefined,
-        status: undefined
+        status: undefined,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         label: [
-          { required: true, message: "数据标签不能为空", trigger: "blur" }
+          { required: true, message: "数据标签不能为空", trigger: "blur" },
         ],
         value: [
-          { required: true, message: "数据键值不能为空", trigger: "blur" }
+          { required: true, message: "数据键值不能为空", trigger: "blur" },
         ],
         sort: [
-          { required: true, message: "数据顺序不能为空", trigger: "blur" }
-        ]
+          { required: true, message: "数据顺序不能为空", trigger: "blur" },
+        ],
       },
 
       // 枚举
       CommonStatusEnum: SysCommonStatusEnum,
       // 数据字典
-      statusDictDatas: getDictDatas(DICT_TYPE.SYS_COMMON_STATUS)
+      statusDictDatas: getDictDatas(DICT_TYPE.SYS_COMMON_STATUS),
     };
   },
   created() {
@@ -155,7 +262,7 @@ export default {
   methods: {
     /** 查询字典类型详细 */
     getType(dictId) {
-      getType(dictId).then(response => {
+      getType(dictId).then((response) => {
         this.queryParams.dictType = response.data.type;
         this.defaultDictType = response.data.type;
         this.getList();
@@ -163,22 +270,22 @@ export default {
     },
     /** 查询字典类型列表 */
     getTypeList() {
-      listAllSimple().then(response => {
+      listAllSimple().then((response) => {
         this.typeOptions = response.data;
       });
     },
     /** 查询字典数据列表 */
     getList() {
       this.loading = true;
-      listData(this.queryParams).then(response => {
-        this.dataList = response.data.list;
+      listData(this.queryParams).then((response) => {
+        this.dataList = response.data.records;
         this.total = response.data.total;
         this.loading = false;
       });
     },
     // 数据状态字典翻译
     statusFormat(row, column) {
-      return getDictDataLabel(DICT_TYPE.SYS_COMMON_STATUS, row.status)
+      return getDictDataLabel(DICT_TYPE.SYS_COMMON_STATUS, row.status);
     },
     // 取消按钮
     cancel() {
@@ -193,7 +300,7 @@ export default {
         value: undefined,
         sort: 0,
         status: SysCommonStatusEnum.ENABLE,
-        remark: undefined
+        remark: undefined,
       };
       this.resetForm("form");
     },
@@ -218,25 +325,25 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id || this.ids
-      getData(id).then(response => {
+      const id = row.id || this.ids;
+      getData(id).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改字典数据";
       });
     },
     /** 提交按钮 */
-    submitForm: function() {
-      this.$refs["form"].validate(valid => {
+    submitForm: function () {
+      this.$refs["form"].validate((valid) => {
         if (valid) {
           if (this.form.id !== undefined) {
-            updateData(this.form).then(response => {
+            updateData(this.form).then((response) => {
               this.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
-            addData(this.form).then(response => {
+            addData(this.form).then((response) => {
               this.msgSuccess("新增成功");
               this.open = false;
               this.getList();
@@ -249,29 +356,33 @@ export default {
     handleDelete(row) {
       const ids = row.id;
       this.$confirm('是否确认删除字典编码为"' + ids + '"的数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(function () {
           return delData(ids);
-        }).then(() => {
+        })
+        .then(() => {
           this.getList();
           this.msgSuccess("删除成功");
-        })
+        });
     },
     /** 导出按钮操作 */
     handleExport() {
       const queryParams = this.queryParams;
-      this.$confirm('是否确认导出所有数据项?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
+      this.$confirm("是否确认导出所有数据项?", "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(function () {
           return exportData(queryParams);
-        }).then(response => {
-          this.downloadExcel(response, '字典数据.xls');
         })
-    }
-  }
+        .then((response) => {
+          this.downloadExcel(response, "字典数据.xls");
+        });
+    },
+  },
 };
 </script>

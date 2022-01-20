@@ -40,34 +40,36 @@
     </el-row>
 
     <el-table v-loading="loading" :data="list">
-      <el-table-column label="日志编号" align="center" prop="id" />
-      <el-table-column label="操作模块" align="center" prop="module" />
-      <el-table-column label="操作名" align="center" prop="name" width="180" />
+      <el-table-column label="编号" align="center" prop="logId" width="100" />
+      <el-table-column label="标题" align="center" prop="title" width="180" />
+      <el-table-column label="IP" align="center" prop="ip" width="180"/>
+      <el-table-column label="状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <span>{{ scope.row.resultCode === 0 ? '成功' : '失败' }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作者" align="center" prop="createBy" width="180"/>
       <el-table-column label="操作类型" align="center" prop="type">
         <template slot-scope="scope">
           <span>{{ getDictDataLabel(DICT_TYPE.SYS_OPERATE_TYPE, scope.row.type) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作人" align="center" prop="userNickname" />
-      <el-table-column label="操作结果" align="center" prop="status">
+      
+      <el-table-column label="操作日期" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
-          <span>{{ scope.row.resultCode === 0 ? '成功' : '失败' }}</span>
+          <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作日期" align="center" prop="startTime" width="180">
+      <el-table-column label="执行时长" align="center" prop="time">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.startTime) }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="执行时长" align="center" prop="startTime">
-        <template slot-scope="scope">
-          <span>{{ scope.row.duration }}  ms</span>
+          <span>{{ scope.row.time }}  ms</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-view" @click="handleView(scope.row,scope.index)"
-                     v-hasPermi="['system:operate-log:query']">详细</el-button>
+          <!-- 详细 -->
+          <el-button size="small" type="primary" icon="el-icon-view" @click="handleView(scope.row,scope.index)"
+                     v-hasPermi="['system:log:get']"></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -85,40 +87,13 @@
       <el-form ref="form" :model="form" label-width="100px" size="mini">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="日志主键：">{{ form.id }}</el-form-item>
+            <el-form-item label="编号">{{ form.logId }}</el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="链路追踪：">{{ form.traceId }}</el-form-item>
+            <el-form-item label="请求信息">{{ form.request }}</el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="用户信息：">{{ form.userId }} | {{ form.userNickname }} | {{ form.userIp }} | {{ form.userAgent}} </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="操作信息：">
-              {{ form.module }} | {{ form.name }} | {{ getDictDataLabel(DICT_TYPE.SYS_OPERATE_TYPE, form.type) }}
-              <br /> {{ form.content }}
-              <br /> {{ form.exts }}
-            </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="请求信息：">{{ form.requestMethod }} | {{ form.requestUrl }} </el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="方法名：">{{ form.javaMethod }}</el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="方法参数：">{{ form.javaMethodArgs }}</el-form-item>
-          </el-col>
-          <el-col :span="24">
-            <el-form-item label="开始时间：">
-              {{ parseTime(form.startTime) }} | {{ form.duration }} ms
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="操作结果：">
-              <div v-if="form.resultCode === 0">正常 | {{ form.resultData}} </div>
-              <div v-else-if="form.resultCode > 0">失败 | {{ form.resultCode }} || {{ form.resultMsg}}</div>
-            </el-form-item>
+            <el-form-item label="响应信息">{{ form.response }}</el-form-item>
           </el-col>
         </el-row>
       </el-form>
@@ -130,7 +105,7 @@
 </template>
 
 <script>
-import { listOperateLog, exportOperateLog } from "@/api/system/monitor/operatelog";
+import { listOperateLog, exportOperateLog } from "@/api/system/monitor/log";
 
 export default {
   name: "Operlog",
@@ -176,7 +151,7 @@ export default {
         this.dateRange[0] ? this.dateRange[0] + ' 00:00:00' : undefined,
         this.dateRange[1] ? this.dateRange[1] + ' 23:59:59' : undefined,
       ])).then( response => {
-          this.list = response.data.list;
+          this.list = response.data.records;
           this.total = response.data.total;
           this.loading = false;
         }
