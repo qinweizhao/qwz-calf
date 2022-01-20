@@ -1,4 +1,4 @@
-package com.qinweizhao.common.core.enums;
+package com.qinweizhao.system.module.manage.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

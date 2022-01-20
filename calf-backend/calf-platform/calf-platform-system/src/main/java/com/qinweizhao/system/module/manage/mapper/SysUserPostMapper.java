@@ -24,6 +24,7 @@ public interface SysUserPostMapper extends BaseMapper<SysUserPost> {
 
     /**
      * 通过用户 Id 查询所属岗位集合
+     *
      * @param userId userId
      * @return List<Long>
      */

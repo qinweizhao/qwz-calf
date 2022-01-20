@@ -2,8 +2,6 @@ package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.qinweizhao.api.system.dto.SysDeptDTO;
 import com.qinweizhao.api.system.dto.SysDictDTO;
 import com.qinweizhao.api.system.dto.command.SysDictSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysDictUpdateCmd;
@@ -55,6 +53,7 @@ public interface ISysDictService {
 
     /**
      * 获取字典
+     *
      * @param dictId dictId
      * @return SysDictDTO
      */
@@ -62,6 +61,7 @@ public interface ISysDictService {
 
     /**
      * 获取字典列表(开启状态）
+     *
      * @return List<SysDictDTO>
      */
     List<SysDictDTO> listSimpleDicts();

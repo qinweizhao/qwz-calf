@@ -2,6 +2,7 @@ package com.qinweizhao.api.system.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,14 +12,15 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 操作日志记录
+ * 日志表
  * </p>
  *
  * @author qinweizhao
- * @since 2021-12-22
+ * @since 2022-01-20
  */
 @Data
-@ApiModel(value = "SysOperateLog对象", description = "操作日志记录")
+@TableName("sys_log")
+@ApiModel(value = "SysLog对象", description = "日志表")
 public class SysLogDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,31 +35,41 @@ public class SysLogDTO implements Serializable {
     @ApiModelProperty("日志标题")
     private String title;
 
+    @ApiModelProperty("操作地址")
+    private String ip;
+
     @ApiModelProperty("请求信息")
     private String request;
 
-    @ApiModelProperty("异常信息")
+    @ApiModelProperty("请求信息")
+    private String response;
+
+    @ApiModelProperty("响应信息")
     private String exception;
 
     @ApiModelProperty("执行时间")
     private Long time;
 
-    @ApiModelProperty("删除标记")
-    private String deleted;
+    @ApiModelProperty("备注")
+    private String remark;
 
     @ApiModelProperty("状态：0成功、1失败")
-    private String status;
+    private Integer status;
 
-    @ApiModelProperty("创建人")
+    @ApiModelProperty("删除：0存在、1删除")
+    private Integer deleted;
+
+    @ApiModelProperty("创建者")
     private String createBy;
 
-    @ApiModelProperty("更新人")
+    @ApiModelProperty("更新者")
     private String updateBy;
 
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty("创建日期")
     private LocalDateTime createTime;
 
     @ApiModelProperty("更新时间")
     private LocalDateTime updateTime;
+
 
 }

@@ -1,7 +1,6 @@
 package com.qinweizhao.api.system.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -59,7 +58,7 @@ public class SysMenuDTO implements Serializable {
     private Integer deleted;
 
     @ApiModelProperty("状态：1正常、0停用")
-    private String status;
+    private Integer status;
 
     @ApiModelProperty("创建者")
     private String createBy;
@@ -73,6 +72,5 @@ public class SysMenuDTO implements Serializable {
     @ApiModelProperty("更新时间")
     private Date updateTime;
 
-    @TableField(exist = false)
     private List<SysMenuDTO> children;
 }

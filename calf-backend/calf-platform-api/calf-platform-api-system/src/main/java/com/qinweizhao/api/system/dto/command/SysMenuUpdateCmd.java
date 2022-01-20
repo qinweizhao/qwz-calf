@@ -57,7 +57,7 @@ public class SysMenuUpdateCmd implements Serializable {
     private Integer deleted;
 
     @ApiModelProperty("状态：1正常、0停用")
-    private String status;
+    private Integer status;
 
     @ApiModelProperty("创建者")
     private String createBy;

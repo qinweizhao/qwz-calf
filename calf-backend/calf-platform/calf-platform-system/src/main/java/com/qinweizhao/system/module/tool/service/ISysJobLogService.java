@@ -1,7 +1,11 @@
 package com.qinweizhao.system.module.tool.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.qinweizhao.system.module.tool.entity.SysJobLog;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.qinweizhao.api.system.dto.SysJobLogDTO;
+import com.qinweizhao.api.system.dto.query.SysJobLogPageQry;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +15,11 @@ import com.qinweizhao.system.module.tool.entity.SysJobLog;
  * @author qinweizhao
  * @since 2021-12-27
  */
-public interface ISysJobLogService extends IService<SysJobLog> {
+public interface ISysJobLogService {
 
+    SysJobLogDTO getJobLog(Long id);
+
+    List<SysJobLogDTO> listJobLogs(Collection<Long> ids);
+
+    IPage<SysJobLogDTO> pageJobLogs(SysJobLogPageQry sysJobLogPageQry);
 }

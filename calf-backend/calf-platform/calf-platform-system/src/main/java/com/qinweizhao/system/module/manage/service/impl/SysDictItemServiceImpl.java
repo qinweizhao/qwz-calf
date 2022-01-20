@@ -69,6 +69,7 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
             throw new ServiceException(ResultCode.DICT_TYPE_NOT_ENABLE);
         }
     }
+
     public void checkDictDataValueUnique(Long id, String dictType, String value) {
         SysDictItem sysDictItem = sysDictItemMapper.selectByDictTypeAndValue(dictType, value);
         if (sysDictItem == null) {
@@ -82,9 +83,10 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
             throw new ServiceException(ResultCode.DICT_DATA_VALUE_DUPLICATE);
         }
     }
+
     @Override
     public int updateDictItem(SysDictItemUpdateCmd sysDictItemUpdateCmd) {
-        checkCreateOrUpdate(sysDictItemUpdateCmd.getDictItemId(), sysDictItemUpdateCmd.getValue(),sysDictItemUpdateCmd.getDictType());
+        checkCreateOrUpdate(sysDictItemUpdateCmd.getDictItemId(), sysDictItemUpdateCmd.getValue(), sysDictItemUpdateCmd.getDictType());
         SysDictItem sysDictItem = SysDictItemConvert.INSTANCE.convert(sysDictItemUpdateCmd);
         return sysDictItemMapper.insert(sysDictItem);
     }

@@ -9,8 +9,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
-
 /**
  * <p>
  * 参数配置表
@@ -29,7 +27,7 @@ public class SysConfigPageQry extends PageQry {
 
     @ApiModelProperty("参数主键")
     @TableId(value = "config_id", type = IdType.AUTO)
-     private Long configId;
+    private Long configId;
 
     @ApiModelProperty("参数分组")
     private String category;

@@ -4,9 +4,7 @@ package com.qinweizhao.system.module.manage.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.qinweizhao.api.system.dto.SysDictItemDTO;
 import com.qinweizhao.api.system.dto.query.SysDictItemPageQry;
-import com.qinweizhao.common.core.enums.StatusEnum;
 import com.qinweizhao.system.module.manage.entity.SysDictItem;
 import org.apache.ibatis.annotations.Param;
 
@@ -51,6 +49,7 @@ public interface SysDictItemMapper extends BaseMapper<SysDictItem> {
 
     /**
      * 获取部分字典数据 dictType、value、label
+     *
      * @return List<SysDictItemDTO>
      */
     List<SysDictItem> selectListSimpleDictItems(Integer status);

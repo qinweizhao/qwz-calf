@@ -5,11 +5,14 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.monitor.entity.SysLog">
         <id column="log_id" property="logId" />
-        <result column="log_type" property="type" />
-        <result column="log_title" property="title" />
+        <result column="type" property="type" />
+        <result column="title" property="title" />
+        <result column="ip" property="ip" />
         <result column="request" property="request" />
+        <result column="response" property="response" />
         <result column="exception" property="exception" />
         <result column="time" property="time" />
+        <result column="remark" property="remark" />
         <result column="deleted" property="deleted" />
         <result column="status" property="status" />
         <result column="create_by" property="createBy" />
@@ -20,7 +23,28 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        log_id, log_type, log_title, request, exception, time, deleted, status, create_by, update_by, create_time, update_time
+        log_id, type, title, ip, request, response, exception, time, remark, deleted, status, create_by, update_by, create_time, update_time
     </sql>
+
+
+    <select id="selectPageLogs" resultType="com.qinweizhao.system.module.monitor.entity.SysLog">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_log
+        <where>
+            <if test="query.type != null and query.type != ''">
+                type = #{query.type}
+            </if>
+            <!-- 开始时间检索 -->
+            <if test="query.beginTime != null and query.beginTime != ''">
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{query.beginTime},'%y%m%d')
+            </if>
+            <!-- 结束时间检索 -->
+            <if test="query.endTime != null and query.endTime != ''">
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{query.endTime},'%y%m%d')
+            </if>
+            AND deleted=0
+        </where>
+    </select>
 
 </mapper>

@@ -5,7 +5,6 @@ import com.qinweizhao.api.system.dto.SysDictItemDTO;
 import com.qinweizhao.api.system.dto.command.SysDictItemSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysDictItemUpdateCmd;
 import com.qinweizhao.api.system.dto.query.SysDictItemPageQry;
-import com.qinweizhao.system.module.manage.entity.SysDictItem;
 
 import java.util.List;
 
@@ -31,6 +30,7 @@ public interface ISysDictItemService {
 
     /**
      * 获取部分字典数据 dictType、value、label
+     *
      * @return List<SysDictItemDTO>
      */
     List<SysDictItemDTO> listSimpleDictItems();

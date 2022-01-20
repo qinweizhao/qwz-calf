@@ -32,10 +32,9 @@ import static com.qinweizhao.common.core.response.ResultCode.*;
 public class SysDictServiceImpl implements ISysDictService {
 
     @Resource
-    private SysDictMapper sysDictMapper;
-
-    @Resource
     SysDictItemMapper sysDictItemMapper;
+    @Resource
+    private SysDictMapper sysDictMapper;
 
     @Override
     public int saveDictType(SysDictSaveCmd sysDictSaveCmd) {

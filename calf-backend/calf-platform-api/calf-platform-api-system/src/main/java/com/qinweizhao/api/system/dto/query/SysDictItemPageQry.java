@@ -1,6 +1,5 @@
 package com.qinweizhao.api.system.dto.query;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.qinweizhao.common.core.request.PageQry;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

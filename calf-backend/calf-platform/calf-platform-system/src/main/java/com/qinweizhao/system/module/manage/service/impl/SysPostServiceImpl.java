@@ -48,7 +48,6 @@ public class SysPostServiceImpl implements ISysPostService {
     /**
      * 校验正确性
      *
-     *
      * @param postId postId
      * @param name   name
      * @param code   code

@@ -2,14 +2,12 @@ package com.qinweizhao.system.module.tool.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.qinweizhao.common.core.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import lombok.EqualsAndHashCode;
 
 /**
  * <p>
@@ -22,13 +20,19 @@ import java.time.LocalDateTime;
 @Data
 @TableName("sys_job")
 @ApiModel(value = "SysJob对象", description = "定时任务表")
-public class SysJob implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class SysJob extends BaseEntity {
+
+    /**
+     * 任务调度参数key
+     */
+    public static final String JOB_PARAM_KEY = "JOB_PARAM_KEY";
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("任务编号")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "job_id", type = IdType.AUTO)
+    private Long jobId;
 
     @ApiModelProperty("任务名称")
     private String name;
@@ -53,21 +57,5 @@ public class SysJob implements Serializable {
 
     @ApiModelProperty("监控超时时间")
     private Integer monitorTimeout;
-
-    @ApiModelProperty("创建者")
-    private String createBy;
-
-    @ApiModelProperty("创建时间")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty("更新者")
-    private String updateBy;
-
-    @ApiModelProperty("更新时间")
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty("是否删除")
-    @TableLogic
-    private Integer deleted;
 
 }

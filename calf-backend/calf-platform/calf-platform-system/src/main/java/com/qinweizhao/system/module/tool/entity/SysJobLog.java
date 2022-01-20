@@ -2,7 +2,6 @@ package com.qinweizhao.system.module.tool.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -28,7 +27,7 @@ public class SysJobLog implements Serializable {
 
     @ApiModelProperty("日志编号")
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private Long jobLogId;
 
     @ApiModelProperty("任务编号")
     private Long jobId;
@@ -69,7 +68,7 @@ public class SysJobLog implements Serializable {
     @ApiModelProperty("更新时间")
     private LocalDateTime updateTime;
 
-    @TableLogic
+
     @ApiModelProperty("是否删除")
     private Integer deleted;
 
