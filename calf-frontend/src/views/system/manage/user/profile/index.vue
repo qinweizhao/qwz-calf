@@ -70,7 +70,7 @@ import { getUserProfile } from "@/api/system/manage/user";
 
 export default {
   name: "Profile",
-  components: { userAvatar, userInfo, resetPwd, userSocial },
+  components: { userAvatar, userInfo, resetPwd },
   data() {
     return {
       user: {},

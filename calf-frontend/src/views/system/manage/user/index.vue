@@ -34,9 +34,9 @@
           v-show="showSearch"
           label-width="68px"
         >
-          <el-form-item label="用户名称" prop="keyword">
+          <el-form-item label="用户名称" prop="username">
             <el-input
-              v-model="queryParams.keyword"
+              v-model="queryParams.username"
               placeholder="请输入用户名称"
               clearable
               size="small"
@@ -385,7 +385,7 @@ export default {
       queryParams: {
         current: 1,
         size: 10,
-        keyword: undefined,
+        username: undefined,
         deptId: undefined,
       },
       // 表单校验
@@ -614,7 +614,6 @@ export default {
     },
     /** 提交按钮（角色权限） */
     submitRole: function () {
-      console.log("sss");
       if (this.form.userId !== undefined) {
         assignUserRole({
           userId: this.form.userId,

@@ -5,21 +5,20 @@
       ref="queryForm"
       :inline="true"
       v-show="showSearch"
-      label-width="100px"
     >
-      <el-form-item label="任务名称" prop="name">
+      <el-form-item label="名称" prop="name">
         <el-input
           v-model="queryParams.name"
-          placeholder="请输入任务名称"
+          placeholder="请输入名称"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="任务状态" prop="status">
+      <el-form-item label="状态" prop="status">
         <el-select
           v-model="queryParams.status"
-          placeholder="请选择任务状态"
+          placeholder="请选择状态"
           clearable
           size="small"
         >
@@ -31,10 +30,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="处理器的名字" prop="handlerName" >
+      <el-form-item label="BeanName" prop="handlerName" >
         <el-input
           v-model="queryParams.handlerName"
-          placeholder="请输入处理器的名字"
+          placeholder="请输入BeanName"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
@@ -66,16 +65,6 @@
         >
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          type="warning"
-          icon="el-icon-download"
-          size="small"
-          @click="handleExport"
-          v-hasPermi="['system:job:export']"
-          >导出</el-button
-        >
-      </el-col>
-      <el-col :span="1.5">
         <!-- v-hasPermi="['system:job:query']" -->
         <el-button
           type="info"
@@ -101,9 +90,9 @@
           }}</span>
         </template> </el-table-column
       >>
-      <el-table-column label="处理器的名字" align="center" prop="handlerName" width="220px" />
+      <el-table-column label="BeanName" align="center" prop="handlerName" width="220px" />
       <el-table-column
-        label="处理器的参数"
+        label="执行参数"
         align="center"
         prop="handlerParam"
       />
@@ -126,13 +115,14 @@
             type="primary"
             icon="el-icon-view"
             @click="handleView(scope.row)"
-            
+            v-hasPermi="['system:job:query']"
           ></el-button>
           <!-- 执行日志  v-hasPermi="['system:job:query']" -->
           <el-button
             size="small"
             icon="el-icon-s-operation"
             @click="handleJobLog(scope.row)"
+            v-hasPermi="['system:job:query']"
           ></el-button>
           <!-- 修改  v-hasPermi="['system:job:update']" -->
           <el-button
@@ -140,6 +130,7 @@
             type="primary"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
+            v-hasPermi="['system:job:update']"
           ></el-button>
           <!-- 开启 v-hasPermi="['system:job:update']"  v-if="scope.row.status === InfJobStatusEnum.STOP"-->
           <el-button
@@ -147,6 +138,8 @@
             type="primary"
             icon="el-icon-check"
             @click="handleChangeStatus(scope.row, true)"
+            v-if="scope.row.status === InfJobStatusEnum.STOP"
+            v-hasPermi="['system:job:update']"
             ></el-button
           >
           <!-- 暂停 v-hasPermi="['system:job:update']" v-if="scope.row.status === InfJobStatusEnum.NORMAL" -->
@@ -155,14 +148,18 @@
             type="primary"
             icon="el-icon-close"
             @click="handleChangeStatus(scope.row, false)"
+            v-if="scope.row.status === InfJobStatusEnum.NORMAL"
+            v-hasPermi="['system:job:update']"
             ></el-button
           >
-          <!-- 执行一次 v-hasPermi="['system:job:trigger']" -->
+          <!-- 执行 v-hasPermi="['system:job:trigger']" -->
           <el-button
             size="small"
             type="primary"
             icon="el-icon-caret-right"
             @click="handleRun(scope.row)"
+            v-if="scope.row.status === InfJobStatusEnum.INIT"
+            v-hasPermi="['system:job:trigger']"
             ></el-button
           >
           <!-- 删除 -->
@@ -185,48 +182,29 @@
       :limit.sync="queryParams.size"
       @pagination="getList"
     />
-
     <!-- 添加或修改定时任务对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="任务名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入任务名称" />
         </el-form-item>
-        <el-form-item label="处理器的名字" prop="handlerName">
+        <el-form-item label="BeanName" prop="handlerName">
           <el-input
             v-model="form.handlerName"
-            placeholder="请输入处理器的名字"
+            placeholder="请输入BeanName"
             v-bind:readonly="form.id !== undefined"
           />
         </el-form-item>
-        <el-form-item label="处理器的参数" prop="handlerParam">
+        <el-form-item label="执行参数" prop="handlerParam">
           <el-input
             v-model="form.handlerParam"
-            placeholder="请输入处理器的参数"
+            placeholder="请输入执行参数"
           />
         </el-form-item>
         <el-form-item label="CRON 表达式" prop="cronExpression">
           <el-input
             v-model="form.cronExpression"
             placeholder="请输入CRON 表达式"
-          />
-        </el-form-item>
-        <el-form-item label="重试次数" prop="retryCount">
-          <el-input
-            v-model="form.retryCount"
-            placeholder="请输入重试次数。设置为 0 时，不进行重试"
-          />
-        </el-form-item>
-        <el-form-item label="重试间隔" prop="retryInterval">
-          <el-input
-            v-model="form.retryInterval"
-            placeholder="请输入重试间隔，单位：毫秒。设置为 0 时，无需间隔"
-          />
-        </el-form-item>
-        <el-form-item label="监控超时时间" prop="monitorTimeout">
-          <el-input
-            v-model="form.monitorTimeout"
-            placeholder="请输入监控超时时间，单位：毫秒"
           />
         </el-form-item>
       </el-form>
@@ -251,25 +229,15 @@
             <el-form-item label="状态：">{{
               getDictDataLabel(DICT_TYPE.INF_JOB_STATUS, form.status)
             }}</el-form-item>
-            <el-form-item label="处理器的名字：">{{
+            <el-form-item label="BeanName：">{{
               form.handlerName
             }}</el-form-item>
-            <el-form-item label="处理器的参数：">{{
+            <el-form-item label="执行参数：">{{
               form.handlerParam
             }}</el-form-item>
             <el-form-item label="cron表达式：">{{
               form.cronExpression
             }}</el-form-item>
-            <el-form-item label="重试次数：">{{
-              form.retryCount
-            }}</el-form-item>
-            <el-form-item label="重试间隔：">{{
-              form.retryInterval + " 毫秒"
-            }}</el-form-item>
-            <el-form-item label="监控超时时间：">{{
-              form.monitorTimeout > 0 ? form.monitorTimeout + " 毫秒" : "未开启"
-            }}</el-form-item>
-      
           </el-col>
         </el-row>
       </el-form>
@@ -329,7 +297,7 @@ export default {
           { required: true, message: "任务名称不能为空", trigger: "blur" },
         ],
         handlerName: [
-          { required: true, message: "处理器的名字不能为空", trigger: "blur" },
+          { required: true, message: "BeanName不能为空", trigger: "blur" },
         ],
         cronExpression: [
           { required: true, message: "CRON 表达式不能为空", trigger: "blur" },
@@ -401,6 +369,7 @@ export default {
           return runJob(row.jobId);
         })
         .then(() => {
+          this.getList();
           this.msgSuccess("执行成功");
         });
     },
@@ -433,8 +402,8 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.jobId;
-      getJob(id).then((response) => {
+      const jobId = row.jobId;
+      getJob(jobId).then((response) => {
         this.form = response.data;
         this.open = true;
         this.title = "修改任务";
@@ -444,7 +413,7 @@ export default {
     submitForm: function () {
       this.$refs["form"].validate((valid) => {
         if (valid) {
-          if (this.form.id !== undefined) {
+          if (this.form.jobId !== undefined) {
             updateJob(this.form).then((response) => {
               this.msgSuccess("修改成功");
               this.open = false;
@@ -500,21 +469,6 @@ export default {
         .then(() => {
           this.getList();
           this.msgSuccess(statusStr + "成功");
-        });
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$confirm("是否确认导出所有定时任务数据项?", "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(function () {
-          return exportJob(queryParams);
-        })
-        .then((response) => {
-          this.downloadExcel(response, "定时任务.xls");
         });
     },
   },
