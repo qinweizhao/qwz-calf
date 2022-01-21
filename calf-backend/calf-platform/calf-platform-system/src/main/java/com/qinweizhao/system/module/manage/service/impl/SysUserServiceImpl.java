@@ -2,7 +2,6 @@ package com.qinweizhao.system.module.manage.service.impl;
 
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -15,16 +14,18 @@ import com.qinweizhao.common.core.enums.StatusEnum;
 import com.qinweizhao.common.core.exception.ServiceException;
 import com.qinweizhao.common.core.response.ResultCode;
 import com.qinweizhao.common.core.util.PageUtil;
-import com.qinweizhao.common.core.util.SecurityUtils;
 import com.qinweizhao.system.module.manage.convert.SysUserConvert;
 import com.qinweizhao.system.module.manage.entity.*;
 import com.qinweizhao.system.module.manage.mapper.*;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
+import com.qinweizhao.system.module.manage.util.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,9 @@ public class SysUserServiceImpl implements ISysUserService {
     private SysUserMapper sysUserMapper;
 
     @Resource
+    private SysMenuMapper sysMenuMapper;
+
+    @Resource
     private SysUserRoleMapper sysUserRoleMapper;
 
     @Resource
@@ -54,6 +58,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Resource
     private SysDeptMapper sysDeptMapper;
+
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public SysUser selectUserByUsername(String username) {
@@ -88,7 +95,12 @@ public class SysUserServiceImpl implements ISysUserService {
         sysUser.setPassword("");
         Long userId = sysUser.getUserId();
         Set<String> roles = sysUserMapper.selectCodesByUserId(userId);
-        Set<String> permissions = sysUserMapper.selectPermissionsByUserId(userId);
+        Set<String> permissions;
+        if (SecurityUtils.hasAnyAdmin(roles)) {
+            permissions = sysMenuMapper.selectListPermission();
+        } else {
+            permissions = sysUserMapper.selectPermissionsByUserId(userId);
+        }
         return MapUtil.builder()
                 .put("user", sysUser)
                 .put("roles", roles)
@@ -132,7 +144,7 @@ public class SysUserServiceImpl implements ISysUserService {
         Collection<Long> deleteRoleIds = CollUtil.subtract(dbRoleIds, roleIds);
         // 执行新增和删除。对于已经授权的角色，不用做任何处理
         List<SysUserRole> insertList = new ArrayList<>();
-        if (!CollectionUtil.isEmpty(insertRoleIds)) {
+        if (!CollUtil.isEmpty(insertRoleIds)) {
             insertRoleIds.forEach(item -> {
                 SysUserRole sysUserRole = new SysUserRole();
                 sysUserRole.setUserId(userId);
@@ -141,10 +153,23 @@ public class SysUserServiceImpl implements ISysUserService {
             });
             sysUserRoleMapper.insertBatchUserRole(insertList);
         }
-        if (!CollectionUtil.isEmpty(deleteRoleIds)) {
+        if (!CollUtil.isEmpty(deleteRoleIds)) {
             sysUserRoleMapper.deleteUserRoleByUserIdAndRoleIds(userId, deleteRoleIds);
         }
         return true;
+    }
+
+    /**
+     * 更新用户头像
+     *
+     * @param userId      userId
+     * @param inputStream inputStream
+     * @return String
+     */
+    @Override
+    public String updateAvatar(String userId, InputStream inputStream) {
+        // TODO
+        return null;
     }
 
     /**
@@ -329,6 +354,8 @@ public class SysUserServiceImpl implements ISysUserService {
                 sysUserSaveCmd.getDeptId(), sysUserSaveCmd.getPostIds());
         SysUser sysUser = SysUserConvert.INSTANCE.convert(sysUserSaveCmd);
         sysUser.setAvatar(UserConstants.DEFAULT_AVATAR);
+        // 加密密码
+        sysUser.setPassword(passwordEncoder.encode(sysUserSaveCmd.getPassword()));
         // 新增用户信息
         int i = sysUserMapper.insert(sysUser);
         List<Long> postIds = sysUserSaveCmd.getPostIds();
@@ -351,9 +378,7 @@ public class SysUserServiceImpl implements ISysUserService {
                 ur.setRoleId(roleId);
                 list.add(ur);
             }
-            if (list.isEmpty()) {
-                sysUserRoleMapper.insertBatchUserRole(list);
-            }
+            sysUserRoleMapper.insertBatchUserRole(list);
         }
     }
 
@@ -367,9 +392,7 @@ public class SysUserServiceImpl implements ISysUserService {
                 up.setPostId(postId);
                 list.add(up);
             }
-            if (!list.isEmpty()) {
-                sysUserPostMapper.insertBatchUserPost(list);
-            }
+            sysUserPostMapper.insertBatchUserPost(list);
         }
     }
 

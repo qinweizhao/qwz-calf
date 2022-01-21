@@ -9,11 +9,12 @@ import org.quartz.*;
 /**
  * 定时任务工具类
  *
- * @author Mark sunlightcs@gmail.com
+ * @author qinweizhao
+ * @since 2022/1/21
  */
 public class ScheduleUtils {
 
-    private final static String JOB_NAME = "TASK_";
+    private static final String JOB_NAME = "TASK_";
 
     private ScheduleUtils() {
     }
@@ -95,9 +96,9 @@ public class ScheduleUtils {
             scheduler.rescheduleJob(triggerKey, trigger);
 
             //暂停任务
-            if (sysJob.getStatus().equals(JobStatusEnum.NORMAL.getStatus())) {
-                pauseJob(scheduler, sysJob.getJobId());
-            }
+//            if (sysJob.getStatus().equals(JobStatusEnum.NORMAL.getStatus())) {
+//                pauseJob(scheduler, sysJob.getJobId());
+//            }
 
         } catch (SchedulerException e) {
             throw new ServiceException("更新定时任务失败");
@@ -112,7 +113,6 @@ public class ScheduleUtils {
             //参数
             JobDataMap dataMap = new JobDataMap();
             dataMap.put(SysJob.JOB_PARAM_KEY, sysjob);
-
             scheduler.triggerJob(getJobKey(sysjob.getJobId()), dataMap);
         } catch (SchedulerException e) {
             throw new ServiceException("立即执行定时任务失败");
@@ -137,7 +137,7 @@ public class ScheduleUtils {
         try {
             scheduler.resumeJob(getJobKey(jobId));
         } catch (SchedulerException e) {
-            throw new ServiceException("暂停定时任务失败");
+            throw new ServiceException("恢复定时任务失败");
         }
     }
 

@@ -7,6 +7,7 @@ import com.qinweizhao.api.system.dto.command.SysUserUpdateCmd;
 import com.qinweizhao.api.system.dto.query.SysUserPageQry;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -109,4 +110,12 @@ public interface ISysUserService {
      * @return boolean
      */
     boolean updateUserRole(Long userId, List<Long> roleIds);
+
+    /**
+     * 更新用户头像
+     * @param userId userId
+     * @param inputStream inputStream
+     * @return String
+     */
+    String updateAvatar(String userId, InputStream inputStream);
 }

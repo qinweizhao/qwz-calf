@@ -5,7 +5,6 @@ import org.springframework.context.ApplicationEvent;
 
 
 /**
- *
  * @author qinweizhao
  * @since 2021/12/31
  */

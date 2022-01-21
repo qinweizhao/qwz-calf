@@ -53,4 +53,7 @@ public class SysUser extends BaseEntity {
     @ApiModelProperty("头像")
     private String avatar;
 
+    @ApiModelProperty("排序")
+    private Integer sort;
+
 }

@@ -1,13 +1,13 @@
 package com.qinweizhao.system.module.manage.service.impl;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.api.system.dto.SysDictDTO;
 import com.qinweizhao.api.system.dto.command.SysDictSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysDictUpdateCmd;
+import com.qinweizhao.api.system.dto.query.SysDictPageQry;
 import com.qinweizhao.common.core.exception.ServiceException;
+import com.qinweizhao.common.core.util.PageUtil;
 import com.qinweizhao.system.module.manage.convert.SysDictConvert;
 import com.qinweizhao.system.module.manage.entity.SysDict;
 import com.qinweizhao.system.module.manage.mapper.SysDictItemMapper;
@@ -85,7 +85,7 @@ public class SysDictServiceImpl implements ISysDictService {
      * @param name name
      */
     private void checkDictTypeNameUnique(Long id, String name) {
-        SysDict dictType = sysDictMapper.selectDictTypeByName(name);
+        SysDict dictType = sysDictMapper.selectByName(name);
         if (dictType == null) {
             return;
         }
@@ -105,7 +105,7 @@ public class SysDictServiceImpl implements ISysDictService {
      * @param type type
      */
     private void checkDictTypeUnique(Long id, String type) {
-        SysDict dictType = sysDictMapper.selectDictTypeByType(type);
+        SysDict dictType = sysDictMapper.selectByType(type);
         if (dictType == null) {
             return;
         }
@@ -142,11 +142,6 @@ public class SysDictServiceImpl implements ISysDictService {
         return sysDictMapper.deleteById(id);
     }
 
-    @Override
-    public IPage<SysDict> pageDictTypes(Page<SysDict> page, SysDict sysDict) {
-        QueryWrapper<SysDict> queryWrapper = new QueryWrapper<>();
-        return sysDictMapper.selectPage(page, queryWrapper);
-    }
 
     /**
      * 获取字典
@@ -167,5 +162,17 @@ public class SysDictServiceImpl implements ISysDictService {
     @Override
     public List<SysDictDTO> listSimpleDicts() {
         return SysDictConvert.INSTANCE.convertToDTO(sysDictMapper.selectList(null));
+    }
+
+    /**
+     * 获取字典分类数据
+     *
+     * @param sysDictPageQry sysDictPageQry
+     * @return IPage<SysDictDTO>
+     */
+    @Override
+    public IPage<SysDictDTO> pageDicts(SysDictPageQry sysDictPageQry) {
+        IPage<SysDict> sysDictPage = sysDictMapper.selectPageDicts(PageUtil.getPage(sysDictPageQry), sysDictPageQry);
+        return SysDictConvert.INSTANCE.convertToDTO(sysDictPage);
     }
 }

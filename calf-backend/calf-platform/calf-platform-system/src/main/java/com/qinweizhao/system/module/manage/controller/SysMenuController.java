@@ -9,6 +9,7 @@ import com.qinweizhao.common.core.base.BaseController;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysMenuConvert;
 import com.qinweizhao.system.module.manage.service.ISysMenuService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,6 +28,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-06
  */
+@Api(tags = "菜单管理")
 @RestController
 @RequestMapping("/system/manage/menu")
 public class SysMenuController extends BaseController {

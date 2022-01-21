@@ -20,12 +20,14 @@ public @interface SysLog {
 
     /**
      * 日志类型
+     *
      * @return String
      */
     String type() default LogConstants.LOG_TYPE_OPERATE;
 
     /**
      * // 描述
+     *
      * @return String
      */
     String value() default "";

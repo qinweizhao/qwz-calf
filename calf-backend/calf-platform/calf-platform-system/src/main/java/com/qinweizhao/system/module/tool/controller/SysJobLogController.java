@@ -8,6 +8,7 @@ import com.qinweizhao.api.system.vo.SysJobLogVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.tool.convert.SysJobLogConvert;
 import com.qinweizhao.system.module.tool.service.ISysJobLogService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +30,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-27
  */
+@Api(tags = "任务日志")
 @RestController
 @RequestMapping("/system/tool/job/log")
 public class SysJobLogController {

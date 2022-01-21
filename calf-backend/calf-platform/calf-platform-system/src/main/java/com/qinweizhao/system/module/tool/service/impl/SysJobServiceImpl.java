@@ -122,6 +122,7 @@ public class SysJobServiceImpl implements ISysJobService {
         }
         // 更新 Job 状态
         SysJob sysJob = new SysJob();
+        sysJob.setJobId(jobId);
         sysJob.setStatus(status);
         int i = sysJobMapper.updateById(sysJob);
         // 更新状态 Job 到 Quartz 中
@@ -150,6 +151,8 @@ public class SysJobServiceImpl implements ISysJobService {
     @Override
     public void triggerJob(Long jobId) {
         SysJob sysJob = sysJobMapper.selectById(jobId);
+        sysJob.setStatus(JobStatusEnum.NORMAL.getStatus());
+        sysJobMapper.updateById(sysJob);
         ScheduleUtils.run(scheduler, sysJob);
     }
 

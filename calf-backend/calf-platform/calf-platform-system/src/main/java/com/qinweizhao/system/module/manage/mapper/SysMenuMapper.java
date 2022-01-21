@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -60,4 +61,13 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @return List<SysMenu>
      */
     List<SysMenu> selectListMenus(@Param("query") SysMenuListQry sysMenuListQry);
+
+    /**
+     * 获取所有权限
+     *
+     * @return Set<String>
+     */
+    Set<String> selectListPermission();
+
+
 }

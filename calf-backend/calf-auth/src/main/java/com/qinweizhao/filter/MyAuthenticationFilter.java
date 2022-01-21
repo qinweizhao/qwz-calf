@@ -4,7 +4,6 @@ import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.qinweizhao.common.core.constant.AuthConstants;
 import com.qinweizhao.common.core.response.Result;
-
 import com.qinweizhao.common.core.util.GuavaCacheUtils;
 import com.qinweizhao.common.core.util.IoUtils;
 import com.qinweizhao.exception.CaptchaException;
@@ -69,7 +68,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
         }
         JSONObject jsonObject = IoUtils.parseRequestToJsonObject(request);
         String captcha = jsonObject.getString(AuthConstants.LOGIN_CODE_KEY);
-        if (com.qinweizhao.config.AuthConstants.IS_CAPTCHA){
+        if (com.qinweizhao.config.AuthConstants.IS_CAPTCHA) {
             boolean b = this.validateCaptcha(captcha);
             if (!b) {
                 throw new CaptchaException("验证码错误");
@@ -95,7 +94,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
      * @param response   response
      * @param chain      chain
      * @param authResult authResult
-     * @throws IOException      e
+     * @throws IOException e
      */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
@@ -128,7 +127,7 @@ public class MyAuthenticationFilter extends UsernamePasswordAuthenticationFilter
         }
         Result<?> failure = Result.failure();
         response.setContentType("application/json;charset=utf-8");
-        if (exception instanceof CaptchaException){
+        if (exception instanceof CaptchaException) {
             failure.setMsg(exception.getMessage());
         }
         if (exception instanceof LockedException) {

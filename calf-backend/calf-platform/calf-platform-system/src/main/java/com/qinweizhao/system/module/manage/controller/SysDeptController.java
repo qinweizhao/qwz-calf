@@ -8,6 +8,7 @@ import com.qinweizhao.api.system.vo.SysDeptVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysDeptConvert;
 import com.qinweizhao.system.module.manage.service.ISysDeptService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +27,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-06
  */
+@Api(tags = "部门管理")
 @RestController
 @RequestMapping("/system/manage/dept")
 public class SysDeptController {
@@ -34,7 +36,7 @@ public class SysDeptController {
     ISysDeptService sysDeptService;
 
 
-    @ApiOperation("获取部门列表")
+    @ApiOperation("部门列表")
     @PreAuthorize("hasAuthority('system:dept:query')")
     @GetMapping("/list")
     public Result<List<SysDeptVO>> list(SysDeptListQry sysDeptListQry) {
@@ -42,7 +44,7 @@ public class SysDeptController {
     }
 
     @GetMapping("/list-simple")
-    @ApiOperation(value = "获取岗位精简信息列表", notes = "启用状态")
+    @ApiOperation(value = "精简列表", notes = "只需要开启状态")
     public Result<List<SysDeptVO>> getSimpleRoles() {
         List<SysDeptVO> voList = SysDeptConvert.INSTANCE.convertToVO(sysDeptService.listSimpleDepts());
         voList.sort(Comparator.comparing(SysDeptVO::getSort));

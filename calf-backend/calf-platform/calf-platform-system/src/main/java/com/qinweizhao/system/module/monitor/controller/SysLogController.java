@@ -7,6 +7,7 @@ import com.qinweizhao.api.system.vo.SysLogVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysLogConvert;
 import com.qinweizhao.system.module.monitor.service.ISysLogService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import javax.annotation.Resource;
  * @author qinweizhao
  * @since 2022-01-20
  */
+@Api(tags = "日志记录")
 @RestController
 @RequestMapping("/system/monitor/log")
 public class SysLogController {

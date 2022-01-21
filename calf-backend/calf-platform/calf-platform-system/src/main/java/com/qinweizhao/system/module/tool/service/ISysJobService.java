@@ -24,6 +24,12 @@ public interface ISysJobService {
 
     int updateJob(SysJobUpdateCmd sysJobUpdateCmd);
 
+    /**
+     * 修改任务状态
+     * @param id id
+     * @param status status
+     * @return int
+     */
     int updateJobStatus(Long id, Integer status);
 
     int removeJob(Long jobId);

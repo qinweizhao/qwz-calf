@@ -2,7 +2,7 @@ package com.qinweizhao.system.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.qinweizhao.common.core.util.CalfDefaultValueUtils;
-import com.qinweizhao.common.core.util.SecurityUtils;
+import com.qinweizhao.system.module.manage.util.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;

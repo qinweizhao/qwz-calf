@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.api.system.dto.SysDictDTO;
 import com.qinweizhao.api.system.dto.command.SysDictSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysDictUpdateCmd;
+import com.qinweizhao.api.system.dto.query.SysDictPageQry;
 import com.qinweizhao.system.module.manage.entity.SysDict;
 
 import java.util.List;
@@ -44,14 +45,6 @@ public interface ISysDictService {
     int removeDict(Long dictId);
 
     /**
-     * 分页
-     *
-     * @param sysDict sysDict
-     * @return IPage<SysDict>
-     */
-    IPage<SysDict> pageDictTypes(Page<SysDict> page, SysDict sysDict);
-
-    /**
      * 获取字典
      *
      * @param dictId dictId
@@ -66,4 +59,10 @@ public interface ISysDictService {
      */
     List<SysDictDTO> listSimpleDicts();
 
+    /**
+     * 获取字典分类数据
+     * @param sysDictPageQry sysDictPageQry
+     * @return IPage<SysDictDTO>
+     */
+    IPage<SysDictDTO> pageDicts(SysDictPageQry sysDictPageQry);
 }

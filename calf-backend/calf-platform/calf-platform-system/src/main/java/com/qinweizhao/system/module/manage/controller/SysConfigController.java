@@ -10,6 +10,7 @@ import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysConfigConvert;
 import com.qinweizhao.system.module.manage.entity.SysConfig;
 import com.qinweizhao.system.module.manage.service.ISysConfigService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ import javax.validation.Valid;
  * @author qinweizhao
  * @since 2021-12-22
  */
+@Api(tags = "配置管理")
 @RestController
 @RequestMapping("/sys/config")
 public class SysConfigController {

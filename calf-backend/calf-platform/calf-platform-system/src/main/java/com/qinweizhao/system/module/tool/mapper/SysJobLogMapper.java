@@ -17,5 +17,11 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface SysJobLogMapper extends BaseMapper<SysJobLog> {
 
+    /**
+     * 查询任务日志分页
+     * @param page page
+     * @param sysJobLogPageQry sysJobLogPageQry
+     * @return IPage<SysJobLog>
+     */
     IPage<SysJobLog> selectPageJobLogs(Page<Object> page, @Param("query") SysJobLogPageQry sysJobLogPageQry);
 }

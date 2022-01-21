@@ -10,6 +10,7 @@ import com.qinweizhao.api.system.vo.SysDictItemVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysDictItemConvert;
 import com.qinweizhao.system.module.manage.service.ISysDictItemService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-21
  */
+@Api(tags = "字典数据")
 @RestController
 @RequestMapping("/system/manage/dict/item")
 public class SysDictItemController {

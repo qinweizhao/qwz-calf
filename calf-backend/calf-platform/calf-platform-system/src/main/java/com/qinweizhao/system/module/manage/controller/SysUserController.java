@@ -1,6 +1,7 @@
 package com.qinweizhao.system.module.manage.controller;
 
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.api.system.dto.SysUserDTO;
@@ -10,9 +11,12 @@ import com.qinweizhao.api.system.dto.query.SysUserPageQry;
 import com.qinweizhao.api.system.vo.SysUserPageRespVO;
 import com.qinweizhao.api.system.vo.SysUserRespVO;
 import com.qinweizhao.common.core.base.BaseController;
+import com.qinweizhao.common.core.exception.ServiceException;
 import com.qinweizhao.common.core.response.Result;
+import com.qinweizhao.common.core.response.ResultCode;
 import com.qinweizhao.common.log.annotation.SysLog;
 import com.qinweizhao.system.module.manage.convert.SysUserConvert;
+import com.qinweizhao.system.module.manage.entity.SysUser;
 import com.qinweizhao.system.module.manage.service.ISysDeptService;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
 import io.swagger.annotations.Api;
@@ -20,9 +24,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -119,4 +125,14 @@ public class SysUserController extends BaseController {
         return Result.condition(sysUserService.removeUserByIds(id));
     }
 
+
+    @PutMapping("/update-avatar")
+    @ApiOperation("上传用户个人头像")
+    public Result<String> updateUserAvatar(@RequestParam("avatarFile") MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
+            throw new ServiceException(ResultCode.FILE_DOES_NOT_EXIST);
+        }
+        String avatar = sysUserService.updateAvatar(getCurrentLoginUsername(), file.getInputStream());
+        return Result.success(avatar);
+    }
 }

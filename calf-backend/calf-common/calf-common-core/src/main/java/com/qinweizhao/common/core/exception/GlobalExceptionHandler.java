@@ -24,6 +24,13 @@ public class GlobalExceptionHandler {
     private final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 
+    @ExceptionHandler(ServiceException.class)
+    public Result<?> exception(ServiceException e) {
+        e.printStackTrace();
+        log.error("Service异常===》ServiceException：", e);
+        return Result.failure(ResultCode.ERROR, e.getMessage());
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Result<?> handler(MethodArgumentNotValidException e) {

@@ -1,4 +1,3 @@
-
 package com.qinweizhao.common.log.listener;
 
 import com.qinweizhao.api.system.SysLogApi;

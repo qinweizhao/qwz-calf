@@ -22,7 +22,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-27
  */
-@Service
+@Service("sysJobLogService")
 public class SysJobLogServiceImpl implements ISysJobLogService {
 
     @Resource
@@ -41,7 +41,6 @@ public class SysJobLogServiceImpl implements ISysJobLogService {
     @Override
     public IPage<SysJobLogDTO> pageJobLogs(SysJobLogPageQry sysJobLogPageQry) {
         IPage<SysJobLog> pageDTO = sysJobLogMapper.selectPageJobLogs(PageUtil.getPage(sysJobLogPageQry), sysJobLogPageQry);
-        System.out.println("pageDTO = " + pageDTO);
         return SysJobLogConvert.INSTANCE.convertToDTO(pageDTO);
     }
 }

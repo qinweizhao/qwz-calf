@@ -32,7 +32,6 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
-
     /**
      * 日志记录
      */
@@ -57,10 +56,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throw new JwtException("token已过期");
         }
         String username = claim.getSubject();
-        SysUserDTO user = sysUserApi.getUserIdByUsername(username);
+        SysUserDTO user = sysUserApi.getByUsername(username);
         String authority = sysUserApi.getAuthorityByUserId(user.getUserId());
         log.info("当前用户拥有的权限有{}", authority);
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null, AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, null, AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
         SecurityContextHolder.getContext().setAuthentication(token);
         chain.doFilter(request, response);
     }

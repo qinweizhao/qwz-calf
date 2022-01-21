@@ -22,15 +22,15 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        job_id, name, status, handler_name, handler_param, cron_expression, retry_count, retry_interval, monitor_timeout,create_by, create_time, update_by, update_time, deleted
+        job_id
+        , name, status, handler_name, handler_param, cron_expression, retry_count, retry_interval, monitor_timeout,create_by, create_time, update_by, update_time, deleted
     </sql>
 
     <select id="selectByHandlerName" resultType="com.qinweizhao.system.module.tool.entity.SysJob">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM sys_job WHERE handlerName #{handlerName}
+        FROM sys_job WHERE handler_name= #{handlerName}
     </select>
-
 
     <select id="selectPageJobs" resultType="com.qinweizhao.system.module.tool.entity.SysJob">
         SELECT

@@ -1,10 +1,14 @@
-package com.qinweizhao.common.core.util;
+package com.qinweizhao.system.module.manage.util;
 
 
+import cn.hutool.core.collection.CollUtil;
 import com.qinweizhao.common.core.exception.ServiceException;
+import com.qinweizhao.system.module.manage.enums.RoleCodeEnum;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.Collection;
 
 /**
  * 安全服务工具类
@@ -58,10 +62,13 @@ public class SecurityUtils {
     /**
      * 是否为管理员
      *
-     * @param userId 用户ID
+     * @param roleList 角色编码集合
      * @return 结果
      */
-    public static boolean isAdmin(Long userId) {
-        return userId != null && 1L == userId;
+    public static boolean hasAnyAdmin(Collection<String> roleList) {
+        if (CollUtil.isEmpty(roleList)) {
+            return false;
+        }
+        return roleList.stream().anyMatch(item -> RoleCodeEnum.ADMIN.getCode().equals(item));
     }
 }

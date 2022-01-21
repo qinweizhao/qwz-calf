@@ -62,11 +62,10 @@ public class SysJobController {
     })
     @PreAuthorize("hasAuthority('system:job:update')")
     public Result<Boolean> updateJobStatus(@RequestParam(value = "jobId") Long jobId, @RequestParam("status") Integer status) {
-        sysJobService.updateJobStatus(jobId, status);
-        return Result.success(true);
+        return Result.condition(sysJobService.updateJobStatus(jobId, status));
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/remove")
     @ApiOperation("删除定时任务")
     @ApiImplicitParam(name = "jobId", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("hasAuthority('system:job:delete')")
@@ -78,7 +77,7 @@ public class SysJobController {
     @ApiOperation("触发定时任务")
     @ApiImplicitParam(name = "jobId", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("hasAuthority('system:job:trigger')")
-    public Result<Boolean> triggerJob(@RequestParam("jobId") Long jobId) {
+    public Result<Boolean> trigger(@RequestParam("jobId") Long jobId) {
         sysJobService.triggerJob(jobId);
         return Result.success(true);
     }

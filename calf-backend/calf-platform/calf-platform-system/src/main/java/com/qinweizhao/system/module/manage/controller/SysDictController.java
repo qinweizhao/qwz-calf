@@ -3,13 +3,16 @@ package com.qinweizhao.system.module.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.SysDictDTO;
 import com.qinweizhao.api.system.dto.command.SysDictSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysDictUpdateCmd;
+import com.qinweizhao.api.system.dto.query.SysDictPageQry;
 import com.qinweizhao.api.system.vo.SysDictVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysDictConvert;
 import com.qinweizhao.system.module.manage.entity.SysDict;
 import com.qinweizhao.system.module.manage.service.ISysDictService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-21
  */
+@Api(tags = "字典管理")
 @RestController
 @RequestMapping("/system/manage/dict")
 public class SysDictController {
@@ -55,8 +59,9 @@ public class SysDictController {
 
     @ApiOperation("/获得字典类型的分页列表")
     @GetMapping("/page")
-    public Result<IPage<SysDict>> pageDictTypes(Page<SysDict> page, @Valid SysDict sysDict) {
-        return Result.success(sysDictTypeService.pageDictTypes(page, sysDict));
+    public Result<IPage<SysDictVO>> pageDictTypes(SysDictPageQry sysDictPageQry) {
+        IPage<SysDictDTO> s = sysDictTypeService.pageDicts(sysDictPageQry);
+        return Result.success();
     }
 
     @ApiOperation("/查询字典类型详细")

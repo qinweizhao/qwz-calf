@@ -9,6 +9,7 @@ import com.qinweizhao.api.system.vo.SysPostVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysPostConvert;
 import com.qinweizhao.system.module.manage.service.ISysPostService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +27,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-06
  */
+@Api(tags = "岗位管理")
 @RestController
 @RequestMapping("/system/manage/post")
 public class SysPostController {

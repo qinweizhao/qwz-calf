@@ -29,12 +29,12 @@ public class SysUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUserDTO user = sysUserApi.getUserIdByUsername(username);
+        SysUserDTO user = sysUserApi.getByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("用户名输入错误");
         }
         SysUserDetails sysUserDetails = new SysUserDetails();
-        BeanUtils.copyProperties(user,sysUserDetails);
+        BeanUtils.copyProperties(user, sysUserDetails);
         String authority = sysUserApi.getAuthorityByUserId(user.getUserId());
         log.info("当前用户拥有的权限有{}", authority);
         sysUserDetails.setAuthorities(AuthorityUtils.commaSeparatedStringToAuthorityList(authority));

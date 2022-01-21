@@ -11,7 +11,5 @@ spring:
         enabled: true
         url-pattern: /druid/*
       stat-view-servlet:
-        login-username: 123
-        login-password: 123
         allow:
         enabled: true

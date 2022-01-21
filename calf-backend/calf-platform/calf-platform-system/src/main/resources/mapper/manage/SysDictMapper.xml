@@ -4,8 +4,8 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.manage.entity.SysDict">
-        <id column="dict_id" property="dictId" />
-        <result column="name" property="name" />
+        <id column="dict_id" property="dictId"/>
+        <result column="name" property="name"/>
         <result column="type" property="type"/>
         <result column="status" property="status"/>
         <result column="remark" property="remark"/>
@@ -16,12 +16,32 @@
         <result column="deleted" property="deleted"/>
     </resultMap>
 
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        dict_id
+        ,name,type,status,remark,create_by,create_time,update_by,update_time,deleted
+    </sql>
 
-    <select id="selectDictTypeByName" resultType="com.qinweizhao.system.module.manage.entity.SysDict">
-
+    <select id="selectByName" resultType="com.qinweizhao.system.module.manage.entity.SysDict">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_dict WHERE name = #{name}
     </select>
-    <select id="selectDictTypeByType" resultType="com.qinweizhao.system.module.manage.entity.SysDict">
+    <select id="selectByType" resultType="com.qinweizhao.system.module.manage.entity.SysDict">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_dict WHERE type = #{type}
+    </select>
 
+    <select id="selectPageDicts" resultType="com.qinweizhao.system.module.manage.entity.SysDict">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_dict
+        <where>
+            <if test="query.name != null and query.name != ''">
+                name = #{query.name}
+            </if>
+        </where>
     </select>
 
 </mapper>

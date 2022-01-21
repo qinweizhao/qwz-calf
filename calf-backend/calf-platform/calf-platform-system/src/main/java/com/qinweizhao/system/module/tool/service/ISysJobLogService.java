@@ -15,6 +15,7 @@ import java.util.List;
  * @author qinweizhao
  * @since 2021-12-27
  */
+
 public interface ISysJobLogService {
 
     SysJobLogDTO getJobLog(Long id);

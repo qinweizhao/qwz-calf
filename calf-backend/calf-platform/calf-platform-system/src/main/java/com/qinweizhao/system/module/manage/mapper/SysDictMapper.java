@@ -1,7 +1,11 @@
 package com.qinweizhao.system.module.manage.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.query.SysDictPageQry;
 import com.qinweizhao.system.module.manage.entity.SysDict;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,7 +17,29 @@ import com.qinweizhao.system.module.manage.entity.SysDict;
  */
 public interface SysDictMapper extends BaseMapper<SysDict> {
 
-    SysDict selectDictTypeByType(String type);
 
-    SysDict selectDictTypeByName(String name);
+    /**
+     * 通过类型获取字典
+     *
+     * @param type type
+     * @return SysDict
+     */
+    SysDict selectByType(String type);
+
+    /**
+     * 通过字典名称获取字典
+     *
+     * @param name name
+     * @return SysDict
+     */
+    SysDict selectByName(String name);
+
+    /**
+     * 获取分页信息
+     *
+     * @param page           page
+     * @param sysDictPageQry sysDictPageQry
+     * @return IPage<SysDict>
+     */
+    IPage<SysDict> selectPageDicts(Page<Object> page, @Param("query") SysDictPageQry sysDictPageQry);
 }

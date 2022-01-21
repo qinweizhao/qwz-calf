@@ -1,16 +1,10 @@
 package com.qinweizhao.common.log.util;
 
-import cn.hutool.core.util.URLUtil;
-import com.alibaba.fastjson.JSONObject;
 import com.qinweizhao.api.system.dto.SysLogDTO;
 import lombok.experimental.UtilityClass;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 

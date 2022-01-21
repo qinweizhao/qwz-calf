@@ -68,4 +68,9 @@
         </where>
     </select>
 
+    <select id="selectListPermission" resultType="java.lang.String">
+        SELECT permission
+        FROM sys_menu
+    </select>
+
 </mapper>
