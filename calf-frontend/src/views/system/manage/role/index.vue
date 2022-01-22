@@ -6,9 +6,9 @@
       v-show="showSearch"
       :inline="true"
     >
-      <el-form-item label="角色名称" prop="keyword">
+      <el-form-item label="角色名称" prop="name">
         <el-input
-          v-model="queryParams.keyword"
+          v-model="queryParams.name"
           placeholder="请输入角色名称"
           clearable
           size="small"
