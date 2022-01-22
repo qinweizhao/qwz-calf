@@ -90,4 +90,13 @@ public interface ISysRoleService {
      * @return SysRoleVO
      */
     SysRoleDTO getRoleById(Long roleId);
+
+
+    /**
+     * 通过用户 Id 获取所属角色
+     *
+     * @param userId userId
+     * @return List<SysRoleDTO>
+     */
+    List<SysRoleDTO> listRoleByUserId(Long userId);
 }

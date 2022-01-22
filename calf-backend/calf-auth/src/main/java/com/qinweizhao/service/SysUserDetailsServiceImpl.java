@@ -3,7 +3,7 @@ package com.qinweizhao.service;
 
 import com.qinweizhao.api.system.SysUserApi;
 import com.qinweizhao.api.system.dto.SysUserDTO;
-import com.qinweizhao.entity.SysUserDetails;
+import com.qinweizhao.common.core.entity.SysUserDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.authority.AuthorityUtils;

@@ -16,11 +16,15 @@
         </foreach>
     </delete>
     <delete id="deleteRoleDeptByDeptId">
-        DELETE FROM sys_role_dept WHERE dept_id=#{deptId}
+        DELETE
+        FROM sys_role_dept
+        WHERE dept_id = #{deptId}
     </delete>
 
     <select id="selectDeptIdsByRoleId" resultType="java.lang.Long">
-        SELECT dept_id FROM sys_role_dept WHERE role_id= #{roleId}
+        SELECT dept_id
+        FROM sys_role_dept
+        WHERE role_id = #{roleId}
     </select>
 
 </mapper>

@@ -40,6 +40,7 @@ public interface SysDeptConvert {
      */
     SysDeptVO convert(SysDeptDTO sysDept);
 
+
     /**
      * DO 转 DTO
      *

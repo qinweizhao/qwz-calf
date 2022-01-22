@@ -65,4 +65,11 @@ public interface ISysPostService {
      */
     List<SysPostDTO> listSimplePost();
 
+    /**
+     * 通过用户 Id 获取所属岗位
+     *
+     * @param userId userId
+     * @return List<SysPostDTO>
+     */
+    List<SysPostDTO> listByUserId(Long userId);
 }

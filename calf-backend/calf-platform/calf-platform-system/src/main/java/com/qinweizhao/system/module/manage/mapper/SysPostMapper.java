@@ -53,4 +53,12 @@ public interface SysPostMapper extends BaseMapper<SysPost> {
      * @return SysPost
      */
     SysPost selectPostBycode(String code);
+
+    /**
+     * 通过用户 Id 获取岗位集合
+     *
+     * @param userId userId
+     * @return List<SysPost>
+     */
+    List<SysPost> listByUserId(Long userId);
 }

@@ -6,7 +6,6 @@ import com.qinweizhao.system.module.tool.entity.SysJobLog;
 import com.qinweizhao.system.module.tool.mapper.SysJobLogMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.quartz.QuartzJobBean;

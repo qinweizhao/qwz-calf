@@ -1,6 +1,5 @@
 package com.qinweizhao.system.module.tool.task;
 
-import com.qinweizhao.system.module.tool.task.ITask;
 import org.springframework.stereotype.Component;
 
 /**

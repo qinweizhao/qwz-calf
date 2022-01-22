@@ -1,4 +1,4 @@
-package com.qinweizhao.entity;
+package com.qinweizhao.common.core.entity;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

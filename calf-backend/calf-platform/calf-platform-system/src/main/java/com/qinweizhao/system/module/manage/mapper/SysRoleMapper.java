@@ -71,4 +71,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @return List<Long>
      */
     List<Long> selectListMenuIdsByRoleId(Long roleId);
+
+
+    List<SysRole> selectListByUserId(Long userId);
 }

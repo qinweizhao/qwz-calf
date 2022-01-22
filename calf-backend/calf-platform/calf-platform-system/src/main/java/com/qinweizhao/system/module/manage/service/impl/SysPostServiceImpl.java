@@ -128,5 +128,16 @@ public class SysPostServiceImpl implements ISysPostService {
 
     }
 
+    /**
+     * 通过用户 Id 获取所属岗位
+     *
+     * @param userId userId
+     * @return List<SysPostDTO>
+     */
+    @Override
+    public List<SysPostDTO> listByUserId(Long userId) {
+        return SysPostConvert.INSTANCE.convertToDTO(sysPostMapper.listByUserId(userId));
+    }
+
 
 }

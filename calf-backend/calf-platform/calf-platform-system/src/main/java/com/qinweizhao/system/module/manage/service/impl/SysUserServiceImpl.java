@@ -5,9 +5,11 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.google.common.annotations.VisibleForTesting;
 import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.dto.command.SysUserSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysUserUpdateCmd;
+import com.qinweizhao.api.system.dto.command.SysUserUpdatePasswordCmd;
 import com.qinweizhao.api.system.dto.query.SysUserPageQry;
 import com.qinweizhao.common.core.constant.UserConstants;
 import com.qinweizhao.common.core.enums.StatusEnum;
@@ -25,7 +27,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -162,15 +163,49 @@ public class SysUserServiceImpl implements ISysUserService {
     /**
      * 更新用户头像
      *
-     * @param userId      userId
-     * @param inputStream inputStream
+     * @param userId userId
+     * @param path   path
      * @return String
      */
     @Override
-    public String updateAvatar(String userId, InputStream inputStream) {
-        // TODO
-        return null;
+    public int updateAvatar(Long userId, String path) {
+        this.checkUserExists(userId);
+        SysUser sysUser = new SysUser();
+        sysUser.setAvatar(path);
+        sysUser.setUserId(userId);
+        return sysUserMapper.updateById(sysUser);
     }
+
+    @Override
+    public boolean updatePassword(Long userId, SysUserUpdatePasswordCmd sysUserUpdatePasswordCmd) {
+        // 校验旧密码密码
+        this.checkOldPassword(userId, sysUserUpdatePasswordCmd.getOldPassword());
+        // 执行更新
+        SysUser sysUser = new SysUser();
+        sysUser.setUserId(userId);
+        // 加密密码
+        sysUser.setPassword(passwordEncoder.encode(sysUserUpdatePasswordCmd.getNewPassword()));
+        int i = sysUserMapper.updateById(sysUser);
+        return i > 0;
+    }
+
+    /**
+     * 校验旧密码
+     *
+     * @param userId      用户 id
+     * @param oldPassword 旧密码
+     */
+    @VisibleForTesting
+    public void checkOldPassword(Long userId, String oldPassword) {
+        SysUser sysUser = sysUserMapper.selectById(userId);
+        if (sysUser == null) {
+            throw new ServiceException(ResultCode.USER_NOT_EXISTS);
+        }
+        if (!passwordEncoder.matches(oldPassword, sysUser.getPassword())) {
+            throw new ServiceException(ResultCode.USER_PASSWORD_FAILED);
+        }
+    }
+
 
     /**
      * 更新或保存前置检查

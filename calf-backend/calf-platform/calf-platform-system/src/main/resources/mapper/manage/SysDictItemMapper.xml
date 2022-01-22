@@ -20,7 +20,8 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        sort,dict_item_id,label,value,dict_type,status,remark,create_by,create_time,update_by,update_time,deleted
+        sort
+        ,dict_item_id,label,value,dict_type,status,remark,create_by,create_time,update_by,update_time,deleted
     </sql>
 
     <select id="selectCountByDictType" resultType="java.lang.Integer">
@@ -30,7 +31,8 @@
     </select>
 
     <select id="selectPageDictItems" resultType="com.qinweizhao.system.module.manage.entity.SysDictItem">
-        SELECT <include refid="Base_Column_List"></include>
+        SELECT
+        <include refid="Base_Column_List"></include>
         FROM sys_dict_item
         <where>
             <if test="query.dictType != null and query.dictType != ''">
@@ -40,19 +42,22 @@
     </select>
 
     <select id="getByDictType" resultType="com.qinweizhao.system.module.manage.entity.SysDictItem">
-        SELECT <include refid="Base_Column_List"></include>
+        SELECT
+        <include refid="Base_Column_List"></include>
         FROM sys_dict_item
         WHERE dict_type= #{dictType}
     </select>
 
     <select id="selectByDictTypeAndValue" resultType="com.qinweizhao.system.module.manage.entity.SysDictItem">
-        SELECT <include refid="Base_Column_List"></include>
+        SELECT
+        <include refid="Base_Column_List"></include>
         FROM sys_dict_item
         WHERE dict_type= #{dictType} AND value=#{value}
     </select>
 
     <select id="selectListSimpleDictItems" resultType="com.qinweizhao.system.module.manage.entity.SysDictItem">
-        SELECT <include refid="Base_Column_List"/>
+        SELECT
+        <include refid="Base_Column_List"/>
         FROM sys_dict_item
         WHERE status= #{status}
     </select>

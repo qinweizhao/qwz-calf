@@ -3,11 +3,13 @@ package com.qinweizhao.filter;
 import cn.hutool.core.util.StrUtil;
 import com.qinweizhao.api.system.SysUserApi;
 import com.qinweizhao.api.system.dto.SysUserDTO;
+import com.qinweizhao.common.core.entity.SysUserDetails;
 import com.qinweizhao.util.JwtUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -57,9 +59,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         String username = claim.getSubject();
         SysUserDTO user = sysUserApi.getByUsername(username);
+        SysUserDetails sysUserDetails = new SysUserDetails();
+        BeanUtils.copyProperties(user, sysUserDetails);
         String authority = sysUserApi.getAuthorityByUserId(user.getUserId());
         log.info("当前用户拥有的权限有{}", authority);
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, null, AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(sysUserDetails, null, AuthorityUtils.commaSeparatedStringToAuthorityList(authority));
         SecurityContextHolder.getContext().setAuthentication(token);
         chain.doFilter(request, response);
     }

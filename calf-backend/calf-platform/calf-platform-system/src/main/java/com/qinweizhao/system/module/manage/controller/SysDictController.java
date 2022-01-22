@@ -2,7 +2,6 @@ package com.qinweizhao.system.module.manage.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.api.system.dto.SysDictDTO;
 import com.qinweizhao.api.system.dto.command.SysDictSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysDictUpdateCmd;
@@ -10,7 +9,6 @@ import com.qinweizhao.api.system.dto.query.SysDictPageQry;
 import com.qinweizhao.api.system.vo.SysDictVO;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.system.module.manage.convert.SysDictConvert;
-import com.qinweizhao.system.module.manage.entity.SysDict;
 import com.qinweizhao.system.module.manage.service.ISysDictService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

@@ -2,6 +2,7 @@ package com.qinweizhao.system.module.manage.util;
 
 
 import cn.hutool.core.collection.CollUtil;
+import com.qinweizhao.common.core.entity.SysUserDetails;
 import com.qinweizhao.common.core.exception.ServiceException;
 import com.qinweizhao.system.module.manage.enums.RoleCodeEnum;
 import org.springframework.security.core.Authentication;
@@ -18,12 +19,28 @@ import java.util.Collection;
  */
 public class SecurityUtils {
 
+    private SecurityUtils() {
+
+    }
+
     /**
-     * 获取用户
+     * 获取用户名
      **/
     public static String getLoginUsername() {
         try {
-            return String.valueOf(getAuthentication().getPrincipal());
+            return String.valueOf(getLoginUser().getUsername());
+        } catch (Exception e) {
+            throw new ServiceException("获取用户信息异常");
+        }
+    }
+
+
+    /**
+     * 获取用户名
+     **/
+    public static SysUserDetails getLoginUser() {
+        try {
+            return (SysUserDetails) getAuthentication().getPrincipal();
         } catch (Exception e) {
             throw new ServiceException("获取用户信息异常");
         }

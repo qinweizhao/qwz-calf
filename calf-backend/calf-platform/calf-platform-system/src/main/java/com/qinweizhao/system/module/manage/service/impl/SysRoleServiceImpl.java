@@ -155,6 +155,18 @@ public class SysRoleServiceImpl implements ISysRoleService {
         return sysRoleDTO;
     }
 
+    /**
+     * 通过用户 Id 获取所属角色
+     *
+     * @param userId userId
+     * @return List<SysRoleDTO>
+     */
+    @Override
+    public List<SysRoleDTO> listRoleByUserId(Long userId) {
+        List<SysRole> userRoles = sysRoleMapper.selectListByUserId(userId);
+        return SysRoleConvert.INSTANCE.convertToDTO(userRoles);
+    }
+
     private void checkupdateByole(Long roleId) {
         SysRole sysRole = sysRoleMapper.selectById(roleId);
         if (sysRole == null) {

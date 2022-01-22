@@ -1,12 +1,10 @@
 package com.qinweizhao.system.module.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qinweizhao.api.system.dto.SysDictDTO;
 import com.qinweizhao.api.system.dto.command.SysDictSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysDictUpdateCmd;
 import com.qinweizhao.api.system.dto.query.SysDictPageQry;
-import com.qinweizhao.system.module.manage.entity.SysDict;
 
 import java.util.List;
 
@@ -61,6 +59,7 @@ public interface ISysDictService {
 
     /**
      * 获取字典分类数据
+     *
      * @param sysDictPageQry sysDictPageQry
      * @return IPage<SysDictDTO>
      */

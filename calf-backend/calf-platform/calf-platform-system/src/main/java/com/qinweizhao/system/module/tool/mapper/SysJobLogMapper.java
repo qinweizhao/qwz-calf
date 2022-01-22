@@ -19,7 +19,8 @@ public interface SysJobLogMapper extends BaseMapper<SysJobLog> {
 
     /**
      * 查询任务日志分页
-     * @param page page
+     *
+     * @param page             page
      * @param sysJobLogPageQry sysJobLogPageQry
      * @return IPage<SysJobLog>
      */

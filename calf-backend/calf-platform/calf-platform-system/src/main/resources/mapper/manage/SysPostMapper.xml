@@ -18,11 +18,14 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        create_by,create_time,deleted,code,post_id,name,sort,status,update_by,update_time
+        create_by
+        ,create_time,deleted,code,post_id,name,sort,status,update_by,update_time
     </sql>
 
     <select id="selectListPosts" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
-        select <include refid="Base_Column_List"/> from sys_post
+        select
+        <include refid="Base_Column_List"/>
+        from sys_post
     </select>
 
     <select id="selectPagePosts" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
@@ -46,6 +49,15 @@
         <include refid="Base_Column_List"/>
         FROM sys_post
         WHERE code=#{code}
+    </select>
+
+
+    <select id="listByUserId" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
+
+        SELECT p.*
+        FROM sys_post p
+                 LEFT JOIN sys_user_post up ON p.post_id = up.post_id
+        WHERE up.user_id = #{userId}
     </select>
 
 </mapper>

@@ -4,11 +4,16 @@ package com.qinweizhao.system.module.manage.controller;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.api.system.dto.SysDeptDTO;
+import com.qinweizhao.api.system.dto.SysPostDTO;
+import com.qinweizhao.api.system.dto.SysRoleDTO;
 import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.dto.command.SysUserSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysUserUpdateCmd;
+import com.qinweizhao.api.system.dto.command.SysUserUpdatePasswordCmd;
 import com.qinweizhao.api.system.dto.query.SysUserPageQry;
 import com.qinweizhao.api.system.vo.SysUserPageRespVO;
+import com.qinweizhao.api.system.vo.SysUserProfileRespVO;
 import com.qinweizhao.api.system.vo.SysUserRespVO;
 import com.qinweizhao.common.core.base.BaseController;
 import com.qinweizhao.common.core.exception.ServiceException;
@@ -16,9 +21,11 @@ import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.common.core.response.ResultCode;
 import com.qinweizhao.common.log.annotation.SysLog;
 import com.qinweizhao.system.module.manage.convert.SysUserConvert;
-import com.qinweizhao.system.module.manage.entity.SysUser;
 import com.qinweizhao.system.module.manage.service.ISysDeptService;
+import com.qinweizhao.system.module.manage.service.ISysPostService;
+import com.qinweizhao.system.module.manage.service.ISysRoleService;
 import com.qinweizhao.system.module.manage.service.ISysUserService;
+import com.qinweizhao.system.module.manage.util.SecurityUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -27,10 +34,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * <p>
@@ -50,6 +60,12 @@ public class SysUserController extends BaseController {
 
     @Resource
     private ISysDeptService sysDeptService;
+
+    @Resource
+    private ISysRoleService sysRoleService;
+
+    @Resource
+    private ISysPostService sysPostService;
 
 
     @GetMapping("/info")
@@ -126,13 +142,55 @@ public class SysUserController extends BaseController {
     }
 
 
+    @GetMapping("/get-profile")
+    @ApiOperation("获得登录用户信息")
+    public Result<SysUserProfileRespVO> profile() {
+        // 获得用户基本信息
+        SysUserDTO user = sysUserService.getUserById(SecurityUtils.getLoginUser().getUserId());
+        SysUserProfileRespVO resp = SysUserConvert.INSTANCE.convert(user);
+        // 获得用户角色
+        List<SysRoleDTO> userRoles = sysRoleService.listRoleByUserId(user.getUserId());
+        resp.setRoles(userRoles);
+        // 获得部门信息
+        if (user.getDeptId() != null) {
+            SysDeptDTO sysDeptDTO = sysDeptService.getDeptById(user.getDeptId());
+            SysUserProfileRespVO.Dept dept = new SysUserProfileRespVO.Dept();
+            dept.setId(sysDeptDTO.getDeptId());
+            dept.setName(sysDeptDTO.getName());
+            resp.setDept(dept);
+        }
+        // 获得岗位信息
+        if (CollUtil.isNotEmpty(user.getPostIds())) {
+            List<SysPostDTO> posts = sysPostService.listByUserId(user.getUserId());
+            resp.setPosts(posts);
+        }
+        return Result.success(resp);
+    }
+
+    @PutMapping("/update-password")
+    @ApiOperation("修改用户个人密码")
+    public Result<Boolean> updateUserProfilePassword(@Valid @RequestBody SysUserUpdatePasswordCmd sysUserUpdatePasswordCmd) {
+        return Result.condition(sysUserService.updatePassword(getLoginUser().getUserId(), sysUserUpdatePasswordCmd));
+    }
+
     @PutMapping("/update-avatar")
-    @ApiOperation("上传用户个人头像")
-    public Result<String> updateUserAvatar(@RequestParam("avatarFile") MultipartFile file) throws IOException {
+    @ApiOperation("修改头像")
+    public Result<String> updateUserAvatar(@RequestParam("avatarFile") MultipartFile file, HttpServletRequest request) throws IOException {
+        // 判断文件是否为空，
         if (file.isEmpty()) {
             throw new ServiceException(ResultCode.FILE_DOES_NOT_EXIST);
         }
-        String avatar = sysUserService.updateAvatar(getCurrentLoginUsername(), file.getInputStream());
-        return Result.success(avatar);
+        // 获取文件存储路径（绝对路径）
+        String path = System.getProperty("user.dir") + "\\calf-backend\\calf-start\\src\\main\\resources\\static\\img";
+        // 获取原文件名
+        String fileName = file.getOriginalFilename();
+        UUID uuid = UUID.randomUUID();
+        fileName = fileName + uuid + ".jpg";
+        // 创建文件实例
+        File filePath = new File(path, fileName);
+        String avatarPath = "http://localhost:8008/img/" + fileName;
+        // 写入文件
+        file.transferTo(filePath);
+        return Result.condition(sysUserService.updateAvatar(getLoginUser().getUserId(), avatarPath));
     }
 }

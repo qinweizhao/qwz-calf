@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.dto.command.SysUserSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysUserUpdateCmd;
+import com.qinweizhao.api.system.dto.command.SysUserUpdatePasswordCmd;
 import com.qinweizhao.api.system.dto.query.SysUserPageQry;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -113,9 +113,12 @@ public interface ISysUserService {
 
     /**
      * 更新用户头像
+     *
      * @param userId userId
-     * @param inputStream inputStream
+     * @param path   path
      * @return String
      */
-    String updateAvatar(String userId, InputStream inputStream);
+    int updateAvatar(Long userId, String path);
+
+    boolean updatePassword(Long userId, SysUserUpdatePasswordCmd sysUserUpdatePasswordCmd);
 }

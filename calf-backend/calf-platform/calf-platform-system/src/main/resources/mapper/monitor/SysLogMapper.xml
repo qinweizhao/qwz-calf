@@ -4,26 +4,27 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.qinweizhao.system.module.monitor.entity.SysLog">
-        <id column="log_id" property="logId" />
-        <result column="type" property="type" />
-        <result column="title" property="title" />
-        <result column="ip" property="ip" />
-        <result column="request" property="request" />
-        <result column="response" property="response" />
-        <result column="exception" property="exception" />
-        <result column="time" property="time" />
-        <result column="remark" property="remark" />
-        <result column="deleted" property="deleted" />
-        <result column="status" property="status" />
-        <result column="create_by" property="createBy" />
-        <result column="update_by" property="updateBy" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
+        <id column="log_id" property="logId"/>
+        <result column="type" property="type"/>
+        <result column="title" property="title"/>
+        <result column="ip" property="ip"/>
+        <result column="request" property="request"/>
+        <result column="response" property="response"/>
+        <result column="exception" property="exception"/>
+        <result column="time" property="time"/>
+        <result column="remark" property="remark"/>
+        <result column="deleted" property="deleted"/>
+        <result column="status" property="status"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        log_id, type, title, ip, request, response, exception, time, remark, deleted, status, create_by, update_by, create_time, update_time
+        log_id
+        , type, title, ip, request, response, exception, time, remark, deleted, status, create_by, update_by, create_time, update_time
     </sql>
 
 

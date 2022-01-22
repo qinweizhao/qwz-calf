@@ -2,8 +2,8 @@ package com.qinweizhao.common.core.base;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.qinweizhao.common.core.entity.SysUserDetails;
 import com.qinweizhao.common.core.request.Search;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
@@ -30,7 +30,16 @@ public class BaseController {
      * @return String
      */
     public String getCurrentLoginUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return String.valueOf(authentication.getPrincipal());
+        SysUserDetails sysUserDetails = (SysUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return sysUserDetails.getUsername();
+    }
+
+    /**
+     * 获取当前登录用户的用户名
+     *
+     * @return String
+     */
+    public SysUserDetails getLoginUser() {
+        return (SysUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

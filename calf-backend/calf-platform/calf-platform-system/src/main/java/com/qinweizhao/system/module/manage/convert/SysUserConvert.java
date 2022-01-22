@@ -6,6 +6,7 @@ import com.qinweizhao.api.system.dto.SysUserDTO;
 import com.qinweizhao.api.system.dto.command.SysUserSaveCmd;
 import com.qinweizhao.api.system.dto.command.SysUserUpdateCmd;
 import com.qinweizhao.api.system.vo.SysUserPageRespVO;
+import com.qinweizhao.api.system.vo.SysUserProfileRespVO;
 import com.qinweizhao.api.system.vo.SysUserRespVO;
 import com.qinweizhao.system.module.manage.entity.SysUser;
 import org.mapstruct.Mapper;
@@ -30,6 +31,14 @@ public interface SysUserConvert {
      * @return SysUser
      */
     SysUser convert(SysUserSaveCmd sysUserSaveCmd);
+
+    /**
+     * sysUserUpdateCmd 转 DO
+     *
+     * @param SysUserProfileRespVO sysUserSaveCmd
+     * @return SysUser
+     */
+    SysUserProfileRespVO convert(SysUserDTO sysUserDTO);
 
 
     /**
