@@ -15,10 +15,6 @@
     <name>calf-platform-system</name>
     <description>System</description>
 
-    <properties>
-        <java.version>11</java.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.qinweizhao</groupId>
