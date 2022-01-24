@@ -15,7 +15,7 @@
     <artifactId>calf-resource</artifactId>
     <packaging>pom</packaging>
 
-    <name>A-resource</name>
+    <name>a-resource</name>
     <description>资源</description>
 
     <modules>

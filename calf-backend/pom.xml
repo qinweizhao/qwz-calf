@@ -6,7 +6,7 @@
     <groupId>com.qinweizhao</groupId>
     <version>0.0.1-SNAPSHOT</version>
     <artifactId>calf-backend</artifactId>
-    <name>A-backend</name>
+    <name>a-backend</name>
     <description>后端</description>
     <packaging>pom</packaging>
 

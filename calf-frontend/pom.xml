@@ -13,7 +13,7 @@
 
   <artifactId>calf-frontend</artifactId>
 
-  <name>A-frontend</name>
+  <name>a-frontend</name>
   <description>前端</description>
 
   <properties>
