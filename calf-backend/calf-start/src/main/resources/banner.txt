@@ -1,0 +1,12 @@
+${AnsiColor.BLUE}
+
+    mmmm             mmmm         mmmm
+  ##""""#            ""##        ##"""
+ ##"        m#####m    ##      #######
+ ##         " mmm##    ##        ##
+ ##m       m##"""##    ##        ##
+  ##mmmm#  ##mmm###    ##mmm     ##
+    """"    """" ""     """"     ""
+
+${AnsiColor.BRIGHT_YELLOW}
+Version: ${application.version}${AnsiColor.DEFAULT}
