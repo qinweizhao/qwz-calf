@@ -39,7 +39,8 @@ public class ExcelUtils {
                 .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
                 .sheet(sheetName).doWrite(data);
         // 设置 header 和 contentType。写在最后的原因是，避免报错时，响应 contentType 已经被修改了
-        response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, StandardCharsets.UTF_8));
+        // TODO
+        // response.addHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, StandardCharsets.UTF_8));
         response.setContentType("application/vnd.ms-excel;charset=UTF-8");
     }
 

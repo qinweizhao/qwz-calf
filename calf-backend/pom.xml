@@ -6,7 +6,7 @@
     <groupId>com.qinweizhao</groupId>
     <version>0.0.1-SNAPSHOT</version>
     <artifactId>calf-backend</artifactId>
-    <name>a-backend</name>
+    <name>a-backend-parent</name>
     <description>后端</description>
     <packaging>pom</packaging>
 
@@ -186,23 +186,6 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
-                <configuration>
-                    <mainClass>com.qinweizhao.calf.CalfApplication</mainClass>
-                    <skip>false</skip>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>repackage</id>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
