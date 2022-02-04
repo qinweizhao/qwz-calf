@@ -17,7 +17,7 @@
 
 ![Alt](https://repobeats.axiom.co/api/embed/eb3662176aaf698084ee4be0d84f33895612eac1.svg "Analytics image")
 
-## 1、简介
+## 简介
 
 calf 是一个前后端分离的权限管理系统。
 
@@ -37,7 +37,7 @@ qwz-calf
 ├─calf-resource 项目资源
 ```
 
-## 2、使用
+## 使用
 
 - 启动项目
 
@@ -52,7 +52,9 @@ qwz-calf
     3. npm install 执行成功后，再执行 npm run serve 启动前端项目。
     4. 二次开发完成后，执行 npm run build 前端编译打包。把打包后的文件拷贝到后端。
 
-## 3、演示
+## 演示
+
+### 部分截图
 
 <table>
     <tr>
@@ -62,5 +64,13 @@ qwz-calf
     <tr>
         <td><img src="https://cdn.jsdelivr.net/gh/qinweizhao/qwz-calf/calf-resource/img/2021-12-27_175404.png"/></td>
         <td><img src="https://cdn.jsdelivr.net/gh/qinweizhao/qwz-calf/calf-resource/img/2021-12-27_175453.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://cdn.jsdelivr.net/gh/qinweizhao/qwz-calf/calf-resource/img/2022-02-04_220740.png"/></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/qinweizhao/qwz-calf/calf-resource/img/2022-02-04_220749.png"/></td>
+    </tr>
+    <tr>
+        <td><img src="https://cdn.jsdelivr.net/gh/qinweizhao/qwz-calf/calf-resource/img/2022-02-04_220813.png"/></td>
+        <td><img src="https://cdn.jsdelivr.net/gh/qinweizhao/qwz-calf/calf-resource/img/2022-02-04_220823.png"/></td>
     </tr>
 </table>

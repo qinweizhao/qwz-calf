@@ -13,7 +13,7 @@ import javax.annotation.Resource;
  * @author qinweizhao
  * @since 2021/12/13
  */
-@Service
+@Service("sysLogApi")
 public class SysLogApiImpl implements SysLogApi {
 
 

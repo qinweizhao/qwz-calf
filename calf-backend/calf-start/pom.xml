@@ -29,6 +29,7 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
     <build>
         <finalName>calf</finalName>
         <plugins>
@@ -41,6 +42,7 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>repackage</id>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
