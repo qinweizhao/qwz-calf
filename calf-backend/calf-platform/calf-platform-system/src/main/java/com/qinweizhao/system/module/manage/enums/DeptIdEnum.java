@@ -6,7 +6,7 @@ import lombok.Getter;
 /**
  * 部门编号枚举
  *
- * @author YVKG
+ * @author qinweizhao
  */
 @Getter
 @AllArgsConstructor
