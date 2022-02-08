@@ -18,8 +18,20 @@ import java.util.List;
 @Mapper
 public interface SysUserPostMapper extends BaseMapper<SysUserPost> {
 
+    /**
+     * 删除
+     *
+     * @param ids ids
+     * @return int
+     */
     int deleteUserPost(@Param("ids") List<Long> ids);
 
+    /**
+     * 插入
+     *
+     * @param list list
+     * @return int
+     */
     int insertBatchUserPost(@Param("list") List<SysUserPost> list);
 
     /**

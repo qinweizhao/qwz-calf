@@ -21,6 +21,13 @@ import java.util.List;
 public interface SysDictItemMapper extends BaseMapper<SysDictItem> {
 
 
+    /**
+     * 查询字典项分页信息
+     *
+     * @param page               page
+     * @param sysDictItemPageQry sysDictItemPageQry
+     * @return IPage<SysDictItem>
+     */
     IPage<SysDictItem> selectPageDictItems(Page<Object> page, @Param("query") SysDictItemPageQry sysDictItemPageQry);
 
     /**
@@ -39,10 +46,12 @@ public interface SysDictItemMapper extends BaseMapper<SysDictItem> {
      */
     SysDictItem getByDictType(String dictType);
 
+
     /**
      * 通过字典类型和 value 获取字典数据
      *
      * @param dictType dictType
+     * @param value    value
      * @return SysDictItem
      */
     SysDictItem selectByDictTypeAndValue(@Param("dictType") String dictType, @Param("value") String value);
@@ -50,6 +59,7 @@ public interface SysDictItemMapper extends BaseMapper<SysDictItem> {
     /**
      * 获取部分字典数据 dictType、value、label
      *
+     * @param status value
      * @return List<SysDictItemDTO>
      */
     List<SysDictItem> selectListSimpleDictItems(Integer status);

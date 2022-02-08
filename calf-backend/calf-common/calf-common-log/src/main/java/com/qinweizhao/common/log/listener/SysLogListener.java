@@ -12,7 +12,10 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 /**
- * @author lengleng 异步监听日志事件
+ * 异步监听日志事件
+ *
+ * @author qinweizhao
+ * @since 2021/12/31
  */
 @Slf4j
 @Component

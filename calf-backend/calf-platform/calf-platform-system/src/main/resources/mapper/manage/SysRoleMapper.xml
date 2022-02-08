@@ -24,7 +24,7 @@
         ,create_time,data_scope,deleted,description,role_id,code,name,sort,status,update_by,update_time
     </sql>
 
-    <update id="updateByoleStatusById">
+    <update id="updateStatusById">
         UPDATE sys_role
         SET status=#{status}
         WHERE role_id = #{roleId}
@@ -37,7 +37,7 @@
         WHERE name = #{name}
     </select>
 
-    <select id="selectRoleBycode" resultType="com.qinweizhao.system.module.manage.entity.SysRole">
+    <select id="selectRoleByCode" resultType="com.qinweizhao.system.module.manage.entity.SysRole">
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_role

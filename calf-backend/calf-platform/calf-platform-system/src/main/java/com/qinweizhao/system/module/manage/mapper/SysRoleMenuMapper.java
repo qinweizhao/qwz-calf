@@ -29,6 +29,7 @@ public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
      * 通过角色 Id 删除角色菜单
      *
      * @param roleId roleId
+     * @return int
      */
     int deleteRoleMenuByRoleId(Long roleId);
 

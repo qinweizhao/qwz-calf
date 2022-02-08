@@ -20,6 +20,12 @@ import java.util.List;
 public interface SysDeptMapper extends BaseMapper<SysDept> {
 
 
+    /**
+     * 查询简单部门列表（状态为开启的）
+     *
+     * @param status status
+     * @return List<SysDept>
+     */
     List<SysDept> selectListSimpleDepts(Integer status);
 
 

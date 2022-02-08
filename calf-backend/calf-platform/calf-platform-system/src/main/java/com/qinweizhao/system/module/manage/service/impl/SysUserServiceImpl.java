@@ -128,7 +128,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Override
     public boolean updateUserStatusById(Long userId, Integer status) {
-        return sysUserMapper.updateUserStatusById(userId, status);
+        return sysUserMapper.updateStatusByUserId(userId, status);
     }
 
     @Override
@@ -282,7 +282,7 @@ public class SysUserServiceImpl implements ISysUserService {
         if (StrUtil.isBlank(phone)) {
             return;
         }
-        SysUser user = sysUserMapper.selectUserByPhone(phone);
+        SysUser user = sysUserMapper.selectByPhone(phone);
         if (user == null) {
             return;
         }
@@ -305,7 +305,7 @@ public class SysUserServiceImpl implements ISysUserService {
         if (StrUtil.isBlank(email)) {
             return;
         }
-        SysUser user = sysUserMapper.selectUserByEmail(email);
+        SysUser user = sysUserMapper.selectByEmail(email);
         if (user == null) {
             return;
         }

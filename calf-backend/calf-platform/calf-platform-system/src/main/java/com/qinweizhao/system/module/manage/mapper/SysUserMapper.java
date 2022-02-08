@@ -65,11 +65,30 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      */
     IPage<SysUser> selectPageUsers(Page<SysUser> page, @Param("query") SysUserPageQry sysUserPageQry);
 
-    SysUser selectUserByEmail(String email);
+    /**
+     * 通过邮箱查询用户
+     *
+     * @param email email
+     * @return SysUser
+     */
+    SysUser selectByEmail(String email);
 
-    SysUser selectUserByPhone(String phone);
+    /**
+     * 查询
+     *
+     * @param phone phone
+     * @return SysUser
+     */
+    SysUser selectByPhone(String phone);
 
-    boolean updateUserStatusById(@Param("userId") Long userId, @Param("status") Integer status);
+    /**
+     * 更新
+     *
+     * @param userId userId
+     * @param status status
+     * @return boolean
+     */
+    boolean updateStatusByUserId(@Param("userId") Long userId, @Param("status") Integer status);
 
     /**
      * 通过用户 Id 获取所拥有的角色 Id 集合

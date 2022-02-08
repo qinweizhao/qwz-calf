@@ -73,7 +73,7 @@ public class SysPostServiceImpl implements ISysPostService {
     }
 
     private void checkNameUnique(Long postId, String name) {
-        SysPost post = sysPostMapper.selectPostByname(name);
+        SysPost post = sysPostMapper.selectPostByName(name);
         if (post == null) {
             return;
         }
@@ -87,7 +87,7 @@ public class SysPostServiceImpl implements ISysPostService {
     }
 
     private void checkCodeUnique(Long id, String code) {
-        SysPost post = sysPostMapper.selectPostBycode(code);
+        SysPost post = sysPostMapper.selectPostByCode(code);
         if (post == null) {
             return;
         }

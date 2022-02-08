@@ -44,7 +44,7 @@ public interface SysPostMapper extends BaseMapper<SysPost> {
      * @param name name
      * @return SysPost
      */
-    SysPost selectPostByname(String name);
+    SysPost selectPostByName(String name);
 
     /**
      * 通过岗位编码查询岗位
@@ -52,7 +52,7 @@ public interface SysPostMapper extends BaseMapper<SysPost> {
      * @param code code
      * @return SysPost
      */
-    SysPost selectPostBycode(String code);
+    SysPost selectPostByCode(String code);
 
     /**
      * 通过用户 Id 获取岗位集合

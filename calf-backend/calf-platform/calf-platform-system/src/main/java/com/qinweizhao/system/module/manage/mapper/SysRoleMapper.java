@@ -28,7 +28,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @param status status
      * @return boolean
      */
-    boolean updateByoleStatusById(@Param("roleId") Long roleId, @Param("status") Integer status);
+    boolean updateStatusById(@Param("roleId") Long roleId, @Param("status") Integer status);
 
     /**
      * 通过 Id 查询角色
@@ -39,12 +39,12 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     SysRole selectRoleByRoleName(String roleName);
 
     /**
-     * 通过 Key 查询角色
+     * 通过角色标识查询角色
      *
      * @param code code
      * @return SysRole
      */
-    SysRole selectRoleBycode(String code);
+    SysRole selectRoleByCode(String code);
 
 
     /**
@@ -64,14 +64,12 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      */
     IPage<SysRole> selectPageRoles(Page<SysRole> page, @Param("query") SysRolePageQry sysRolePageQry);
 
+
     /**
-     * 获取角色拥有的菜单
+     * 通过用户 Id 获取角色列表
      *
-     * @param roleId roleId
-     * @return List<Long>
+     * @param userId userId
+     * @return List<SysRole>
      */
-    List<Long> selectListMenuIdsByRoleId(Long roleId);
-
-
     List<SysRole> selectListByUserId(Long userId);
 }

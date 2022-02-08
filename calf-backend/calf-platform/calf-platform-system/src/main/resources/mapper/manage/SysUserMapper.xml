@@ -22,7 +22,7 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-    <update id="updateUserStatusById">
+    <update id="updateStatusByUserId">
         UPDATE sys_user
         SET status=#{status}
         WHERE user_id = #{userId}
@@ -87,13 +87,13 @@
         </where>
     </select>
 
-    <select id="selectUserByPhone" resultType="com.qinweizhao.system.module.manage.entity.SysUser">
+    <select id="selectByPhone" resultType="com.qinweizhao.system.module.manage.entity.SysUser">
         select *
         from sys_user
         where phone = #{phone}
     </select>
 
-    <select id="selectUserByEmail" resultType="com.qinweizhao.system.module.manage.entity.SysUser">
+    <select id="selectByEmail" resultType="com.qinweizhao.system.module.manage.entity.SysUser">
         select *
         from sys_user
         where email = #{email}

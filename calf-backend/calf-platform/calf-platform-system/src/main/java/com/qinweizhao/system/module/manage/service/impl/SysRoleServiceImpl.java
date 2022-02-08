@@ -54,7 +54,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Override
     public boolean updateByoleStatusById(Long roleId, Integer status) {
-        return sysRoleMapper.updateByoleStatusById(roleId, status);
+        return sysRoleMapper.updateStatusById(roleId, status);
     }
 
     @Override
@@ -197,7 +197,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
             return;
         }
         // 3. 该 key 是否被其他角色使用
-        sysRole = sysRoleMapper.selectRoleBycode(code);
+        sysRole = sysRoleMapper.selectRoleByCode(code);
         if (sysRole != null && !sysRole.getRoleId().equals(roleId)) {
             throw new ServiceException(ResultCode.ROLE_CODE_DUPLICATE);
         }

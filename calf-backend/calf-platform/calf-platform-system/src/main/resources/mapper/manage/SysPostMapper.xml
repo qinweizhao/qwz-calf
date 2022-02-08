@@ -38,13 +38,13 @@
             </if>
         </where>
     </select>
-    <select id="selectPostByname" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
+    <select id="selectPostByName" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_post
         WHERE name=#{name}
     </select>
-    <select id="selectPostBycode" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
+    <select id="selectPostByCode" resultType="com.qinweizhao.system.module.manage.entity.SysPost">
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_post

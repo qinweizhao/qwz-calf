@@ -32,6 +32,7 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
      * 批量新增用户和角色关联
      *
      * @param list list
+     * @return int
      */
     int insertBatchUserRole(List<SysUserRole> list);
 

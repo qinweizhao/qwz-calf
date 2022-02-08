@@ -35,5 +35,10 @@ public interface SysRoleDeptMapper extends BaseMapper<SysRoleDept> {
      */
     void deleteRoleDeptByRoleIdAndDeptIds(@Param("roleId") Long roleId, @Param("deptIds") Collection<Long> deleteRoleIds);
 
+
+    /**
+     * 删除
+     * @param deptId deptId
+     */
     void deleteRoleDeptByDeptId(Long deptId);
 }
