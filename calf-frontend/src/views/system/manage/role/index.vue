@@ -59,32 +59,22 @@
     </el-row>
 
     <el-table v-loading="loading" :data="roleList">
+      <el-table-column label="编号" align="center" prop="roleId" width="100" />
       <el-table-column
-        label="角色编号"
-        align="center"
-        prop="roleId"
-        width="180"
-      />
-      <el-table-column
-        label="角色名称"
+        label="名称"
         align="center"
         prop="name"
         :show-overflow-tooltip="true"
-        width="180"
+        width="100"
       />
       <el-table-column
-        label="角色标识"
+        label="标识"
         align="center"
         prop="code"
         :show-overflow-tooltip="true"
-        width="180"
+        width="100"
       />
-      <el-table-column
-        label="显示顺序"
-        align="center"
-        prop="sort"
-        width="180"
-      />
+      <el-table-column label="顺序" align="center" prop="sort" width="100" />
       <el-table-column label="状态" align="center" width="100">
         <template slot-scope="scope">
           <el-switch
@@ -101,7 +91,7 @@
         align="center"
         prop="createBy"
         :show-overflow-tooltip="true"
-        width="180"
+        width="100"
       />
 
       <el-table-column
@@ -129,35 +119,36 @@
       <el-table-column
         label="操作"
         align="center"
-        width="200"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
-          <!-- 修改 -->
-          <el-button
-            size="small"
-            type="primary"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:role:update']"
-          ></el-button>
-          <!-- 分配 -->
-          <el-button
-            size="small"
-            type="primary"
-            icon="el-icon-circle-check"
-            @click="handleMenu(scope.row)"
-            v-hasPermi="['system:role:update']"
-          ></el-button>
-          <!-- 删除 -->
-          <el-button
-            v-show="scope.row.userId !== 1"
-            size="small"
-            type="primary"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.row)"
-            v-hasPermi="['system:role:delete']"
-          ></el-button>
+          <div class="op-center">
+            <!-- 修改 -->
+            <el-button
+              size="small"
+              type="primary"
+              icon="el-icon-edit"
+              @click="handleUpdate(scope.row)"
+              v-hasPermi="['system:role:update']"
+            ></el-button>
+            <!-- 分配 -->
+            <el-button
+              size="small"
+              type="primary"
+              icon="el-icon-circle-check"
+              @click="handleMenu(scope.row)"
+              v-hasPermi="['system:role:update']"
+            ></el-button>
+            <!-- 删除 -->
+            <el-button
+              v-show="scope.row.userId !== 1"
+              size="small"
+              type="primary"
+              icon="el-icon-delete"
+              @click="handleDelete(scope.row)"
+              v-hasPermi="['system:role:delete']"
+            ></el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
