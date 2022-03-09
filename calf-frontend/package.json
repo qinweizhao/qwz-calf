@@ -1,21 +1,14 @@
 {
   "name": "calf-frontend",
-  "version": "3.3.0",
+  "version": "1.0.1",
   "description": "Calf 管理系统",
   "author": "Calf ",
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build:prod": "vue-cli-service build",
-    "build:stage": "vue-cli-service build --mode staging",
-    "build:demo1024": "vue-cli-service build --mode demo1024",
+    "build": "vue-cli-service build",
     "preview": "node build/index.js --preview",
     "lint": "eslint --ext .js,.vue src"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "src/**/*.{js,vue}": [
