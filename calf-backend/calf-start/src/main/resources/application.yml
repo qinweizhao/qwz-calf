@@ -1,11 +1,3 @@
-# 项目启动端口
-server:
-  servlet:
-    context-path: /
-  port: 8008
-  tomcat:
-    uri-encoding: utf-8
-
 spring:
   application:
     name: calf
@@ -22,7 +14,7 @@ spring:
   mvc:
     throw-exception-if-no-handler-found: true
   profiles:
-    active: dev
+    active: prod
 
 # mybatis-plus配置
 mybatis-plus:
