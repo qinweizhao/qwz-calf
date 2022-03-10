@@ -18,6 +18,6 @@ services:
     image: calf:latest
     build: . # 表示以当前目录下的Dockerfile开始构建镜像
     ports:
-      - "8081:8081"
+      - "8088:8088"
     depends_on:
       - mysql
