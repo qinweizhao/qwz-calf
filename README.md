@@ -46,10 +46,18 @@ qwz-calf
     2. 更改 calf-back 配置文件中的数据库配置（根据实际情况更改）
 
     3. 项目地址：http://ip:port/index.html
+    
 - 二次开发
     1. 这个需要部署前端。前端在运行时，需要准备一个 nodejs。
-    2. 前端项目打开后，需要在项目根目录下，执行 npm install （默认安装比较慢，可以修改为淘宝的源。[下载源修改为淘宝](https://mp.weixin.qq.com/s/HWRYAR16vLE1XFep6_i1tA)）。
+    
+    2. 前端项目打开后，需要在项目根目录下，执行 npm install （默认安装比较慢，可以修改为淘宝的源。
+    
+       ```sh
+       npm config set registry https://registry.npm.taobao.org
+       ```
+    
     3. npm install 执行成功后，再执行 npm run serve 启动前端项目。
+    
     4. 二次开发完成后，执行 npm run build 前端编译打包。把打包后的文件拷贝到后端。
 
 ## 演示
@@ -59,7 +67,7 @@ qwz-calf
 
 
 <p align="center">
-👉 <a href="https://www.qinweizhao.com:88">http://www.qinweizhao.com:88</a> 👈
+  <a href="https://www.qinweizhao.com:88">http://www.qinweizhao.com:88</a>
 </p>
 
 ### 部分截图
