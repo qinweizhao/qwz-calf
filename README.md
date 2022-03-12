@@ -64,11 +64,7 @@ qwz-calf
 
 ### 体验地址
 
-
-
-<p align="center">
-  <a href="https://www.qinweizhao.com:88">http://www.qinweizhao.com:88</a>
-</p>
+http://calf.qinweizhao.com/
 
 ### 部分截图
 
