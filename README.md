@@ -50,7 +50,7 @@ qwz-calf
 - 二次开发
     1. 这个需要部署前端。前端在运行时，需要准备一个 nodejs。
     
-    2. 前端项目打开后，需要在项目根目录下，执行 npm install （默认安装比较慢，可以修改为淘宝的源。
+    2. 前端项目打开后，需要在项目根目录下，执行 npm install （默认安装比较慢，可以修改为淘宝的源。）
     
        ```sh
        npm config set registry https://registry.npm.taobao.org
