@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://github.com/qinweizhao/qwz-calf" target="_blank">
-    <img src="https://img.shields.io/badge/Release-1.0.0-green" alt="Release"/>
+    <img src="https://img.shields.io/badge/Release-1.0.1-green" alt="Release"/>
   </a>
 </p>
 
