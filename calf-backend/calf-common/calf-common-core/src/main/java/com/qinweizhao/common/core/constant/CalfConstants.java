@@ -11,6 +11,10 @@ public class CalfConstants {
      */
     public static final Long SYSTEM_ROLE_ID = 1L;
 
+    /**
+     * 本地文件协议
+     */
+    public static final String FILE_PROTOCOL = "file:///";
 
     private CalfConstants() {
 

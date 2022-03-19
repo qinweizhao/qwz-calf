@@ -10,16 +10,16 @@ pipeline {
   }
 
   environment {
-    APP_NAME = 'yudao-admin'
-    PROJECT_DIR='yudao-admin-ui'
-    NGINX_WORKDIR = '/home/pi/mydata/nginx/html/'
+    APP_NAME = 'calf'
+    PROJECT_DIR='calf-frontend'
+    NGINX_WORKDIR = '/home/mydata/nginx/html/'
   }
 
   stages {
     stage('检出') {
       steps {
-        git url: "https://gitee.com/will-we/ruoyi-vue-pro.git",
-          branch: "devops"
+        git url: "https://gitee.com/qinweizhao/qwz-calf",
+          branch: "master"
       }
     }
 

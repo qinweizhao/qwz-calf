@@ -43,7 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-resources/**",
             "/v3/**",
             "/druid/**",
-            "/doc.html"
+            "/doc.html",
+            "/upload/**",
+            "/static/**"
     };
 
     @Resource

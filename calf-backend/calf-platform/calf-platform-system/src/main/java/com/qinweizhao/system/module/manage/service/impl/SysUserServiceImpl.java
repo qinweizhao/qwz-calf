@@ -13,9 +13,11 @@ import com.qinweizhao.api.system.dto.command.SysUserUpdatePasswordCmd;
 import com.qinweizhao.api.system.dto.query.SysUserPageQry;
 import com.qinweizhao.common.core.constant.UserConstants;
 import com.qinweizhao.common.core.enums.StatusEnum;
+import com.qinweizhao.common.core.exception.CustomizeException;
 import com.qinweizhao.common.core.exception.ServiceException;
 import com.qinweizhao.common.core.response.ResultCode;
 import com.qinweizhao.common.core.util.PageUtil;
+import com.qinweizhao.common.core.util.ServerUtils;
 import com.qinweizhao.system.module.manage.convert.SysUserConvert;
 import com.qinweizhao.system.module.manage.entity.*;
 import com.qinweizhao.system.module.manage.mapper.*;
@@ -25,8 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -62,6 +67,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Resource
     private PasswordEncoder passwordEncoder;
+
+    @Resource
+    private ServerUtils serverUtils;
 
     @Override
     public SysUser selectUserByUsername(String username) {
@@ -164,16 +172,59 @@ public class SysUserServiceImpl implements ISysUserService {
      * 更新用户头像
      *
      * @param userId userId
-     * @param path   path
+     * @param file   file
      * @return String
      */
     @Override
-    public int updateAvatar(Long userId, String path) {
+    public int updateAvatar(Long userId, MultipartFile file) throws IOException {
+        // 判断文件是否为空，
+        if (file.isEmpty()) {
+            throw new ServiceException(ResultCode.FILE_DOES_NOT_EXIST);
+        }
+        String projectPath = System.getProperty("user.dir");;
+        // 获取文件存储路径（绝对路径）
+        String path = projectPath + "/calf-resource/upload/";
+        // 获取原文件名
+        UUID uuid = UUID.randomUUID();
+        String fileName = uuid + ".png";
+        // 创建文件实例
+        File filePath = new File(path, fileName);
+        log.info("文件{}上传到{}目录成功", fileName, path);
+        if (!filePath.getParentFile().exists()) {
+            boolean mkdirs = filePath.getParentFile().mkdirs();
+            if (!mkdirs) {
+                throw new CustomizeException("创建目录失败");
+            }
+        }
+        String avatarPath = serverUtils.getUrl() + "upload/" + fileName;
+        // 写入文件
+        file.transferTo(filePath);
+
         this.checkUserExists(userId);
+
         SysUser sysUser = new SysUser();
-        sysUser.setAvatar(path);
+        sysUser.setAvatar(avatarPath);
         sysUser.setUserId(userId);
         return sysUserMapper.updateById(sysUser);
+    }
+
+
+    /**
+     * 获取当前项目的根目录
+     *
+     * @return String
+     */
+    private String getProjectPath() {
+        File parentFile = null;
+        try {
+            String userHome = System.getProperty("user.dir");
+            File file = new File(userHome);
+            parentFile = file.getParentFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assert parentFile != null;
+        return parentFile.toString();
     }
 
     @Override

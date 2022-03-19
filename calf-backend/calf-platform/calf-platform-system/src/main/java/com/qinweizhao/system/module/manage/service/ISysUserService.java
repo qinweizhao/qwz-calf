@@ -7,7 +7,9 @@ import com.qinweizhao.api.system.dto.command.SysUserUpdateCmd;
 import com.qinweizhao.api.system.dto.command.SysUserUpdatePasswordCmd;
 import com.qinweizhao.api.system.dto.query.SysUserPageQry;
 import com.qinweizhao.system.module.manage.entity.SysUser;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -115,10 +117,10 @@ public interface ISysUserService {
      * 更新用户头像
      *
      * @param userId userId
-     * @param path   path
+     * @param file   file
      * @return String
      */
-    int updateAvatar(Long userId, String path);
+    int updateAvatar(Long userId, MultipartFile file) throws IOException;
 
     boolean updatePassword(Long userId, SysUserUpdatePasswordCmd sysUserUpdatePasswordCmd);
 }

@@ -16,9 +16,11 @@ import com.qinweizhao.api.system.vo.SysUserPageRespVO;
 import com.qinweizhao.api.system.vo.SysUserProfileRespVO;
 import com.qinweizhao.api.system.vo.SysUserRespVO;
 import com.qinweizhao.common.core.base.BaseController;
+import com.qinweizhao.common.core.constant.CalfConstants;
 import com.qinweizhao.common.core.exception.ServiceException;
 import com.qinweizhao.common.core.response.Result;
 import com.qinweizhao.common.core.response.ResultCode;
+import com.qinweizhao.common.core.util.ServerUtils;
 import com.qinweizhao.common.log.annotation.SysLog;
 import com.qinweizhao.system.module.manage.convert.SysUserConvert;
 import com.qinweizhao.system.module.manage.service.ISysDeptService;
@@ -30,6 +32,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -66,6 +69,7 @@ public class SysUserController extends BaseController {
 
     @Resource
     private ISysPostService sysPostService;
+
 
 
     @GetMapping("/info")
@@ -176,21 +180,7 @@ public class SysUserController extends BaseController {
     @PutMapping("/update-avatar")
     @ApiOperation("修改头像")
     public Result<String> updateUserAvatar(@RequestParam("avatarFile") MultipartFile file, HttpServletRequest request) throws IOException {
-        // 判断文件是否为空，
-        if (file.isEmpty()) {
-            throw new ServiceException(ResultCode.FILE_DOES_NOT_EXIST);
-        }
-        // 获取文件存储路径（绝对路径）
-        String path = System.getProperty("user.dir") + "\\calf-backend\\calf-start\\src\\main\\resources\\static\\img";
-        // 获取原文件名
-        String fileName = file.getOriginalFilename();
-        UUID uuid = UUID.randomUUID();
-        fileName = fileName + uuid + ".jpg";
-        // 创建文件实例
-        File filePath = new File(path, fileName);
-        String avatarPath = "http://localhost:8008/img/" + fileName;
-        // 写入文件
-        file.transferTo(filePath);
-        return Result.condition(sysUserService.updateAvatar(getLoginUser().getUserId(), avatarPath));
+
+        return Result.condition(sysUserService.updateAvatar(getLoginUser().getUserId(), file));
     }
 }
