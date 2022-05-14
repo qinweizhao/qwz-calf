@@ -188,12 +188,6 @@ public class SysMenuServiceImpl implements ISysMenuService {
      * @return 返回容器
      */
     private List<SysMenuDTO> getChildrenMenu(SysMenuDTO menu, List<SysMenuDTO> menus) {
-        menus.stream().filter(
-                i -> menu.getMenuId().equals(i.getParentId())
-        ).forEach(item -> item.setChildren(getChildrenMenu(item, menus)));
-
-
-        System.out.println(menus);
         return menus.stream().filter(
                 i -> menu.getMenuId().equals(i.getParentId())
         ).peek(item -> item.setChildren(getChildrenMenu(item, menus))).collect(Collectors.toList());
